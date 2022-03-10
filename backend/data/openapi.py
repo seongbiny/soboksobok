@@ -6,7 +6,7 @@ import pandas as pd
 # 파일에 저장
 welfare_list = []
 
-open_api_key = 'saenbgPkRs4DTtgAVEqQtgaKtJH8CBCeXGcW8izo1DEc03AFWj4yFrynsCdJ6EKLPavrMlNOaqPWSqDsmAnkSA%3D%3D'
+open_api_key = 'HslY0%2Fj9FNsdWBwuO7SXRyk6qJtrjfmIOg9Xsxfqanqqxpo68M7qlLPuZEJyLPhteO2W39kBdQ5%2B22VekmlmEQ%3D%3D'
 params ='&callTp=L&pageNo=1&numOfRows=500&srchKeyCode=003'
 params2 ='&callTp=D'
 
@@ -80,6 +80,6 @@ for i in range(100):
     welfare_list.append(welfare)
 
 resultSet=pd.concat(welfare_list)
-file_name= '중앙부처복지서비스_openapi_5.csv'
+file_name= '중앙부처복지서비스_openapi_1.csv'
 resultSet.to_csv('D:/ssafy/[작업]특화PJT/'+file_name,index=False,encoding='utf-8-sig')
 print(file_name,'완료')
