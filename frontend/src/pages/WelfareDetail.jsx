@@ -2,8 +2,8 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import DetailTabs from '../components/WelfareDetail.js/DetailTabs';
-import DetailMain from '../components/WelfareDetail.js/DetailMain';
+import DetailTabs from '../components/WelfareDetail/DetailTabs';
+import DetailMain from '../components/WelfareDetail/DetailMain';
 import WelfareCard from '../components/WelfareCard';
 
 const StyledContainer = styled.div`
