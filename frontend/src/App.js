@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 import WelfareDetail from "./pages/WelfareDetail";
 import NavBar from "./components/Navbar.js";
 import Main from "./pages/Main.jsx";
+import Qna from './pages/Qna.jsx';
 
 function App() {
   return (
@@ -14,7 +15,11 @@ function App() {
       <Routes>
         <Route path="/welfare" element={<WelfareDetail />} />
       </Routes>
+      <Routes>
+        <Route path="/Qna" element={<Qna/>} />
+      </Routes>
     </div>
+
   );
 }
 
