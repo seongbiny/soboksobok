@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '../CSS/qnacreate.css';
 
 let 게시판이름 = styled.h1`
     text-align: center;
@@ -22,6 +23,7 @@ function QnaCreate(){
                 Q&A
             </게시판이름>
             <CKEditor
+                className="cke_editor_editor .cke_contents"
                 editor={ ClassicEditor }
                 // data="<p>Hello from CKEditor 5!</p>"
                 onReady={ editor => {
