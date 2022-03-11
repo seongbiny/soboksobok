@@ -6,9 +6,8 @@ import Main from './pages/Main.jsx';
 import Auth from './pages/OAuth.jsx';
 import Qna from './pages/Qna.jsx';
 import QnaCreate from './pages/QnaCreate.jsx';
-import Search from "./pages/Search";
-
-
+import Search from './pages/Search';
+import CustomFilter from './pages/CustomFilter';
 
 function App() {
   return (
@@ -30,7 +29,10 @@ function App() {
         <Route path="/search" element={<Search />} />
       </Routes>
       <Routes>
-        <Route path="/QnaCreate" element={<QnaCreate/>} />
+        <Route path="/QnaCreate" element={<QnaCreate />} />
+      </Routes>
+      <Routes>
+        <Route path="/filter" element={<CustomFilter />} />
       </Routes>
     </div>
   );
