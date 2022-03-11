@@ -4,6 +4,7 @@ import WelfareDetail from "./pages/WelfareDetail";
 import NavBar from "./components/Navbar.js";
 import Main from "./pages/Main.jsx";
 import Qna from './pages/Qna.jsx';
+import QnaCreate from './pages/QnaCreate.jsx';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/Qna" element={<Qna/>} />
+      </Routes>
+      <Routes>
+        <Route path="/QnaCreate" element={<QnaCreate/>} />
       </Routes>
     </div>
 
