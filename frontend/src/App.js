@@ -5,6 +5,8 @@ import NavBar from './components/Navbar.js';
 import Main from './pages/Main.jsx';
 import Auth from './pages/OAuth.jsx';
 import Qna from './pages/Qna.jsx';
+import Search from "./pages/Search";
+
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/Qna" element={<Qna />} />
+      </Routes>
+      <Routes>
+        <Route path="/search" element={<Search />} />
       </Routes>
     </div>
   );
