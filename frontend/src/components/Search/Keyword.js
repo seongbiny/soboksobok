@@ -11,7 +11,12 @@ const StyledBox = styled.div`
 function Keyword() {
   return (
     <StyledBox>
-      <div>keyword</div>
+      <div>추천 검색어</div>
+      <hr />
+      <ol>
+        <ul>청년</ul>
+        <ul>지원</ul>
+      </ol>
     </StyledBox>
   );
 }
