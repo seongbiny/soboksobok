@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Tabs, Tab, TabContainer } from 'react-bootstrap';
 import SearchBar from '../components/SearchBar';
 
 import styled from 'styled-components';
@@ -8,6 +8,14 @@ const 소개 = styled.div`
   margin: 20px;
   padding: 20px;
   background-color: #e3f2fd;
+`;
+
+const 탭 = styled.div`
+  margin: 20px;
+`;
+
+const 탭내용 = styled.div`
+  padding: 20px;
 `;
 
 function Main() {
@@ -39,6 +47,38 @@ function Main() {
               </p>
               <Button variant="primary">카카오톡 간편가입</Button>
             </소개>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <탭>
+              <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
+                <Tab eventKey="home" title="맞춤형 복지 안내">
+                  <탭내용>
+                    <h2>맞춤형 복지 안내</h2>
+                    <p>
+                      내 정보 페이지에서 정보를 입력하면 더욱 자세한 맞춤 복지 혜택을 안내받을 수
+                      있습니다.
+                    </p>
+                    <Button variant="primary">정보 입력하기</Button>
+                  </탭내용>
+                  {/* <TabContainer>
+                    <h2>맞춤형 복지 안내</h2>
+                    <p>
+                      내 정보 페이지에서 정보를 입력하면 더욱 자세한 맞춤 복지 혜택을 안내받을 수
+                      있습니다.
+                    </p>
+                    <p>소복소복은 사용자에게 맞춤 복지 정보를 제공합니다.</p>
+                  </TabContainer> */}
+
+                  {/* <Sonnet /> //필요한 요소 넣기 */}
+                </Tab>
+                <Tab eventKey="profile" title="Profile">
+                  {/* <Sonnet /> */}
+                </Tab>
+              </Tabs>
+            </탭>
           </Col>
         </Row>
       </Container>
