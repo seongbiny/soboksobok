@@ -8,6 +8,7 @@ import Qna from './pages/Qna.jsx';
 import QnaCreate from './pages/QnaCreate.jsx';
 import Search from './pages/Search';
 import CustomFilter from './pages/CustomFilter';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/filter" element={<CustomFilter />} />
+      </Routes>
+      <Routes>
+        <Route path="/profile" element={<Profile />}></Route>
       </Routes>
     </div>
   );
