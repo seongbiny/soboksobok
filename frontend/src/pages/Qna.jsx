@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination, Table, Button } from 'react-bootstrap';
+import { Pagination, Table, Button, Container } from 'react-bootstrap';
 import styled from "styled-components";
 
 let 표 = styled.div`
@@ -14,6 +14,7 @@ let 제목 = styled.h1`
 `
 let 글쓰기버튼 = styled.div`
     text-align: right;
+    margin-bottom: 1%;
 `
 let 페이지번호 = styled.div`
     display: grid;
@@ -22,7 +23,7 @@ let 페이지번호 = styled.div`
 function Qna(){
     return (
 
-        <div>
+        <Container>
             <표>
                 <제목>
                     Q&A 게시판
@@ -58,9 +59,10 @@ function Qna(){
 
 
             </표>
+        </Container>
 
 
-        </div>
+
 
     )
 }
