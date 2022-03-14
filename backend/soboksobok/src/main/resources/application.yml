@@ -36,8 +36,8 @@ spring:
     oauth2.client:
       registration:
         kakao:
-          clientId: '{카카오 client-id}'
-          clientSecret: '{카카오 client-secret}'
+          clientId: '8c3ffe29c110efd6ec4e8e75e591ce48'
+          clientSecret: 'o5Ai1cTUrivXwVcVUHgOaPwMbSPfxOaI'
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
@@ -45,6 +45,9 @@ spring:
             - profile_nickname
             - profile_image
             - account_email
+            - age_range
+            - gender
+            - birthday
           clientName: Kakao
       # Provider 설정
       provider:
