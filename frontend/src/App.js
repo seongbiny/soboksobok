@@ -8,6 +8,7 @@ import Qna from "./pages/Qna.jsx";
 import QnaCreate from "./pages/QnaCreate.jsx";
 import WelfareSearch from "./pages/WelfareSearch";
 import WelfareRecommend from "./pages/WelfareRecommend";
+import CustomFilter from './pages/CustomFilter';
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/QnaCreate" element={<QnaCreate />} />
+      </Routes>
+            <Routes>
+        <Route path="/filter" element={<CustomFilter />} />
       </Routes>
       <Routes>
         <Route path="/recommend" element={<WelfareRecommend />} />
