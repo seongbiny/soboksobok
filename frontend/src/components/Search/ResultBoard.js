@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Pagination from "react-bootstrap/Pagination";
+// import Pagination from "react-bootstrap/Pagination";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const StyledBoard = styled.div`
   box-sizing: border-box;
@@ -12,23 +14,9 @@ const StyledBoard = styled.div`
 function ResultBoard() {
   return (
     <StyledBoard>
-      <Pagination size="sm">
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
-
-        <Pagination.Item>{3}</Pagination.Item>
-        <Pagination.Item>{4}</Pagination.Item>
-        <Pagination.Item active>{5}</Pagination.Item>
-        <Pagination.Item>{6}</Pagination.Item>
-        <Pagination.Item>{7}</Pagination.Item>
-
-        <Pagination.Ellipsis />
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
-      </Pagination>
+      <Stack spacing={2}>
+        <Pagination count={10} color="primary" />
+      </Stack>
     </StyledBoard>
   );
 }

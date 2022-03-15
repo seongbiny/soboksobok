@@ -6,16 +6,8 @@ import {
   BsStarFill,
   BsStar,
 } from "react-icons/bs";
-
-const StyledMain = styled.div`
-  box-sizing: border-box;
-  height: 30vh;
-  width: 70vw;
-  border: 1px solid gray;
-  border-radius: 20px;
-  margin: 10px;
-  padding: 10px;
-`;
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 
 function DetailMain() {
   const [likeBtn, setLikeBtn] = useState(false);
@@ -23,40 +15,51 @@ function DetailMain() {
 
   return (
     <div>
-      <StyledMain>
-        {likeBtn ? (
-          <BsStarFill
-            size="30"
-            color="yellow"
-            onClick={() => {
-              setLikeBtn(false);
-            }}
-          />
-        ) : (
-          <BsStar
-            size="30"
-            color="yellow"
-            onClick={() => {
-              setLikeBtn(true);
-            }}
-          />
-        )}
-        {checkBtn ? (
-          <BsBookmarkDashFill
-            size="30"
-            onClick={() => {
-              setCheckBtn(false);
-            }}
-          />
-        ) : (
-          <BsBookmarkCheck
-            size="30"
-            onClick={() => {
-              setCheckBtn(true);
-            }}
-          />
-        )}
-      </StyledMain>
+      <Box
+        sx={{
+          "& > :not(style)": {
+            m: 1,
+            width: 1000,
+            height: 128,
+          },
+        }}
+      >
+        <Paper elevation={3}>
+          {likeBtn ? (
+            <BsStarFill
+              size="30"
+              color="yellow"
+              onClick={() => {
+                setLikeBtn(false);
+              }}
+            />
+          ) : (
+            <BsStar
+              size="30"
+              color="yellow"
+              onClick={() => {
+                setLikeBtn(true);
+              }}
+            />
+          )}
+          {checkBtn ? (
+            <BsBookmarkDashFill
+              size="30"
+              onClick={() => {
+                setCheckBtn(false);
+              }}
+            />
+          ) : (
+            <BsBookmarkCheck
+              size="30"
+              onClick={() => {
+                setCheckBtn(true);
+              }}
+            />
+          )}
+          상세내용
+        </Paper>
+      </Box>
     </div>
   );
 }
