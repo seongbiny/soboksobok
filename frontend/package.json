@@ -5,26 +5,20 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^33.0.0",
     "@ckeditor/ckeditor5-react": "^4.0.0",
-<<<<<<< HEAD
-    "@material-ui/core": "^4.12.3",
-=======
+
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.5.0",
->>>>>>> 966cc4042358276be1c70000cc724dd27f092e73
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
-<<<<<<< HEAD
     "prop-types": "^15.8.1",
-=======
     "chart.js": "^3.7.1",
->>>>>>> 966cc4042358276be1c70000cc724dd27f092e73
     "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.0",
