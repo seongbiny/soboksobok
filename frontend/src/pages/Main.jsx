@@ -1,6 +1,8 @@
-import React from 'react';
-import { Container, Row, Col, Button, Tabs, Tab, TabContainer } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import axios from 'axios';
 
 import styled from 'styled-components';
 
@@ -19,6 +21,22 @@ const 탭내용 = styled.div`
 `;
 
 function Main() {
+  let navigate = useNavigate();
+
+  let [popular, setPopular] = useState(null);
+  let [recent, setRecent] = useState(null);
+
+  const updatePopular = async () => {
+    try {
+      // 요청 시작 시, 초기화
+      setPopular(null);
+      const response = await axios.get('http://localhost:3000//welfare/popular');
+      setPopular(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="main">
       <Container>
@@ -61,21 +79,20 @@ function Main() {
                       내 정보 페이지에서 정보를 입력하면 더욱 자세한 맞춤 복지 혜택을 안내받을 수
                       있습니다.
                     </p>
-                    <Button variant="primary">정보 입력하기</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        navigate('/filter');
+                      }}
+                    >
+                      정보 입력하기
+                    </Button>
                   </탭내용>
-                  {/* <TabContainer>
-                    <h2>맞춤형 복지 안내</h2>
-                    <p>
-                      내 정보 페이지에서 정보를 입력하면 더욱 자세한 맞춤 복지 혜택을 안내받을 수
-                      있습니다.
-                    </p>
-                    <p>소복소복은 사용자에게 맞춤 복지 정보를 제공합니다.</p>
-                  </TabContainer> */}
-
-                  {/* <Sonnet /> //필요한 요소 넣기 */}
                 </Tab>
-                <Tab eventKey="profile" title="Profile">
-                  {/* <Sonnet /> */}
+                <Tab eventKey="popular-list" title="인기순">
+                  <탭내용>
+                    <p>지금 인기있는 복지 혜택을 안내드립니다.</p>
+                  </탭내용>
                 </Tab>
               </Tabs>
             </탭>
