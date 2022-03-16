@@ -12,7 +12,7 @@ function NavBar() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/welfare">추천</Nav.Link>
-            <Nav.Link href="/">QnA</Nav.Link>
+            <Nav.Link href="/qna">QnA</Nav.Link>
           </Nav>
           <Button variant="primary">로그인</Button>
           <Login></Login>
