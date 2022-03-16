@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import Button from '@mui/material/Button';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import DetailTabs from '../components/WelfareDetail/DetailTabs';
@@ -21,6 +21,7 @@ const StyledTop = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 10px;
+    align-items: center;
 `;
 
 function WelfareDetail(){
@@ -30,7 +31,7 @@ function WelfareDetail(){
         <StyledContainer>
             <StyledTop>
                 <h1>복지서비스 상세</h1>
-                <Button variant="primary" onClick={()=>{ navigate('/') }}>뒤로가기</Button>
+                <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
             <DetailMain />
             <DetailTabs />
