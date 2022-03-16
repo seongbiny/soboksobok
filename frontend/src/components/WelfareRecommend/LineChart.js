@@ -3,8 +3,9 @@ import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
 const Container = styled.div`
-  width: 25vw;
   max-width: 900px;
+  height: 100%;
+  padding: 10px;
 `;
 
 const data = {
