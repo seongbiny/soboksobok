@@ -13,65 +13,65 @@ function DetailMain() {
   const [checkBtn, setCheckBtn] = useState(false);
 
   return (
-    <div>
-      <Box
-        sx={{
-          "& > :not(style)": {
-            m: 1,
-            width: 1000,
-            height: 150,
-          },
-        }}
-      >
-        <Paper elevation={3} sx={{ p: 3 }}>
-          <Grid container>
-            <Grid item xs={10}>
-              <Typography variant="h4" align="left">
-                취업 후상환 학자금대출
-              </Typography>
-            </Grid>
-            <Grid item xs={2} align="right">
-              <div>
-                {likeBtn ? (
-                  <StarRoundedIcon
-                    sx={{ color: yellow[600], fontSize: 40 }}
-                    onClick={() => {
-                      setLikeBtn(false);
-                    }}
-                  />
-                ) : (
-                  <StarBorderRoundedIcon
-                    sx={{ color: grey[400], fontSize: 40 }}
-                    onClick={() => {
-                      setLikeBtn(true);
-                    }}
-                  />
-                )}
-                {checkBtn ? (
-                  <BookmarkRemoveRoundedIcon
-                    sx={{ color: blue[600], fontSize: 35 }}
-                    onClick={() => {
-                      setCheckBtn(false);
-                    }}
-                  />
-                ) : (
-                  <BookmarkAddedOutlinedIcon
-                    sx={{ color: grey[400], fontSize: 35 }}
-                    onClick={() => {
-                      setCheckBtn(true);
-                    }}
-                  />
-                )}
-              </div>
-            </Grid>
+    <Box
+      sx={{
+        "& > :not(style)": {
+          m: 1,
+          width: 1000,
+          height: 150,
+        },
+        mb: 3,
+        mt: 3,
+      }}
+    >
+      <Paper elevation={3} sx={{ p: 3 }}>
+        <Grid container>
+          <Grid item xs={10}>
+            <Typography variant="h4" align="left">
+              취업 후상환 학자금대출
+            </Typography>
           </Grid>
-          <Typography sx={{ mt: 1 }}>
-            대학생이 학업에 전념할 수 있도록 학자금 전액대출을 지원하고 일정
-            소득이 발생한 후 소득수준에 따라 상환할 수 있도록 합니다.
-          </Typography>
-        </Paper>
-      </Box>
-    </div>
+          <Grid item xs={2} align="right">
+            <div>
+              {likeBtn ? (
+                <StarRoundedIcon
+                  sx={{ color: yellow[600], fontSize: 40 }}
+                  onClick={() => {
+                    setLikeBtn(false);
+                  }}
+                />
+              ) : (
+                <StarBorderRoundedIcon
+                  sx={{ color: grey[400], fontSize: 40 }}
+                  onClick={() => {
+                    setLikeBtn(true);
+                  }}
+                />
+              )}
+              {checkBtn ? (
+                <BookmarkRemoveRoundedIcon
+                  sx={{ color: blue[600], fontSize: 35 }}
+                  onClick={() => {
+                    setCheckBtn(false);
+                  }}
+                />
+              ) : (
+                <BookmarkAddedOutlinedIcon
+                  sx={{ color: grey[400], fontSize: 35 }}
+                  onClick={() => {
+                    setCheckBtn(true);
+                  }}
+                />
+              )}
+            </div>
+          </Grid>
+        </Grid>
+        <Typography sx={{ mt: 1 }}>
+          대학생이 학업에 전념할 수 있도록 학자금 전액대출을 지원하고 일정
+          소득이 발생한 후 소득수준에 따라 상환할 수 있도록 합니다.
+        </Typography>
+      </Paper>
+    </Box>
   );
 }
 export default DetailMain;

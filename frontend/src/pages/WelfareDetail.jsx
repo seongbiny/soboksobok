@@ -8,9 +8,9 @@ import WelfareCard from '../components/WelfareCard';
 
 const StyledContainer = styled.div`
     box-sizing: border-box;
-    border: 1px solid;
     display: grid;
     justify-content: center;
+    margin-top: 5vh;
 `;
 const StyledCard = styled.div`
     display: flex;
@@ -30,7 +30,10 @@ function WelfareDetail(){
     return(
         <StyledContainer>
             <StyledTop>
-                <h1>복지서비스 상세</h1>
+                <div>
+                    <h1>복지서비스 상세(중앙)</h1>
+                    <div>다양한 복지 혜택을 찾고, 지원대상 및 선정기준 등 자세한 내용을 확인할 수 있습니다.</div>
+                </div>
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
             <DetailMain />
