@@ -42,8 +42,8 @@ function Qna(){
                     <tbody>
                         <tr>
                         <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                        <td>OOOO 복지혜택 추가해주세요!</td>
+                        <td>2022/03/17</td>
                         </tr>
                     </tbody>
                 </Table>
