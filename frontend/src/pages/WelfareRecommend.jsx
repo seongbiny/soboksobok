@@ -14,7 +14,7 @@ const StyledTop = styled.div`
     margin-bottom: 5vh;
 `;
 const StyledMain = styled.div`
-    display: flex;
+    display: grid;
     justify-content: center;
     margin-bottom: 5vh;
     margin-top: 5vh;
@@ -36,6 +36,7 @@ function WelfareRecommend(){
             </StyledTop>
             <StyledMain>
                 <Slide />
+                {/* <Slide /> */}
             </StyledMain>
         </StyledContainer>
     )
