@@ -11,18 +11,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping()
     public ApiResponse getUser() {
+        System.out.println("테스트트");
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = userService.getUser(principal.getUsername());
 
         return ApiResponse.success("user", user);
+    }
+
+    @GetMapping("/profile")
+    public ApiResponse getUserInfo() {
+        System.out.println("테스트트");
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = userService.getUser(principal.getUsername());
+
+        return ApiResponse.success("user", user);
+    }
+
+    @GetMapping("/test")
+    public ApiResponse test(){
+        System.out.println("테테테스트트");
+        String test = "테스트 메시지";
+        return ApiResponse.success("test",test);
     }
 }

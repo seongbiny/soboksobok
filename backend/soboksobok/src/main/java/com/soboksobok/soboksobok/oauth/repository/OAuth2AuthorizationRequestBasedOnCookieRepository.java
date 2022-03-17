@@ -17,6 +17,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
 
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
+        System.out.println("OAuth2AuthorizationRequestBasedOnCookieRepository - loadAuthorizationRequest");
         return CookieUtil.getCookie(request, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME)
                 .map(cookie -> CookieUtil.deserialize(cookie, OAuth2AuthorizationRequest.class))
                 .orElse(null);
@@ -24,6 +25,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
 
     @Override
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(authorizationRequest);
         if (authorizationRequest == null) {
             CookieUtil.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
             CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
@@ -40,15 +42,18 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
 
     @Override
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request) {
+        System.out.println("OAuth2AuthorizationRequestBasedOnCookieRepository - removeAuth1...");
         return this.loadAuthorizationRequest(request);
     }
 
     @Override
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("OAuth2AuthorizationRequestBasedOnCookieRepository - removeAuth2...");
         return this.loadAuthorizationRequest(request);
     }
 
     public void removeAuthorizationRequestCookies(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("OAuth2AuthorizationRequestBasedOnCookieRepository - removeAuth..cookie");
         CookieUtil.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
         CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
         CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);

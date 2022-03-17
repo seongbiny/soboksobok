@@ -11,6 +11,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUser(String userId) {
+        System.out.println("UserService - getUser");
         return userRepository.findByUserId(userId);
     }
 }

@@ -84,6 +84,9 @@ public class User {
     @Column(name = "BIRTH")
     private String birth;
 
+    @Column(name = "CHILD")
+    private String child;
+
     public User(
             @NotNull @Size(max = 64) String userId,
             @NotNull @Size(max = 100) String username,
