@@ -8,6 +8,7 @@ public class HeaderUtil {
     private final static String TOKEN_PREFIX = "Bearer ";
 
     public static String getAccessToken(HttpServletRequest request) {
+        System.out.println("HeaderUtil - getAccessToken");
         String headerValue = request.getHeader(HEADER_AUTHORIZATION);
 
         if (headerValue == null) {
