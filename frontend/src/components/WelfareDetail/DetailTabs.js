@@ -1,36 +1,94 @@
-import React from "react";
-import styled from "styled-components";
-import { Tabs, Tab } from "react-bootstrap";
+import React, { Children } from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
-const StyledTab = styled.div`
-  box-sizing: border-box;
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-  width: 70vw;
-  margin: 10px;
-`;
-
-function DetailTabs() {
   return (
-    <StyledTab>
-      <Tabs
-        defaultActiveKey="지원대상"
-        id="uncontrolled-tab-example"
-        className="mb-3"
-      >
-        <Tab eventKey="지원대상" title="지원대상">
-          1
-        </Tab>
-        <Tab eventKey="서비스 내용" title="서비스 내용">
-          2
-        </Tab>
-        <Tab eventKey="신청방법" title="신청방법">
-          3
-        </Tab>
-        <Tab eventKey="추가정보" title="추가정보">
-          4
-        </Tab>
-      </Tabs>
-    </StyledTab>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
   );
 }
-export default DetailTabs;
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+export default function DetailTaps() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: 1014,
+        border: 1,
+        borderColor: "divider",
+        borderRadius: 3,
+        mb: 3,
+      }}
+    >
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          variant="fullWidth"
+        >
+          <Tab label="지원대상" {...a11yProps(0)} />
+          <Tab label="서비스 내용" {...a11yProps(1)} />
+          <Tab label="신청방법" {...a11yProps(2)} />
+          <Tab label="추가정보" {...a11yProps(3)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <li>
+          국내의 대학(대학원 제외)에 재학 중이거나, 입학예정인 대한민국 국민에게
+          지원합니다.
+        </li>
+        <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
+          대출 신청일 현재 만 35세 이하인 기초생활수급자 및 학자금지원 8구간
+          이하 국내 고등교육기관 학부생을 지원합니다. <br />
+          다자녀(3자녀 이상)가구 학부생의 경우 학자금지원 관계없이 취업 후 상환
+          학자금대출 이용 가능합니다.
+        </Box>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Item Four
+      </TabPanel>
+    </Box>
+  );
+}

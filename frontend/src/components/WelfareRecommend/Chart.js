@@ -3,8 +3,8 @@ import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 
 const Container = styled.div`
-  width: 20vw;
   max-width: 900px;
+  margin-right: 3vw;
 `;
 
 const data = {
