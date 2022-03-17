@@ -23,7 +23,7 @@ public class QnaDto {
     private Long id;
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY, readOnly = true, required = false, description = "게시글 작성자", nullable = true)
-    private User qna_user_id;
+    private UserDto user;
 
     @NotBlank(message = "제목은 Null이거나 공백일 수 없습니다")
     @Schema(description = "게시글 제목")
@@ -54,7 +54,7 @@ public class QnaDto {
 //                .content(qna.getQna_content())
 //                .qna_created_at(qna.getQna_created_at())
 //                .qna_updated_at(qna.getQna_updated_at())
-//                .qna_user_id(userInfo)
+//                .user(userInfo)
 //                .build();
 //
 //    }

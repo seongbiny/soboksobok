@@ -14,14 +14,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Qna")
 public class Qna {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) //auto increment
     private Long qna_id;
 
     @ManyToOne(fetch = FetchType.LAZY) //게시글 쓴 사람
-    @JoinColumn(name="qna_user_id")
-    private User userSeq;
+    @JoinColumn(name="qna_user_id") //매핑할 키 값, user pk와 매핑됨
+    private User user;
 
     @Column(length = 50)
     private String qna_title;
@@ -40,7 +41,7 @@ public class Qna {
 //                .qna_content(qnaDto.getContent())
 //                .qna_created_at(LocalDateTime.now())
 //                .qna_updated_at(LocalDateTime.now())
-//                .userSeq(user)
+//                .user(user)
 //                .build();
 //    }
 }

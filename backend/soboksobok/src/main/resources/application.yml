@@ -32,6 +32,8 @@ spring:
         order_updates: true
         format_sql: true
         use-new-id-generator-mappings: false
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImp
 
   # Security OAuth
   security:

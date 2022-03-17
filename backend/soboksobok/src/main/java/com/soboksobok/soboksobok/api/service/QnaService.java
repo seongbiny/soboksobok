@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface QnaService {
     List<QnaDto> getAllQna();
+//    List<QnaDto> getAllMyQna();
     QnaDto getQnaDetail(Long qna_id);
 }
