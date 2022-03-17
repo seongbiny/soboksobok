@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import WelfareDetail from "./pages/WelfareDetail";
 import NavBar from "./components/Navbar.js";
+import Footer from "./components/Footer.js";
 import Main from "./pages/Main.jsx";
 import Auth from "./pages/OAuth.jsx";
 import Qna from "./pages/Qna.jsx";
@@ -10,10 +11,11 @@ import WelfareSearch from "./pages/WelfareSearch";
 import WelfareRecommend from "./pages/WelfareRecommend";
 import CustomFilter from "./pages/CustomFilter";
 import Profile from './pages/Profile';
+import './CSS/app.css';
 
 function App() {
   return (
-    <div>
+    <div id='wrapper'>
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -42,6 +44,7 @@ function App() {
       <Routes>
         <Route path="/profile" element={<Profile />}></Route>
       </Routes>
+      <Footer/>
     </div>
   );
 }
