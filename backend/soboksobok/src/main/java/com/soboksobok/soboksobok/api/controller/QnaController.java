@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,16 +42,18 @@ public class QnaController {
         return res;
     }
 
-//    @Operation(summary = "내가 등록한 qna 전체 조회")
-//    @ApiResponses( value = {
-//            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 전체 조회 성공")
-//    })
-//    public ResponseEntity<List<QnaDto>> getAllMyQna() throws Exception{
-//        List<QnaDto> list=service.getAllMyQna();
-//        ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
-//        return res;
-//    }
-
+    @GetMapping("/mine")
+    @Operation(summary = "내가 등록한 qna 전체 조회")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 전체 조회 성공")
+    })
+    public ResponseEntity<List<QnaDto>> getMyQna(@ParameterObject Long userId) throws Exception{
+        List<QnaDto> list=service.getMyQna(userId);
+        ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
+        log.info("userId: "+userId);
+        log.info("qna 개수 확인: "+list.size());
+        return res;
+    }
     @GetMapping("/{qna_id}")
     @Operation(summary = "qna 상세 조회")
     @ApiResponses( value = {
@@ -61,6 +64,19 @@ public class QnaController {
         ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
         return res;
     }
+
+    @GetMapping("/mine/{qna_id}")
+    @Operation(summary = "내가 등록한 qna 상세 조회")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 상세 조회 성공")
+    })
+    public ResponseEntity<QnaDto> getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @ParameterObject Long userId) throws Exception{
+        QnaDto qna=service.getMyQnaDetail(qna_id,userId);
+        ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
+        log.info("userId: "+userId);
+        return res;
+    }
+
 
     @GetMapping("/test")
     public String test() throws Exception{
