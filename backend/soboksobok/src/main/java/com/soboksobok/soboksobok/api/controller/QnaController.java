@@ -5,6 +5,8 @@ import com.soboksobok.soboksobok.api.entity.dto.QnaDto;
 import com.soboksobok.soboksobok.api.entity.user.User;
 import com.soboksobok.soboksobok.api.service.QnaService;
 import io.jsonwebtoken.lang.Collections;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -26,15 +28,17 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/qna")
+@Api("Qna Controller")
 public class QnaController {
     @Autowired
     QnaService service;
 
     @GetMapping
-    @Operation(summary = "전체 qna 조회")
-    @ApiResponses( value = {
-            @ApiResponse(responseCode = "200", description = "전체 qna 조회 성공")
-    })
+    @ApiOperation(value="전체 qna",notes="hihi")
+//    @Operation(summary = "전체 qna 조회")
+//    @ApiResponses( value = {
+//            @ApiResponse(responseCode = "200", description = "전체 qna 조회 성공")
+//    })
     public ResponseEntity<List<QnaDto>> getAllQna() throws Exception{
         List<QnaDto> list=service.getAllQna();
         ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
@@ -43,10 +47,10 @@ public class QnaController {
     }
 
     @GetMapping("/mine")
-    @Operation(summary = "내가 등록한 qna 전체 조회")
-    @ApiResponses( value = {
-            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 전체 조회 성공")
-    })
+//    @Operation(summary = "내가 등록한 qna 전체 조회")
+//    @ApiResponses( value = {
+//            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 전체 조회 성공")
+//    })
     public ResponseEntity<List<QnaDto>> getMyQna(@ParameterObject Long userId) throws Exception{
         List<QnaDto> list=service.getMyQna(userId);
         ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
@@ -55,10 +59,10 @@ public class QnaController {
         return res;
     }
     @GetMapping("/{qna_id}")
-    @Operation(summary = "qna 상세 조회")
-    @ApiResponses( value = {
-            @ApiResponse(responseCode = "200", description = "qna 상세 조회 성공")
-    })
+//    @Operation(summary = "qna 상세 조회")
+//    @ApiResponses( value = {
+//            @ApiResponse(responseCode = "200", description = "qna 상세 조회 성공")
+//    })
     public ResponseEntity<QnaDto> getQnaDetail(@PathVariable("qna_id") Long qna_id) throws Exception{
         QnaDto qna=service.getQnaDetail(qna_id);
         ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
@@ -66,10 +70,10 @@ public class QnaController {
     }
 
     @GetMapping("/mine/{qna_id}")
-    @Operation(summary = "내가 등록한 qna 상세 조회")
-    @ApiResponses( value = {
-            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 상세 조회 성공")
-    })
+//    @Operation(summary = "내가 등록한 qna 상세 조회")
+//    @ApiResponses( value = {
+//            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 상세 조회 성공")
+//    })
     public ResponseEntity<QnaDto> getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @ParameterObject Long userId) throws Exception{
         QnaDto qna=service.getMyQnaDetail(qna_id,userId);
         ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
