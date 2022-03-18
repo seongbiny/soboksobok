@@ -1,6 +1,6 @@
 package com.soboksobok.soboksobok.config.security;
 
-import com.soboksobok.soboksobok.api.repository.user.UserRefreshTokenRepository;
+import com.soboksobok.soboksobok.repository.user.UserRefreshTokenRepository;
 import com.soboksobok.soboksobok.config.properties.AppProperties;
 import com.soboksobok.soboksobok.config.properties.CorsProperties;
 import com.soboksobok.soboksobok.oauth.entity.RoleType;

@@ -1,7 +1,7 @@
 package com.soboksobok.soboksobok.oauth.handler;
 
-import com.soboksobok.soboksobok.api.entity.user.UserRefreshToken;
-import com.soboksobok.soboksobok.api.repository.user.UserRefreshTokenRepository;
+import com.soboksobok.soboksobok.domain.user.UserRefreshToken;
+import com.soboksobok.soboksobok.repository.user.UserRefreshTokenRepository;
 import com.soboksobok.soboksobok.config.properties.AppProperties;
 import com.soboksobok.soboksobok.oauth.entity.ProviderType;
 import com.soboksobok.soboksobok.oauth.entity.RoleType;

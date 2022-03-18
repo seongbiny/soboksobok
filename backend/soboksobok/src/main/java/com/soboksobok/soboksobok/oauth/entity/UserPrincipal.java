@@ -1,6 +1,6 @@
 package com.soboksobok.soboksobok.oauth.entity;
 
-import com.soboksobok.soboksobok.api.entity.user.User;
+import com.soboksobok.soboksobok.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
