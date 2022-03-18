@@ -73,7 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                     .antMatchers("/welfare/**").permitAll()
                     .antMatchers("/qna/**").permitAll()
-                    .antMatchers("/swagger-ui.html").permitAll()
+                    .antMatchers("/swagger-ui/**").permitAll()
+                    .antMatchers("/v3/**").permitAll()
                     .antMatchers("/api/**").hasAnyAuthority(RoleType.USER.getCode())
                     .antMatchers("/api/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
                     .anyRequest().authenticated()
@@ -99,6 +100,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/welfare/**")
                 .antMatchers("/qna/**");
+//       web.ignoring().antMatchers(
+//               "swagger-ui.html",   // swgger 사용시
+//               "/index.html",   // front-end 에서 build한 static file
+//               "/qna/**",
+//               "qna/**",
+//               "/swagger-ui.html"   // swgger 사용시"
+//       );
     }
 
     @Override
