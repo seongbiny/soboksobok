@@ -35,7 +35,7 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
+        return new Docket(DocumentationType.OAS_30).consumes(getConsumeContentTypes()).produces(getProduceContentTypes())
                 .apiInfo(apiInfo()).groupName(version).select()
                 .apis(RequestHandlerSelectors.basePackage("com.soboksobok.soboksobok.controller"))
                 .paths(PathSelectors.any()).build()
