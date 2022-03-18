@@ -1,8 +1,8 @@
 package com.soboksobok.soboksobok.api.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.soboksobok.soboksobok.oauth.entity.ProviderType;
 import com.soboksobok.soboksobok.oauth.entity.RoleType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -12,6 +12,8 @@ public class UserService {
 
     public User getUser(String userId) {
         System.out.println("UserService - getUser");
+        System.out.println(userRepository.findByUserId("2158720017"));
         return userRepository.findByUserId(userId);
     }
+
 }

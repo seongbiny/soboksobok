@@ -6,9 +6,7 @@ import com.soboksobok.soboksobok.api.service.UserService;
 import com.soboksobok.soboksobok.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -37,10 +35,11 @@ public class UserController {
         return ApiResponse.success("user", user);
     }
 
-    @GetMapping("/test")
-    public ApiResponse test(){
-        System.out.println("테테테스트트");
-        String test = "테스트 메시지";
-        return ApiResponse.success("test",test);
-    }
+//    @PostMapping("/update")
+//    public ApiResponse updateUser(@RequestBody User user){
+//        System.out.println("updateUser");
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User update = userService.getUser(principal.getUsername());
+//        return ApiResponse.success("update",update);
+//    }
 }
