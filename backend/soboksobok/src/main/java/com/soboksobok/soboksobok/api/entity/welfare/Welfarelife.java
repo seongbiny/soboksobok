@@ -15,7 +15,7 @@ public class Welfarelife {
     private Welfare welfare;
 
     @ManyToOne
-    @JoinColumn(name = "TARGET_ID")
+    @JoinColumn(name = "LIFE_ID")
     private Life life;
 
 }

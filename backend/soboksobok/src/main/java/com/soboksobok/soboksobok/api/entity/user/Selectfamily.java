@@ -1,23 +1,21 @@
-package com.soboksobok.soboksobok.api.entity.welfare;
+package com.soboksobok.soboksobok.api.entity.user;
 
 import com.soboksobok.soboksobok.api.entity.Family;
 
 import javax.persistence.*;
-import javax.persistence.metamodel.IdentifiableType;
 
 @Entity
-public class Welfarefamily {
+public class Selectfamily {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "WELFARE_ID")
-    private Welfare welfare;
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "FAMILY_ID")
     private Family family;
-
 }

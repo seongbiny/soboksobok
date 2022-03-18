@@ -27,8 +27,16 @@ public class Welfare {
     private String welfare_phone;
     private String welfare_site_name;
     private String welfare_site_link;
-    private Long welfare_area;
-    private Long welfare_gu;
+
+    @Column(length = 2)
+    @NotNull
+    private String welfare_area;
+
+    @Column(length = 2)
+    @NotNull
+    private String welfare_gu;
+
+    @Column(columnDefinition = "TINYINT", length = 2)
     private Long welfare_child;
 
     @OneToMany(mappedBy = "target")

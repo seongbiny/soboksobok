@@ -21,8 +21,7 @@ public class WelfareController {
     @GetMapping("/{welfare_id}")
     public ApiResponse getwelfare(@PathVariable("welfare_id") Long welfare_id) {
         Welfare welfare = welfareService.getWelfare(welfare_id);
-        Integer result = 3;
-        return ApiResponse.success("result", result);
+        return ApiResponse.success("welfare", welfare);
     }
 //    @ApiOperation(value = "단일복지 유사복지 리스트")
     @GetMapping("/{welfare_id}/recommend")
@@ -30,7 +29,7 @@ public class WelfareController {
         String result = "ok";
         return ApiResponse.success("welfare", result);
     }
-//    @ApiOperation(value = "사용자 그룹 추천 복지 리스트")
+//    @ApiOperation(value = "사용자 추천 복지 리스트")
     @GetMapping("/recommend/{user_id}")
     public ApiResponse getwelfaregroup() {
         String result = "ok";

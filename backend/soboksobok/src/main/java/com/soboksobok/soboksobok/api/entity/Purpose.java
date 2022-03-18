@@ -16,6 +16,8 @@ public class Purpose {
     @Id
     @GeneratedValue
     private Long purpose_id;
+
+    @Column(length = 50)
     private String purpose_name;
 
     @OneToMany

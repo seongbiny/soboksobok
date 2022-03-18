@@ -16,6 +16,8 @@ public class Life {
     @Id
     @GeneratedValue
     private Long age_id;
+
+    @Column(length = 50)
     private String age_name;
 
     @OneToMany

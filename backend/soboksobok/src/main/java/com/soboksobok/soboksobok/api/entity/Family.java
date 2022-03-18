@@ -17,6 +17,7 @@ public class Family {
     @GeneratedValue
     private Long family_id;
 
+    @Column(length = 50)
     private String family_name;
 
     @OneToMany

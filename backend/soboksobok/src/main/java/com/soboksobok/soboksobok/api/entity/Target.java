@@ -16,6 +16,8 @@ public class Target {
     @Id
     @GeneratedValue
     private Long target_id;
+
+    @Column(length = 50)
     private String target_name;
 
     @OneToMany

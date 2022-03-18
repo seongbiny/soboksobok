@@ -16,7 +16,7 @@ public class Welfarepurpose {
     private Welfare welfare;
 
     @ManyToOne
-    @JoinColumn(name = "TARGET_ID")
+    @JoinColumn(name = "PURPOSE_ID")
     private Purpose purpose;
 
 }
