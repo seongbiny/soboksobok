@@ -3,12 +3,13 @@ package com.soboksobok.soboksobok.api.entity.welfare;
 import com.soboksobok.soboksobok.api.entity.Family;
 
 import javax.persistence.*;
+import javax.persistence.metamodel.IdentifiableType;
 
 @Entity
 public class Welfarefamily {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

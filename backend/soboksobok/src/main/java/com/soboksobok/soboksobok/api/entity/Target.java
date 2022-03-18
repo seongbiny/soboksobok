@@ -4,15 +4,13 @@ import com.soboksobok.soboksobok.api.entity.welfare.Welfaretarget;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@Table(name = "target")
 public class Target {
 
     @Id
@@ -21,6 +19,6 @@ public class Target {
     private String target_name;
 
     @OneToMany
-    private List<Welfaretarget> wefaretarget = new ArrayList<>();
+    private List<Welfaretarget> welfaretarget = new ArrayList<>();
 
 }

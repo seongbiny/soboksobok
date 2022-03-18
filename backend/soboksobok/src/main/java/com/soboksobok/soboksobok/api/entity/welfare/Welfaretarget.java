@@ -7,7 +7,8 @@ import javax.persistence.*;
 @Entity
 public class Welfaretarget {
 
-    @Id @GeneratedValue()
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

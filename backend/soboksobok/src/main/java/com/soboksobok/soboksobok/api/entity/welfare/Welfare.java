@@ -4,15 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@Table(name = "welfare")
 public class Welfare {
 
     @Id
-    private Long welfare_id;
+    @Column(name = "welfareId")
+    private Long welfareId;
 
     private String welfare_service_name;
     private String welfare_dept_name;
