@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -72,8 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                     .antMatchers("/welfare/**").permitAll()
                     .antMatchers("/qna/**").permitAll()
-                    .antMatchers("/test/**").permitAll()
-                    .antMatchers("/swagger-ui.html").permitAll()
+                    .antMatchers("/swagger-ui/**").permitAll()
+                    .antMatchers("/v3/**").permitAll()
                     .antMatchers("/api/**").hasAnyAuthority(RoleType.USER.getCode())
                     .antMatchers("/api/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
                     .anyRequest().authenticated()
@@ -93,6 +94,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureHandler(oAuth2AuthenticationFailureHandler());
 
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+   @Override public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/welfare/**")
+                .antMatchers("/qna/**");
+//       web.ignoring().antMatchers(
+//               "swagger-ui.html",   // swgger 사용시
+//               "/index.html",   // front-end 에서 build한 static file
+//               "/qna/**",
+//               "qna/**",
+//               "/swagger-ui.html"   // swgger 사용시"
+//       );
     }
 
     @Override
