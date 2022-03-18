@@ -1,7 +1,7 @@
 package com.soboksobok.soboksobok.oauth.service;
 
-import com.soboksobok.soboksobok.api.entity.user.User;
-import com.soboksobok.soboksobok.api.repository.user.UserRepository;
+import com.soboksobok.soboksobok.domain.user.User;
+import com.soboksobok.soboksobok.repository.user.UserRepository;
 import com.soboksobok.soboksobok.oauth.entity.ProviderType;
 import com.soboksobok.soboksobok.oauth.entity.RoleType;
 import com.soboksobok.soboksobok.oauth.entity.UserPrincipal;
