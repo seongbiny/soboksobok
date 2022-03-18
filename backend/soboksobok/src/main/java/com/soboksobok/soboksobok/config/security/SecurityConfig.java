@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,12 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("SecurityConfig - configure");
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        System.out.println("SecurityConfig - configure");
         http
                     .cors()
                 .and()
@@ -68,6 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                    .antMatchers("/welfare/**").permitAll()
+                    .antMatchers("/qna/**").permitAll()
+                    .antMatchers("/swagger-ui.html").permitAll()
                     .antMatchers("/api/**").hasAnyAuthority(RoleType.USER.getCode())
                     .antMatchers("/api/**/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
                     .anyRequest().authenticated()
@@ -89,12 +95,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    /*
-    * auth 매니저 설정
-    * */
+   @Override public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/welfare/**")
+                .antMatchers("/qna/**");
+    }
+
     @Override
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     protected AuthenticationManager authenticationManager() throws Exception {
+        System.out.println("SecurityConfig - authenticationManager");
         return super.authenticationManager();
     }
 
@@ -103,6 +113,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
+        System.out.println("SecurityConfig - passwordEncoder");
         return new BCryptPasswordEncoder();
     }
 
@@ -111,6 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
+        System.out.println("SecurityConfig - tokenAuthenticationFilter");
         return new TokenAuthenticationFilter(tokenProvider);
     }
 
@@ -120,6 +132,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Bean
     public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
+        System.out.println("SecurityConfig - oAuth2AuthorizationRequestBasedOnCookieRepository");
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
@@ -128,6 +141,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Bean
     public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+        System.out.println("SecurityConfig - oAuth2AuthenticationSuccessHandler");
         return new OAuth2AuthenticationSuccessHandler(
                 tokenProvider,
                 appProperties,
@@ -141,6 +155,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * */
     @Bean
     public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
+        System.out.println("SecurityConfig - oAuth2AuthenticationFailureHandler");
         return new OAuth2AuthenticationFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository());
     }
 
@@ -149,6 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        System.out.println("SecurityConfig - corsConfigurationSource");
         UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration corsConfig = new CorsConfiguration();

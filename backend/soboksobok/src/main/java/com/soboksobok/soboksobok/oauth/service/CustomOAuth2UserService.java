@@ -27,6 +27,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("CustomOAuth2UserService - loadUser");
         OAuth2User user = super.loadUser(userRequest);
 
         try {
@@ -40,6 +41,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User user) {
+        System.out.println("CustomOAuth2UserService - process");
         ProviderType providerType = ProviderType.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
 
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, user.getAttributes());
@@ -61,6 +63,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User createUser(OAuth2UserInfo userInfo, ProviderType providerType) {
+        System.out.println("CustomOAuth2UserService - createUser");
         LocalDateTime now = LocalDateTime.now();
         User user = new User(
                 userInfo.getId(),
@@ -82,6 +85,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User updateUser(User user, OAuth2UserInfo userInfo) {
+        System.out.println("CustomOAuth2UserService - updateUser");
         System.out.println("유저는: "+userInfo);
         if (userInfo.getName() != null && !user.getUsername().equals(userInfo.getName())) {
             user.setUsername(userInfo.getName());
