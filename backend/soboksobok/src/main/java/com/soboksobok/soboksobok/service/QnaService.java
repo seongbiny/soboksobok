@@ -12,4 +12,5 @@ public interface QnaService {
     QnaDto getQnaDetail(Long qna_id);
     QnaDto getMyQnaDetail(Long qna_id,Long userId);
     QnaDto createMyQna(QnaDto qnaDto, User user);
+    String deleteMyQna(Long qna_id,Long userId);
 }

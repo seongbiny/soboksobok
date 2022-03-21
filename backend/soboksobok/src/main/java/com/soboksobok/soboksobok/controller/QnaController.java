@@ -71,4 +71,13 @@ public class QnaController {
         log.info("userId: {}",user.getUserSeq());
         return res;
     }
+
+    @DeleteMapping("/mine/{qna_id}")
+    @ApiOperation(value="qna 삭제",notes="qna를 삭제합니다.")
+    public ResponseEntity<String> deleteMyQna(@PathVariable("qna_id") Long qna_id, @RequestParam Long userId) throws Exception{
+        String result=service.deleteMyQna(qna_id,userId);
+        ResponseEntity<String> res=new ResponseEntity(result, HttpStatus.OK);
+        log.info("qnaId: {} userId: {}",qna_id, userId);
+        return res;
+    }
 }

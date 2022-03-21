@@ -102,4 +102,13 @@ public class QnaServiceImpl implements QnaService{
         repo.save(qna);
         return QnaDto.of(qna);
     }
+
+    @Override
+    public String deleteMyQna(Long qna_id, Long userId) {
+        Optional<Qna> qna=repo.findById(qna_id);
+        if(!qna.isPresent()) throw new NullPointerException("존재하지 않는 qna입니다.");
+        if(!qna.get().getUser().getUserSeq().equals(userId)) throw new NullPointerException("qna 작성자만 삭제할 수 있습니다.");
+        repo.delete(qna.get());
+        return "삭제";
+    }
 }
