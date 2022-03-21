@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "welfare")
 public class Welfare {
 
-    @Id
+    @Id @GeneratedValue
     @Column(name = "welfareId")
     private Long welfareId;
 

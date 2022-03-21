@@ -1,17 +1,25 @@
 package com.soboksobok.soboksobok.service;
 
 import com.soboksobok.soboksobok.domain.welfare.Welfare;
-import com.soboksobok.soboksobok.repository.welfare.WelfareReposisory;
+import com.soboksobok.soboksobok.repository.welfare.WelfareRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class WelfareService {
-    private final WelfareReposisory welfareReposisory;
+
+    @Autowired
+    private final WelfareRepository welfareRepository;
 
     public Welfare getWelfare(Long welfare_id) {
-        return welfareReposisory.findByWelfareId(welfare_id);
+        return welfareRepository.findByWelfareId(welfare_id);
     }
 
+    public List<Welfare> getWelfarebykeyword(String keyword) {
+        return welfareRepository.searchWelfare(keyword);
+    }
 }

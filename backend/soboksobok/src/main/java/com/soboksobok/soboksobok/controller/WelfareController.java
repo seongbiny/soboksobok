@@ -4,12 +4,12 @@ import com.soboksobok.soboksobok.domain.welfare.Welfare;
 import com.soboksobok.soboksobok.service.WelfareService;
 import com.soboksobok.soboksobok.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/welfare")
 @RequiredArgsConstructor
 public class WelfareController {
@@ -49,9 +49,9 @@ public class WelfareController {
     }
 
 //    @ApiOperation(value = "복지데이터 검색")
-    @GetMapping("/search/{String}")
-    public ApiResponse getwelfareauto() {
-        String result = "ok";
-        return ApiResponse.success("welfare", result);
+    @GetMapping("/search/{keyword}")
+    public ApiResponse welfaresearch(@PathVariable("keyword") String keyword) {
+        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        return ApiResponse.success("welfares", list);
     }
 }
