@@ -11,9 +11,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUser(String userId) {
-        System.out.println("UserService - getUser");
-        System.out.println(userRepository.findByUserId("2158720017"));
         return userRepository.findByUserId(userId);
+    }
+
+    public User getUserInfo(String userId){
+
     }
 
 }
