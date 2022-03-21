@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.controller;
 
+import com.soboksobok.soboksobok.domain.dto.CommentResDto;
 import com.soboksobok.soboksobok.domain.dto.QnaDto;
 import com.soboksobok.soboksobok.domain.dto.WriteQnaDto;
 import com.soboksobok.soboksobok.domain.user.User;
@@ -54,6 +55,7 @@ public class QnaController {
     @GetMapping("/mine/{qna_id}")
     public ResponseEntity<QnaDto> getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @RequestParam Long userId) throws Exception{
         QnaDto qna=service.getMyQnaDetail(qna_id,userId);
+        List<CommentResDto> comments = qna.getComments(); //댓글
         ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
         log.info("userId: "+userId);
         return res;

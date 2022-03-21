@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Schema(description = "게시글 정보")
 @Getter
@@ -35,12 +37,15 @@ public class QnaDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "게시글 수정 날짜", nullable = true)
     private LocalDateTime qna_updated_at=LocalDateTime.now();
 
+    @Schema(description = "댓글 내용")
+    private List<CommentResDto> comments;
+
     public static QnaDto of(WriteQnaDto writeQna) {
         return QnaDto.builder()
                 .title(writeQna.getTitle())
                 .content(writeQna.getContent())
                 .build();
-    };
+    }
     public static QnaDto of(Qna qna) {
         return QnaDto.builder()
                 .id(qna.getQna_id())
@@ -49,6 +54,7 @@ public class QnaDto {
                 .qna_created_at(qna.getQna_created_at())
                 .qna_updated_at(qna.getQna_updated_at())
                 .user(UserDto.of(qna.getUser()))
+                .comments(qna.getComments().stream().map(CommentResDto::new).collect(Collectors.toList()))
                 .build();
 
     }

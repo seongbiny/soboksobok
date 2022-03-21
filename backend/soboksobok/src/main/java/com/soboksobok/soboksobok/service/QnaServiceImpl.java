@@ -5,6 +5,7 @@ import com.soboksobok.soboksobok.domain.dto.QnaDto;
 import com.soboksobok.soboksobok.domain.dto.UserDto;
 import com.soboksobok.soboksobok.domain.dto.WriteQnaDto;
 import com.soboksobok.soboksobok.domain.user.User;
+import com.soboksobok.soboksobok.repository.CommentRepository;
 import com.soboksobok.soboksobok.repository.user.QnaRepository;
 import com.soboksobok.soboksobok.repository.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ public class QnaServiceImpl implements QnaService{
     QnaRepository repo;
     @Autowired
     UserRepository userRepo;
+    @Autowired
+    CommentRepository commentRepo;
 
     @Override
     public List<QnaDto> getAllQna() {
@@ -68,14 +71,7 @@ public class QnaServiceImpl implements QnaService{
     public QnaDto getQnaDetail(Long qna_id) {
         Optional<Qna> q=repo.findById(qna_id);
         // entity -> dto 변환
-        QnaDto dto=new QnaDto();
-        dto.setId(q.get().getQna_id());
-        dto.setUser(UserDto.of(q.get().getUser()));
-        dto.setTitle(q.get().getQna_title());
-        dto.setContent(q.get().getQna_content());
-        dto.setQna_created_at(q.get().getQna_created_at());
-        dto.setQna_updated_at(q.get().getQna_updated_at());
-
+        QnaDto dto=QnaDto.of(q.get());
         return dto;
     }
 
@@ -83,14 +79,7 @@ public class QnaServiceImpl implements QnaService{
     public QnaDto getMyQnaDetail(Long qna_id, Long userId) {
         Optional<Qna> q=repo.findByQnaIdAndUserId(qna_id,userId);
         // entity -> dto 변환
-        QnaDto dto=new QnaDto();
-        dto.setId(q.get().getQna_id());
-        dto.setUser(UserDto.of(q.get().getUser()));
-        dto.setTitle(q.get().getQna_title());
-        dto.setContent(q.get().getQna_content());
-        dto.setQna_created_at(q.get().getQna_created_at());
-        dto.setQna_updated_at(q.get().getQna_updated_at());
-
+        QnaDto dto=QnaDto.of(q.get());
         return dto;
     }
 
