@@ -5,6 +5,24 @@ import Slide from "../components/WelfareRecommend/Slide";
 import styled from 'styled-components';
 import { Avatar } from "@mui/material";
 
+
+
+function WelfareRecommend(){
+    return(
+        <StyledContainer>
+            <StyledTop>
+                <Avatar />
+                <Chart />
+                <LineChart />
+            </StyledTop>
+            <StyledMain>
+                <Slide />
+                {/* <Slide /> */}
+            </StyledMain>
+        </StyledContainer>
+    )
+}
+
 const StyledTop = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -26,19 +44,4 @@ const StyledContainer = styled.div`
     margin: auto;
 `;
 
-function WelfareRecommend(){
-    return(
-        <StyledContainer>
-            <StyledTop>
-                <Avatar />
-                <Chart />
-                <LineChart />
-            </StyledTop>
-            <StyledMain>
-                <Slide />
-                {/* <Slide /> */}
-            </StyledMain>
-        </StyledContainer>
-    )
-}
 export default WelfareRecommend;
