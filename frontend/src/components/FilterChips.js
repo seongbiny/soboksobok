@@ -71,7 +71,7 @@ function FilterChips() {
         setError={setError}
       />
 
-      {/* <Form.Select aria-label="Default select example">
+      <Form.Select aria-label="Default select example">
         <option>지역 선택</option>
         <option value="1">전국</option>
         <option value="2">광주</option>
@@ -84,7 +84,7 @@ function FilterChips() {
         <option value="3">동구</option>
         <option value="4">북구</option>
         <option value="5">서구</option>
-      </Form.Select> */}
+      </Form.Select>
 
       <MultipleSelectChips
         label="지역"

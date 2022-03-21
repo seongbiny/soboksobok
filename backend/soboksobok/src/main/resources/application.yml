@@ -99,3 +99,7 @@ app:
 #    paths-to-match:
 #      - /**
 #      - /test/**
+
+server:
+  servlet:
+    context-path: /api

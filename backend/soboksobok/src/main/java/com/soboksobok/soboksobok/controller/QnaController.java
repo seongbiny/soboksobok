@@ -5,7 +5,6 @@ import com.soboksobok.soboksobok.service.QnaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,7 @@ public class QnaController {
 //    @ApiResponses( value = {
 //            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 전체 조회 성공")
 //    })
-    public ResponseEntity<List<QnaDto>> getMyQna(@ParameterObject Long userId) throws Exception{
+    public ResponseEntity<List<QnaDto>> getMyQna(@RequestParam Long userId) throws Exception{
         List<QnaDto> list=service.getMyQna(userId);
         ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
         log.info("userId: "+userId);
@@ -62,7 +61,7 @@ public class QnaController {
 //    @ApiResponses( value = {
 //            @ApiResponse(responseCode = "200", description = "내가 등록한 qna 상세 조회 성공")
 //    })
-    public ResponseEntity<QnaDto> getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @ParameterObject Long userId) throws Exception{
+    public ResponseEntity<QnaDto> getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @RequestParam Long userId) throws Exception{
         QnaDto qna=service.getMyQnaDetail(qna_id,userId);
         ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
         log.info("userId: "+userId);
