@@ -38,7 +38,6 @@ public class CommentReqDto {
     // Dto->Entity
     public Comment of(){
         Comment comments= Comment.builder()
-                .comment_id(comment_id)
                 .comment_content(comment_content)
                 .comment_created_at(comment_created_at)
                 .comment_updated_at(comment_updated_at)
