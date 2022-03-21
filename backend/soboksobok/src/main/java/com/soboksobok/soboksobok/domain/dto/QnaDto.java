@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.domain.dto;
 
+import com.soboksobok.soboksobok.domain.Qna;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -34,24 +35,22 @@ public class QnaDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "게시글 수정 날짜", nullable = true)
     private LocalDateTime qna_updated_at=LocalDateTime.now();
 
-//    public static QnaDto of(WriteQna writeQna) {
-//        return QnaDto.builder()
-//                .qna_title(writeQna.getTitle())
-//                .qna_content(writeQna.getContent())
-//                .build();
-//    };
-//    public static QnaDto of(Qna qna) {
-//
-//        User userInfo = User;
-//        return QnaDto.builder()
-//                .id(qna.getQna_id())
-//                .title(qna.getQna_title())
-//                .content(qna.getQna_content())
-//                .qna_created_at(qna.getQna_created_at())
-//                .qna_updated_at(qna.getQna_updated_at())
-//                .user(userInfo)
-//                .build();
-//
-//    }
+    public static QnaDto of(WriteQnaDto writeQna) {
+        return QnaDto.builder()
+                .title(writeQna.getTitle())
+                .content(writeQna.getContent())
+                .build();
+    };
+    public static QnaDto of(Qna qna) {
+        return QnaDto.builder()
+                .id(qna.getQna_id())
+                .title(qna.getQna_title())
+                .content(qna.getQna_content())
+                .qna_created_at(qna.getQna_created_at())
+                .qna_updated_at(qna.getQna_updated_at())
+                .user(UserDto.of(qna.getUser()))
+                .build();
+
+    }
 
 }

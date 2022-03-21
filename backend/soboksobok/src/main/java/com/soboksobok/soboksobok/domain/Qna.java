@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.domain;
 
+import com.soboksobok.soboksobok.domain.dto.QnaDto;
 import com.soboksobok.soboksobok.domain.user.User;
 import lombok.*;
 
@@ -33,13 +34,13 @@ public class Qna {
     @Builder.Default
     private LocalDateTime qna_updated_at=LocalDateTime.now();
 
-//    public static Qna of(User user, QnaDto qnaDto){
-//        return Qna.builder()
-//                .qna_title(qnaDto.getTitle())
-//                .qna_content(qnaDto.getContent())
-//                .qna_created_at(LocalDateTime.now())
-//                .qna_updated_at(LocalDateTime.now())
-//                .user(user)
-//                .build();
-//    }
+    public static Qna of(QnaDto qnaDto, User user){
+        return Qna.builder()
+                .qna_title(qnaDto.getTitle())
+                .qna_content(qnaDto.getContent())
+                .qna_created_at(LocalDateTime.now())
+                .qna_updated_at(LocalDateTime.now())
+                .user(user)
+                .build();
+    }
 }
