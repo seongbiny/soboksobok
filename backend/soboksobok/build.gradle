@@ -37,10 +37,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	// Swagger 관련 설정 (springdoc 사용)
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
-	implementation 'org.springdoc:springdoc-openapi-security:1.6.4'
+//	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
+//	implementation 'org.springdoc:springdoc-openapi-security:1.6.4'
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+//	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
 }
 
