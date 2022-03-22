@@ -1,26 +1,29 @@
 package com.soboksobok.soboksobok.repository.welfare;
 
 import com.soboksobok.soboksobok.domain.Keyword;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class KeywordRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
+
+    public void save(Keyword keyword) {
+        em.persist(keyword);
+    }
 
     public List<Keyword> findAllKeyword() {
         return em.createQuery("select k from Keyword k", Keyword.class)
                 .getResultList();
     }
 
-    public String getKeywordByName(String keyword) {
-        String result = "ok";
-        return result;
-//                em.find(Keyword.class, name);
+    public List<Keyword> getPopular() {
+        return em.createQuery("select k from Keyword k order by k.keywordCnt DESC", Keyword.class)
+                .getResultList();
     }
 }
