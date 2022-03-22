@@ -5,6 +5,7 @@ import FilterChips from '../components/FilterChips';
 import styled from 'styled-components';
 
 import Axios from '../api.js';
+// import { useStore } from '../store.jsx';
 
 const 소개 = styled.div`
   margin: 20px;
@@ -23,28 +24,44 @@ const 리스트 = styled.div`
   background-color: #e3f2fd;
 `;
 
-function Profile() {
-  const [user, setUser] = useState();
-  const [nickname, setNickname] = useState();
-  const [email, setEmail] = useState();
-  const [ageRange, setAgeRange] = useState();
-  const [gender, setGender] = useState();
+// const setUsername = useStore((state) => state.setUsername);
 
-  const [profileImage, setProfileImage] = useState();
+// function ShowUsername() {
+//   const username = useStore((state) => state.username);
+//   return <p>{username}</p>;
+// }
+
+function Profile() {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [ageRange, setAgeRange] = useState('');
+  const [gender, setGender] = useState('');
+  const [profileImage, setProfileImage] = useState('');
 
   const getProfile = async () => {
     try {
-      // Kakao SDK API를 이용해 사용자 정보 획득
-      let response = await Axios.get('/api/user/profile');
+      let response = await Axios.get('/api/users/profile');
       console.log('카카오 : ', response.data);
-      setUser(response.data);
+      console.log('body : ', response.data.body.user);
+
+      // // 사용자 정보 변수에 저장
+      setUsername(response.data.body.user.username);
+      setEmail(response.data.body.user.email);
+      setAgeRange(response.data.body.user.ageRange);
+      setGender(response.data.body.user.gender);
+      setProfileImage(response.data.body.user.profileImageUrl);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getLike = async () => {
+    try {
+      let response = await Axios.get('/api/users/like');
+      console.log('찜 : ', response.data);
+      console.log('body : ', response.data.body.user);
 
       // 사용자 정보 변수에 저장
-      // setNickname(data.properties.nickname);
-      // setEmail(data.kakao_account.email);
-      // setAgeRange(data.kakao_account.age_range);
-      // setGender(data.kakao_account.gender);
-      // setProfileImage(data.properties.profile_image);
     } catch (err) {
       console.log(err);
     }
@@ -52,6 +69,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
+    getLike();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return (
@@ -60,10 +78,10 @@ function Profile() {
         <Row>
           <Col xs={12} md={8}>
             <소개>
-              {/* <h1> {nickname}님 안녕하세요!</h1> */}
-              {/* <img src={profileImage}></img>
+              {/* <h1> {username}님 안녕하세요!</h1> */}
+              <img src={profileImage}></img>
               <h5>
-                이름: {nickname} <br />
+                이름: {username} <br />
               </h5>
               <h5>
                 이메일: {email} <br />
@@ -76,7 +94,7 @@ function Profile() {
               </h5>
               <h5>
                 성별: {gender} <br />
-              </h5> */}
+              </h5>
             </소개>
             <필터>
               <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
