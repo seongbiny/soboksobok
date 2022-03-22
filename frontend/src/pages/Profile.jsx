@@ -5,7 +5,7 @@ import FilterChips from '../components/FilterChips';
 import styled from 'styled-components';
 
 import Axios from '../api.js';
-// import { useStore } from '../store.jsx';
+import { useStore } from '../store.jsx';
 
 const 소개 = styled.div`
   margin: 20px;
@@ -24,52 +24,36 @@ const 리스트 = styled.div`
   background-color: #e3f2fd;
 `;
 
-// const setUsername = useStore((state) => state.setUsername);
-
-// function ShowUsername() {
-//   const username = useStore((state) => state.username);
-//   return <p>{username}</p>;
-// }
-
 function Profile() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [ageRange, setAgeRange] = useState('');
-  const [gender, setGender] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const username = useStore((state) => state.username);
+  const email = useStore((state) => state.email);
+  const ageRange = useStore((state) => state.ageRange);
+  const gender = useStore((state) => state.gender);
+  const profileImage = useStore((state) => state.profileImage);
 
-  const getProfile = async () => {
-    try {
-      let response = await Axios.get('/api/users/profile');
-      console.log('카카오 : ', response.data);
-      console.log('body : ', response.data.body.user);
+  // const getProfile = async () => {
+  //   try {
+  //     let response = await Axios.get('/api/users/profile');
+  //     console.log('카카오 : ', response.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-      // // 사용자 정보 변수에 저장
-      setUsername(response.data.body.user.username);
-      setEmail(response.data.body.user.email);
-      setAgeRange(response.data.body.user.ageRange);
-      setGender(response.data.body.user.gender);
-      setProfileImage(response.data.body.user.profileImageUrl);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getLike = async () => {
+  //   try {
+  //     let response = await Axios.get('/api/users/like');
+  //     console.log('찜 : ', response.data);
 
-  const getLike = async () => {
-    try {
-      let response = await Axios.get('/api/users/like');
-      console.log('찜 : ', response.data);
-      console.log('body : ', response.data.body.user);
-
-      // 사용자 정보 변수에 저장
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     // 사용자 정보 변수에 저장
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
-    getProfile();
-    getLike();
+    // getProfile();
+    // getLike();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return (
@@ -78,7 +62,7 @@ function Profile() {
         <Row>
           <Col xs={12} md={8}>
             <소개>
-              {/* <h1> {username}님 안녕하세요!</h1> */}
+              <h1> {username}님 안녕하세요!</h1>
               <img src={profileImage}></img>
               <h5>
                 이름: {username} <br />
