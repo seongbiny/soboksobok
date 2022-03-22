@@ -40,8 +40,8 @@ spring:
     oauth2.client:
       registration:
         kakao:
-          clientId: '8c3ffe29c110efd6ec4e8e75e591ce48'
-          clientSecret: 'o5Ai1cTUrivXwVcVUHgOaPwMbSPfxOaI'
+          clientId: 'b0c4483210e0ea0db8f56255adbeeda5'
+          clientSecret: 'pe7y4NArlDuQpJYXu8nxNFitPddPonFY'
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
