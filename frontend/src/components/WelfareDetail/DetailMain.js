@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
@@ -7,10 +7,64 @@ import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
+import axios from "axios";
 
-function DetailMain() {
+function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
+  const welfareId = props.welfareId;
+
+  const likeAxios = () => {
+    axios
+      .post(`http://localhost:8080/api/userId/like/${welfareId}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  const unlikeAxios = () => {
+    axios
+      .delete(`http://localhost:8080/api/userId/like/${welfareId}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  const usedAxios = () => {
+    axios
+      .post(`http://localhost:8080/api/userId/used/${welfareId}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  const unusedAxios = () => {
+    axios
+      .delete(`http://localhost:8080/api/userId/used/${welfareId}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/userId/like`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Box
@@ -38,6 +92,7 @@ function DetailMain() {
                   sx={{ color: yellow[600], fontSize: 40 }}
                   onClick={() => {
                     setLikeBtn(false);
+                    unlikeAxios();
                   }}
                 />
               ) : (
@@ -45,6 +100,7 @@ function DetailMain() {
                   sx={{ color: grey[400], fontSize: 40 }}
                   onClick={() => {
                     setLikeBtn(true);
+                    likeAxios();
                   }}
                 />
               )}
@@ -53,6 +109,7 @@ function DetailMain() {
                   sx={{ color: blue[600], fontSize: 35 }}
                   onClick={() => {
                     setCheckBtn(false);
+                    unusedAxios();
                   }}
                 />
               ) : (
@@ -60,6 +117,7 @@ function DetailMain() {
                   sx={{ color: grey[400], fontSize: 35 }}
                   onClick={() => {
                     setCheckBtn(true);
+                    usedAxios();
                   }}
                 />
               )}

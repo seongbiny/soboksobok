@@ -9,7 +9,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { yellow, grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 
-function WelfareCard() {
+function RecommendCard() {
   const [likeBtn, setLikeBtn] = useState(false);
   return (
     <Card sx={{ width: 275, p: 2 }}>
@@ -57,4 +57,4 @@ function WelfareCard() {
     </Card>
   );
 }
-export default WelfareCard;
+export default RecommendCard;
