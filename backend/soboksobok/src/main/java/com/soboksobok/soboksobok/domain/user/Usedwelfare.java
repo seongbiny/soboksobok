@@ -1,25 +1,34 @@
 package com.soboksobok.soboksobok.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.soboksobok.soboksobok.domain.welfare.Welfare;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "USED")
 public class Usedwelfare {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_SEQ")
-    private User userSeq;
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "welfareId")
-    private Welfare welfareId;
+    private Welfare welfare;
 
 //    public Usedwelfare(User userId,Welfare welfareId){
 //        this.userSeq = userId;
@@ -30,8 +39,8 @@ public class Usedwelfare {
     public String toString() {
         return "Usedwelfare{" +
                 "id=" + id +
-                ", userSeq=" + userSeq.getUserSeq() +
-                ", welfareId=" + welfareId.getWelfareId() +
+                ", userSeq=" + user.getUserSeq() +
+                ", welfareId=" + welfare.getWelfareId() +
                 '}';
     }
 }

@@ -24,13 +24,31 @@ public class UserService {
 
     public List<Usedwelfare> getUsed(User userSeq){
         System.out.println("userSeq: "+userSeq.getUserSeq());
-        List<Usedwelfare> li = userUsedRepository.findAllByUserSeq_UserSeq(userSeq.getUserSeq());
+        List<Usedwelfare> li = userUsedRepository.findByUser_UserSeq(userSeq.getUserSeq());
         System.out.println(li);
         return li;
     }
 
-    public List<Likewelfare> getLike(User user){
-        List<Likewelfare> li = likeWelfareRepository.findAllByUserSeq_UserSeq(user.getUserSeq());
+    public List<Usedwelfare> getAllUsedList(){
+        List<Usedwelfare> li = userUsedRepository.findAll();
         return li;
+    }
+
+    public void setUserUsedRepository(Usedwelfare used){
+        userUsedRepository.save(used);
+    }
+
+    public List<Likewelfare> getLike(User user){
+        List<Likewelfare> li = likeWelfareRepository.findByUser_UserSeq(user.getUserSeq());
+        return li;
+    }
+
+    public List<Likewelfare> getAllLikeList(){
+        List<Likewelfare> li = likeWelfareRepository.findAll();
+        return li;
+    }
+
+    public void setLikeRepository(Likewelfare like){
+        likeWelfareRepository.save(like);
     }
 }
