@@ -17,18 +17,10 @@ let 초기값 = [
 function reducer(state = 초기값, 액션) {
   if ( 액션.type === '항목추가'){
 
-    let found = state.findIndex( (a)=> { return a.id === 액션.payload.id } );  // findIndex : array 안에서 원하는 데이터 찾아주는 함수
-    if ( found >= 0 ){
-      let copy = [...state];
-      copy[found].quan++;
-      return copy
-    } else {
+
       let copy = [...state];
       copy.push(액션.데이터);
       return copy
-  
-    }
-
 
   }
 }

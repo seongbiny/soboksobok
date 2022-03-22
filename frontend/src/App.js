@@ -19,37 +19,29 @@ function App() {
     <div id='wrapper'>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Main />} />
-      </Routes>
-      <Routes>
         <Route path="/oauth/kakao/callback" element={<Auth />} />
-      </Routes>
-      <Routes>
-        <Route path="/welfare" element={<WelfareDetail />} />
-      </Routes>
-      <Routes>
+
+        <Route path="/" element={<Main />} />
+
+        <Route path="/welfare/:welfareId" element={<WelfareDetail />} />
+
         <Route path="/Qna" element={<Qna />} />
-      </Routes>
-      <Routes>
+
         <Route path="/search" element={<WelfareSearch />} />
-      </Routes>
-      <Routes>
+
         <Route path="/QnaCreate" element={<QnaCreate />} />
-      </Routes>
-      <Routes>
+
         <Route path="/QnaDetail" element={<QnaDetail />} />
-      </Routes>
-      <Routes>
+
         <Route path="/filter" element={<CustomFilter />} />
-      </Routes>
-      <Routes>
+
         <Route path="/recommend" element={<WelfareRecommend />} />
-      </Routes>
-      <Routes>
+
         <Route path="/profile" element={<Profile />}></Route>
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
+
   );
 }
 
