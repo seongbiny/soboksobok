@@ -7,12 +7,10 @@ import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 
-let 초기값 = [
-  {id:0, title: '하이'},
-];
+let 초기값 = [{ id: 0, title: "하이" }];
 
 function reducer(state = 초기값, 액션) {
   if ( 액션.type === '항목추가'){
@@ -32,7 +30,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
-      </Provider>    
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

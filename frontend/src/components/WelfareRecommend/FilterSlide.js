@@ -4,8 +4,8 @@ import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import WelfareCard from "../WelfareCard";
 import styled from "styled-components";
+import RecommendCard from "./RecommendCard";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
@@ -14,7 +14,7 @@ const StyledBox = styled.div`
   width: 80vw;
 `;
 
-function Slide() {
+function FilterSlide() {
   return (
     <StyledBox>
       <div className="main-wrap">
@@ -44,7 +44,7 @@ function Slide() {
               justifyContent: "center",
             }}
           >
-            <WelfareCard
+            <RecommendCard
               style={{ alignItems: "center", border: "1px solid" }}
             />
           </SwiperSlide>
@@ -54,7 +54,7 @@ function Slide() {
               justifyContent: "center",
             }}
           >
-            <WelfareCard />
+            <RecommendCard />
           </SwiperSlide>
           <SwiperSlide
             style={{
@@ -62,7 +62,7 @@ function Slide() {
               justifyContent: "center",
             }}
           >
-            <WelfareCard />
+            <RecommendCard />
           </SwiperSlide>
           <SwiperSlide
             style={{
@@ -70,11 +70,11 @@ function Slide() {
               justifyContent: "center",
             }}
           >
-            <WelfareCard />
+            <RecommendCard />
           </SwiperSlide>
         </Swiper>
       </div>
     </StyledBox>
   );
 }
-export default Slide;
+export default FilterSlide;

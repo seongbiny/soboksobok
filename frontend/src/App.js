@@ -11,12 +11,12 @@ import QnaDetail from "./pages/QnaDetail.jsx";
 import WelfareSearch from "./pages/WelfareSearch";
 import WelfareRecommend from "./pages/WelfareRecommend";
 import CustomFilter from "./pages/CustomFilter";
-import Profile from './pages/Profile';
-import './CSS/app.css';
+import Profile from "./pages/Profile";
+import "./CSS/app.css";
 
 function App() {
   return (
-    <div id='wrapper'>
+    <div id="wrapper">
       <NavBar />
       <Routes>
         <Route path="/oauth/kakao/callback" element={<Auth />} />
