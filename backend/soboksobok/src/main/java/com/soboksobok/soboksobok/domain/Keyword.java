@@ -19,4 +19,9 @@ public class Keyword {
     private String keywordName;
 
     private Long keywordCnt;
+
+    public Long setCntOfKeyword(Long CntOfKeyword) {
+        this.keywordCnt = CntOfKeyword;
+        return this.keywordCnt;
+    }
 }

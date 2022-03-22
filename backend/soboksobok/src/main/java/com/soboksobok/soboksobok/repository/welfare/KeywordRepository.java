@@ -17,4 +17,10 @@ public class KeywordRepository {
         return em.createQuery("select k from Keyword k", Keyword.class)
                 .getResultList();
     }
+
+    public String getKeywordByName(String keyword) {
+        String result = "ok";
+        return result;
+//                em.find(Keyword.class, name);
+    }
 }
