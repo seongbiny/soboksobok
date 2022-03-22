@@ -41,7 +41,7 @@ function WelfareDetail(){
                 </div>
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
-            <DetailMain />
+            <DetailMain welfareId={welfareId}/>
             <DetailTabs />
             <StyledCard>
                 <DetailCard />

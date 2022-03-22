@@ -19,9 +19,9 @@ function App() {
     <div id="wrapper">
       <NavBar />
       <Routes>
-        <Route path="/" element={<Main />} />
-
         <Route path="/oauth/kakao/callback" element={<Auth />} />
+
+        <Route path="/" element={<Main />} />
 
         <Route path="/welfare/:welfareId" element={<WelfareDetail />} />
 
