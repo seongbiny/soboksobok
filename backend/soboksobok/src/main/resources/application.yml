@@ -82,25 +82,6 @@ app:
     authorizedRedirectUris:
       - http://localhost:3000/oauth/kakao/callback
 
-
-# swagger 설정
-#springdoc:
-#  version: '@project.version@'
-#  api-docs:
-#    path: /v3/api-docs
-#  default-consumes-media-type: application/json
-#  default-produces-media-type: application/json
-#  swagger-ui:
-#    operations-sorter: alpha
-#    tags-sorter: alpha
-#    path: /swagger-ui.html
-#    disable-swagger-default-url: true
-#    display-query-params-without-oauth2: true
-#    persistAuthorization: true
-#    paths-to-match:
-#      - /**
-#      - /test/**
-
 server:
   servlet:
     context-path: /api
