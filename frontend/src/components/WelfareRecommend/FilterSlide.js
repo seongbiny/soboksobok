@@ -14,7 +14,7 @@ const StyledBox = styled.div`
   width: 80vw;
 `;
 
-function Slide() {
+function FilterSlide() {
   return (
     <StyledBox>
       <div className="main-wrap">
@@ -77,4 +77,4 @@ function Slide() {
     </StyledBox>
   );
 }
-export default Slide;
+export default FilterSlide;
