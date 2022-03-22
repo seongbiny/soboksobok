@@ -99,7 +99,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    @Override public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/welfare/**")
-                .antMatchers("/qna/**");
+                .antMatchers("/qna/**")
+                .antMatchers("/comment/**");
 //       web.ignoring().antMatchers(
 //               "swagger-ui.html",   // swgger 사용시
 //               "/index.html",   // front-end 에서 build한 static file
