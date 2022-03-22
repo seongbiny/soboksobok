@@ -42,6 +42,7 @@ public class AuthController {
             HttpServletResponse response,
             @RequestBody AuthReqModel authReqModel
     ) {
+        System.out.println("AuthController-login");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authReqModel.getId(),

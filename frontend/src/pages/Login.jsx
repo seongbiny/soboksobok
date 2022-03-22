@@ -7,7 +7,8 @@ function Login() {
 
   return (
     <div>
-      <a href={KAKAO_AUTH_URL}>
+      {/* <a href={KAKAO_AUTH_URL}> */}
+      <a href='http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback'>
         <img src="/kakao/kakao_login_small.png" id="kakao-login-btn" />
       </a>
     </div>
