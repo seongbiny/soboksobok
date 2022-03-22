@@ -18,4 +18,8 @@ public class KeywordService {
     public List<Keyword> getAllKeyword() {
         return keywordRepository.findAllKeyword();
     }
+
+//    public void plusKeyword(String keyword) {
+//        keywordRepository.setKeyword();
+//    }
 }
