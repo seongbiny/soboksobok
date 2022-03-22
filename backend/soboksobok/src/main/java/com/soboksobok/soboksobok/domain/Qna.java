@@ -1,10 +1,13 @@
 package com.soboksobok.soboksobok.domain;
 
+import com.soboksobok.soboksobok.domain.dto.QnaDto;
 import com.soboksobok.soboksobok.domain.user.User;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Builder
@@ -22,24 +25,29 @@ public class Qna {
     @JoinColumn(name="qna_user_id") //매핑할 키 값, user pk와 매핑됨
     private User user;
 
-    @Column(length = 50)
+    @Column(length = 100)
     private String qna_title;
 
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String qna_content;
 
     @Builder.Default
     private LocalDateTime qna_created_at=LocalDateTime.now();
-
     @Builder.Default
     private LocalDateTime qna_updated_at=LocalDateTime.now();
 
-//    public static Qna of(User user, QnaDto qnaDto){
-//        return Qna.builder()
-//                .qna_title(qnaDto.getTitle())
-//                .qna_content(qnaDto.getContent())
-//                .qna_created_at(LocalDateTime.now())
-//                .qna_updated_at(LocalDateTime.now())
-//                .user(user)
-//                .build();
-//    }
+    // comment와 양방향 관계
+    @OneToMany(mappedBy = "qna", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
+
+
+    public static Qna of(QnaDto qnaDto, User user){
+        return Qna.builder()
+                .qna_title(qnaDto.getTitle())
+                .qna_content(qnaDto.getContent())
+                .qna_created_at(LocalDateTime.now())
+                .qna_updated_at(LocalDateTime.now())
+                .user(user)
+                .build();
+    }
 }

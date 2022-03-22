@@ -1,6 +1,8 @@
 import React from 'react';
 import { Pagination, Table, Button, Container } from 'react-bootstrap';
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 let 표 = styled.div`
     width: 80%;
@@ -20,7 +22,9 @@ let 페이지번호 = styled.div`
     display: grid;
     justify-content: center;
 `
-function Qna(){
+function Qna(props){
+    let state = useSelector((state) => state)
+
     return (
 
         <Container>
@@ -28,9 +32,13 @@ function Qna(){
                 <제목>
                     Q&A 게시판
                 </제목>
-                <글쓰기버튼>
-                    <Button variant="secondary">글쓰기</Button>{' '}
-                </글쓰기버튼>
+                <Link to = '/QnaCreate'>
+                    <글쓰기버튼>
+                        <Button variant="secondary">글쓰기</Button>{' '}
+                    </글쓰기버튼>
+                </Link>
+
+
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -40,11 +48,16 @@ function Qna(){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>1</td>
-                        <td>OOOO 복지혜택 추가해주세요!</td>
-                        <td>2022/03/17</td>
-                        </tr>
+                        {
+                            state.reducer.map((a, i)=> {
+                                return (
+                                    <tr key={i}>
+                                        <td>{a.id}</td>
+                                        <td>{a.title}</td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
                 <페이지번호>
