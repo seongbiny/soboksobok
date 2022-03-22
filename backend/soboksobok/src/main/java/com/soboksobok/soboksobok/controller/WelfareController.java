@@ -54,14 +54,14 @@ public class WelfareController {
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
     public ApiResponse welfaresearch(@PathVariable("keyword") String keyword) {
-//        keywordService.plusKeyword(keyword);
+        keywordService.getOrsetKeywordbyname(keyword);
         List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
         return ApiResponse.success("welfares", list);
     }
 
     @GetMapping("/keyword")
     public ApiResponse loadkeyword() {
-        List<Keyword> list = keywordService.getAllKeyword();
+        List<Keyword> list = keywordService.getPopularKeyword();
         return ApiResponse.success("keywords", list);
     }
 }
