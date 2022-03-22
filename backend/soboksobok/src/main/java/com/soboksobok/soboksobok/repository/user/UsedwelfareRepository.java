@@ -4,7 +4,9 @@ import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface UserUsedRepository extends JpaRepository<Usedwelfare, Long> {
-    Usedwelfare findByUserId(String userId);
+public interface UsedwelfareRepository extends JpaRepository<Usedwelfare, Long> {
+    List<Usedwelfare> findAllByUserSeq_UserSeq(Long userSeq);
 }

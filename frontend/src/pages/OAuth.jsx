@@ -12,7 +12,8 @@ function Auth() {
   const CLIENT_SECRET = 'pe7y4NArlDuQpJYXu8nxNFitPddPonFY';
 
   // calllback으로 받은 인가코드
-  const code = new URL(window.location.href).searchParams.get('code');
+  const code = new URL(window.location.href).searchParams.get('token');
+  console.log(code);
 
   let navigate = useNavigate();
 
@@ -29,12 +30,12 @@ function Auth() {
 
     try {
       // access token 가져오기
-      const res = await axios.post('https://kauth.kakao.com/oauth/token', payload);
+      // const res = await axios.post('https://kauth.kakao.com/oauth/token', payload);
 
-      // Kakao Javascript SDK 초기화
-      window.Kakao.init(REST_API_KEY);
-      // access token 설정
-      window.Kakao.Auth.setAccessToken(res.data.access_token);
+      // // Kakao Javascript SDK 초기화
+      // window.Kakao.init(REST_API_KEY);
+      // // access token 설정
+      // window.Kakao.Auth.setAccessToken(res.data.access_token);
       // navigate('/', { replace: true });
       navigate('/profile', { replace: true });
     } catch (err) {

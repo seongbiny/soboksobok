@@ -12,6 +12,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +27,12 @@ public class User {
     @Column(name = "USER_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
+
+    @OneToMany(mappedBy = "userSeq")
+    private List<Usedwelfare> usedwelfares = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userSeq")
+    private List<Likewelfare> likewelfares = new ArrayList<>();
 
     @Column(name = "USER_ID", length = 64, unique = true)
     @NotNull
@@ -86,6 +94,8 @@ public class User {
 
     @Column(name = "CHILD")
     private String child;
+
+
 
     public User(
             @NotNull @Size(max = 64) String userId,
