@@ -1,14 +1,26 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import Axios from "../../api.js";
 
 const StyledBox = styled.div`
   box-sizing: border-box;
-  border: 1px solid gray;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
   height: 30vh;
   width: 15vw;
 `;
 
 function Keyword() {
+  useEffect(() => {
+    Axios.get("/api/welfare/keyword")
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
   return (
     <StyledBox>
       <div>추천 검색어</div>
