@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Pagination from "@mui/material/Pagination";
+// import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
+import Pagination from "./Pagination";
+import { paginate } from "./paginate";
 
 const StyledBoard = styled.div`
   box-sizing: border-box;
@@ -22,16 +24,37 @@ const StyledTable = styled.div`
 `;
 
 function ResultBoard() {
-  const obj = {
-    data: [
+  const getData = () => {
+    const welfares = [
       { index: 1, title: "사과", date: "2022.03.22" },
       { index: 2, title: "딸기", date: "2022.03.22" },
       { index: 3, title: "토마토", date: "2022.03.22" },
       { index: 4, title: "메론", date: "2022.03.22" },
       { index: 5, title: "바나나", date: "2022.03.22" },
-    ],
+      { index: 6, title: "바나나", date: "2022.03.22" },
+      { index: 7, title: "바나나", date: "2022.03.22" },
+      { index: 8, title: "바나나", date: "2022.03.22" },
+      { index: 9, title: "바나나", date: "2022.03.22" },
+      { index: 10, title: "바나나", date: "2022.03.22" },
+      { index: 11, title: "바나나", date: "2022.03.22" },
+    ];
+    return welfares;
   };
+  const [welfares, setWelfares] = useState({
+    data: getData(),
+    pageSize: 5,
+    currentPage: 1,
+  });
+  const handlePageChange = page => {
+    setWelfares({ ...welfares, currentPage: page });
+  };
+  const { data, pageSize, currentPage } = welfares;
+  const pagedWelfares = paginate(data, currentPage, pageSize);
 
+  const { length: count } = welfares.data;
+  if (count === 0) {
+    return <p>검색 정보가 없습니다.</p>;
+  }
   return (
     <StyledBoard>
       <StyledTable>
@@ -44,22 +67,26 @@ function ResultBoard() {
             </tr>
           </thead>
           <tbody>
-            {obj.data.map(item => {
-              return (
-                <tr key={item.index}>
-                  <td>{item.index}</td>
-                  <td>{item.title}</td>
-                  <td>{item.date}</td>
-                </tr>
-              );
-            })}
+            {pagedWelfares.map(welfare => (
+              <tr key={welfare.index}>
+                <td>{welfare.index}</td>
+                <td>{welfare.title}</td>
+                <td>{welfare.date}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </StyledTable>
       <StyledPage>
-        <Stack spacing={2}>
+        {/* <Stack spacing={2}>
           <Pagination count={10} color="primary" />
-        </Stack>
+        </Stack> */}
+        <Pagination
+          itemsCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </StyledPage>
     </StyledBoard>
   );
