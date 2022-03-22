@@ -38,6 +38,10 @@ public class UserService {
         userUsedRepository.save(used);
     }
 
+    public void deleteUserUsedRepository(Usedwelfare used){
+        userUsedRepository.delete(used);
+    }
+
     public List<Likewelfare> getLike(User user){
         List<Likewelfare> li = likeWelfareRepository.findByUser_UserSeq(user.getUserSeq());
         return li;
@@ -50,5 +54,9 @@ public class UserService {
 
     public void setLikeRepository(Likewelfare like){
         likeWelfareRepository.save(like);
+    }
+
+    public void deleteLikeRepository(Likewelfare like){
+        likeWelfareRepository.delete(like);
     }
 }
