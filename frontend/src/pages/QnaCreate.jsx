@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import '../CSS/qnacreate.css';
+import { useState } from 'react';
 
 let 게시판이름 = styled.h1`
     text-align: center;
@@ -27,7 +31,9 @@ let 버튼위치 = styled.div`
     text-align: center;
 `
 
-function QnaCreate(){
+function QnaCreate(props){
+
+    let [제목, 제목값변경] = useState('');
     return (
         <Container>
             <글작성틀>
@@ -36,7 +42,8 @@ function QnaCreate(){
                 </게시판이름>
                 <게시글제목>
                     <p>제목</p> 
-                    <input type="text" style={ { width: "100%"}} />
+                    <input type="text" style={ { width: "100%"}} onChange={ (e) => {제목값변경(e.target.value)} }/>
+
                 </게시글제목>
                 <p>내용</p> 
                 <CKEditor
@@ -58,8 +65,13 @@ function QnaCreate(){
                     } }
                 />
                 <버튼위치>
-                <Button variant="secondary" size="lg">취소</Button>{' '}
-                <Button variant="primary" size="lg">등록</Button>{' '}
+                <Link to = '/Qna'>
+                    <Button variant="secondary" size="lg">취소</Button>
+                </Link>
+                {' '}
+                <Button variant="primary" size="lg" onClick={() => {
+                    props.dispatch({ type: '항목추가', payload: {id: 0, title:제목 }})
+                }}>등록</Button>
                 </버튼위치>
 
             </글작성틀>
@@ -70,4 +82,12 @@ function QnaCreate(){
         
     )
 }
-export default QnaCreate;
+// export default QnaCreate;
+function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
+    return {
+        state : state.reducer
+
+    }
+}
+
+export default connect(state를props화)(QnaCreate)
