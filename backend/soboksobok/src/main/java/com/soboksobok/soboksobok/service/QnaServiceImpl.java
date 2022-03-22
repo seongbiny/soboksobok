@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.service;
 
+import com.soboksobok.soboksobok.common.ApiResponse;
 import com.soboksobok.soboksobok.domain.Qna;
 import com.soboksobok.soboksobok.domain.dto.QnaDto;
 import com.soboksobok.soboksobok.domain.dto.UserDto;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -99,5 +101,31 @@ public class QnaServiceImpl implements QnaService{
         if(!qna.get().getUser().getUserSeq().equals(userId)) throw new NullPointerException("qna 작성자만 삭제할 수 있습니다.");
         repo.delete(qna.get());
         return "삭제";
+    }
+
+    @Override
+    public QnaDto findById(Long qna_id) {
+        Optional<Qna> qna=repo.findById(qna_id);
+        if(!qna.isPresent()) throw new NullPointerException("존재하지 않는 qna입니다.");
+        QnaDto dto=QnaDto.of(qna.get());
+        return dto;
+    }
+
+    @Override
+    public String updateMyQna(Long qna_id, Long user_seq, QnaDto dto) {
+        Optional<Qna> findqna=repo.findById(qna_id);
+        // 게시글이 없을 때
+        if(!findqna.isPresent()) throw new NullPointerException("존재하지 않는 qna입니다.");
+        // 내가 쓴 게시글만 수정 가능
+        if(findqna.get().getUser().getUserSeq()!=user_seq) throw new NullPointerException("작성자만 수정 가능합니다.");
+        Qna qna=Qna.builder()
+                .qna_id(qna_id)
+                .qna_title(dto.getTitle())
+                .qna_content(dto.getContent())
+                .qna_updated_at(LocalDateTime.now())
+                .user(findqna.get().getUser())
+                .build();
+        repo.save(qna);
+        return "수정";
     }
 }

@@ -1,5 +1,7 @@
 package com.soboksobok.soboksobok.controller;
 
+import com.soboksobok.soboksobok.common.ApiResponse;
+import com.soboksobok.soboksobok.domain.Qna;
 import com.soboksobok.soboksobok.domain.dto.CommentResDto;
 import com.soboksobok.soboksobok.domain.dto.QnaDto;
 import com.soboksobok.soboksobok.domain.dto.WriteQnaDto;
@@ -16,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -76,10 +79,25 @@ public class QnaController {
 
     @DeleteMapping("/mine/{qna_id}")
     @ApiOperation(value="qna 삭제",notes="qna를 삭제합니다.")
-    public ResponseEntity<String> deleteMyQna(@PathVariable("qna_id") Long qna_id, @RequestParam Long userId) throws Exception{
+    public ResponseEntity<String> deleteMyQna(@PathVariable("qna_id") Long qna_id, @RequestParam("userId") Long userId) throws Exception{
         String result=service.deleteMyQna(qna_id,userId);
         ResponseEntity<String> res=new ResponseEntity(result, HttpStatus.OK);
         log.info("qnaId: {} userId: {}",qna_id, userId);
         return res;
+    }
+
+    @PatchMapping("/mine/{qna_id}")
+    @ApiOperation(value="qna 수정",notes="qna를 수정합니다. content와 title에 수정된 내용을 넣어줍니다. 만약, 수정된 내용이 없다면 원래 내용을 넣어주세요.")
+    public  ApiResponse updateMyQna(@PathVariable("qna_id") Long qna_id, @RequestParam("userId") Long user_seq, @RequestBody WriteQnaDto dto) throws Exception{
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User)principal; // 현재 로그인 한 유저
+        // 받은 아이디와 로그인 한 유저의 아이디가 같을 때만 실행
+        // 로그인 한 유저 받아야 함. 1은 임시값
+//        if(user.getUserSeq()!=user_id) return ApiResponse.fail();
+        if(Long.valueOf(1)!=user_seq) return ApiResponse.fail();
+        QnaDto qnaDto=QnaDto.of(dto);
+        String result=service.updateMyQna(qna_id,user_seq,qnaDto);
+        return  ApiResponse.success("success",result);
     }
 }
