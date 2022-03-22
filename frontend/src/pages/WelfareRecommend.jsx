@@ -1,9 +1,27 @@
 import React from "react";
 import Chart from "../components/WelfareRecommend/Chart";
 import LineChart from "../components/WelfareRecommend/LineChart";
-import Slide from "../components/WelfareRecommend/Slide";
+import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import styled from 'styled-components';
 import { Avatar } from "@mui/material";
+
+
+
+function WelfareRecommend(){
+    return(
+        <StyledContainer>
+            <StyledTop>
+                <Avatar />
+                <Chart />
+                <LineChart />
+            </StyledTop>
+            <StyledMain>
+                <FilterSlide />
+                {/* <Slide /> */}
+            </StyledMain>
+        </StyledContainer>
+    )
+}
 
 const StyledTop = styled.div`
     display: grid;
@@ -26,19 +44,4 @@ const StyledContainer = styled.div`
     margin: auto;
 `;
 
-function WelfareRecommend(){
-    return(
-        <StyledContainer>
-            <StyledTop>
-                <Avatar />
-                <Chart />
-                <LineChart />
-            </StyledTop>
-            <StyledMain>
-                <Slide />
-                {/* <Slide /> */}
-            </StyledMain>
-        </StyledContainer>
-    )
-}
 export default WelfareRecommend;
