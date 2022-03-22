@@ -38,6 +38,14 @@ public class CommentServiceImpl implements CommentService{
         repo.save(comment);
         return dto.getComment_id();
     }
+
+    @Override
+    public String deleteComment(Long comment_id) {
+        Optional<Comment> comment=repo.findById(comment_id);
+        if(!comment.isPresent()) throw new NullPointerException("존재하지 않는 댓글입니다.");
+        repo.delete(comment.get());
+        return "success";
+    }
 //    @Override
 //    public List<CommentReqDto> getAllComment(Long qnaId) {
 //        System.out.println("service");

@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.controller;
 
+import com.soboksobok.soboksobok.common.ApiResponse;
 import com.soboksobok.soboksobok.domain.dto.CommentReqDto;
 import com.soboksobok.soboksobok.domain.user.User;
 import com.soboksobok.soboksobok.service.CommentService;
@@ -41,5 +42,20 @@ public class CommentController {
 //        User user = (User)principal; // 현재 로그인 한 유저
         // 로그인 한 유저 받아야 함. 1은 임시값
         return ResponseEntity.ok(service.createComment(Long.valueOf(1),qna_id,comment));
+    }
+
+    @DeleteMapping("/{comment_id}")
+    @ApiOperation(value="댓글 삭제",notes="댓글을 삭제합니다.")
+    public ApiResponse deleteComment(@PathVariable("comment_id") Long comment_id,@RequestParam("user_seq") Long user_seq) throws Exception{
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User)principal; // 현재 로그인 한 유저
+        // 받은 아이디와 로그인 한 유저의 아이디가 같을 때만 실행
+
+        // 로그인 한 유저 받아야 함. 1은 임시값
+//        if(user.getUserSeq()!=user_id) return ApiResponse.fail();
+        if(Long.valueOf(1)!=user_seq) return ApiResponse.fail();
+        String result=service.deleteComment(comment_id);
+        return ApiResponse.success("success",result);
     }
 }
