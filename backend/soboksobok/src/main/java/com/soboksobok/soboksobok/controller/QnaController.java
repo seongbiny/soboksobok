@@ -32,7 +32,7 @@ public class QnaController {
     UserService userService;
 
     @GetMapping
-    @ApiOperation(value="전체 qna",notes="hihi")
+    @ApiOperation(value="전체 qna 조회",notes="전체 qna를 불러옵니다.(user 상관없이 DB에 있는 모든 qna 조회)")
     public ResponseEntity<List<QnaDto>> getAllQna() throws Exception{
         List<QnaDto> list=service.getAllQna();
         ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
@@ -41,6 +41,7 @@ public class QnaController {
     }
 
     @GetMapping("/mine")
+    @ApiOperation(value="나의 qna 조회",notes="내가 작성한 모든 qna를 조회합니다.")
     public ResponseEntity<List<QnaDto>> getMyQna(@RequestParam Long userId) throws Exception{
         List<QnaDto> list=service.getMyQna(userId);
         ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
@@ -49,6 +50,7 @@ public class QnaController {
         return res;
     }
     @GetMapping("/{qna_id}")
+    @ApiOperation(value="qna 상세 조회",notes="qna를 상세 조회합니다.(user 상관없이)")
     public ResponseEntity<QnaDto> getQnaDetail(@PathVariable("qna_id") Long qna_id) throws Exception{
         QnaDto qna=service.getQnaDetail(qna_id);
         ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
@@ -56,34 +58,35 @@ public class QnaController {
     }
 
     @GetMapping("/mine/{qna_id}")
-    public ResponseEntity<QnaDto> getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @RequestParam Long userId) throws Exception{
+    @ApiOperation(value="나의 qna 상세 조회",notes="내가 등록한 qna를 상세 조회합니다.")
+    public ApiResponse getMyQnaDetail(@PathVariable("qna_id") Long qna_id, @RequestParam Long userId) throws Exception{
         QnaDto qna=service.getMyQnaDetail(qna_id,userId);
         List<CommentResDto> comments = qna.getComments(); //댓글
-        ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
-        log.info("userId: "+userId);
-        return res;
+//        ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
+//        log.info("userId: "+userId);
+        return ApiResponse.success("success",qna);
     }
 
     @PostMapping("/mine")
     @ApiOperation(value="qna 등록",notes="qna를 등록합니다.")
-    public ResponseEntity<QnaDto> createMyQna(@RequestBody WriteQnaDto writeQnaDto) throws Exception{
+    public ApiResponse createMyQna(@RequestBody WriteQnaDto dto, @RequestParam("userId") Long user_seq) throws Exception{
 //        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = (User)principal;
-        QnaDto qnaDto=QnaDto.of(writeQnaDto);
-        QnaDto qna=service.createMyQna(qnaDto,user);
-        ResponseEntity<QnaDto> res=new ResponseEntity(qna, HttpStatus.OK);
-        log.info("userId: {}",user.getUserSeq());
-        return res;
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User)principal;
+        // 받은 아이디와 로그인 한 유저의 아이디가 같을 때만 실행
+        // 로그인 한 유저 받아야 함. 1은 임시값
+//        if(user.getUserSeq()!=user_id) return ApiResponse.fail();
+        if(Long.valueOf(1)!=user_seq) return ApiResponse.fail();
+        QnaDto qnaDto=QnaDto.of(dto);
+        QnaDto qna=service.createMyQna(qnaDto,user_seq);
+        return ApiResponse.success("success",qna);
     }
 
     @DeleteMapping("/mine/{qna_id}")
     @ApiOperation(value="qna 삭제",notes="qna를 삭제합니다.")
-    public ResponseEntity<String> deleteMyQna(@PathVariable("qna_id") Long qna_id, @RequestParam("userId") Long userId) throws Exception{
+    public ApiResponse deleteMyQna(@PathVariable("qna_id") Long qna_id, @RequestParam("userId") Long userId) throws Exception{
         String result=service.deleteMyQna(qna_id,userId);
-        ResponseEntity<String> res=new ResponseEntity(result, HttpStatus.OK);
-        log.info("qnaId: {} userId: {}",qna_id, userId);
-        return res;
+        return ApiResponse.success("success",result);
     }
 
     @PatchMapping("/mine/{qna_id}")
@@ -98,6 +101,6 @@ public class QnaController {
         if(Long.valueOf(1)!=user_seq) return ApiResponse.fail();
         QnaDto qnaDto=QnaDto.of(dto);
         String result=service.updateMyQna(qna_id,user_seq,qnaDto);
-        return  ApiResponse.success("success",result);
+        return ApiResponse.success("success",result);
     }
 }
