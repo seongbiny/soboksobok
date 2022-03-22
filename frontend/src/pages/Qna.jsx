@@ -2,7 +2,7 @@ import React from 'react';
 import { Pagination, Table, Button, Container } from 'react-bootstrap';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 let 표 = styled.div`
     width: 80%;
@@ -80,4 +80,12 @@ function Qna(props){
     )
 }
 
+// function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
+//     return {
+//         state : state
+
+//     }
+// }
+
+// export default connect(state를props화)(Qna)
 export default Qna;

@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
-let 초기값 = [{ id: 0, title: "하이" }];
+let 초기값 = [{ id: 0, title: "하이" },];
 
 function reducer(state = 초기값, 액션) {
   if ( 액션.type === '항목추가'){
@@ -20,6 +20,8 @@ function reducer(state = 초기값, 액션) {
       copy.push(액션.데이터);
       return copy
 
+  } else {
+    return state
   }
 }
 
