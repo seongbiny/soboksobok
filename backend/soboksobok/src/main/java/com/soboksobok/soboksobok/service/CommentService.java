@@ -9,4 +9,5 @@ public interface CommentService {
 //    List<CommentReqDto> getAllComment(Long qna_id);
     Long createComment(Long userSeq, Long qna_id, CommentReqDto comment);
     String deleteComment(Long comment_id);
+    String updateComment(Long comment_id, Long user_seq, CommentReqDto comment);
 }
