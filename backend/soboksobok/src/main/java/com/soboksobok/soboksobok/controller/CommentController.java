@@ -24,16 +24,6 @@ public class CommentController {
     @Autowired
     CommentService service;
 
-//    @GetMapping("/{qna_id}")
-//    @ApiOperation(value="전체 댓글",notes="전체 댓글을 보여줍니다.")
-//    public ResponseEntity<List<CommentReqDto>> getAllComment(@PathVariable("qna_id") Long qna_id) throws Exception{
-//        System.out.println("controller");
-//        List<CommentReqDto> list=service.getAllComment(qna_id);
-//        ResponseEntity<List<CommentReqDto>> res=new ResponseEntity(list, HttpStatus.OK);
-//        log.info("댓글 개수 확인: "+list.size());
-//        return res;
-//    }
-
     @PostMapping("/{qna_id}")
     @ApiOperation(value="댓글 작성",notes="댓글을 작성합니다.")
     public ResponseEntity createComment(@PathVariable("qna_id") Long qna_id,@RequestBody CommentReqDto comment) throws Exception{
@@ -56,6 +46,21 @@ public class CommentController {
 //        if(user.getUserSeq()!=user_id) return ApiResponse.fail();
         if(Long.valueOf(1)!=user_seq) return ApiResponse.fail();
         String result=service.deleteComment(comment_id);
+        return ApiResponse.success("success",result);
+    }
+
+    @PatchMapping("/{comment_id}")
+    @ApiOperation(value="댓글 수정",notes="댓글을 수정합니다. 'comment_created_at'는 원래 값으로 넣어주세요.'")
+    public ApiResponse deleteComment(@PathVariable("comment_id") Long comment_id,@RequestParam("user_seq") Long user_seq,@RequestBody CommentReqDto dto) throws Exception{
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = (User)principal; // 현재 로그인 한 유저
+        // 받은 아이디와 로그인 한 유저의 아이디가 같을 때만 실행
+
+        // 로그인 한 유저 받아야 함. 1은 임시값
+//        if(user.getUserSeq()!=user_id) return ApiResponse.fail();
+        if(Long.valueOf(1)!=user_seq) return ApiResponse.fail();
+        String result=service.updateComment(comment_id,user_seq,dto);
         return ApiResponse.success("success",result);
     }
 }

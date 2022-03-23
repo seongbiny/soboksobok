@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,22 @@ public class CommentServiceImpl implements CommentService{
         Optional<Comment> comment=repo.findById(comment_id);
         if(!comment.isPresent()) throw new NullPointerException("존재하지 않는 댓글입니다.");
         repo.delete(comment.get());
+        return "success";
+    }
+
+    @Override
+    public String updateComment(Long comment_id, Long user_seq, CommentReqDto dto) {
+        Optional<Comment> findcomment=repo.findById(comment_id);
+        if(!findcomment.isPresent()) throw new NullPointerException("존재하지 않는 댓글입니다.");
+        if(findcomment.get().getUser().getUserSeq()!=user_seq) throw new NullPointerException("작성자만 수정할 수 있습니다.");
+        Comment comment=Comment.builder()
+                .comment_id(comment_id)
+                .comment_content(dto.getComment_content())
+                .comment_updated_at(LocalDateTime.now())
+                .user(findcomment.get().getUser())
+                .qna(findcomment.get().getQna())
+                .build();
+        repo.save(comment);
         return "success";
     }
 //    @Override
