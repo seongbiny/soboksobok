@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Axios from "../../api.js";
+import getAxios from "../../api.js";
 
 const StyledBox = styled.div`
   box-sizing: border-box;
@@ -12,22 +12,29 @@ const StyledBox = styled.div`
 `;
 
 function Keyword() {
+  const [keywords, setKeywords] = useState([]);
+
   useEffect(() => {
-    Axios.get("/api/welfare/keyword")
+    const axios = getAxios();
+    axios
+      .get("/api/welfare/keyword")
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data.body.keywords);
+        setKeywords(res.data.body.keywords);
       })
       .catch(err => {
         console.log(err);
       });
-  });
+  }, []);
+  // console.log(keywords);
   return (
     <StyledBox>
       <div>추천 검색어</div>
       <hr />
       <ol>
-        <ul>청년</ul>
-        <ul>지원</ul>
+        {keywords.map(keyword => (
+          <li key={keyword.keywordId}>{keyword.keywordName}</li>
+        ))}
       </ol>
     </StyledBox>
   );

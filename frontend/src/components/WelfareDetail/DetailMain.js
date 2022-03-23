@@ -57,7 +57,7 @@ function DetailMain(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/userId/like`)
+      .get("http://localhost:8080/api/users/like")
       .then(res => {
         console.log(res.data);
       })
