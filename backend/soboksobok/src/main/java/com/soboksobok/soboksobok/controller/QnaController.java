@@ -36,7 +36,7 @@ public class QnaController {
     public ResponseEntity<List<QnaDto>> getAllQna() throws Exception{
         List<QnaDto> list=service.getAllQna();
         ResponseEntity<List<QnaDto>> res=new ResponseEntity(list, HttpStatus.OK);
-        log.info("qna 개수 확인: "+list.size());
+        log.info("qna 개수 확인: {}",list.size());
         return res;
     }
 
@@ -45,10 +45,10 @@ public class QnaController {
     public ApiResponse getMyQna() throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
-        log.info("유저 확인: {}"+user.getUsername());
+        log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
         List<QnaDto> list=service.getMyQna(userId);
-        log.info("qna 개수 확인: {}"+list.size());
+        log.info("qna 개수 확인: {}",list.size());
         return ApiResponse.success("success",list);
     }
     @GetMapping("/{qna_id}")
@@ -64,7 +64,7 @@ public class QnaController {
     public ApiResponse getMyQnaDetail(@PathVariable("qna_id") Long qna_id) throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
-        log.info("유저 확인: {}"+user.getUsername());
+        log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
         QnaDto qna=service.getMyQnaDetail(qna_id,userId);
         List<CommentResDto> comments = qna.getComments(); //댓글
@@ -76,7 +76,7 @@ public class QnaController {
     public ApiResponse createMyQna(@RequestBody WriteQnaDto dto) throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
-        log.info("유저 확인: {}"+user.getUsername());
+        log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
         QnaDto qnaDto=QnaDto.of(dto);
         QnaDto qna=service.createMyQna(qnaDto,userId);
@@ -88,7 +88,7 @@ public class QnaController {
     public ApiResponse deleteMyQna(@PathVariable("qna_id") Long qna_id) throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
-        log.info("유저 확인: {}"+user.getUsername());
+        log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
         String result=service.deleteMyQna(qna_id,userId);
         return ApiResponse.success("success",result);
@@ -99,7 +99,7 @@ public class QnaController {
     public  ApiResponse updateMyQna(@PathVariable("qna_id") Long qna_id, @RequestBody WriteQnaDto dto) throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
-        log.info("유저 확인: {}"+user.getUsername());
+        log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
         QnaDto qnaDto=QnaDto.of(dto);
         String result=service.updateMyQna(qna_id,userId,qnaDto);

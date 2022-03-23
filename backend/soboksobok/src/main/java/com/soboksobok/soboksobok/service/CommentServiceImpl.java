@@ -56,15 +56,18 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public String deleteComment(Long comment_id) {
+    public String deleteComment(Long comment_id,Long user_seq) {
+        log.info("comment id 확인 :{}",comment_id);
         Optional<Comment> comment=repo.findById(comment_id);
         if(!comment.isPresent()) throw new NullPointerException("존재하지 않는 댓글입니다.");
+        if(comment.get().getUser().getUserSeq()!=user_seq) throw new NullPointerException("작성자만 수정할 수 있습니다.");
         repo.delete(comment.get());
         return "success";
     }
 
     @Override
     public CommentResDto updateComment(Long comment_id, Long user_seq, CommentReqDto dto) {
+        log.info("comment id 확인 :{}",comment_id);
         Optional<Comment> findcomment=repo.findById(comment_id);
         if(!findcomment.isPresent()) throw new NullPointerException("존재하지 않는 댓글입니다.");
         if(findcomment.get().getUser().getUserSeq()!=user_seq) throw new NullPointerException("작성자만 수정할 수 있습니다.");
@@ -87,24 +90,4 @@ public class CommentServiceImpl implements CommentService{
                 .build();
         return re;
     }
-//    @Override
-//    public List<CommentReqDto> getAllComment(Long qnaId) {
-//        System.out.println("service");
-//        List<Comment> all = repo.findAllByQnaId(qnaId);
-//        log.info("all {}",all);
-//        List<CommentReqDto> commentDtos = new ArrayList<>();
-//        CommentReqDto dto;
-//        // entity -> dto 변환
-//        for (int i=0; i<all.size(); i++){
-//            dto=new CommentReqDto();
-//            Comment entity=all.get(i);
-//            dto.setComment_id(entity.getComment_id());
-//            dto.setComment_content(entity.getComment_content());
-//            dto.setComment_created_at(entity.getComment_created_at());
-//            dto.setComment_updated_at(entity.getComment_updated_at());
-//            dto.setQna(entity.getQna());
-//            commentDtos.add(dto);
-//        }
-//        return commentDtos;
-//    }
 }
