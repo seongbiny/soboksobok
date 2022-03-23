@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SearchBar from '../components/Search/SearchBar';
 import ResultBoard from '../components/Search/ResultBoard';
 import Keyword from '../components/Search/Keyword';
-import axios from 'axios';
 
 function Search(){
     return(

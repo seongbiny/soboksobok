@@ -5,22 +5,6 @@ import getAxios from "../../api.js";
 import PaginationBtn from "./PaginationBtn";
 import { paginate } from "./paginate";
 
-const StyledBoard = styled.div`
-  box-sizing: border-box;
-  width: 50vw;
-  display: flex;
-  flex-direction: column;
-`;
-const StyledPage = styled.div`
-  margin: 0 auto;
-  margin-top: 10px;
-`;
-const StyledTable = styled.div`
-  box-sizing: border-box;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
-`;
-
 function ResultBoard() {
   const axios = getAxios();
   const word = "청년";
@@ -119,9 +103,9 @@ function ResultBoard() {
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>게시일</th>
+              <th width="10%">번호</th>
+              <th width="70%">제목</th>
+              <th width="20%">게시일</th>
             </tr>
           </thead>
           <tbody>
@@ -146,4 +130,20 @@ function ResultBoard() {
     </StyledBoard>
   );
 }
+
+const StyledBoard = styled.div`
+  box-sizing: border-box;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+`;
+const StyledPage = styled.div`
+  margin: 0 auto;
+  margin-top: 10px;
+`;
+const StyledTable = styled.div`
+  box-sizing: border-box;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+`;
 export default ResultBoard;

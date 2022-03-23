@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -38,8 +37,12 @@ function a11yProps(index) {
   };
 }
 
-export default function DetailTaps() {
+export default function DetailTaps(props) {
   const [value, setValue] = React.useState(0);
+  const target = props.target;
+  const crit = props.crit;
+  const howto = props.howto;
+  const contact = props.contact;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,22 +72,17 @@ export default function DetailTaps() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <li>
-          국내의 대학(대학원 제외)에 재학 중이거나, 입학예정인 대한민국 국민에게
-          지원합니다.
-        </li>
+        <li>{target}</li>
         <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
-          대출 신청일 현재 만 35세 이하인 기초생활수급자 및 학자금지원 8구간
-          이하 국내 고등교육기관 학부생을 지원합니다. <br />
-          다자녀(3자녀 이상)가구 학부생의 경우 학자금지원 관계없이 취업 후 상환
-          학자금대출 이용 가능합니다.
+          {crit}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        {howto}
+        {contact}
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Four
