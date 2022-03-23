@@ -39,8 +39,8 @@ public class CommentReqDto {
     public Comment of(){
         Comment comments= Comment.builder()
                 .comment_content(comment_content)
-                .comment_created_at(comment_created_at)
-                .comment_updated_at(comment_updated_at)
+                .comment_created_at(LocalDateTime.now())
+                .comment_updated_at(LocalDateTime.now())
                 .user(user)
                 .qna(qna)
                 .build();
