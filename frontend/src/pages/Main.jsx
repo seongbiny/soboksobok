@@ -6,21 +6,17 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-const 소개 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
-`;
-
-const 탭 = styled.div`
-  margin: 20px;
-`;
-
-const 탭내용 = styled.div`
-  padding: 20px;
-`;
+function isLogin() {
+  const token = localStorage.getItem('jwtToken');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function Main() {
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
   let navigate = useNavigate();
 
   let [popular, setPopular] = useState(null);
@@ -63,7 +59,11 @@ function Main() {
                 <br />
                 나에게 딱 맞는 복지제도 정보를 찾아보세요
               </p>
-              <Button variant="primary">카카오톡 간편가입</Button>
+              {!isLogin() ? (
+                <Button variant="primary" href={KAKAO_AUTH_URL}>
+                  카카오톡 간편가입
+                </Button>
+              ) : null}
             </소개>
           </Col>
         </Row>
@@ -102,5 +102,19 @@ function Main() {
     </div>
   );
 }
+
+const 소개 = styled.div`
+  margin: 20px;
+  padding: 20px;
+  background-color: #e3f2fd;
+`;
+
+const 탭 = styled.div`
+  margin: 20px;
+`;
+
+const 탭내용 = styled.div`
+  padding: 20px;
+`;
 
 export default Main;
