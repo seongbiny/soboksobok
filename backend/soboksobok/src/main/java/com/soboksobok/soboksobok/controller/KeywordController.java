@@ -16,9 +16,5 @@ public class KeywordController {
 
     private final KeywordService keywordService;
 
-    @GetMapping()
-    public ApiResponse getkeyword() {
-        List<Keyword> keywords = keywordService.getAllKeyword();
-        return ApiResponse.success("keywords", keywords);
-    }
+
 }
