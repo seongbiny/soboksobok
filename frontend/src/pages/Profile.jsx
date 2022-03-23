@@ -4,25 +4,18 @@ import FilterChips from '../components/FilterChips';
 
 import styled from 'styled-components';
 
-import getAxios from '../api.js';
 import { useStore } from '../store.jsx';
 
 function Profile() {
   const username = useStore((state) => state.username);
+  // const username = useStore.username;
   const email = useStore((state) => state.email);
   const ageRange = useStore((state) => state.ageRange);
   const gender = useStore((state) => state.gender);
   const profileImage = useStore((state) => state.profileImage);
 
-  const getProfile = async () => {
-    try {
-      const axios = getAxios();
-      let response = await axios.get('/api/users/profile');
-      console.log('카카오 : ', response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  console.log(username);
+  console.log(email);
 
   // const getLike = async () => {
   //   try {
@@ -36,7 +29,6 @@ function Profile() {
   // };
 
   useEffect(() => {
-    getProfile();
     // getLike();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
