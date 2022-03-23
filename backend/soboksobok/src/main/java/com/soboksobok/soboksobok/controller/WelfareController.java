@@ -1,6 +1,8 @@
 package com.soboksobok.soboksobok.controller;
 
+import com.soboksobok.soboksobok.domain.Keyword;
 import com.soboksobok.soboksobok.domain.welfare.Welfare;
+import com.soboksobok.soboksobok.service.KeywordService;
 import com.soboksobok.soboksobok.service.WelfareService;
 import com.soboksobok.soboksobok.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 public class WelfareController {
 
     private final WelfareService welfareService;
+    private final KeywordService keywordService;
 
 //    @ApiOperation(value = "단일복지 상세데이터")
     @GetMapping("/{welfare_id}")
@@ -51,7 +54,14 @@ public class WelfareController {
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
     public ApiResponse welfaresearch(@PathVariable("keyword") String keyword) {
+        keywordService.getOrsetKeywordbyname(keyword);
         List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
         return ApiResponse.success("welfares", list);
+    }
+
+    @GetMapping("/keyword")
+    public ApiResponse loadkeyword() {
+        List<Keyword> list = keywordService.getPopularKeyword();
+        return ApiResponse.success("keywords", list);
     }
 }
