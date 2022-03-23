@@ -1,35 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import FilterChips from '../components/FilterChips';
-
 import styled from 'styled-components';
-
-import { useStore } from '../store.jsx';
+import FilterChips from '../components/FilterChips';
+import getAxios from '../api.js';
 
 function Profile() {
-  const username = useStore((state) => state.username);
-  // const username = useStore.username;
-  const email = useStore((state) => state.email);
-  const ageRange = useStore((state) => state.ageRange);
-  const gender = useStore((state) => state.gender);
-  const profileImage = useStore((state) => state.profileImage);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [ageRange, setAgeRange] = useState('');
+  const [gender, setGender] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [liked, setLiked] = useState([]);
+  const [used, setUsed] = useState([]);
 
-  console.log(username);
-  console.log(email);
+  const getProfile = async () => {
+    try {
+      console.log(localStorage.getItem('jwtToken'));
 
-  // const getLike = async () => {
-  //   try {
-  //     let response = await Axios.get('/api/users/like');
-  //     console.log('찜 : ', response.data);
+      const axios = getAxios();
+      let response = await axios.get('/api/users');
 
-  //     // 사용자 정보 변수에 저장
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+      console.log('카카오 : ', response.data);
+      setUsername(response.data.body.user.username);
+      setEmail(response.data.body.user.email);
+      setAgeRange(response.data.body.user.ageRange);
+      setGender(response.data.body.user.gender);
+      setProfileImage(response.data.body.user.profileImage);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getLike = async () => {
+    try {
+      const axios = getAxios();
+      let response = await axios.get('/api/users/like');
+      console.log('찜 : ', response.data);
+      setLiked(response.data.body.likeList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const renderLiked = () => {
+    const result = [];
+    for (let i = 0; i < liked.length; i++) {
+      result.push(<div key={i}>{' - ' + liked[i].welfare_service_name}</div>);
+    }
+    return result;
+  };
+
+  const getUsed = async () => {
+    try {
+      const axios = getAxios();
+      let response = await axios.get('/api/users/used');
+      console.log('사용중 : ', response.data.body.usedWelfareList);
+      setUsed(response.data.body.usedWelfareList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const renderUsed = () => {
+    const result = [];
+    for (let i = 0; i < used.length; i++) {
+      result.push(<div key={i}>{' - ' + used[i].welfare_service_name}</div>);
+    }
+    return result;
+  };
 
   useEffect(() => {
-    // getLike();
+    getProfile();
+    getLike();
+    getUsed();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return (
@@ -50,9 +91,6 @@ function Profile() {
                 연령대: {ageRange} <br />
               </h5>
               <h5>
-                나이 <br />
-              </h5>
-              <h5>
                 성별: {gender} <br />
               </h5>
             </소개>
@@ -66,12 +104,12 @@ function Profile() {
               <h5>
                 찜한 복지 <br />
               </h5>
-              <h6>- xxx</h6>
+              <h6>{renderLiked()}</h6>
               <br />
               <h5>
                 사용 중인 복지 <br />
               </h5>
-              <h6>- xxx</h6>
+              <h6>{renderUsed()}</h6>
             </리스트>
           </Col>
         </Row>
