@@ -5,23 +5,24 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import DetailTabs from '../components/WelfareDetail/DetailTabs';
 import DetailMain from '../components/WelfareDetail/DetailMain';
-import axios from 'axios';
+import getAxios from '../api';
 import DetailCard from '../components/WelfareDetail/DetailCard';
 
 
 function WelfareDetail(){
     let navigate = useNavigate();
     const welfareId = useParams().welfareId;
-    const [title, setTitle] = useState('');
+    const [welfare, setWelfare] = useState({});
+    const axios = getAxios();
 
     useEffect(()=>{
         axios.get(`http://localhost:8080/api/welfare/${welfareId}`)
             .then(res => {
                 console.log(res.data);
+                setWelfare(res.data.body.welfare);
             })
             .catch(err => console.log(err))
     },[]);
-
     useEffect(()=>{
         axios.get(`http://localhost:8080/api/welfare/${welfareId}/recommend`)
             .then(res => {
@@ -30,7 +31,7 @@ function WelfareDetail(){
             .catch(err => {
                 console.log(err)
             })
-    })
+    },[]);
 
     return(
         <StyledContainer>
@@ -41,8 +42,8 @@ function WelfareDetail(){
                 </div>
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
-            <DetailMain welfareId={welfareId}/>
-            <DetailTabs />
+            <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} />
+            <DetailTabs target={welfare.welfare_target_detail} crit={welfare.welfare_crit} howto={welfare.welfare_howto} contact={welfare.welfare_contact} phone={welfare.welfare_phone}  />
             <StyledCard>
                 <DetailCard />
                 <DetailCard />

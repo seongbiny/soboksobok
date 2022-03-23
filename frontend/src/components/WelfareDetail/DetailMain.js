@@ -13,6 +13,8 @@ function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
   const welfareId = props.welfareId;
+  const Name = props.Name;
+  const Content = props.Content;
 
   const likeAxios = () => {
     axios
@@ -57,7 +59,7 @@ function DetailMain(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/userId/like`)
+      .get("http://localhost:8080/api/users/like")
       .then(res => {
         console.log(res.data);
       })
@@ -82,7 +84,7 @@ function DetailMain(props) {
         <Grid container>
           <Grid item xs={10}>
             <Typography variant="h4" align="left">
-              취업 후상환 학자금대출
+              {Name}
             </Typography>
           </Grid>
           <Grid item xs={2} align="right">
@@ -124,10 +126,7 @@ function DetailMain(props) {
             </div>
           </Grid>
         </Grid>
-        <Typography sx={{ mt: 1 }}>
-          대학생이 학업에 전념할 수 있도록 학자금 전액대출을 지원하고 일정
-          소득이 발생한 후 소득수준에 따라 상환할 수 있도록 합니다.
-        </Typography>
+        <Typography>{Content}</Typography>
       </Paper>
     </Box>
   );
