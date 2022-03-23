@@ -12,6 +12,8 @@ const Axios = axios.create({
   },
 });
 
-Axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.jwtToken}`;
-
-export default Axios;
+export default function getAxios() {
+  const token = localStorage.getItem('jwtToken');
+  Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return Axios;
+}

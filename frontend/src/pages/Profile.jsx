@@ -4,54 +4,40 @@ import FilterChips from '../components/FilterChips';
 
 import styled from 'styled-components';
 
-import Axios from '../api.js';
-
-const 소개 = styled.div`
-  margin: 20px;
-  padding: 20px;
-`;
-
-const 필터 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
-`;
-
-const 리스트 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
-`;
+import getAxios from '../api.js';
+import { useStore } from '../store.jsx';
 
 function Profile() {
-  const [user, setUser] = useState();
-  const [nickname, setNickname] = useState();
-  const [email, setEmail] = useState();
-  const [ageRange, setAgeRange] = useState();
-  const [gender, setGender] = useState();
-
-  const [profileImage, setProfileImage] = useState();
+  const username = useStore((state) => state.username);
+  const email = useStore((state) => state.email);
+  const ageRange = useStore((state) => state.ageRange);
+  const gender = useStore((state) => state.gender);
+  const profileImage = useStore((state) => state.profileImage);
 
   const getProfile = async () => {
     try {
-      // Kakao SDK API를 이용해 사용자 정보 획득
-      let response = await Axios.get('/api/user/profile');
+      const axios = getAxios();
+      let response = await axios.get('/api/users/profile');
       console.log('카카오 : ', response.data);
-      setUser(response.data);
-
-      // 사용자 정보 변수에 저장
-      // setNickname(data.properties.nickname);
-      // setEmail(data.kakao_account.email);
-      // setAgeRange(data.kakao_account.age_range);
-      // setGender(data.kakao_account.gender);
-      // setProfileImage(data.properties.profile_image);
     } catch (err) {
       console.log(err);
     }
   };
 
+  // const getLike = async () => {
+  //   try {
+  //     let response = await Axios.get('/api/users/like');
+  //     console.log('찜 : ', response.data);
+
+  //     // 사용자 정보 변수에 저장
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   useEffect(() => {
     getProfile();
+    // getLike();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return (
@@ -60,10 +46,10 @@ function Profile() {
         <Row>
           <Col xs={12} md={8}>
             <소개>
-              {/* <h1> {nickname}님 안녕하세요!</h1> */}
-              {/* <img src={profileImage}></img>
+              <h1> {username}님 안녕하세요!</h1>
+              <img src={profileImage}></img>
               <h5>
-                이름: {nickname} <br />
+                이름: {username} <br />
               </h5>
               <h5>
                 이메일: {email} <br />
@@ -76,7 +62,7 @@ function Profile() {
               </h5>
               <h5>
                 성별: {gender} <br />
-              </h5> */}
+              </h5>
             </소개>
             <필터>
               <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
@@ -101,5 +87,27 @@ function Profile() {
     </div>
   );
 }
+
+const 소개 = styled.div`
+  margin: 20px;
+  padding: 20px;
+`;
+
+const 필터 = styled.div`
+  margin: 20px;
+  padding: 20px;
+  background-color: #e3f2fd;
+`;
+
+const 리스트 = styled.div`
+  margin: 20px;
+  padding: 20px;
+  positoin: sticky;
+  width: 175px;
+  display: inline-block;
+  right: 10%;
+  top: 94%;
+  background-color: #e3f2fd;
+`;
 
 export default Profile;
