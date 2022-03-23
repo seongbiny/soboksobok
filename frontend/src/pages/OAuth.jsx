@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Axios from '../api.js';
+import getAxios from '../api.js';
 import { useStore } from '../store.jsx';
 
 function Auth() {
@@ -17,7 +17,8 @@ function Auth() {
 
   const getToken = async () => {
     try {
-      localStorage.setItem('jwtToken', token);
+      await localStorage.setItem('jwtToken', token);
+      getProfile();
     } catch (err) {
       console.log(err);
     }
@@ -25,7 +26,12 @@ function Auth() {
 
   const getProfile = async () => {
     try {
-      let response = await Axios.get('/api/users');
+      console.log(localStorage.getItem('jwtToken'));
+
+      const axios = getAxios();
+      console.log(axios.defaults.headers);
+      let response = await axios.get('/api/users');
+
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
       setEmail(response.data.body.user.email);
@@ -40,7 +46,6 @@ function Auth() {
 
   useEffect(() => {
     getToken();
-    getProfile();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return null;

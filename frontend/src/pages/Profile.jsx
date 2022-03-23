@@ -4,25 +4,8 @@ import FilterChips from '../components/FilterChips';
 
 import styled from 'styled-components';
 
-import Axios from '../api.js';
+import getAxios from '../api.js';
 import { useStore } from '../store.jsx';
-
-const 소개 = styled.div`
-  margin: 20px;
-  padding: 20px;
-`;
-
-const 필터 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
-`;
-
-const 리스트 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
-`;
 
 function Profile() {
   const username = useStore((state) => state.username);
@@ -31,14 +14,15 @@ function Profile() {
   const gender = useStore((state) => state.gender);
   const profileImage = useStore((state) => state.profileImage);
 
-  // const getProfile = async () => {
-  //   try {
-  //     let response = await Axios.get('/api/users/profile');
-  //     console.log('카카오 : ', response.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const getProfile = async () => {
+    try {
+      const axios = getAxios();
+      let response = await axios.get('/api/users/profile');
+      console.log('카카오 : ', response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // const getLike = async () => {
   //   try {
@@ -52,7 +36,7 @@ function Profile() {
   // };
 
   useEffect(() => {
-    // getProfile();
+    getProfile();
     // getLike();
   }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
@@ -103,5 +87,27 @@ function Profile() {
     </div>
   );
 }
+
+const 소개 = styled.div`
+  margin: 20px;
+  padding: 20px;
+`;
+
+const 필터 = styled.div`
+  margin: 20px;
+  padding: 20px;
+  background-color: #e3f2fd;
+`;
+
+const 리스트 = styled.div`
+  margin: 20px;
+  padding: 20px;
+  positoin: sticky;
+  width: 175px;
+  display: inline-block;
+  right: 10%;
+  top: 94%;
+  background-color: #e3f2fd;
+`;
 
 export default Profile;
