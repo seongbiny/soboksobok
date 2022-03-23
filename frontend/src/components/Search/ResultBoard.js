@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import Table from "react-bootstrap/Table";
-import axios from "axios";
-import Pagination from "./Pagination";
+import Axios from "../../api.js";
+import PaginationBtn from "./PaginationBtn";
 import { paginate } from "./paginate";
 
 const StyledBoard = styled.div`
@@ -24,8 +22,28 @@ const StyledTable = styled.div`
 `;
 
 function ResultBoard() {
+  const word = "청년";
+  useEffect(() => {
+    Axios.get(`/api/welfare/search/${word}}`, {
+      contentType: "application/json; charset=utf-8;",
+    })
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    console.log(`/api/welfare/search/${word}`);
+  }, []);
   const getData = () => {
     const welfares = [
+      { index: 1, title: "사과", date: "2022.03.22" },
+      { index: 2, title: "딸기", date: "2022.03.22" },
+      { index: 3, title: "토마토", date: "2022.03.22" },
+      { index: 4, title: "메론", date: "2022.03.22" },
+      { index: 5, title: "바나나", date: "2022.03.22" },
+      { index: 10, title: "바나나", date: "2022.03.22" },
+      { index: 11, title: "바나나", date: "2022.03.22" },
       { index: 1, title: "사과", date: "2022.03.22" },
       { index: 2, title: "딸기", date: "2022.03.22" },
       { index: 3, title: "토마토", date: "2022.03.22" },
@@ -37,19 +55,57 @@ function ResultBoard() {
       { index: 9, title: "바나나", date: "2022.03.22" },
       { index: 10, title: "바나나", date: "2022.03.22" },
       { index: 11, title: "바나나", date: "2022.03.22" },
+      { index: 1, title: "사과", date: "2022.03.22" },
+      { index: 2, title: "딸기", date: "2022.03.22" },
+      { index: 3, title: "토마토", date: "2022.03.22" },
+      { index: 4, title: "메론", date: "2022.03.22" },
+      { index: 5, title: "바나나", date: "2022.03.22" },
+      { index: 6, title: "바나나", date: "2022.03.22" },
+      { index: 7, title: "바나나", date: "2022.03.22" },
+      { index: 8, title: "바나나", date: "2022.03.22" },
+      { index: 9, title: "바나나", date: "2022.03.22" },
+      { index: 10, title: "바나나", date: "2022.03.22" },
+      { index: 11, title: "바나나", date: "2022.03.22" },
+      { index: 1, title: "사과", date: "2022.03.22" },
+      { index: 2, title: "딸기", date: "2022.03.22" },
+      { index: 4, title: "메론", date: "2022.03.22" },
+      { index: 5, title: "바나나", date: "2022.03.22" },
+      { index: 6, title: "바나나", date: "2022.03.22" },
+      { index: 7, title: "바나나", date: "2022.03.22" },
+      { index: 8, title: "바나나", date: "2022.03.22" },
+      { index: 9, title: "바나나", date: "2022.03.22" },
+      { index: 10, title: "바나나", date: "2022.03.22" },
+      { index: 11, title: "바나나", date: "2022.03.22" },
+      { index: 1, title: "사과", date: "2022.03.22" },
+      { index: 2, title: "딸기", date: "2022.03.22" },
+      { index: 3, title: "토마토", date: "2022.03.22" },
+      { index: 4, title: "메론", date: "2022.03.22" },
+      { index: 9, title: "바나나", date: "2022.03.22" },
+      { index: 10, title: "바나나", date: "2022.03.22" },
+      { index: 11, title: "바나나", date: "2022.03.22" },
+      { index: 1, title: "사과", date: "2022.03.22" },
+      { index: 2, title: "딸기", date: "2022.03.22" },
+      { index: 3, title: "토마토", date: "2022.03.22" },
+      { index: 4, title: "메론", date: "2022.03.22" },
+      { index: 5, title: "바나나", date: "2022.03.22" },
+      { index: 6, title: "바나나", date: "2022.03.22" },
+      { index: 7, title: "바나나", date: "2022.03.22" },
+      { index: 6, title: "바나나", date: "2022.03.22" },
+      { index: 7, title: "바나나", date: "2022.03.22" },
     ];
     return welfares;
   };
   const [welfares, setWelfares] = useState({
     data: getData(),
-    pageSize: 5,
-    currentPage: 1,
+    pageSize: 10, // 한 페이지에 보여줄 데이터 개수
+    currentPage: 1, // 현재 활성화된 페이지 위치
   });
   const handlePageChange = page => {
     setWelfares({ ...welfares, currentPage: page });
+    console.log(page);
   };
   const { data, pageSize, currentPage } = welfares;
-  const pagedWelfares = paginate(data, currentPage, pageSize);
+  const pagedWelfares = paginate(data, currentPage, pageSize); // 페이지 별로 데이터가 속한 배열을 얻어옴
 
   const { length: count } = welfares.data;
   if (count === 0) {
@@ -78,10 +134,7 @@ function ResultBoard() {
         </Table>
       </StyledTable>
       <StyledPage>
-        {/* <Stack spacing={2}>
-          <Pagination count={10} color="primary" />
-        </Stack> */}
-        <Pagination
+        <PaginationBtn
           itemsCount={count}
           pageSize={pageSize}
           currentPage={currentPage}
