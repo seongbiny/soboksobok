@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Container } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import '../CSS/qnacreate.css';
@@ -32,8 +32,13 @@ let 버튼위치 = styled.div`
 `
 
 function QnaCreate(props){
-
+    let state = useSelector((state) => state)
     let [제목, 제목값변경] = useState('');
+    let dispatch = useDispatch();
+    let date = new Date();
+    let 글작성연도 = date.getFullYear();
+    let 글작성월 = date.getMonth();
+    let 글작성일 = date.getDate();
     return (
         <Container>
             <글작성틀>
@@ -42,7 +47,7 @@ function QnaCreate(props){
                 </게시판이름>
                 <게시글제목>
                     <p>제목</p> 
-                    <input type="text" style={ { width: "100%"}} onChange={ (e) => {제목값변경(e.target.value)} }/>
+                    <input type="text" maxlength='50' style={ { width: "100%"}} onChange={ (e) => {제목값변경(e.target.value)} }/>
 
                 </게시글제목>
                 <p>내용</p> 
@@ -69,9 +74,13 @@ function QnaCreate(props){
                     <Button variant="secondary" size="lg">취소</Button>
                 </Link>
                 {' '}
+                <Link to = '/Qna'>
                 <Button variant="primary" size="lg" onClick={() => {
-                    props.dispatch({ type: '항목추가', payload: {id: 0, title:제목 }})
+                    dispatch({ type: '항목추가',payload: { title:제목, year:글작성연도, month:글작성월, day:글작성일 }})
                 }}>등록</Button>
+
+                </Link>
+ 
                 </버튼위치>
 
             </글작성틀>
@@ -82,14 +91,13 @@ function QnaCreate(props){
         
     )
 }
-// export default QnaCreate;
-function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
-    console.log(state)
+export default QnaCreate;
+// function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
 
-    return {
-        state: state
+//     return {
+//         state: state
 
-    }
-}
+//     }
+// }
 
-export default connect(state를props화)(QnaCreate)
+// export default connect(state를props화)(QnaCreate)
