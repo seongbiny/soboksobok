@@ -1,6 +1,8 @@
 package com.soboksobok.soboksobok.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.soboksobok.soboksobok.oauth.entity.ProviderType;
 import com.soboksobok.soboksobok.oauth.entity.RoleType;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "USER")
 public class User {
     @JsonIgnore
@@ -28,10 +31,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
 
-    @OneToMany(mappedBy = "userSeq")
+    @OneToMany(mappedBy = "user")
     private List<Usedwelfare> usedwelfares = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userSeq")
+    @OneToMany(mappedBy = "user")
     private List<Likewelfare> likewelfares = new ArrayList<>();
 
     @Column(name = "USER_ID", length = 64, unique = true)
