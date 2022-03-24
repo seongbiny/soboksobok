@@ -31,7 +31,7 @@ function App() {
 
         <Route path="/QnaCreate" element={<QnaCreate />} />
 
-        <Route path="/QnaDetail" element={<QnaDetail />} />
+        <Route path="/QnaDetail/" element={<QnaDetail />} />
 
         <Route path="/filter" element={<CustomFilter />} />
 
