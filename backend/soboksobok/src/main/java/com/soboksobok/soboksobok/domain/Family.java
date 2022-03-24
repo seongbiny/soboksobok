@@ -15,10 +15,10 @@ public class Family {
 
     @Id
     @GeneratedValue
-    private Long family_id;
+    private Long familyId;
 
     @Column(length = 50)
-    private String family_name;
+    private String familyName;
 
     @OneToMany
     private List<Welfarefamily> welfarefamily = new ArrayList<>();
