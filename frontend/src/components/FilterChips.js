@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import MultipleSelectChips from '../MultipleSelectChips.js';
 import getAxios from '../api.js';
 import SidoSelectBox from './Filter/Sido.jsx';
@@ -90,6 +90,24 @@ function FilterChips() {
     }
   };
 
+  const getFilter = async () => {
+    try {
+      const axios = getAxios();
+      console.log(axios.defaults.headers);
+
+      let res = await axios.get('/api/users/update');
+      console.log(res.data.body.UserCharacter);
+      console.log('Child: ', res.data.body.UserCharacter.child);
+      setChild(res.data.body.UserCharacter.child);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getFilter();
+  }, []);
+
   return (
     <div>
       <SidoSelectBox setIsAll={setIsAll} />
@@ -105,7 +123,7 @@ function FilterChips() {
         setError={setError}
       />
 
-      <ChildSelectBox setChild={setChild}></ChildSelectBox>
+      <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
       <p>{child}</p>
 
       <MultipleSelectChips
