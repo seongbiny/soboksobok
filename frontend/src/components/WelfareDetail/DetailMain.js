@@ -7,18 +7,21 @@ import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
-import axios from "axios";
+import getAxios from "../../api";
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
-  const welfareId = props.welfareId;
+  const welfareId = Number(props.welfareId);
   const Name = props.Name;
   const Content = props.Content;
+  const likeNum = props.likeNum;
+
+  const axios = getAxios();
 
   const likeAxios = () => {
     axios
-      .post(`http://localhost:8080/api/userId/like/${welfareId}`)
+      .put(`/api/users/like/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -28,7 +31,7 @@ function DetailMain(props) {
   };
   const unlikeAxios = () => {
     axios
-      .delete(`http://localhost:8080/api/userId/like/${welfareId}`)
+      .delete(`/api/users/like/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -38,7 +41,7 @@ function DetailMain(props) {
   };
   const usedAxios = () => {
     axios
-      .post(`http://localhost:8080/api/userId/used/${welfareId}`)
+      .put(`/api/users/used/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -48,7 +51,7 @@ function DetailMain(props) {
   };
   const unusedAxios = () => {
     axios
-      .delete(`http://localhost:8080/api/userId/used/${welfareId}`)
+      .delete(`/api/users/used/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -58,15 +61,11 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/users/like")
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    console.log(likeNum);
+    likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    // console.log(likeNum.includes(welfareId));
   }, []);
+  console.log(likeBtn);
 
   return (
     <Box

@@ -14,25 +14,40 @@ function WelfareDetail(){
     const welfareId = useParams().welfareId;
     const [welfare, setWelfare] = useState({});
     const axios = getAxios();
+    const [likeWelfares, setLikeWelfares] = useState([]);
+    const [likeNum, setLikeNum] = useState([]);
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/api/welfare/${welfareId}`)
+        axios.get(`/api/welfare/${welfareId}`)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 setWelfare(res.data.body.welfare);
             })
-            .catch(err => console.log(err))
-    },[]);
-    useEffect(()=>{
-        axios.get(`http://localhost:8080/api/welfare/${welfareId}/recommend`)
-            .then(res => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => console.log(err));
     },[]);
 
+    useEffect(()=>{
+        const fetchLike = async () => {
+            const request = await axios.get('/api/users/like');
+            console.log(request.data.body.likeList);
+            const datas = request.data.body.likeList;
+            const ids = await datas.map(data => data.welfareId);
+            const likeIds = await new Set(ids);
+            const arr = Array.from(likeIds);
+            setLikeWelfares(arr);
+        }
+        fetchLike();
+        return () => setLikeWelfares([]);
+    }, [])
+
+    useEffect(()=>{
+        const fetchUsed = async () => {
+            const request = await axios.get('api/users/used');
+            console.log(request.data)
+        }
+        fetchUsed();
+    },[])
+    
     return(
         <StyledContainer>
             <StyledTop>
@@ -42,7 +57,7 @@ function WelfareDetail(){
                 </div>
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
-            <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} />
+            {likeWelfares.length !== 0 ? <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares || []} /> : <div></div> }
             <DetailTabs target={welfare.welfare_target_detail} crit={welfare.welfare_crit} howto={welfare.welfare_howto} contact={welfare.welfare_contact} phone={welfare.welfare_phone}  />
             <StyledCard>
                 <DetailCard />
