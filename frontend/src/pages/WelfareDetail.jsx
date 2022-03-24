@@ -15,7 +15,8 @@ function WelfareDetail(){
     const [welfare, setWelfare] = useState({});
     const axios = getAxios();
     const [likeWelfares, setLikeWelfares] = useState([]);
-    const [likeNum, setLikeNum] = useState([]);
+    const [update, setUpdate] = useState(false);
+    const [usedWelfares, setUsedWelfares] = useState([]);
 
     useEffect(()=>{
         axios.get(`/api/welfare/${welfareId}`)
@@ -29,24 +30,45 @@ function WelfareDetail(){
     useEffect(()=>{
         const fetchLike = async () => {
             const request = await axios.get('/api/users/like');
-            console.log(request.data.body.likeList);
             const datas = request.data.body.likeList;
-            const ids = await datas.map(data => data.welfareId);
-            const likeIds = await new Set(ids);
-            const arr = Array.from(likeIds);
-            setLikeWelfares(arr);
+            console.log(update);
+            if (datas.length !== 0) {
+                const ids = await datas.map(data => data.welfareId);
+                const likeIds = await new Set(ids);
+                const arr = Array.from(likeIds);
+                setLikeWelfares(arr);
+            } else {
+                setLikeWelfares([0])
+            }
         }
         fetchLike();
         return () => setLikeWelfares([]);
     }, [])
 
+    function changeUpdate(update) {
+        setUpdate(!update);
+        // console.log(update)
+    }
+    
     useEffect(()=>{
         const fetchUsed = async () => {
             const request = await axios.get('api/users/used');
-            console.log(request.data)
+            // console.log(request.data.body.usedWelfareList)
+            const datas = request.data.body.usedWelfareList;
+            if (datas.length !== 0) {
+                const ids = await datas.map(data => data.welfareId);
+                const usedIds = await new Set(ids);
+                const arr = Array.from(usedIds);
+                setUsedWelfares(arr);
+            } else {
+                setUsedWelfares([0])
+            }
         }
         fetchUsed();
+        return () => setUsedWelfares([]);
     },[])
+
+    // console.log(update)
     
     return(
         <StyledContainer>
@@ -57,12 +79,15 @@ function WelfareDetail(){
                 </div>
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
-            {likeWelfares.length !== 0 ? <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares || []} /> : <div></div> }
+            {likeWelfares.length !== 0 ? 
+            <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares} changeUpdate={changeUpdate} update={update} /> : 
+            <div></div> }
+            {/* <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares || []} /> */}
             <DetailTabs target={welfare.welfare_target_detail} crit={welfare.welfare_crit} howto={welfare.welfare_howto} contact={welfare.welfare_contact} phone={welfare.welfare_phone}  />
             <StyledCard>
-                <DetailCard />
-                <DetailCard />
-                <DetailCard />
+                {likeWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> }
+                {likeWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> }
+                {likeWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> } 
             </StyledCard>
         </StyledContainer>
     );

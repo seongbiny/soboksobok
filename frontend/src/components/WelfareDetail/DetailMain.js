@@ -16,7 +16,7 @@ function DetailMain(props) {
   const Name = props.Name;
   const Content = props.Content;
   const likeNum = props.likeNum;
-
+  // const update = props.update;
   const axios = getAxios();
 
   const likeAxios = () => {
@@ -62,10 +62,11 @@ function DetailMain(props) {
 
   useEffect(() => {
     console.log(likeNum);
-    likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    if (likeNum.length !== 0) {
+      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    }
     // console.log(likeNum.includes(welfareId));
   }, []);
-  console.log(likeBtn);
 
   return (
     <Box
@@ -94,6 +95,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setLikeBtn(false);
                     unlikeAxios();
+                    props.changeUpdate(props.update);
                   }}
                 />
               ) : (
