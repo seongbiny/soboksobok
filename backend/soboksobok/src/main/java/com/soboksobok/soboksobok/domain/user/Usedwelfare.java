@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,10 +23,12 @@ public class Usedwelfare {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "USER_SEQ")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "welfareId")
     private Welfare welfare;

@@ -43,8 +43,9 @@ public class UserService {
         userUsedRepository.save(used);
     }
 
+    @Transactional
     public void deleteUserUsedRepository(Usedwelfare used){
-        userUsedRepository.delete(used);
+        userUsedRepository.deleteByUser_UserSeqAndWelfare_WelfareId(used.getUser().getUserSeq(),used.getWelfare().getWelfareId());
     }
 
     public List<Likewelfare> getLike(User user){
@@ -61,8 +62,9 @@ public class UserService {
         likeWelfareRepository.save(like);
     }
 
+    @Transactional
     public void deleteLikeRepository(Likewelfare like){
-        likeWelfareRepository.delete(like);
+        likeWelfareRepository.deleteByUser_UserSeqAndWelfare_WelfareId(like.getUser().getUserSeq(), like.getWelfare().getWelfareId());
     }
 
     @Transactional
