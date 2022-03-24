@@ -16,6 +16,7 @@ function DetailMain(props) {
   const Name = props.Name;
   const Content = props.Content;
   const likeNum = props.likeNum;
+  const usedNum = props.usedNum;
   // const update = props.update;
   const axios = getAxios();
 
@@ -62,8 +63,12 @@ function DetailMain(props) {
 
   useEffect(() => {
     console.log(likeNum);
+    console.log(usedNum);
     if (likeNum.length !== 0) {
       likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    }
+    if (usedNum.length !== 0) {
+      usedNum.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
     }
     // console.log(likeNum.includes(welfareId));
   }, []);
@@ -104,6 +109,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setLikeBtn(true);
                     likeAxios();
+                    props.changeUpdate(props.update);
                   }}
                 />
               )}
@@ -113,6 +119,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setCheckBtn(false);
                     unusedAxios();
+                    props.changeUpdate(props.update);
                   }}
                 />
               ) : (
@@ -121,6 +128,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setCheckBtn(true);
                     usedAxios();
+                    props.changeUpdate(props.update);
                   }}
                 />
               )}
