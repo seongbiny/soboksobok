@@ -2,6 +2,7 @@ package com.soboksobok.soboksobok.controller;
 
 
 import com.soboksobok.soboksobok.common.ApiResponse;
+import com.soboksobok.soboksobok.domain.dto.CharacterDto;
 import com.soboksobok.soboksobok.domain.user.Likewelfare;
 import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import com.soboksobok.soboksobok.domain.user.User;
@@ -62,6 +63,13 @@ public class UserController {
                 res.add(welfareService.getWelfare(i.getWelfare().getWelfareId()));
             }
         }
+        List<Long> test = new ArrayList<>();
+        for(Usedwelfare i: used){
+            if(i.getUser().getUserSeq()==user.getUserSeq()){
+                test.add(i.getWelfare().getWelfareId());
+            }
+        }
+        System.out.println("test: "+test.toString());
         return ApiResponse.success("usedWelfareList",res);
     }
 
@@ -125,5 +133,13 @@ public class UserController {
         userService.deleteLikeRepository(like);
 
         return ApiResponse.success("save","success");
+    }
+
+    @PostMapping("/update")
+    public ApiResponse updateUserProfile(@RequestBody CharacterDto dto){
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+        userService.updateUserCharacter(dto,user.getUserId());
+        return ApiResponse.success("성공","성공");
     }
 }
