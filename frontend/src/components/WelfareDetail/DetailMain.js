@@ -17,7 +17,6 @@ function DetailMain(props) {
   const Content = props.Content;
   const likeNum = props.likeNum;
   const usedNum = props.usedNum;
-  // const update = props.update;
   const axios = getAxios();
 
   const likeAxios = () => {
@@ -100,7 +99,6 @@ function DetailMain(props) {
                   onClick={() => {
                     setLikeBtn(false);
                     unlikeAxios();
-                    props.changeUpdate(props.update);
                   }}
                 />
               ) : (
@@ -109,7 +107,6 @@ function DetailMain(props) {
                   onClick={() => {
                     setLikeBtn(true);
                     likeAxios();
-                    props.changeUpdate(props.update);
                   }}
                 />
               )}
@@ -119,7 +116,6 @@ function DetailMain(props) {
                   onClick={() => {
                     setCheckBtn(false);
                     unusedAxios();
-                    props.changeUpdate(props.update);
                   }}
                 />
               ) : (
@@ -128,7 +124,6 @@ function DetailMain(props) {
                   onClick={() => {
                     setCheckBtn(true);
                     usedAxios();
-                    props.changeUpdate(props.update);
                   }}
                 />
               )}

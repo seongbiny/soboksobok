@@ -15,7 +15,6 @@ function WelfareDetail(){
     const [welfare, setWelfare] = useState({});
     const axios = getAxios();
     const [likeWelfares, setLikeWelfares] = useState([]);
-    const [update, setUpdate] = useState(false);
     const [usedWelfares, setUsedWelfares] = useState([]);
 
     useEffect(()=>{
@@ -45,10 +44,6 @@ function WelfareDetail(){
         return () => setLikeWelfares([]);
     }, [])
 
-    function changeUpdate(update) {
-        setUpdate(!update);
-        // console.log(update)
-    }
     
     useEffect(()=>{
         const fetchUsed = async () => {
@@ -70,7 +65,6 @@ function WelfareDetail(){
         return () => setUsedWelfares([]);
     },[])
 
-    // console.log(update)
     
     return(
         <StyledContainer>
@@ -82,7 +76,7 @@ function WelfareDetail(){
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
             {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? 
-            <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares} usedNum={usedWelfares} changeUpdate={changeUpdate} update={update} /> : 
+            <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares} usedNum={usedWelfares} /> : 
             <div></div> }
             <DetailTabs target={welfare.welfare_target_detail} crit={welfare.welfare_crit} howto={welfare.welfare_howto} contact={welfare.welfare_contact} phone={welfare.welfare_phone}  />
             <StyledCard>
