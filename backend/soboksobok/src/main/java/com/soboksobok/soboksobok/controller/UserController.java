@@ -43,14 +43,6 @@ public class UserController {
         return ApiResponse.success("user", user);
     }
 
-//    @PostMapping("/update")
-//    public ApiResponse updateUser(@RequestBody User user){
-//        System.out.println("updateUser");
-//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User update = userService.getUser(principal.getUsername());
-//        return ApiResponse.success("update",update);
-//    }
-
     @GetMapping("/used")
     public ApiResponse getUsedWelfare(){
         System.out.println("사용중 복지 불러오기");
@@ -141,5 +133,18 @@ public class UserController {
         User user = userService.getUser(principal.getUsername());
         userService.updateUserCharacter(dto,user.getUserId());
         return ApiResponse.success("성공","성공");
+    }
+
+    @GetMapping("/update")
+    public ApiResponse getUserProfile(){
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+        CharacterDto dto = new CharacterDto();
+        dto.setChild(user.getChild());
+        dto.setRegion(user.getRegion());
+        dto.setFamily(userService.getAllSelectFamily(user.getUserSeq()));
+        dto.setJob(userService.getAllSelectTarget(user.getUserSeq()));
+        System.out.println("dto: "+dto);
+        return ApiResponse.success("UserCharacter",dto);
     }
 }

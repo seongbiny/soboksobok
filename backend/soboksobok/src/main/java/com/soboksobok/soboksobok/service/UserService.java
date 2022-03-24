@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -88,6 +89,23 @@ public class UserService {
             selectfamily.setFamily(familyRepository.findByFamilyId(dto.getFamily().get(i)));
             selectFamilyRepository.save(selectfamily);
         }
+    }
 
+    public List<Long> getAllSelectFamily(Long userSeq){
+        List<Selectfamily> li =  selectFamilyRepository.findByUser_UserSeq(userSeq);
+        List<Long> res = new ArrayList<>();
+        for(Selectfamily i : li){
+            res.add(i.getFamily().getFamilyId());
+        }
+        return res;
+    }
+
+    public List<Long> getAllSelectTarget(Long userSeq){
+        List<Selecttarget> li =  selectTargetRepository.findByUser_UserSeq(userSeq);
+        List<Long> res = new ArrayList<>();
+        for(Selecttarget i : li){
+            res.add(i.getTarget().getTargetId());
+        }
+        return res;
     }
 }
