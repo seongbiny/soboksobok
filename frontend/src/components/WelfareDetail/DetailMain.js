@@ -8,6 +8,7 @@ import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined
 import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
 import getAxios from "../../api";
+import styled from "styled-components";
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
@@ -61,15 +62,14 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    console.log(likeNum);
-    console.log(usedNum);
+    // console.log(likeNum);
+    // console.log(usedNum);
     if (likeNum.length !== 0) {
       likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
     }
     if (usedNum.length !== 0) {
       usedNum.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
     }
-    // console.log(likeNum.includes(welfareId));
   }, []);
 
   return (
@@ -78,7 +78,7 @@ function DetailMain(props) {
         "& > :not(style)": {
           m: 1,
           width: 1000,
-          height: 150,
+          height: 200,
         },
         mb: 3,
         mt: 3,
@@ -87,9 +87,10 @@ function DetailMain(props) {
       <Paper elevation={3} sx={{ p: 3 }}>
         <Grid container>
           <Grid item xs={10}>
-            <Typography variant="h4" align="left">
+            {/* <Typography variant="h4" align="left">
               {Name}
-            </Typography>
+            </Typography> */}
+            <h2>{Name}</h2>
           </Grid>
           <Grid item xs={2} align="right">
             <div>
@@ -130,9 +131,13 @@ function DetailMain(props) {
             </div>
           </Grid>
         </Grid>
-        <Typography>{Content}</Typography>
+        <StyledP>{Content}</StyledP>
       </Paper>
     </Box>
   );
 }
+
+const StyledP = styled.div`
+  margin-top: 3vh;
+`;
 export default DetailMain;

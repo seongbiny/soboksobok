@@ -8,7 +8,6 @@ import DetailMain from '../components/WelfareDetail/DetailMain';
 import getAxios from '../api';
 import DetailCard from '../components/WelfareDetail/DetailCard';
 
-
 function WelfareDetail(){
     let navigate = useNavigate();
     const welfareId = useParams().welfareId;
@@ -16,6 +15,17 @@ function WelfareDetail(){
     const axios = getAxios();
     const [likeWelfares, setLikeWelfares] = useState([]);
     const [usedWelfares, setUsedWelfares] = useState([]);
+    const [recommend, setRecommend] = useState([]);
+    const name = welfare.welfare_service_name;
+    const content = welfare.welfare_service_content;
+    const target = welfare.welfare_target_detail;
+    const crit = welfare.welfare_crit;
+    const howto = welfare.welfare_howto;
+    const contact = welfare.welfare_contact;
+    const phone = welfare.welfare_phone;
+    const deptName = welfare.welfare_dept_name;
+    const siteLink = welfare.welfare_site_link;
+    const siteName = welfare.welfare_site_name;
 
     useEffect(()=>{
         axios.get(`/api/welfare/${welfareId}`)
@@ -25,6 +35,19 @@ function WelfareDetail(){
             })
             .catch(err => console.log(err));
     },[]);
+
+    useEffect(() => {
+        const fetchRecommend = async () => {
+            const request = await axios.get(`/api/welfare/${welfareId}/recommend`);
+            const datas = request.data.body.welfare;
+            // const ids = await datas.map(data => data.welfareId);
+            // setRecommend(ids);
+            console.log(datas)
+        }
+        fetchRecommend();
+        // console.log(recommend);
+        return () => setRecommend([]);
+    },[])
 
     useEffect(()=>{
         const fetchLike = async () => {
@@ -42,9 +65,8 @@ function WelfareDetail(){
         }
         fetchLike();
         return () => setLikeWelfares([]);
-    }, [])
-
-    
+    },[])
+  
     useEffect(()=>{
         const fetchUsed = async () => {
             const request = await axios.get('api/users/used');
@@ -65,21 +87,21 @@ function WelfareDetail(){
         return () => setUsedWelfares([]);
     },[])
 
-    
     return(
         <StyledContainer>
             <StyledTop>
                 <div>
-                    <h1>복지서비스 상세(중앙)</h1>
+                    <h2>복지서비스 상세(중앙)</h2>
                     <div>다양한 복지 혜택을 찾고, 지원대상 및 선정기준 등 자세한 내용을 확인할 수 있습니다.</div>
                 </div>
                 <Button variant="contained" sx={{height: 35}} onClick={()=>{ navigate('/') }}>뒤로가기</Button>
             </StyledTop>
             {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? 
-            <DetailMain welfareId={welfareId} Name={welfare.welfare_service_name} Content={welfare.welfare_service_content} likeNum={likeWelfares} usedNum={usedWelfares} /> : 
+            <DetailMain welfareId={welfareId} Name={name} Content={content} likeNum={likeWelfares} usedNum={usedWelfares} /> : 
             <div></div> }
-            <DetailTabs target={welfare.welfare_target_detail} crit={welfare.welfare_crit} howto={welfare.welfare_howto} contact={welfare.welfare_contact} phone={welfare.welfare_phone}  />
+            <DetailTabs target={target} content={content} crit={crit} howto={howto} contact={contact} phone={phone} deptName={deptName} siteLink={siteLink} siteName={siteName} />
             <StyledCard>
+                {/* {recommend.map(rec => {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} usedNum={usedWelfares} /> : <DetailCard /> } )} */}
                 {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> }
                 {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> }
                 {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> } 

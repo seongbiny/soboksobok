@@ -43,6 +43,11 @@ export default function DetailTaps(props) {
   const crit = props.crit;
   const howto = props.howto;
   const contact = props.contact;
+  const phone = props.phone;
+  const deptName = props.deptName;
+  const siteLink = props.siteLink;
+  const siteName = props.siteName;
+  const content = props.content;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -72,20 +77,30 @@ export default function DetailTaps(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
+        <h4 style={{ marginBottom: "5vh" }}>지원대상</h4>
         <li>{target}</li>
         <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
           {crit}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <h4 style={{ marginBottom: "5vh" }}>서비스 내용</h4>
+        {content}
       </TabPanel>
       <TabPanel value={value} index={2}>
+        <h4 style={{ marginBottom: "5vh" }}>신청방법</h4>
         {howto}
-        {contact}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <h4 style={{ marginBottom: "5vh" }}>추가정보</h4>
+        <p style={{ fontWeight: "bold" }}>관련부서</p>
+        <li>{deptName}</li>
+        <li style={{ marginBottom: "5vh" }}>{contact}</li>
+        <p style={{ fontWeight: "bold" }}>전화문의</p>
+        <li style={{ marginBottom: "5vh" }}>{phone}</li>
+        <p style={{ fontWeight: "bold" }}>관련 웹사이트</p>
+        <li>{siteLink}</li>
+        <li>{siteName}</li>
       </TabPanel>
     </Box>
   );

@@ -12,6 +12,7 @@ import WelfareSearch from "./pages/WelfareSearch";
 import WelfareRecommend from "./pages/WelfareRecommend";
 import CustomFilter from "./pages/CustomFilter";
 import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 import "./CSS/app.css";
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/oauth/kakao/callback" element={<Auth />} />
 
-        <Route path="/" element={<Main />} />
+        <Route exact path="/" element={<Main />} />
 
         <Route path="/welfare/:welfareId" element={<WelfareDetail />} />
 
@@ -37,7 +38,9 @@ function App() {
 
         <Route path="/recommend" element={<WelfareRecommend />} />
 
-        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/profile" element={<Profile />} />
+
+        <Route path={"*"} element={<NotFound />} />
       </Routes>
       <Footer />
     </div>
