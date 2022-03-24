@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
 import { Container, Button } from 'react-bootstrap';
+import { connect, useSelector } from 'react-redux';
+import getAxios from '../api.js';
+import { useParams } from 'react-router-dom';
 
 let 글작성틀 = styled.div`
     width: 70%;
@@ -39,7 +42,14 @@ let 답변내용 = styled.div`
     
 
 `
-function QnaDetail() {
+function QnaDetail(props) {
+    let state = useSelector((state) => state)
+    const  qnaId  = useParams();
+    const axios = getAxios();
+    axios.get('/api/qna/mine/' + qnaId, {
+        title: state.제목,
+        content: state.내용
+    })
 
     return (
         
@@ -57,9 +67,10 @@ function QnaDetail() {
                 </버튼들>
 
                 <hr></hr>
+                                    console.log(title)
 
                 <제목>
-                    OOOO 복지혜택 추가해주세요!
+                    { props.title }
                 </제목>
                 <hr></hr>
 
