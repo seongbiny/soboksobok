@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import MultipleSelectChips from '../MultipleSelectChips.js';
+import getAxios from '../api.js';
+import SidoSelectBox from './Filter/Sido.jsx';
+import GugunSelectBox from './Filter/Gugun.jsx';
+
+const map = new Map();
+map.set(14, '15'); //서구
+map.set(15, 0); //학생
+map.set(16, 1); //무직
+map.set(17, 2); //창업
+map.set(18, 3); //농어업인
+map.set(19, 4); //중소기업
+map.set(20, 5); //일반
+map.set(21, 1); //자녀 있
+map.set(22, 2); //자녀 없
+map.set(23, 0); //무주택자
+map.set(24, 1); //임산부
+map.set(25, 2); //미취학
+map.set(26, 3); //다문화/탈북민
+map.set(27, 4); //다자녀
+map.set(28, 5); //보훈대상자
+map.set(29, 6); //장애인
+map.set(30, 7); //저소득
+map.set(31, 8); //한부모/조손
+map.set(32, 9); //신용불량자
+map.set(33, 10); //독거노인
+map.set(34, 11); //취약계층
 
 function FilterChips() {
   const [value, setValue] = useState([]);
   const [error, setError] = useState('');
-  const gender = [
-    { label: '남성', value: 1 },
-    { label: '여성', value: 2 },
-  ];
-  const age_range = [
-    { label: '어린이 (0-9)', value: 3 },
-    { label: '청소년 (10-19)', value: 4 },
-    { label: '청년 (20-29)', value: 5 },
-    { label: '중/장년 (30-39, 40-49, 50-59)', value: 6 },
-    { label: '노년 (60-)', value: 7 },
-  ];
-  const region = [
-    { label: '전국', value: 8 },
-    { label: '광주', value: 9 },
-    { label: '광주 광산구', value: 10 },
-    { label: '광주 남구', value: 11 },
-    { label: '광주 동구', value: 12 },
-    { label: '광주 북구', value: 13 },
-    { label: '광주 서구', value: 14 },
-  ];
+  const [isAll, setIsAll] = useState('All');
+
   const job = [
     { label: '학생', value: 15 },
     { label: '무직 (실업자(취업희망자))', value: 16 },
@@ -52,48 +60,62 @@ function FilterChips() {
     { label: '저취약계층소득', value: 34 },
   ];
 
+  const selectRegion = [];
+  const selectJob = [];
+  const selectChild = [];
+  const selectFamily = [];
+
+  for (let element of value) {
+    if (element >= 8 && element <= 14) {
+      selectRegion.push(map.get(element));
+    } else if (element >= 15 && element <= 20) {
+      selectJob.push(map.get(element));
+    } else if (element >= 21 && element <= 22) {
+      selectChild.push(map.get(element));
+    } else if (element >= 23 && element <= 34) {
+      selectFamily.push(map.get(element));
+    }
+  }
+  // console.log(
+  //   'selectRegion: ' +
+  //     selectRegion +
+  //     'selectJob: ' +
+  //     selectJob +
+  //     ' selectChild: ' +
+  //     selectChild +
+  //     ' selectFamily: ' +
+  //     selectFamily
+  // );
+
+  const setFilter = async () => {
+    try {
+      const axios = getAxios();
+      console.log(axios.defaults.headers);
+      console.log({
+        child: selectChild,
+        region: selectRegion,
+        job: selectJob,
+        family: selectFamily,
+      });
+
+      await axios.post('/api/users/update', {
+        child: selectChild[0],
+        region: selectRegion[0],
+        job: selectJob,
+        family: selectFamily,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
-      <MultipleSelectChips
-        label="성별"
-        value={value}
-        setValue={setValue}
-        options={gender}
-        error={error}
-        setError={setError}
-      />
-      <MultipleSelectChips
-        label="연령대"
-        value={value}
-        setValue={setValue}
-        options={age_range}
-        error={error}
-        setError={setError}
-      />
+      <SidoSelectBox setIsAll={setIsAll} />
+      <GugunSelectBox isAll={isAll} />
+      {/* <SelectBox options={SIDO} defaultValue="시/도 선택"></SelectBox>
+      <SelectBox2 options={GUGUN} defaultValue="시/도 선택"></SelectBox2> */}
 
-      {/* <Form.Select aria-label="Default select example">
-        <option>지역 선택</option>
-        <option value="1">전국</option>
-        <option value="2">광주</option>
-      </Form.Select>
-
-      <Form.Select aria-label="Default select example">
-        <option>구 선택</option>
-        <option value="1">광산구</option>
-        <option value="2">남구</option>
-        <option value="3">동구</option>
-        <option value="4">북구</option>
-        <option value="5">서구</option>
-      </Form.Select> */}
-
-      <MultipleSelectChips
-        label="지역"
-        value={value}
-        setValue={setValue}
-        options={region}
-        error={error}
-        setError={setError}
-      />
       <MultipleSelectChips
         label="대상특성"
         value={value}
@@ -118,6 +140,15 @@ function FilterChips() {
         error={error}
         setError={setError}
       />
+      <Button
+        variant="primary"
+        onClick={() => {
+          setFilter();
+          // navigate('/', { replace: true });
+        }}
+      >
+        저장
+      </Button>
     </div>
   );
 }
