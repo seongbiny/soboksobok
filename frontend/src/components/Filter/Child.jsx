@@ -1,6 +1,6 @@
-const SidoSelectBox = ({ setIsAll }) => {
+const ChildSelectBox = ({ setChild }) => {
   const handleChange = (e) => {
-    setIsAll(e.target.value);
+    setChild(e.target.value);
     console.log('e.target.value: ', e.target.value);
   };
   return (
@@ -8,10 +8,10 @@ const SidoSelectBox = ({ setIsAll }) => {
       <option value="placeholder" disabled>
         선택
       </option>
-      <option value="All">전국</option>
-      <option value="GwangJu">광주</option>
+      <option value="1">있음(출산예정/ 입양예정)</option>
+      <option value="2">없음</option>
     </select>
   );
 };
 
-export default SidoSelectBox;
+export default ChildSelectBox;
