@@ -28,12 +28,17 @@ function WelfareDetail(){
     const siteName = welfare.welfare_site_name;
 
     useEffect(()=>{
-        axios.get(`/api/welfare/${welfareId}`)
-            .then(res => {
-                // console.log(res.data);
-                setWelfare(res.data.body.welfare);
-            })
-            .catch(err => console.log(err));
+        const fetchDetail = async () => {
+            try {
+                const request = await axios.get(`/api/welfare/${welfareId}`);
+                const datas = request.data.body.welfare;
+                setWelfare(datas)
+                // console.log(datas)
+            } catch(err) {
+                console.log(err)
+            }
+        }
+        fetchDetail();
     },[]);
 
     useEffect(() => {
@@ -42,7 +47,8 @@ function WelfareDetail(){
             const datas = request.data.body.welfare;
             // const ids = await datas.map(data => data.welfareId);
             // setRecommend(ids);
-            console.log(datas)
+            console.log(datas.slice(undefined, 3))
+            setRecommend(datas.slice(undefined, 3))
         }
         fetchRecommend();
         // console.log(recommend);
@@ -102,9 +108,9 @@ function WelfareDetail(){
             <DetailTabs target={target} content={content} crit={crit} howto={howto} contact={contact} phone={phone} deptName={deptName} siteLink={siteLink} siteName={siteName} />
             <StyledCard>
                 {/* {recommend.map(rec => {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} usedNum={usedWelfares} /> : <DetailCard /> } )} */}
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> }
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> }
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} /> : <DetailCard /> } 
+                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[0]} /> : <DetailCard /> }
+                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[1]} /> : <DetailCard /> }
+                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[2]} /> : <DetailCard /> } 
             </StyledCard>
         </StyledContainer>
     );
