@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import MultipleSelectChips from '../MultipleSelectChips.js';
-import getAxios from '../api.js';
+import MultipleSelectChips from './Filter/MultipleSelectChips.js';
 import SidoSelectBox from './Filter/Sido.jsx';
 import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
+import getAxios from '../api.js';
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -32,8 +32,9 @@ function FilterChips() {
   const [isAll, setIsAll] = useState('All');
   const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
+  const [family, setFamily] = useState([]);
 
-  const job = [
+  const jobChip = [
     { label: '학생', value: 15 },
     { label: '무직 (실업자(취업희망자))', value: 16 },
     { label: '창업(영세자영업(창업)자)', value: 17 },
@@ -42,7 +43,7 @@ function FilterChips() {
     { label: '일반', value: 20 },
   ];
 
-  const family = [
+  const familyChip = [
     { label: '무주택자', value: 23 },
     { label: '임산부', value: 24 },
     { label: '미취학', value: 25 },
@@ -93,12 +94,13 @@ function FilterChips() {
   const getFilter = async () => {
     try {
       const axios = getAxios();
-      console.log(axios.defaults.headers);
+      // console.log(axios.defaults.headers);
 
       let res = await axios.get('/api/users/update');
-      console.log(res.data.body.UserCharacter);
-      console.log('Child: ', res.data.body.UserCharacter.child);
+      // console.log(res.data.body.UserCharacter);
+      // console.log('Family: ', res.data.body.UserCharacter.family);
       setChild(res.data.body.UserCharacter.child);
+      setRegion(res.data.body.UserCharacter.region);
     } catch (err) {
       console.log(err);
     }
@@ -106,19 +108,20 @@ function FilterChips() {
 
   useEffect(() => {
     getFilter();
+    // setFamily(selectFamily);
   }, []);
 
   return (
     <div>
-      <SidoSelectBox setIsAll={setIsAll} />
-      <GugunSelectBox isAll={isAll} setRegion={setRegion} />
+      <SidoSelectBox setIsAll={setIsAll} setRegion={setRegion} region={region} />
+      <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
 
       <MultipleSelectChips
         label="대상특성"
         value={value}
         setValue={setValue}
-        options={job}
+        options={jobChip}
         error={error}
         setError={setError}
       />
@@ -130,9 +133,10 @@ function FilterChips() {
         label="가구특성"
         value={value}
         setValue={setValue}
-        options={family}
+        options={familyChip}
         error={error}
         setError={setError}
+        family={family}
       />
       <Button
         variant="primary"
