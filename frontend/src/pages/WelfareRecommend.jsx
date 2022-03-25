@@ -2,6 +2,7 @@ import React from "react";
 import Chart from "../components/WelfareRecommend/Chart";
 import LineChart from "../components/WelfareRecommend/LineChart";
 import FilterSlide from "../components/WelfareRecommend/FilterSlide";
+import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import styled from 'styled-components';
 import { Avatar } from "@mui/material";
 
@@ -17,7 +18,7 @@ function WelfareRecommend(){
             </StyledTop>
             <StyledMain>
                 <FilterSlide />
-                {/* <Slide /> */}
+                <RecommendSlid />
             </StyledMain>
         </StyledContainer>
     )
