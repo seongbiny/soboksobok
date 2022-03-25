@@ -107,10 +107,10 @@ function WelfareDetail(){
             <div></div> }
             <DetailTabs target={target} content={content} crit={crit} howto={howto} contact={contact} phone={phone} deptName={deptName} siteLink={siteLink} siteName={siteName} />
             <StyledCard>
-                {/* {recommend.map(rec => {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} usedNum={usedWelfares} /> : <DetailCard /> } )} */}
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[0]} /> : <DetailCard /> }
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[1]} /> : <DetailCard /> }
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[2]} /> : <DetailCard /> } 
+                {recommend.map((wel)=>{ return (
+                    (likeWelfares.length !== 0) ? <DetailCard recommend={wel} likeNum={likeWelfares} /> : <div></div> 
+                )
+                })}
             </StyledCard>
         </StyledContainer>
     );

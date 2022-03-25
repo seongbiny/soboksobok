@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -8,13 +8,47 @@ import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { yellow, grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
+import getAxios from "../../api";
 
 function DetailCard(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const welfare = props.recommend;
+  const likeNum = props.likeNum;
+  const welfareId = welfare.welfareId;
+  const axios = getAxios();
 
-  console.log(welfare);
+  const likeAxios = () => {
+    axios
+      .put(`/api/users/like/${welfareId}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  const unlikeAxios = () => {
+    axios
+      .delete(`/api/users/like/${welfareId}`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
+    if (likeNum.length !== 0) {
+      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    }
+    console.log(welfareId);
+    console.log(likeNum);
+    console.log(likeNum.includes(welfareId));
+    console.log(likeNum.length !== 0);
+    console.log(likeBtn);
+  }, []);
+  console.log(likeBtn);
   return (
     <Card
       sx={{ width: 275, p: 2, display: "grid", gridTemplateRows: "80% 20%" }}
@@ -32,6 +66,7 @@ function DetailCard(props) {
                 sx={{ color: yellow[600], fontSize: 30 }}
                 onClick={() => {
                   setLikeBtn(false);
+                  unlikeAxios();
                 }}
               />
             ) : (
@@ -39,6 +74,7 @@ function DetailCard(props) {
                 sx={{ color: grey[400], fontSize: 30 }}
                 onClick={() => {
                   setLikeBtn(true);
+                  likeAxios();
                 }}
               />
             )}
