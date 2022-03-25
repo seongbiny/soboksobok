@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import SearchBar from '../components/Search/SearchBar';
 import ResultBoard from '../components/Search/ResultBoard';
 import Keyword from '../components/Search/Keyword';
 
-function Search(){
+function Search(props){
+    const [word, setWord] = useState('');
+
+    useEffect(()=>{
+        console.log(word)
+    },[word])
+
     return(
         <StyledContainer>
             <h1>통합검색</h1>
-            <SearchBar />
+            <SearchBar setWord={setWord} />
             <StyledMain>
-                <ResultBoard />
+                {word !== '' ? <ResultBoard word={word} /> : <ResultBoard />}
                 <Keyword />
             </StyledMain>
         </StyledContainer>

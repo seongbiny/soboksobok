@@ -1,7 +1,48 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
+
+function SearchBar(props) {
+  const [word, setWord] = useState("");
+
+  const onChange = e => {
+    setWord(e.target.value);
+  };
+  const onEnter = async e => {
+    if (e.key === "Enter") {
+      await setWord(e.target.value);
+      console.log(word);
+      // word props로 올려주기
+      await props.setWord(word);
+      await setWord("");
+    }
+  };
+  const onClick = () => {
+    // word props로 올려주기
+    console.log(word);
+    props.setWord(word);
+    setWord("");
+  };
+
+  return (
+    <StyledContainer>
+      <StyledBox>
+        <input
+          type="text"
+          size="50"
+          placeholder="검색어를 입력하세요"
+          onKeyDown={onEnter}
+          onChange={onChange}
+          value={word}
+        />
+        <Button variant="contained" type="submit" onClick={onClick}>
+          <BsSearch />
+        </Button>
+      </StyledBox>
+    </StyledContainer>
+  );
+}
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
@@ -22,16 +63,4 @@ const StyledBox = styled.div`
   justify-content: space-between;
 `;
 
-function SearchBar() {
-  return (
-    <StyledContainer>
-      <StyledBox>
-        <input type="text" size="50" placeholder="검색어를 입력하세요" />
-        <Button variant="primary">
-          <BsSearch />
-        </Button>
-      </StyledBox>
-    </StyledContainer>
-  );
-}
 export default SearchBar;
