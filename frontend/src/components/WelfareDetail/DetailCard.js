@@ -13,13 +13,17 @@ function DetailCard(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const welfare = props.recommend;
 
+  console.log(welfare);
+
   return (
-    <Card sx={{ width: 275, p: 2 }}>
+    <Card
+      sx={{ width: 275, p: 2, display: "grid", gridTemplateRows: "80% 20%" }}
+    >
       <CardContent>
         <Grid container sx={{ mb: 2 }}>
           <Grid item xs={10}>
             <Typography variant="h5" component="div" sx={10}>
-              {/* {welfare.welfare_service_name} */}
+              {welfare.welfare_service_name}
             </Typography>
           </Grid>
           <Grid item xs={2}>
@@ -41,7 +45,7 @@ function DetailCard(props) {
           </Grid>
         </Grid>
         <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
-          {/* {welfare.welfare_service_content} */}
+          {welfare.welfare_service_content}
         </Typography>
         <Typography variant="body2" sx={{ fontSize: 12 }}>
           {/* <li>문의처 129</li>
