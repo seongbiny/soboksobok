@@ -28,27 +28,31 @@ public class WelfareController {
 //    @ApiOperation(value = "단일복지 유사복지 리스트")
     @GetMapping("/{welfare_id}/recommend")
     public ApiResponse getwelfarelike() {
-        String result = "ok";
-        return ApiResponse.success("welfare", result);
+        String keyword = "복지";
+        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        return ApiResponse.success("welfare", list);
     }
 //    @ApiOperation(value = "사용자 추천 복지 리스트")
     @GetMapping("/recommend/{user_id}")
     public ApiResponse getwelfaregroup() {
-        String result = "ok";
-        return ApiResponse.success("welfare", result);
+        String keyword = "취업";
+        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        return ApiResponse.success("welfare", list);
     }
 //    @ApiOperation(value = "인기순 복지 리스트")
     @GetMapping("/popular")
     public ApiResponse getwelfarepopular() {
-        String result = "ok";
-        return ApiResponse.success("welfare", result);
+        String keyword = "노인";
+        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        return ApiResponse.success("welfare", list);
     }
 
 //    @ApiOperation(value = "최신순 복지 리스트")
     @GetMapping("/recent")
     public ApiResponse getwelfarerecent() {
-        String result = "ok";
-        return ApiResponse.success("welfare", result);
+        String keyword = "청년";
+        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        return ApiResponse.success("welfare", list);
     }
 
 //    @ApiOperation(value = "복지데이터 검색")

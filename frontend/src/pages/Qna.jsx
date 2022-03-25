@@ -3,6 +3,7 @@ import { Pagination, Table, Button, Container } from 'react-bootstrap';
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
+import getAxios from '../api.js';
 
 let 표 = styled.div`
     width: 80%;
@@ -29,9 +30,20 @@ let 중앙정렬 = styled.td`
     text-align: center;
 `
 
+
+function isLogin() {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
 function Qna(props){
     let state = useSelector((state) => state)
-    console.log(state)
+    const axios = getAxios();
+    axios.get('/api/qna/mine/') 
     return (
 
         <Container>
@@ -39,12 +51,23 @@ function Qna(props){
                 <제목>
                     Q&A 게시판
                 </제목>
-                <Link to = '/QnaCreate'>
+                {isLogin() ? (
+                    <Link to = '/QnaCreate'>
                     <글쓰기버튼>
                         <Button variant="secondary">글쓰기</Button>{' '}
                     </글쓰기버튼>
-                </Link>
-
+                    </Link>
+                ):(                   
+                    
+                    <Link to = '/'>
+                    <글쓰기버튼>
+                        <Button variant="secondary" onClick={() => {
+                        alert('로그인 후 작성해주세요')
+                        }}>글쓰기</Button>{' '}
+                        
+                    </글쓰기버튼>
+                    </Link>
+                )}
 
                 <Table striped bordered hover>
                     <thead>
@@ -59,7 +82,7 @@ function Qna(props){
                         {
                             state.map((a, i)=> {
                                 return (
-                                    <tr key={i}>
+                                    <tr key={i} >
                                         <중앙정렬 width='10%'>{i+1}</중앙정렬>
                                         <td width='70%'>{a.title}</td>
                                         <중앙정렬 width='20%'>{a.year}년 {a.month+1}월 {a.day}일</중앙정렬>

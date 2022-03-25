@@ -19,6 +19,7 @@ function reducer(state = 초기값, 액션) {
       copy.push(액션.payload);
 
       return copy
+      console.log(copy)
 
   } else {
     return state
