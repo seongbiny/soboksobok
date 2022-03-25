@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 1.0.5
 
-const MultipleSelectChips = ({ value, setValue, options, label, error, setError }) => {
+const MultipleSelectChips = ({ value, setValue, options, label, error, setError, family }) => {
   const classes = useStyles();
 
   const handleClick = (clickedValue) => {
