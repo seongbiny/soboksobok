@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import styled from "styled-components";
-import RecommendCard from "./RecommendCard";
+import FilterCard from "./FilterCard";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
@@ -44,9 +44,7 @@ function FilterSlide() {
               justifyContent: "center",
             }}
           >
-            <RecommendCard
-              style={{ alignItems: "center", border: "1px solid" }}
-            />
+            <FilterCard style={{ alignItems: "center", border: "1px solid" }} />
           </SwiperSlide>
           <SwiperSlide
             style={{
@@ -54,7 +52,7 @@ function FilterSlide() {
               justifyContent: "center",
             }}
           >
-            <RecommendCard />
+            <FilterCard />
           </SwiperSlide>
           <SwiperSlide
             style={{
@@ -62,7 +60,7 @@ function FilterSlide() {
               justifyContent: "center",
             }}
           >
-            <RecommendCard />
+            <FilterCard />
           </SwiperSlide>
           <SwiperSlide
             style={{
@@ -70,7 +68,7 @@ function FilterSlide() {
               justifyContent: "center",
             }}
           >
-            <RecommendCard />
+            <FilterCard />
           </SwiperSlide>
         </Swiper>
       </div>
