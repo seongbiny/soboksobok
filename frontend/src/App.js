@@ -7,6 +7,7 @@ import Main from "./pages/Main.jsx";
 import Auth from "./pages/OAuth.jsx";
 import Qna from "./pages/Qna.jsx";
 import QnaCreate from "./pages/QnaCreate.jsx";
+import QnaPatch from "./pages/QnaPatch.jsx";
 import QnaDetail from "./pages/QnaDetail.jsx";
 import WelfareSearch from "./pages/WelfareSearch";
 import WelfareRecommend from "./pages/WelfareRecommend";
@@ -30,9 +31,11 @@ function App() {
 
         <Route path="/search" element={<WelfareSearch />} />
 
-        <Route path="/QnaCreate" element={<QnaCreate />} />
+        <Route path="/QnaCreate/" element={<QnaCreate />} />
+        
+        <Route path="/QnaPatch/:qnaId" element={<QnaPatch />} />
 
-        <Route path="/QnaDetail/" element={<QnaDetail />} />
+        <Route path="/QnaDetail/:qnaId" element={<QnaDetail />} />
 
         <Route path="/filter" element={<CustomFilter />} />
 
