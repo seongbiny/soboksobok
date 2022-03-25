@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { Container, Button } from 'react-bootstrap';
 import { connect, useSelector } from 'react-redux';
 import getAxios from '../api.js';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 let 글작성틀 = styled.div`
     width: 70%;
@@ -42,14 +42,30 @@ let 답변내용 = styled.div`
     
 
 `
-function QnaDetail(props) {
+function QnaDetail() {
+    let navigate = useNavigate();
     let state = useSelector((state) => state)
-    const  qnaId  = useParams();
+    const qnaId  = useParams().qnaId;
+    const [qna, setQna] = useState({});
     const axios = getAxios();
-    axios.get('/api/qna/mine/' + qnaId, {
-        title: state.제목,
-        content: state.내용
-    })
+    useEffect(()=> {
+        // const fetchQnas = async () => {
+        //     const request = await axios.get(`/api/qna/mine/${qnaId}/`);
+        //     const  datas = request.data.body.success;
+
+        //     setQna(datas)
+        // }
+        // fetchQnas();
+        // return () => setQna([]);
+        // 이거 async 로 바꾸면 글 쓰고 바로 글 목록에 표시가 안된다
+        axios.get(`/api/qna/mine/${qnaId}`)
+            .then(res => {
+                console.log(res.data);
+                setQna(res.data.body.success);
+            })
+            .catch(err => console.log(err))
+        
+    }, []);
 
     return (
         
@@ -62,31 +78,47 @@ function QnaDetail(props) {
                 </게시판이름>
                 
                 <버튼들>
-                    <Button variant="primary" size="lg">수정</Button>{' '}
-                    <Button variant="danger" size="lg">삭제</Button>
+
+                    <Button variant="primary" size="lg" onClick={(e)=> {
+                        navigate(`/QnaPatch/${qnaId}`)
+
+                    }}
+                    
+                    >수정</Button>{' '}
+                    <Link to ='/Qna'>
+                    <Button variant="danger" size="lg" onClick={(e)=> {
+                        const axios = getAxios();
+                        axios.delete(`/api/qna/mine/${qnaId}`)
+                        navigate(`/Qna/`)
+
+                    }}>삭제</Button>
+
+                    </Link>
+
                 </버튼들>
 
                 <hr></hr>
-                                    console.log(title)
 
                 <제목>
-                    { props.title }
+                    { qna.title }
                 </제목>
                 <hr></hr>
 
                 <내용>
-                    최근에 OOOO 복지혜택이 생겼는데 이거 추가해주실수 있나요?? <br></br>
-                    감사합니다!!
+                    { qna.content}
                 </내용>
                 <hr></hr>
                 <답변>
                     답변
                 </답변>
                 <답변내용>
-                    안녕하세요 OOO님! 소복소복 서비스팀입니다. <br></br>
-                    추가 요청해주신 복지혜택은 검토후에 추가하도록 하겠습니다. <br></br>
-                    감사합니다.
+
                 </답변내용>
+                <버튼들>
+                <Link to = '/Qna'>
+                    <Button variant="secondary" size="lg">목록</Button>
+                </Link>
+                </버튼들>
             </글작성틀>
             {/* <button className="post-view-go-list-btn" onClick={() => history.goBack()}>목록</button> */}
 
