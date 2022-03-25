@@ -14,7 +14,7 @@ function NavBar() {
             <Nav.Link href="/welfare">추천</Nav.Link>
             <Nav.Link href="/qna">QnA</Nav.Link>
           </Nav>
-          <Button variant="primary">로그인</Button>
+          {/* <Button variant="primary">로그인</Button> */}
           <Login></Login>
         </Container>
       </Navbar>

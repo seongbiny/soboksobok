@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -38,8 +37,17 @@ function a11yProps(index) {
   };
 }
 
-export default function DetailTaps() {
+export default function DetailTaps(props) {
   const [value, setValue] = React.useState(0);
+  const target = props.target;
+  const crit = props.crit;
+  const howto = props.howto;
+  const contact = props.contact;
+  const phone = props.phone;
+  const deptName = props.deptName;
+  const siteLink = props.siteLink;
+  const siteName = props.siteName;
+  const content = props.content;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,25 +77,30 @@ export default function DetailTaps() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <li>
-          국내의 대학(대학원 제외)에 재학 중이거나, 입학예정인 대한민국 국민에게
-          지원합니다.
-        </li>
+        <div style={{ marginBottom: "5vh" }}>지원대상</div>
+        <li>{target}</li>
         <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
-          대출 신청일 현재 만 35세 이하인 기초생활수급자 및 학자금지원 8구간
-          이하 국내 고등교육기관 학부생을 지원합니다. <br />
-          다자녀(3자녀 이상)가구 학부생의 경우 학자금지원 관계없이 취업 후 상환
-          학자금대출 이용 가능합니다.
+          {crit}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <div style={{ marginBottom: "5vh" }}>서비스 내용</div>
+        {content}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <div style={{ marginBottom: "5vh" }}>신청방법</div>
+        {howto}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <div style={{ marginBottom: "5vh" }}>추가정보</div>
+        <div style={{ fontWeight: "bold" }}>관련부서</div>
+        <li>{deptName}</li>
+        <li style={{ marginBottom: "5vh" }}>{contact}</li>
+        <div style={{ fontWeight: "bold" }}>전화문의</div>
+        <li style={{ marginBottom: "5vh" }}>{phone}</li>
+        <div style={{ fontWeight: "bold" }}>관련 웹사이트</div>
+        <li>{siteLink}</li>
+        <li>{siteName}</li>
       </TabPanel>
     </Box>
   );
