@@ -18,7 +18,7 @@ public class Welfare {
     @Column(name = "welfareId")
     private Long welfareId;
 
-    @Column(name = "welfareName")
+    @Column(name = "welfareServiceName")
     private String welfare_service_name;
 
     @Column(name = "welfareDeptName")
