@@ -37,6 +37,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Likewelfare> likewelfares = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Selectfamily> selectfamilies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Selecttarget> selecttargets = new ArrayList<>();
+
     @Column(name = "USER_ID", length = 64, unique = true)
     @NotNull
     @Size(max = 64)
@@ -96,7 +102,10 @@ public class User {
     private String birth;
 
     @Column(name = "CHILD")
-    private String child;
+    private Long child;
+
+    @Column(name = "REGION")
+    private Long region;
 
 
 

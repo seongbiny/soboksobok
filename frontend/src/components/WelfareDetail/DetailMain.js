@@ -7,16 +7,22 @@ import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
-import axios from "axios";
+import getAxios from "../../api";
+import styled from "styled-components";
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
-  const welfareId = props.welfareId;
+  const welfareId = Number(props.welfareId);
+  const Name = props.Name;
+  const Content = props.Content;
+  const likeNum = props.likeNum;
+  const usedNum = props.usedNum;
+  const axios = getAxios();
 
   const likeAxios = () => {
     axios
-      .post(`http://localhost:8080/api/userId/like/${welfareId}`)
+      .put(`/api/users/like/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -26,7 +32,7 @@ function DetailMain(props) {
   };
   const unlikeAxios = () => {
     axios
-      .delete(`http://localhost:8080/api/userId/like/${welfareId}`)
+      .delete(`/api/users/like/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -36,7 +42,7 @@ function DetailMain(props) {
   };
   const usedAxios = () => {
     axios
-      .post(`http://localhost:8080/api/userId/used/${welfareId}`)
+      .put(`/api/users/used/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -46,7 +52,7 @@ function DetailMain(props) {
   };
   const unusedAxios = () => {
     axios
-      .delete(`http://localhost:8080/api/userId/used/${welfareId}`)
+      .delete(`/api/users/used/${welfareId}`)
       .then(res => {
         console.log(res.data);
       })
@@ -56,14 +62,14 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/userId/like`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // console.log(likeNum);
+    // console.log(usedNum);
+    if (likeNum.length !== 0) {
+      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    }
+    if (usedNum.length !== 0) {
+      usedNum.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
+    }
   }, []);
 
   return (
@@ -72,7 +78,7 @@ function DetailMain(props) {
         "& > :not(style)": {
           m: 1,
           width: 1000,
-          height: 150,
+          height: 200,
         },
         mb: 3,
         mt: 3,
@@ -81,9 +87,10 @@ function DetailMain(props) {
       <Paper elevation={3} sx={{ p: 3 }}>
         <Grid container>
           <Grid item xs={10}>
-            <Typography variant="h4" align="left">
-              취업 후상환 학자금대출
-            </Typography>
+            {/* <Typography variant="h4" align="left">
+              {Name}
+            </Typography> */}
+            <h2>{Name}</h2>
           </Grid>
           <Grid item xs={2} align="right">
             <div>
@@ -124,12 +131,13 @@ function DetailMain(props) {
             </div>
           </Grid>
         </Grid>
-        <Typography sx={{ mt: 1 }}>
-          대학생이 학업에 전념할 수 있도록 학자금 전액대출을 지원하고 일정
-          소득이 발생한 후 소득수준에 따라 상환할 수 있도록 합니다.
-        </Typography>
+        <StyledP>{Content}</StyledP>
       </Paper>
     </Box>
   );
 }
+
+const StyledP = styled.div`
+  margin-top: 3vh;
+`;
 export default DetailMain;
