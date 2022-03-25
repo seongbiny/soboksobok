@@ -107,8 +107,8 @@ function WelfareDetail(){
             <div></div> }
             <DetailTabs target={target} content={content} crit={crit} howto={howto} contact={contact} phone={phone} deptName={deptName} siteLink={siteLink} siteName={siteName} />
             <StyledCard>
-                {recommend.map((wel)=>{ return (
-                    (likeWelfares.length !== 0) ? <DetailCard recommend={wel} likeNum={likeWelfares} /> : <div></div> 
+                {recommend.map((wel,index)=>{ return (
+                    (likeWelfares.length !== 0) ? <DetailCard key={index} recommend={wel} likeNum={likeWelfares} /> : <div key={index}></div> 
                 )
                 })}
             </StyledCard>

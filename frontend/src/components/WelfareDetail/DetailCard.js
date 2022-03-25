@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -42,13 +43,16 @@ function DetailCard(props) {
     if (likeNum.length !== 0) {
       likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
     }
-    console.log(welfareId);
-    console.log(likeNum);
-    console.log(likeNum.includes(welfareId));
-    console.log(likeNum.length !== 0);
-    console.log(likeBtn);
   }, []);
-  console.log(likeBtn);
+
+  let navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/welfare/${welfareId}`);
+    console.log("클릭");
+    window.location.reload();
+  };
+
   return (
     <Card
       sx={{ width: 275, p: 2, display: "grid", gridTemplateRows: "80% 20%" }}
@@ -91,7 +95,12 @@ function DetailCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" size="small" fullWidth>
+        <Button
+          variant="contained"
+          size="small"
+          fullWidth
+          onClick={handleClick}
+        >
           상세보기
         </Button>
       </CardActions>
