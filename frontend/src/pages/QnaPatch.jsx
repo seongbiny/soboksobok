@@ -8,7 +8,7 @@ import { Link, useParams } from 'react-router-dom';
 import '../CSS/qnacreate.css';
 import { useState } from 'react';
 import getAxios from '../api.js';
-
+import ReactHtmlParser from 'react-html-parser';
 let 게시판이름 = styled.h1`
     text-align: center;
     margin-bottom: 5%;
@@ -41,14 +41,17 @@ function QnaCreate(props){
 
     const axios = getAxios();
     useEffect(()=> {
-        axios.patch(`/api/qna/mine/${qnaId}`, {
-            title: qna.title,
-            content: qna.content,
-        })
+        axios.get(`/api/qna/mine/${qnaId}`)
             .then(res => {
-                console.log(1)
-                console.log(res);
-                setQna(res.data.body.success);
+                // console.log(1)
+                // console.log(res);
+                
+                // setQna(res.data.body.success);
+
+                제목값변경(res.data.body.success.title);
+                내용값변경(res.data.body.success.content);
+                console.log(제목)
+                console.log(내용)
             })
             .catch(err => console.log(err))
     
@@ -72,16 +75,17 @@ function QnaCreate(props){
                 <게시글제목>
                     <p>제목</p> 
                     {/* value={qna.title || ""} */}
-                    <input type="text" maxLength='50' style={ { width: "100%"}} onChange={ (e) => {제목값변경(e.target.value)} }/>
+                    
+                    <input type="text" maxLength='50' style={ { width: "100%"}} value={제목 || ""} onChange={ (e) => {제목값변경(e.target.value)} }/>
 
                 </게시글제목>
                 <p>내용</p> 
                 <CKEditor
                     editor={ ClassicEditor  }
-                    // data="<p>Hello from CKEditor 5!</p>"
+                    data={ ReactHtmlParser(내용) || ""}
                     // onReady={ editor => {
                     //     // You can store the "editor" and use when it is needed.
-                    //     // console.log( 'Editor is ready to use!', editor );
+                    //     console.log( 'Editor is ready to use!', editor );
                     // } }
                     // onChange={ ( event, editor ) => {
                     //     const data = editor.getData();
@@ -93,9 +97,8 @@ function QnaCreate(props){
                     // onFocus={ ( event, editor ) => {
                     //     // console.log( 'Focus.', editor );
                     // } }
-
                     onChange={ (event, editor) => {
-                        const data = editor.getData().replace(/<((p|\/p)([^>]*)([^a-z]*)(&nbsp;*|br))([^>]*)>|<(p|\/p)([^>]*)>+([\<\/div>]*)/gi,"");
+                        const data = editor.getData();
                         
                         내용값변경(data)
                     } }
