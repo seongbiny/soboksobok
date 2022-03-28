@@ -3,25 +3,36 @@ import Button from "@mui/material/Button";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
 
-function SearchBar(props) {
+import { useSelector, useDispatch } from "react-redux";
+import { changeInput } from "../../reducers/change.js";
+
+function SearchBar() {
+  const dispatch = useDispatch();
+
+  // const { keyword } = useSelector(state => state.change);
+
   const [word, setWord] = useState("");
 
   const onChange = e => {
     setWord(e.target.value);
+    // keyword(e.target.value);
+    dispatch(changeInput(word));
   };
+
   const onEnter = async e => {
     if (e.key === "Enter") {
       await setWord(e.target.value);
-      console.log(word);
+      // await keyword(e.target.value);
+      // console.log(word);
       // word props로 올려주기
-      await props.setWord(word);
+      await dispatch(changeInput(word));
       await setWord("");
     }
   };
   const onClick = () => {
     // word props로 올려주기
-    console.log(word);
-    props.setWord(word);
+    // console.log(word);
+    dispatch(changeInput(word));
     setWord("");
   };
 

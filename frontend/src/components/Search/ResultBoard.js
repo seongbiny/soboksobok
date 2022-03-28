@@ -6,26 +6,24 @@ import PaginationBtn from "./PaginationBtn";
 import { paginate } from "./paginate";
 import { getDatasetAtEvent } from "react-chartjs-2";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 
 function ResultBoard(props) {
   const axios = getAxios();
   const [word, setWord] = useState("");
   const [result, setResult] = useState([]);
+  const { keyword } = useSelector(state => state.change);
 
   useEffect(() => {
     const fetchSearch = async () => {
-      const request = await axios.get(`/api/welfare/search/${word}`);
+      const request = await axios.get(`/api/welfare/search/${keyword}`);
       const datas = request.data.body.welfares;
       // console.log(datas);
       await setResult(datas);
       await console.log(result);
     };
     fetchSearch();
-  }, [word]);
-
-  useEffect(() => {
-    setWord(props.word);
-  }, [props.word]);
+  }, [keyword]);
 
   const getData = () => {
     const welfares = [
