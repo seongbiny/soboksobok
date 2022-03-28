@@ -16,7 +16,7 @@ function SearchBar() {
   const onChange = e => {
     setWord(e.target.value);
     // keyword(e.target.value);
-    dispatch(changeInput(word));
+    // dispatch(changeInput(word));
   };
 
   const onEnter = async e => {

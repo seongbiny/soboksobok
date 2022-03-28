@@ -4,11 +4,9 @@ import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
 import PaginationBtn from "./PaginationBtn";
 import { paginate } from "./paginate";
-import { getDatasetAtEvent } from "react-chartjs-2";
-import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 
-function ResultBoard(props) {
+function ResultBoard() {
   const axios = getAxios();
   const [word, setWord] = useState("");
   const [result, setResult] = useState([]);
@@ -18,8 +16,8 @@ function ResultBoard(props) {
     const fetchSearch = async () => {
       const request = await axios.get(`/api/welfare/search/${keyword}`);
       const datas = request.data.body.welfares;
-      // console.log(datas);
       await setResult(datas);
+      console.log(datas);
       await console.log(result);
     };
     fetchSearch();
