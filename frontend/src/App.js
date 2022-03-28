@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/oauth/kakao/callback" element={<Auth />} />
 
-        <Route exact path="/" element={<Main />} />
+        <Route path="/" element={<Main />} />
 
         <Route path="/welfare/:welfareId" element={<WelfareDetail />} />
 
@@ -32,7 +32,7 @@ function App() {
         <Route path="/search" element={<WelfareSearch />} />
 
         <Route path="/QnaCreate/" element={<QnaCreate />} />
-        
+
         <Route path="/QnaPatch/:qnaId" element={<QnaPatch />} />
 
         <Route path="/QnaDetail/:qnaId" element={<QnaDetail />} />
@@ -43,11 +43,10 @@ function App() {
 
         <Route path="/profile" element={<Profile />} />
 
-        <Route path={"*"} element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
     </div>
-
   );
 }
 

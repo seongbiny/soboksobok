@@ -68,16 +68,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = new User(
                 userInfo.getId(),
                 userInfo.getName(),
-                userInfo.getEmail(),
-                "Y",
+//                userInfo.getEmail(),
+//                "Y",
                 userInfo.getImageUrl(),
                 providerType,
                 RoleType.USER,
                 now,
-                now,
-                userInfo.getAgeRange(),
-                userInfo.getGender(),
-                userInfo.getBirth()
+                now
         );
 
 
@@ -95,17 +92,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user.setProfileImageUrl(userInfo.getImageUrl());
         }
 
-        if(userInfo.getAgeRange() != null && !user.getAgeRange().equals(userInfo.getAgeRange())){
-            user.setAgeRange(userInfo.getAgeRange());
-        }
-
-        if(userInfo.getGender() != null && !user.getGender().equals(userInfo.getGender())){
-            user.setGender(userInfo.getGender());
-        }
-
-        if(userInfo.getBirth() != null && !user.getBirth().equals(userInfo.getBirth())){
-            user.setBirth(userInfo.getBirth());
-        }
+//        if(userInfo.getAgeRange() != null && !user.getAgeRange().equals(userInfo.getAgeRange())){
+//            user.setAgeRange(userInfo.getAgeRange());
+//        }
+//
+//        if(userInfo.getGender() != null && !user.getGender().equals(userInfo.getGender())){
+//            user.setGender(userInfo.getGender());
+//        }
+//
+//        if(userInfo.getBirth() != null && !user.getBirth().equals(userInfo.getBirth())){
+//            user.setBirth(userInfo.getBirth());
+//        }
 
         return user;
     }
