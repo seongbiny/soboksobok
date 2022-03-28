@@ -45,7 +45,7 @@ function FilterSlide() {
             // border: "1px solid",
           }}
           spaceBetween={8}
-          slidesPerView={3}
+          slidesPerView={4}
           initialSlide={1}
           navigation
           scrollbar={{ draggable: true }}
@@ -71,30 +71,6 @@ function FilterSlide() {
               />
             </SwiperSlide>
           ))}
-          {/* <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide> */}
         </Swiper>
       </div>
     </StyledBox>

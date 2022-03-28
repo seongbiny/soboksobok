@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
+import {useDispatch} from 'react-redux';
+import {userData} from '../reducers/profile';
 
 function Profile() {
   const [username, setUsername] = useState('');
@@ -14,6 +16,8 @@ function Profile() {
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
+
+  const dispatch = useDispatch();
 
   const getProfile = async () => {
     try {
@@ -26,6 +30,7 @@ function Profile() {
       setAgeRange(response.data.body.user.ageRange);
       setGender(response.data.body.user.gender);
       setProfileImage(response.data.body.user.profileImageUrl);
+      dispatch(userData(response.data.body.user));
     } catch (err) {
       console.log(err);
     }

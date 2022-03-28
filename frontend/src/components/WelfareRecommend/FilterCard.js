@@ -22,7 +22,15 @@ function FilterCard(props) {
 
   return (
     <Card
-      sx={{ width: 275, p: 2, display: "grid", gridTemplateRows: "80% 20%" }}
+      sx={{
+        width: 275,
+        height: 300,
+        pl: 2,
+        pr: 2,
+        display: "grid",
+        gridTemplateRows: "80% 20%",
+      }}
+      style={{ border: "1px solid" }}
     >
       <CardContent>
         <Grid container sx={{ mb: 2 }}>

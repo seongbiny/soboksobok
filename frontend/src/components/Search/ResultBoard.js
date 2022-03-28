@@ -3,8 +3,7 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function ResultBoard() {
   const axios = getAxios();
@@ -37,7 +36,7 @@ function ResultBoard() {
     fetchSearch();
   }, [keyword]);
 
-  const onClick = (id, e) => {
+  const onClick = id => {
     navigate(`/welfare/${id}`);
   };
 
@@ -59,12 +58,11 @@ function ResultBoard() {
           </thead>
           <tbody>
             {result.map(welfare => (
-              <tr
-                key={welfare.welfareId}
-                onClick={e => onClick(welfare.welfareId, e)}
-              >
+              <tr key={welfare.welfareId}>
                 <td>{welfare.welfareId}</td>
-                <td>{welfare.welfare_service_name}</td>
+                <StyledTd onClick={e => onClick(welfare.welfareId)}>
+                  {welfare.welfare_service_name}
+                </StyledTd>
                 <td>{welfare.welfare_phone}</td>
               </tr>
             ))}
@@ -86,4 +84,12 @@ const StyledTable = styled.div`
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
 `;
+
+const StyledTd = styled.td`
+  &:hover {
+    text-decoration: underline;
+  }
+  cursor: pointer;
+`;
+
 export default ResultBoard;

@@ -46,8 +46,8 @@ function SearchBar() {
             onChange={onChange}
             value={word}
           />
-          <Button variant="primary" type="submit" onClick={onClick}>
-            Submit
+          <Button variant="primary" type="submit" onClick={onClick} size="sm">
+            검색
           </Button>
         </Stack>
       </박스>

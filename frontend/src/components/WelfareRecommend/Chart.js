@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import getAxios from "../../api";
 
 const Container = styled.div`
-  max-width: 900px;
+  max-width: 800px;
   margin-right: 3vw;
 `;
 
