@@ -26,12 +26,13 @@ map.set(32, 9); //신용불량자
 map.set(33, 10); //독거노인
 map.set(34, 11); //취약계층
 
-// map.set(15, 0); //학생
-// map.set(16, 1); //무직
-// map.set(17, 2); //창업
-// map.set(18, 3); //농어업인
-// map.set(19, 4); //중소기업
-// map.set(20, 5); //일반
+const jobMap = new Map();
+jobMap.set(0, 15); //학생
+jobMap.set(1, 16); //무직
+jobMap.set(2, 17); //창업
+jobMap.set(3, 18); //농어업인
+jobMap.set(4, 19); //중소기업
+jobMap.set(5, 20); //일반
 
 const familyMap = new Map();
 familyMap.set(0, 23); //무주택자
@@ -53,6 +54,7 @@ function FilterChips() {
   const [isAll, setIsAll] = useState('All');
   const [region, setRegion] = useState('placeholder');
   const [child, setChild] = useState('');
+  const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
   const jobChip = [
@@ -131,12 +133,17 @@ function FilterChips() {
       setRegion(res.data.body.UserCharacter.region);
 
       await settingIsAll(region);
+      setJob(...job, res.data.body.UserCharacter.job);
       setFamily(...family, res.data.body.UserCharacter.family);
-      let familyValue = [];
-      for (let element of family) {
-        familyValue.push(familyMap.get(element));
+      let allValue = [];
+      for (let element of job) {
+        allValue.push(jobMap.get(element));
       }
-      setValue(...value, familyValue);
+      for (let element of family) {
+        allValue.push(familyMap.get(element));
+      }
+      setValue(...value, allValue);
+      // console.log(value);
     } catch (err) {
       console.log(err);
     }
@@ -144,13 +151,14 @@ function FilterChips() {
 
   useEffect(() => {
     getFilter();
-  }, []);
+  }, [value]);
 
   return (
     <div>
       <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
+      <p>{value}</p>
 
       <MultipleSelectChips
         label="대상특성"
