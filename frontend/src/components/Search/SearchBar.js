@@ -3,20 +3,12 @@ import Button from "@mui/material/Button";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
 
-import { useSearchParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeInput } from "../../reducers/change.js";
 
 function SearchBar() {
   const dispatch = useDispatch();
   const [word, setWord] = useState("");
-
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // // const keyword = searchParams.get("keyword");
-  // const keyword = searchParams.entries();
-  // // console.dir(keyword);
-  // const [param, value] = keyword;
-  // console.log(param, value);
 
   const onChange = e => {
     setWord(e.target.value);

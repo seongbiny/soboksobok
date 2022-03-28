@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
-import PaginationBtn from "./PaginationBtn";
-import { paginate } from "./paginate";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -18,7 +16,7 @@ function ResultBoard() {
 
   const query = searchParams.entries();
   const [param, value] = query;
-  // console.log(param, value);
+  console.log(param, value);
 
   useEffect(() => {
     const fetchSearch = async () => {
@@ -73,14 +71,6 @@ function ResultBoard() {
           </tbody>
         </Table>
       </StyledTable>
-      <StyledPage>
-        {/* <PaginationBtn
-          itemsCount={count}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        /> */}
-      </StyledPage>
     </StyledBoard>
   );
 }
@@ -90,10 +80,6 @@ const StyledBoard = styled.div`
   width: 50vw;
   display: flex;
   flex-direction: column;
-`;
-const StyledPage = styled.div`
-  margin: 0 auto;
-  margin-top: 10px;
 `;
 const StyledTable = styled.div`
   box-sizing: border-box;
