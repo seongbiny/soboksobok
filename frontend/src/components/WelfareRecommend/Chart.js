@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
+import { useEffect } from "react";
+import getAxios from "../../api";
 
 const Container = styled.div`
   max-width: 900px;
@@ -24,6 +26,20 @@ const data = {
 };
 
 function Chart() {
+  const axios = getAxios();
+
+  useEffect(() => {
+    const FetchData = async () => {
+      try {
+        const request = await axios.get("/api/welfare/graph");
+        console.log(request);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    FetchData();
+  }, []);
+
   return (
     <Container>
       <Doughnut type="doughnut" data={data} />

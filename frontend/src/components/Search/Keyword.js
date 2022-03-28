@@ -26,7 +26,7 @@ function Keyword() {
         console.log(err);
       });
   }, []);
-  // console.log(keywords);
+
   return (
     <StyledBox>
       <div>추천 검색어</div>
