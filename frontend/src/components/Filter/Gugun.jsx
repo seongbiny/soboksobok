@@ -23,17 +23,19 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
 
   if (isAll === 'All') {
     return (
-      <select id="selectGugunAll" value={region} onClick={handleChange}>
+      <select id="selectGugunAll" value={region} onClick={handleChange} readOnly>
         <option value="placeholder" disabled>
           선택
         </option>
-        <option value="00">전체</option>
+        <option value="00" readOnly>
+          전체
+        </option>
         {/* <option value="01">전체1</option> */}
       </select>
     );
   } else if (isAll === 'GwangJu')
     return (
-      <select id="selectGugunGwangJu" value={region} onChange={handleChange}>
+      <select id="selectGugunGwangJu" value={region} onChange={handleChange} readOnly>
         <option value="placeholder" disabled>
           선택
         </option>
