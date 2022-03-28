@@ -19,19 +19,27 @@ function ResultBoard() {
 
   useEffect(() => {
     const fetchSearch = async () => {
-      const request = await axios.get(`/api/welfare/search/${value}`);
-      navigate(`/search?keyword=${value}`);
-      setResult(request.data.body.welfares);
-      console.log(value);
+      try {
+        const request = await axios.get(`/api/welfare/search/${value}`);
+        navigate(`/search?keyword=${value}`);
+        setResult(request.data.body.welfares);
+        console.log(value);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchSearch();
   }, [value]);
 
   useEffect(() => {
     const fetchSearch = async () => {
-      const request = await axios.get(`/api/welfare/search/${keyword}`);
-      navigate(`/search?keyword=${keyword}`);
-      setResult(request.data.body.welfares);
+      try {
+        const request = await axios.get(`/api/welfare/search/${keyword}`);
+        navigate(`/search?keyword=${keyword}`);
+        setResult(request.data.body.welfares);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchSearch();
   }, [keyword]);

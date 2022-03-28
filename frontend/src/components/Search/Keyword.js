@@ -11,18 +11,18 @@ function Keyword() {
   const dispatch = useDispatch();
   const [keywords, setKeywords] = useState([]);
   const navigate = useNavigate();
+  const axios = getAxios();
 
   useEffect(() => {
-    const axios = getAxios();
-    axios
-      .get("/api/welfare/keyword")
-      .then(res => {
-        // console.log(res.data.body.keywords.slice(0, 5));
-        setKeywords(res.data.body.keywords.slice(0, 11));
-      })
-      .catch(err => {
+    const fetchWord = async () => {
+      try {
+        const request = await axios.get("/api/welfare/keyword");
+        setKeywords(request.data.body.keywords.slice(0, 11));
+      } catch (err) {
         console.log(err);
-      });
+      }
+    };
+    fetchWord();
   }, []);
 
   const onClick = word => {
