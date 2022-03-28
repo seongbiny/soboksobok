@@ -2,26 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import getAxios from "../../api.js";
+import { useNavigate } from "react-router-dom";
 
-const StyledBox = styled.div`
-  box-sizing: border-box;
-  border: 1px solid #e9ecef;
-  height: 50vh;
-  width: 15vw;
-  text-align: center;
-  display: grid;
-  align-items: center;
-  border-radius: 15px;
-  grid-template-rows: 8vh;
-`;
-const StyledLi = styled.div`
-  box-sizing: border-box;
-  // border: 1px solid gray;
-  display: flex;
-`;
+import { useDispatch } from "react-redux";
+import { changeInput } from "../../reducers/change.js";
 
 function Keyword() {
+  const dispatch = useDispatch();
   const [keywords, setKeywords] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const axios = getAxios();
@@ -35,6 +24,11 @@ function Keyword() {
         console.log(err);
       });
   }, []);
+
+  const onClick = word => {
+    dispatch(changeInput(word));
+    navigate(`/search?keyword=${word}`);
+  };
 
   return (
     <StyledBox>
@@ -56,6 +50,7 @@ function Keyword() {
           <div
             key={keyword.keywordId}
             style={{ flexBasis: "70%", textAlign: "left" }}
+            onClick={e => onClick(keyword.keywordName)}
           >
             {keyword.keywordName}
           </div>
@@ -66,4 +61,23 @@ function Keyword() {
     </StyledBox>
   );
 }
+const StyledBox = styled.div`
+  box-sizing: border-box;
+  border: 1px solid #e9ecef;
+  height: 50vh;
+  width: 15vw;
+  text-align: center;
+  display: grid;
+  align-items: center;
+  border-radius: 15px;
+  grid-template-rows: 8vh;
+`;
+const StyledLi = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  &:hover {
+    text-decoration: underline;
+  }
+  cursor: pointer;
+`;
 export default Keyword;
