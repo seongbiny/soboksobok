@@ -26,12 +26,35 @@ map.set(32, 9); //신용불량자
 map.set(33, 10); //독거노인
 map.set(34, 11); //취약계층
 
+const jobMap = new Map();
+jobMap.set(0, 15); //학생
+jobMap.set(1, 16); //무직
+jobMap.set(2, 17); //창업
+jobMap.set(3, 18); //농어업인
+jobMap.set(4, 19); //중소기업
+jobMap.set(5, 20); //일반
+
+const familyMap = new Map();
+familyMap.set(0, 23); //무주택자
+familyMap.set(1, 24); //임산부
+familyMap.set(2, 25); //미취학
+familyMap.set(3, 26); //다문화/탈북민
+familyMap.set(4, 27); //다자녀
+familyMap.set(5, 28); //보훈대상자
+familyMap.set(6, 29); //장애인
+familyMap.set(7, 30); //저소득
+familyMap.set(8, 31); //한부모/조손
+familyMap.set(9, 32); //신용불량자
+familyMap.set(10, 33); //독거노인
+familyMap.set(11, 34); //취약계층
+
 function FilterChips() {
   const [value, setValue] = useState([]);
   const [error, setError] = useState('');
   const [isAll, setIsAll] = useState('All');
-  const [region, setRegion] = useState('');
+  const [region, setRegion] = useState('placeholder');
   const [child, setChild] = useState('');
+  const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
   const jobChip = [
@@ -58,31 +81,32 @@ function FilterChips() {
     { label: '저취약계층소득', value: 34 },
   ];
 
-  const selectJob = [];
-  const selectFamily = [];
-
-  for (let element of value) {
-    if (element >= 15 && element <= 20) {
-      selectJob.push(map.get(element));
-    } else if (element >= 23 && element <= 34) {
-      selectFamily.push(map.get(element));
-    }
-  }
-
   const setFilter = async () => {
     try {
       const axios = getAxios();
-      console.log(axios.defaults.headers);
+      // console.log(axios.defaults.headers);
+
+      const selectJob = [];
+      const selectFamily = [];
+
+      for (let element of value) {
+        if (element >= 15 && element <= 20) {
+          selectJob.push(map.get(element));
+        } else if (element >= 23 && element <= 34) {
+          selectFamily.push(map.get(element));
+        }
+      }
+
       console.log({
-        child: parseInt(child),
-        region: parseInt(region),
+        child: String(child),
+        region: String(region),
         job: selectJob,
         family: selectFamily,
       });
 
       await axios.post('/api/users/update', {
-        child: parseInt(child),
-        region: parseInt(region),
+        child: String(child),
+        region: String(region),
         job: selectJob,
         family: selectFamily,
       });
@@ -91,16 +115,35 @@ function FilterChips() {
     }
   };
 
+  let settingIsAll = (region) => {
+    if (region === '00') {
+      setIsAll('All');
+      console.log('전국');
+    } else {
+      setIsAll('GwangJu');
+      console.log('광주');
+    }
+  };
+
   const getFilter = async () => {
     try {
       const axios = getAxios();
-      // console.log(axios.defaults.headers);
-
       let res = await axios.get('/api/users/update');
-      // console.log(res.data.body.UserCharacter);
-      // console.log('Family: ', res.data.body.UserCharacter.family);
       setChild(res.data.body.UserCharacter.child);
       setRegion(res.data.body.UserCharacter.region);
+
+      await settingIsAll(region);
+      setJob(...job, res.data.body.UserCharacter.job);
+      setFamily(...family, res.data.body.UserCharacter.family);
+      let allValue = [];
+      for (let element of job) {
+        allValue.push(jobMap.get(element));
+      }
+      for (let element of family) {
+        allValue.push(familyMap.get(element));
+      }
+      setValue(...value, allValue);
+      // console.log(value);
     } catch (err) {
       console.log(err);
     }
@@ -108,14 +151,14 @@ function FilterChips() {
 
   useEffect(() => {
     getFilter();
-    // setFamily(selectFamily);
-  }, []);
+  }, [value]);
 
   return (
     <div>
-      <SidoSelectBox setIsAll={setIsAll} setRegion={setRegion} region={region} />
+      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
+      <p>{value}</p>
 
       <MultipleSelectChips
         label="대상특성"
@@ -124,6 +167,7 @@ function FilterChips() {
         options={jobChip}
         error={error}
         setError={setError}
+        // onChange={(e) => setValue(e.currentTarget.value)}
       />
 
       <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
@@ -136,7 +180,6 @@ function FilterChips() {
         options={familyChip}
         error={error}
         setError={setError}
-        family={family}
       />
       <Button
         variant="primary"

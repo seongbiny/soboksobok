@@ -6,34 +6,36 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
     setRegion(e.target.value);
   };
 
-  const changeSelected = () => {
-    console.log('isAll: ', isAll);
-    if (isAll === 'All') {
-      const $select = document.querySelector('#selectGugunAll');
-      $select.value = region;
-    } else if (isAll === 'GwangJu') {
-      const $select = document.querySelector('#selectGugunGwangJu');
-      $select.value = region;
-    }
-  };
+  // const changeSelected = () => {
+  //   console.log('isAll: ', isAll);
+  //   if (isAll === 'All') {
+  //     const $select = document.querySelector('#selectGugunAll');
+  //     $select.value = region;
+  //   } else if (isAll === 'GwangJu') {
+  //     const $select = document.querySelector('#selectGugunGwangJu');
+  //     $select.value = region;
+  //   }
+  // };
 
-  useEffect(() => {
-    changeSelected();
-  }, []);
+  // useEffect(() => {
+  //   changeSelected();
+  // }, []);
 
   if (isAll === 'All') {
     return (
-      <select id="selectGugunAll" defaultValue="placeholder" onClick={handleChange}>
+      <select id="selectGugunAll" value={region} onClick={handleChange} readOnly>
         <option value="placeholder" disabled>
           선택
         </option>
-        <option value="00">전체</option>
+        <option value="00" readOnly>
+          전체
+        </option>
         {/* <option value="01">전체1</option> */}
       </select>
     );
   } else if (isAll === 'GwangJu')
     return (
-      <select id="selectGugunGwangJu" defaultValue="placeholder" onChange={handleChange}>
+      <select id="selectGugunGwangJu" value={region} onChange={handleChange} readOnly>
         <option value="placeholder" disabled>
           선택
         </option>

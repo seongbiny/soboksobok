@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
+import ModifyProfile from '../components/Profile/Modify';
 
 function Profile() {
   const [username, setUsername] = useState('');
@@ -12,11 +13,10 @@ function Profile() {
   const [profileImage, setProfileImage] = useState('');
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
+  const [modify, setModify] = useState('false');
 
   const getProfile = async () => {
     try {
-      console.log(localStorage.getItem('jwtToken'));
-
       const axios = getAxios();
       let response = await axios.get('/api/users');
 
@@ -25,7 +25,20 @@ function Profile() {
       setEmail(response.data.body.user.email);
       setAgeRange(response.data.body.user.ageRange);
       setGender(response.data.body.user.gender);
-      setProfileImage(response.data.body.user.profileImage);
+      setProfileImage(response.data.body.user.profileImageUrl);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const setProfile = async () => {
+    try {
+      const axios = getAxios();
+      await axios.post('/api/users/update', {
+        email: email,
+        ageRange: ageRange,
+        gender: gender,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +84,7 @@ function Profile() {
     getProfile();
     getLike();
     getUsed();
-  }, []); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
+  }, [modify]); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return (
     <div>
@@ -79,20 +92,48 @@ function Profile() {
         <Row>
           <Col xs={12} md={8}>
             <소개>
-              <h1> {username}님 안녕하세요!</h1>
-              <img src={profileImage}></img>
-              <h5>
-                이름: {username} <br />
-              </h5>
-              <h5>
-                이메일: {email} <br />
-              </h5>
-              <h5>
-                연령대: {ageRange} <br />
-              </h5>
-              <h5>
-                성별: {gender} <br />
-              </h5>
+              {modify === 'false' ? (
+                <div>
+                  <h1> {username}님 안녕하세요!</h1>
+                  <img src={profileImage}></img>
+                  <h5>이름: {username}</h5>
+                  <h5>
+                    연령대:
+                    {ageRange === null ? '수정 버튼을 눌러 정보를 입력해주세요' : ageRange}
+                  </h5>
+
+                  <h5>성별: {gender}</h5>
+                </div>
+              ) : (
+                <div>
+                  <h1> {username}님 안녕하세요!</h1>
+                  <img src={profileImage}></img>
+                  <ModifyProfile
+                    username={username}
+                    setEmail={setEmail}
+                    setAgeRange={setAgeRange}
+                    setGender={setGender}
+                  ></ModifyProfile>
+                </div>
+              )}
+
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setModify('ture');
+                }}
+              >
+                수정
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setModify('false');
+                  setProfile();
+                }}
+              >
+                저장
+              </Button>
             </소개>
             <필터>
               <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>

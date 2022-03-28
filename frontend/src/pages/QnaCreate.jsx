@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import '../CSS/qnacreate.css';
 import { useState } from 'react';
 import getAxios from '../api.js';
+import ReactHtmlParser from 'react-html-parser';
 
 let 게시판이름 = styled.h1`
     text-align: center;
@@ -70,7 +71,8 @@ function QnaCreate(props){
                     //     // console.log( 'Focus.', editor );
                     // } }
                     onChange={ (event, editor) => {
-                        const data = editor.getData().replace(/<((p|\/p)([^>]*)([^a-z]*)(&nbsp;*|br))([^>]*)>|<(p|\/p)([^>]*)>+([\<\/div>]*)/gi,"");
+                        // const data = editor.getData().replace(/<((p|\/p)([^>]*)([^a-z]*)(&nbsp;*|br))([^>]*)>|<(p|\/p)([^>]*)>+([\<\/div>]*)/gi,"");
+                        const data = editor.getData();
                         
                         내용값변경(data)
                     }}
