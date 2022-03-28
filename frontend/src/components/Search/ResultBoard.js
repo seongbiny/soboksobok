@@ -48,8 +48,8 @@ function ResultBoard() {
   return (
     <StyledBoard>
       <StyledTable>
-        <Table striped bordered hover size="sm">
-          <thead>
+        <Table striped bordered hover>
+          <thead className="text-center">
             <tr>
               <th width="10%">번호</th>
               <th width="70%">제목</th>
@@ -59,11 +59,11 @@ function ResultBoard() {
           <tbody>
             {result.map(welfare => (
               <tr key={welfare.welfareId}>
-                <td>{welfare.welfareId}</td>
+                <td className="text-center">{welfare.welfareId}</td>
                 <StyledTd onClick={e => onClick(welfare.welfareId)}>
                   {welfare.welfare_service_name}
                 </StyledTd>
-                <td>{welfare.welfare_phone}</td>
+                <td className="text-center">{welfare.welfare_phone}</td>
               </tr>
             ))}
           </tbody>
