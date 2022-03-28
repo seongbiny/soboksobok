@@ -17,13 +17,13 @@ public abstract class OAuth2UserInfo {
 
     public abstract String getName();
 
-    public abstract String getEmail();
+//    public abstract String getEmail();
 
     public abstract String getImageUrl();
 
-    public abstract String getAgeRange();
-
-    public abstract String getGender();
-
-    public abstract String getBirth();
+//    public abstract String getAgeRange();
+//
+//    public abstract String getGender();
+//
+//    public abstract String getBirth();
 }
