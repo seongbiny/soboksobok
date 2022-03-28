@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  sample:
+    container_name: soboksobok
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+      - "/etc/letsencrypt/:/etc/letsencrypt/"
+      - "/etc/ssl/:/etc/ssl/"
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    restart: always
