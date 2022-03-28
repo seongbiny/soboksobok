@@ -6,8 +6,8 @@ import java.util.List;
 
 @Data
 public class CharacterDto {
-    private Long child;
-    private Long region;
+    private String child;
+    private String region;
     private List<Long> job;
     private List<Long> family;
 }

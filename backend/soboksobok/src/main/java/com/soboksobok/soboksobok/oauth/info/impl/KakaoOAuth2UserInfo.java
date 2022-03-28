@@ -27,11 +27,11 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
         return (String) properties.get("nickname");
     }
 
-    @Override
-    public String getEmail() {
-        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
-        return (String) info.get("email");
-    }
+//    @Override
+//    public String getEmail() {
+//        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
+//        return (String) info.get("email");
+//    }
 
     @Override
     public String getImageUrl() {
@@ -43,23 +43,23 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
 
         return (String) properties.get("thumbnail_image");
     }
-
-    @Override
-    public String getAgeRange() {
-        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
-        System.out.println("가져오나?"+info.get("age_range"));
-        return (String) info.get("age_range");
-    }
-
-    @Override
-    public String getGender() {
-        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
-        return (String) info.get("gender");
-    }
-
-    @Override
-    public String getBirth() {
-        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
-        return (String) info.get("birthday");
-    }
+//
+//    @Override
+//    public String getAgeRange() {
+//        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
+//        System.out.println("가져오나?"+info.get("age_range"));
+//        return (String) info.get("age_range");
+//    }
+//
+//    @Override
+//    public String getGender() {
+//        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
+//        return (String) info.get("gender");
+//    }
+//
+//    @Override
+//    public String getBirth() {
+//        Map<String, Object> info = (Map<String, Object>) attributes.get("kakao_account");
+//        return (String) info.get("birthday");
+//    }
 }

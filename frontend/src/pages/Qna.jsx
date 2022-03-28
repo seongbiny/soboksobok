@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pagination, Table, Button, Container } from 'react-bootstrap';
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import getAxios from '../api.js';
 
@@ -41,9 +41,28 @@ function isLogin() {
   }
   
 function Qna(props){
+    let navigate = useNavigate();
     let state = useSelector((state) => state)
+    let [qnas, setQnas] = useState([]);
     const axios = getAxios();
-    axios.get('/api/qna/mine/') 
+    useEffect(()=> {
+        const fetchQnas = async () => {
+            const request = await axios.get('/api/qna/mine/');
+
+            const datas = request.data.body.success;
+            // if (datas.length != 0) {
+            //     const ids = await datas.map(data => data.id);
+            //     const titles = await datas.map(data => data.title);
+            //     const arr = Array.from({id:ids, title:titles})
+            //     setQnas( arr );
+
+            // }
+           setQnas(datas) 
+        }
+        fetchQnas();
+        return () => setQnas([]);
+    }, []);
+    console.log(qnas)
     return (
 
         <Container>
@@ -80,12 +99,14 @@ function Qna(props){
                     </thead>
                     <tbody>
                         {
-                            state.map((a, i)=> {
+                            qnas.map((a, i)=> {
                                 return (
-                                    <tr key={i} >
+                                    <tr key={i} onClick={()=> {
+                                        navigate(`/QnaDetail/${a.id}` ) 
+                                    }} style={{cursor: 'pointer'}} >
                                         <중앙정렬 width='10%'>{i+1}</중앙정렬>
-                                        <td width='70%'>{a.title}</td>
-                                        <중앙정렬 width='20%'>{a.year}년 {a.month+1}월 {a.day}일</중앙정렬>
+                                        <중앙정렬 width='70%'>{a.title}</중앙정렬>
+                                        <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
                                     </tr>
                                 )
                             })
