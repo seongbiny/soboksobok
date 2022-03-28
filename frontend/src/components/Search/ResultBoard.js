@@ -27,6 +27,11 @@ function ResultBoard() {
     // console.log(id, e);
   };
 
+  const { length: count } = result;
+  if (count === 0) {
+    return <p>검색 정보가 없습니다.</p>;
+  }
+
   return (
     <StyledBoard>
       <StyledTable>
