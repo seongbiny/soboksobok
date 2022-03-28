@@ -32,7 +32,7 @@ function App() {
         <Route path="/search" element={<WelfareSearch />} />
 
         <Route path="/QnaCreate/" element={<QnaCreate />} />
-        
+
         <Route path="/QnaPatch/:qnaId" element={<QnaPatch />} />
 
         <Route path="/QnaDetail/:qnaId" element={<QnaDetail />} />

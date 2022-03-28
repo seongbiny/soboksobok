@@ -6,17 +6,34 @@ import PaginationBtn from "./PaginationBtn";
 import { paginate } from "./paginate";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function ResultBoard() {
   const axios = getAxios();
   const [result, setResult] = useState([]);
   const { keyword } = useSelector(state => state.change);
-  const [id, setId] = useState(0);
   const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const query = searchParams.entries();
+  const [param, value] = query;
+  // console.log(param, value);
+
+  useEffect(() => {
+    const fetchSearch = async () => {
+      const request = await axios.get(`/api/welfare/search/${value}`);
+      navigate(`/search?keyword=${value}`);
+      setResult(request.data.body.welfares);
+      console.log(value);
+    };
+    fetchSearch();
+  }, [value]);
 
   useEffect(() => {
     const fetchSearch = async () => {
       const request = await axios.get(`/api/welfare/search/${keyword}`);
+      navigate(`/search?keyword=${keyword}`);
       setResult(request.data.body.welfares);
     };
     fetchSearch();
@@ -24,7 +41,6 @@ function ResultBoard() {
 
   const onClick = (id, e) => {
     navigate(`/welfare/${id}`);
-    // console.log(id, e);
   };
 
   const { length: count } = result;

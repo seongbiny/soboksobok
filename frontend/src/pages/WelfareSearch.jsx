@@ -4,8 +4,8 @@ import SearchBar from '../components/Search/SearchBar';
 import ResultBoard from '../components/Search/ResultBoard';
 import Keyword from '../components/Search/Keyword';
 
-function Search(){
 
+function Search(){
 
     return(
         <StyledContainer>
