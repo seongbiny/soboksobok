@@ -26,25 +26,26 @@ map.set(32, 9); //신용불량자
 map.set(33, 10); //독거노인
 map.set(34, 11); //취약계층
 
-map.set(15, 0); //학생
-map.set(16, 1); //무직
-map.set(17, 2); //창업
-map.set(18, 3); //농어업인
-map.set(19, 4); //중소기업
-map.set(20, 5); //일반
+// map.set(15, 0); //학생
+// map.set(16, 1); //무직
+// map.set(17, 2); //창업
+// map.set(18, 3); //농어업인
+// map.set(19, 4); //중소기업
+// map.set(20, 5); //일반
 
-map.set(23, 0); //무주택자
-map.set(24, 1); //임산부
-map.set(25, 2); //미취학
-map.set(26, 3); //다문화/탈북민
-map.set(27, 4); //다자녀
-map.set(28, 5); //보훈대상자
-map.set(29, 6); //장애인
-map.set(30, 7); //저소득
-map.set(31, 8); //한부모/조손
-map.set(32, 9); //신용불량자
-map.set(33, 10); //독거노인
-map.set(34, 11); //취약계층
+const familyMap = new Map();
+familyMap.set(0, 23); //무주택자
+familyMap.set(1, 24); //임산부
+familyMap.set(2, 25); //미취학
+familyMap.set(3, 26); //다문화/탈북민
+familyMap.set(4, 27); //다자녀
+familyMap.set(5, 28); //보훈대상자
+familyMap.set(6, 29); //장애인
+familyMap.set(7, 30); //저소득
+familyMap.set(8, 31); //한부모/조손
+familyMap.set(9, 32); //신용불량자
+familyMap.set(10, 33); //독거노인
+familyMap.set(11, 34); //취약계층
 
 function FilterChips() {
   const [value, setValue] = useState([]);
@@ -115,10 +116,10 @@ function FilterChips() {
   let settingIsAll = (region) => {
     if (region === '00') {
       setIsAll('All');
-      console.log(1);
+      console.log('전국');
     } else {
       setIsAll('GwangJu');
-      console.log(2);
+      console.log('광주');
     }
   };
 
@@ -126,24 +127,16 @@ function FilterChips() {
     try {
       const axios = getAxios();
       let res = await axios.get('/api/users/update');
-      // console.log(res.data.body.UserCharacter);
-      // console.log('Family: ', res.data.body.UserCharacter.family);
       setChild(res.data.body.UserCharacter.child);
       setRegion(res.data.body.UserCharacter.region);
 
       await settingIsAll(region);
-      console.log('isAll: ', isAll);
       setFamily(...family, res.data.body.UserCharacter.family);
-      console.log('family 배열: ', family); //[11]
-      // for (let element of family) {
-      //   if (element >= 15 && element <= 20) {
-      //     let familyValue = [];
-      //     familyValue.push(map.get(element));
-      //     setValue();
-      //   } else if (element >= 23 && element <= 34) {
-      //     selectFamily.push(map.get(element));
-      //   }
-      // }
+      let familyValue = [];
+      for (let element of family) {
+        familyValue.push(familyMap.get(element));
+      }
+      setValue(...value, familyValue);
     } catch (err) {
       console.log(err);
     }
@@ -166,6 +159,7 @@ function FilterChips() {
         options={jobChip}
         error={error}
         setError={setError}
+        // onChange={(e) => setValue(e.currentTarget.value)}
       />
 
       <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
@@ -178,7 +172,6 @@ function FilterChips() {
         options={familyChip}
         error={error}
         setError={setError}
-        family={family}
       />
       <Button
         variant="primary"
