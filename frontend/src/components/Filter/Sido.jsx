@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
-
 const SidoSelectBox = ({ setIsAll, isAll, setRegion, region }) => {
   const handleChange = (e) => {
     setIsAll(e.target.value);
-    console.log('e.target.value: ', e.target.value);
+    console.log('SIDO: ', e.target.value);
     if (e.target.value === 'All') {
       setRegion('00');
     } else {
@@ -11,21 +9,8 @@ const SidoSelectBox = ({ setIsAll, isAll, setRegion, region }) => {
     }
   };
 
-  // const changeSelected = () => {
-  //   if (region === '00') {
-  //     setIsAll('All');
-  //   } else {
-  //     setIsAll('GwangJu');
-  //   }
-  // };
-
-  useEffect(() => {
-    // changeSelected();
-    console.log('sido isAll: ', isAll);
-  }, []);
-
   return (
-    <select id="selectSido" value={isAll} onChange={handleChange}>
+    <select id="selectSido" value={isAll} onChange={handleChange} readOnly>
       <option value="placeholder" disabled>
         선택
       </option>

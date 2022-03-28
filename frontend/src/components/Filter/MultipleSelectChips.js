@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 1.0.5
 
-const MultipleSelectChips = ({ value, setValue, options, label, error, setError, family }) => {
+const MultipleSelectChips = ({ value, setValue, options, label, error, setError }) => {
   const classes = useStyles();
 
   const handleClick = (clickedValue) => {
@@ -72,7 +72,6 @@ const MultipleSelectChips = ({ value, setValue, options, label, error, setError,
                   label={<Typography variant="body2">{`${option.label}`}</Typography>}
                   clickable
                   onClick={() => handleClick(option.value)}
-                  value={family === option.value}
                 />
               ))
             : null}
