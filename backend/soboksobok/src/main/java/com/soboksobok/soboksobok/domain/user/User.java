@@ -102,10 +102,10 @@ public class User {
     private String birth;
 
     @Column(name = "CHILD")
-    private Long child;
+    private String child;
 
     @Column(name = "REGION")
-    private Long region;
+    private String region;
 
 
 
