@@ -19,8 +19,8 @@ function Keyword() {
     axios
       .get("/api/welfare/keyword")
       .then(res => {
-        // console.log(res.data.body.keywords);
-        setKeywords(res.data.body.keywords);
+        console.log(res.data.body.keywords.slice(0, 5));
+        setKeywords(res.data.body.keywords.slice(0, 5));
       })
       .catch(err => {
         console.log(err);
