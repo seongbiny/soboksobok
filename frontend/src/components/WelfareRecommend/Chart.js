@@ -3,7 +3,6 @@ import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import getAxios from "../../api";
-import { SortByAlphaRounded } from "@material-ui/icons";
 
 const Container = styled.div`
   max-width: 900px;
@@ -36,7 +35,7 @@ function Chart() {
   };
 
   useEffect(() => {
-    const FetchData = async () => {
+    const fetchData = async () => {
       try {
         const request = await axios.get("/api/welfare/recommend/purpose");
         // console.log(request.data);
@@ -48,13 +47,13 @@ function Chart() {
         //   return request.data[b] - request.data[a];
         // });
         // console.log(sortarr);
-        await console.log(label);
-        await console.log(datas);
+        // await console.log(label);
+        // await console.log(datas);
       } catch (err) {
         console.log(err);
       }
     };
-    FetchData();
+    fetchData();
   }, []);
 
   return (
