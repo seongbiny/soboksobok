@@ -1,6 +1,7 @@
 package com.soboksobok.soboksobok.service;
 
 import com.soboksobok.soboksobok.domain.dto.CharacterDto;
+import com.soboksobok.soboksobok.domain.dto.ProfileDto;
 import com.soboksobok.soboksobok.domain.user.*;
 import com.soboksobok.soboksobok.repository.user.*;
 import com.soboksobok.soboksobok.repository.welfare.FamilyRepository;
@@ -109,5 +110,12 @@ public class UserService {
             res.add(i.getTarget().getTargetId());
         }
         return res;
+    }
+
+    public void updateUserProfile(ProfileDto dto, String userId){
+        User user = getUser(userId);
+        user.setAgeRange(dto.getAge());
+        user.setGender(dto.getGender());
+        userRepository.save(user);
     }
 }
