@@ -62,7 +62,6 @@ function Qna(props){
         fetchQnas();
         return () => setQnas([]);
     }, []);
-    console.log(qnas)
     return (
 
         <Container>

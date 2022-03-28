@@ -82,7 +82,7 @@ function QnaCreate(props){
                 <p>내용</p> 
                 <CKEditor
                     editor={ ClassicEditor  }
-                    data={ ReactHtmlParser(내용) || ""}
+                    data={ 내용 || ""}
                     // onReady={ editor => {
                     //     // You can store the "editor" and use when it is needed.
                     //     console.log( 'Editor is ready to use!', editor );
