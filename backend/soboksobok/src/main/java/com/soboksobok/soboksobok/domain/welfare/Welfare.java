@@ -18,6 +18,9 @@ public class Welfare {
     @Column(name = "welfareId")
     private Long welfareId;
 
+    @Column(name = "welfareOriId")
+    private String welfareOriId;
+
     @Column(name = "welfareServiceName")
     private String welfare_service_name;
 
