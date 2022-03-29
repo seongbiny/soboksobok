@@ -15,37 +15,38 @@ import CustomFilter from "./pages/CustomFilter";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import "./CSS/app.css";
+import Layout from "./components/layout/layout";
 
 function App() {
   return (
     <div id="wrapper">
-      <NavBar />
-      <Routes>
-        <Route path="/oauth/kakao/callback" element={<Auth />} />
+      <Layout>
+        <Routes>
+          <Route path="/oauth/kakao/callback" element={<Auth />} />
 
-        <Route path="/" element={<Main />} />
+          <Route path="/" element={<Main />} />
 
-        <Route path="/welfare/:welfareId" element={<WelfareDetail />} />
+          <Route path="/welfare/:welfareId" element={<WelfareDetail />} />
 
-        <Route path="/Qna" element={<Qna />} />
+          <Route path="/Qna" element={<Qna />} />
 
-        <Route path="/search" element={<WelfareSearch />} />
+          <Route path="/search" element={<WelfareSearch />} />
 
-        <Route path="/QnaCreate/" element={<QnaCreate />} />
+          <Route path="/QnaCreate/" element={<QnaCreate />} />
 
-        <Route path="/QnaPatch/:qnaId" element={<QnaPatch />} />
+          <Route path="/QnaPatch/:qnaId" element={<QnaPatch />} />
 
-        <Route path="/QnaDetail/:qnaId" element={<QnaDetail />} />
+          <Route path="/QnaDetail/:qnaId" element={<QnaDetail />} />
 
-        <Route path="/filter" element={<CustomFilter />} />
+          <Route path="/filter" element={<CustomFilter />} />
 
-        <Route path="/recommend" element={<WelfareRecommend />} />
+          <Route path="/recommend" element={<WelfareRecommend />} />
 
-        <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
 
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-      <Footer />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Layout>
     </div>
   );
 }

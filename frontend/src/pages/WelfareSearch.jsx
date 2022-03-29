@@ -22,7 +22,7 @@ function Search(){
 const StyledContainer = styled.div`
     display: grid;
     justify-content: center;
-    padding-top: 30px;
+    // padding-top: 30px;
 `;
 const StyledMain = styled.div`
     display: flex;
