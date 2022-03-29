@@ -52,7 +52,7 @@ function FilterChips() {
   const [value, setValue] = useState([]);
   const [error, setError] = useState('');
   const [isAll, setIsAll] = useState('All');
-  const [region, setRegion] = useState('placeholder');
+  const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
@@ -104,7 +104,7 @@ function FilterChips() {
         family: selectFamily,
       });
 
-      await axios.post('/api/users/update', {
+      await axios.post('/api/users/update/char', {
         child: String(child),
         region: String(region),
         job: selectJob,
@@ -115,24 +115,18 @@ function FilterChips() {
     }
   };
 
-  let settingIsAll = (region) => {
-    if (region === '00') {
-      setIsAll('All');
-      console.log('전국');
-    } else {
-      setIsAll('GwangJu');
-      console.log('광주');
-    }
-  };
-
   const getFilter = async () => {
     try {
       const axios = getAxios();
-      let res = await axios.get('/api/users/update');
+      let res = await axios.get('/api/users/update/char');
       setChild(res.data.body.UserCharacter.child);
       setRegion(res.data.body.UserCharacter.region);
 
-      await settingIsAll(region);
+      // settingIsAll(region);
+      {
+        region === '00' ? setIsAll('All') : setIsAll('GwangJu');
+      }
+
       setJob(...job, res.data.body.UserCharacter.job);
       setFamily(...family, res.data.body.UserCharacter.family);
       let allValue = [];
@@ -143,7 +137,6 @@ function FilterChips() {
         allValue.push(familyMap.get(element));
       }
       setValue(...value, allValue);
-      // console.log(value);
     } catch (err) {
       console.log(err);
     }
@@ -167,7 +160,6 @@ function FilterChips() {
         options={jobChip}
         error={error}
         setError={setError}
-        // onChange={(e) => setValue(e.currentTarget.value)}
       />
 
       <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
@@ -185,7 +177,6 @@ function FilterChips() {
         variant="primary"
         onClick={() => {
           setFilter();
-          // navigate('/', { replace: true });
         }}
       >
         저장

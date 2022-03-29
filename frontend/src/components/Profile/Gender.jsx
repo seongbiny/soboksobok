@@ -1,11 +1,11 @@
-const GenderSelectBox = ({ setGender }) => {
+const GenderSelectBox = ({ gender, setGender }) => {
   const handleChange = (e) => {
     setGender(e.target.value);
     console.log('e.target.value: ', e.target.value);
   };
 
   return (
-    <select id="selectAge" defaultValue="placeholder" onChange={handleChange}>
+    <select id="selectAge" value={gender} onChange={handleChange}>
       <option value="placeholder" disabled>
         선택
       </option>
