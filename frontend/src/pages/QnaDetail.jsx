@@ -4,6 +4,7 @@ import { Container, Button } from 'react-bootstrap';
 import { connect, useSelector } from 'react-redux';
 import getAxios from '../api.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import ReactHtmlParser from 'react-html-parser';
 
 let 글작성틀 = styled.div`
     width: 70%;
@@ -105,7 +106,7 @@ function QnaDetail() {
                 <hr></hr>
 
                 <내용>
-                    { qna.content}
+                    { ReactHtmlParser(qna.content)}
                 </내용>
                 <hr></hr>
                 <답변>

@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Chart from "../components/WelfareRecommend/Chart";
 import LineChart from "../components/WelfareRecommend/LineChart";
 import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import styled from 'styled-components';
 import { Avatar } from "@mui/material";
-
+import { useSelector } from 'react-redux';
 
 
 function WelfareRecommend(){
+    const { user } = useSelector(state => state.profile);
+
+    useEffect(()=>{
+        console.log(user)
+    },[])
+
     return(
         <StyledContainer>
             <StyledTop>
@@ -31,6 +37,8 @@ const StyledTop = styled.div`
     align-items: center;
     margin-top: 5vh;
     margin-bottom: 5vh;
+    padding: 2vw;
+    width: 80vw;
 `;
 const StyledMain = styled.div`
     display: grid;
