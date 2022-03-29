@@ -5,7 +5,6 @@ import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
 import { useDispatch } from 'react-redux';
-import { userData } from '../reducers/profile';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -23,8 +22,6 @@ function Profile() {
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
-
-  const dispatch = useDispatch();
 
   const getProfile = async () => {
     try {
@@ -60,7 +57,7 @@ function Profile() {
     try {
       const axios = getAxios();
       let response = await axios.get('/api/users/like');
-      console.log('찜 : ', response.data);
+      // console.log('찜 : ', response.data.body.likeList);/
       setLiked(response.data.body.likeList);
     } catch (err) {
       console.log(err);
@@ -78,7 +75,7 @@ function Profile() {
     try {
       const axios = getAxios();
       let response = await axios.get('/api/users/used');
-      console.log('사용중 : ', response.data.body.usedWelfareList);
+      // console.log('사용중 : ', response.data.body.usedWelfareList);
       setUsed(response.data.body.usedWelfareList);
     } catch (err) {
       console.log(err);
