@@ -3,8 +3,7 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function ResultBoard() {
   const axios = getAxios();
@@ -20,24 +19,32 @@ function ResultBoard() {
 
   useEffect(() => {
     const fetchSearch = async () => {
-      const request = await axios.get(`/api/welfare/search/${value}`);
-      navigate(`/search?keyword=${value}`);
-      setResult(request.data.body.welfares);
-      console.log(value);
+      try {
+        const request = await axios.get(`/api/welfare/search/${value}`);
+        navigate(`/search?keyword=${value}`);
+        setResult(request.data.body.welfares);
+        console.log(value);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchSearch();
   }, [value]);
 
   useEffect(() => {
     const fetchSearch = async () => {
-      const request = await axios.get(`/api/welfare/search/${keyword}`);
-      navigate(`/search?keyword=${keyword}`);
-      setResult(request.data.body.welfares);
+      try {
+        const request = await axios.get(`/api/welfare/search/${keyword}`);
+        navigate(`/search?keyword=${keyword}`);
+        setResult(request.data.body.welfares);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchSearch();
   }, [keyword]);
 
-  const onClick = (id, e) => {
+  const onClick = id => {
     navigate(`/welfare/${id}`);
   };
 
@@ -49,8 +56,8 @@ function ResultBoard() {
   return (
     <StyledBoard>
       <StyledTable>
-        <Table striped bordered hover size="sm">
-          <thead>
+        <Table striped bordered hover>
+          <thead className="text-center">
             <tr>
               <th width="10%">번호</th>
               <th width="70%">제목</th>
@@ -59,13 +66,12 @@ function ResultBoard() {
           </thead>
           <tbody>
             {result.map(welfare => (
-              <tr
-                key={welfare.welfareId}
-                onClick={e => onClick(welfare.welfareId, e)}
-              >
-                <td>{welfare.welfareId}</td>
-                <td>{welfare.welfare_service_name}</td>
-                <td>{welfare.welfare_phone}</td>
+              <tr key={welfare.welfareId}>
+                <td className="text-center">{welfare.welfareId}</td>
+                <StyledTd onClick={e => onClick(welfare.welfareId)}>
+                  {welfare.welfare_service_name}
+                </StyledTd>
+                <td className="text-center">{welfare.welfare_phone}</td>
               </tr>
             ))}
           </tbody>
@@ -86,4 +92,12 @@ const StyledTable = styled.div`
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
 `;
+
+const StyledTd = styled.td`
+  &:hover {
+    text-decoration: underline;
+  }
+  cursor: pointer;
+`;
+
 export default ResultBoard;

@@ -61,7 +61,7 @@ const StyledBox = styled.div`
   display: flex;
   height: 5vh;
   width: 35vw;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export default SearchBar;

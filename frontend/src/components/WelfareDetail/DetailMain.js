@@ -20,45 +20,40 @@ function DetailMain(props) {
   const usedNum = props.usedNum;
   const axios = getAxios();
 
-  const likeAxios = () => {
-    axios
-      .put(`/api/users/like/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  const likeAxios = async () => {
+    try {
+      const request = await axios.put(`/api/users/like/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const unlikeAxios = () => {
-    axios
-      .delete(`/api/users/like/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const unlikeAxios = async () => {
+    try {
+      const request = await axios.delete(`/api/users/like/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const usedAxios = () => {
-    axios
-      .put(`/api/users/used/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const usedAxios = async () => {
+    try {
+      const request = await axios.put(`/api/users/used/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const unusedAxios = () => {
-    axios
-      .delete(`/api/users/used/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const unusedAxios = async () => {
+    try {
+      const request = await axios.delete(`/api/users/used/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

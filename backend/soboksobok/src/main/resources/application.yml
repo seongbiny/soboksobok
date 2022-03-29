@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-#    url: jdbc:mysql://j6c205.p.ssafy.io:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&autoReconnect=true
+    #    url: jdbc:mysql://j6c205.p.ssafy.io:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&autoReconnect=true
     username: ssafy
     password: ssafy
     hikari:
@@ -41,19 +41,19 @@ spring:
     oauth2.client:
       registration:
         kakao:
-          clientId: 'b0c4483210e0ea0db8f56255adbeeda5'
-          clientSecret: 'pe7y4NArlDuQpJYXu8nxNFitPddPonFY'
+          clientId: "b0c4483210e0ea0db8f56255adbeeda5"
+          clientSecret: "pe7y4NArlDuQpJYXu8nxNFitPddPonFY"
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
           redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-#          redirectUri: "http://localhost:3000/oauth/kakao/callback"
+          #          redirectUri: "http://localhost:3000/oauth/kakao/callback"
           scope:
             - profile_nickname
             - profile_image
-#            - account_email
-#            - age_range
-#            - gender
-#            - birthday
+          #            - account_email
+          #            - age_range
+          #            - gender
+          #            - birthday
           clientName: Kakao
       # Provider 설정
       provider:
@@ -65,13 +65,13 @@ spring:
 
 # cors 설정
 cors:
-  allowed-origins: 'http://localhost:3000'
+  allowed-origins: "http://localhost:3000"
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-  allowed-headers: '*'
+  allowed-headers: "*"
   max-age: 3600
 
 # jwt secret key 설정
-jwt.secret: '8sknjlO3NPTBqo319DHLNqsQAfRJEdKsETOds'
+jwt.secret: "8sknjlO3NPTBqo319DHLNqsQAfRJEdKsETOds"
 
 # 토큰 관련 secret Key 및 RedirectUri 설정
 app:
