@@ -1,23 +1,12 @@
-import { useEffect } from 'react';
-
 const ChildSelectBox = ({ child, setChild }) => {
   const handleChange = (e) => {
     setChild(e.target.value);
-    console.log('e.target.value: ', e.target.value);
+    console.log('Child --> e.target.value: ', e.target.value);
   };
-
-  const changeSelected = () => {
-    const $select = document.querySelector('#selectChild');
-    $select.value = child;
-  };
-
-  useEffect(() => {
-    changeSelected();
-  }, [child]);
 
   return (
     <div>
-      <select id="selectChild" defaultValue="placeholder" onChange={handleChange}>
+      <select id="selectChild" defaultValue={child} onChange={handleChange}>
         <option value="placeholder" disabled>
           선택
         </option>

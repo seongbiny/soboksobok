@@ -51,9 +51,9 @@ familyMap.set(11, 34); //취약계층
 function FilterChips() {
   const [value, setValue] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('All');
+  const [isAll, setIsAll] = useState('default');
   const [region, setRegion] = useState('');
-  const [child, setChild] = useState('');
+  const [child, setChild] = useState('placeholder');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -97,12 +97,12 @@ function FilterChips() {
         }
       }
 
-      console.log({
-        child: String(child),
-        region: String(region),
-        job: selectJob,
-        family: selectFamily,
-      });
+      // console.log({
+      //   child: String(child),
+      //   region: String(region),
+      //   job: selectJob,
+      //   family: selectFamily,
+      // });
 
       await axios.post('/api/users/update/char', {
         child: String(child),
@@ -119,13 +119,9 @@ function FilterChips() {
     try {
       const axios = getAxios();
       let res = await axios.get('/api/users/update/char');
+      console.log('res.data.body.UserCharacter: ', res.data.body.UserCharacter);
       setChild(res.data.body.UserCharacter.child);
       setRegion(res.data.body.UserCharacter.region);
-
-      // settingIsAll(region);
-      {
-        region === '00' ? setIsAll('All') : setIsAll('GwangJu');
-      }
 
       setJob(...job, res.data.body.UserCharacter.job);
       setFamily(...family, res.data.body.UserCharacter.family);
@@ -144,15 +140,15 @@ function FilterChips() {
 
   useEffect(() => {
     getFilter();
-  }, [value]);
+  }, []);
 
   return (
     <div>
-      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
+      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
-      <p>{region}</p>
-      <p>{value}</p>
-
+      <p>
+        Sido : {isAll} Gugun: {region}
+      </p> */}
       <MultipleSelectChips
         label="대상특성"
         value={value}
@@ -163,7 +159,6 @@ function FilterChips() {
       />
 
       <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
-      <p>{child}</p>
 
       <MultipleSelectChips
         label="가구특성"
