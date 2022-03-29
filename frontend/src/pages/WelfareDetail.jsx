@@ -43,12 +43,16 @@ function WelfareDetail(){
 
     useEffect(() => {
         const fetchRecommend = async () => {
-            const request = await axios.get(`/api/welfare/${welfareId}/recommend`);
-            const datas = request.data.body.welfare;
-            // const ids = await datas.map(data => data.welfareId);
-            // setRecommend(ids);
-            console.log(datas.slice(undefined, 3))
-            setRecommend(datas.slice(undefined, 3))
+            try {
+                const request = await axios.get(`/api/welfare/${welfareId}/recommend`);
+                const datas = request.data.body.welfare;
+                // const ids = await datas.map(data => data.welfareId);
+                // setRecommend(ids);
+                console.log(datas.slice(undefined, 3))
+                setRecommend(datas.slice(undefined, 3))
+            } catch (err) {
+                console.log(err)
+            }
         }
         fetchRecommend();
         // console.log(recommend);
@@ -57,16 +61,20 @@ function WelfareDetail(){
 
     useEffect(()=>{
         const fetchLike = async () => {
-            const request = await axios.get('/api/users/like');
-            const datas = request.data.body.likeList;
-            // console.log(update);
-            if (datas.length !== 0) {
-                const ids = await datas.map(data => data.welfareId);
-                const likeIds = await new Set(ids);
-                const arr = Array.from(likeIds);
-                setLikeWelfares(arr);
-            } else {
-                setLikeWelfares([0])
+            try {
+                const request = await axios.get('/api/users/like');
+                const datas = request.data.body.likeList;
+                // console.log(update);
+                if (datas.length !== 0) {
+                    const ids = await datas.map(data => data.welfareId);
+                    const likeIds = await new Set(ids);
+                    const arr = Array.from(likeIds);
+                    setLikeWelfares(arr);
+                } else {
+                    setLikeWelfares([0])
+                }
+            } catch (err) {
+                console.log(err)
             }
         }
         fetchLike();
@@ -107,10 +115,10 @@ function WelfareDetail(){
             <div></div> }
             <DetailTabs target={target} content={content} crit={crit} howto={howto} contact={contact} phone={phone} deptName={deptName} siteLink={siteLink} siteName={siteName} />
             <StyledCard>
-                {/* {recommend.map(rec => {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} usedNum={usedWelfares} /> : <DetailCard /> } )} */}
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[0]} /> : <DetailCard /> }
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[1]} /> : <DetailCard /> }
-                {likeWelfares.length !== 0 && usedWelfares.length !== 0 ? <DetailCard likeNum={likeWelfares} recommend={recommend[2]} /> : <DetailCard /> } 
+                {recommend.map((wel,index)=>{ return (
+                    (likeWelfares.length !== 0) ? <DetailCard key={index} recommend={wel} likeNum={likeWelfares} /> : <div key={index}></div> 
+                )
+                })}
             </StyledCard>
         </StyledContainer>
     );

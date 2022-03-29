@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import styled from "styled-components";
 import FilterCard from "./FilterCard";
+import getAxios from "../../api";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
@@ -15,6 +16,22 @@ const StyledBox = styled.div`
 `;
 
 function FilterSlide() {
+  const axios = getAxios();
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    const fetchCard = async () => {
+      try {
+        const request = await axios.get("/api/welfare/recommend");
+        console.log(request.data.body.welfare);
+        setCards(request.data.body.welfare);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCard();
+  }, []);
+
   return (
     <StyledBox>
       <div className="main-wrap">
@@ -28,7 +45,7 @@ function FilterSlide() {
             // border: "1px solid",
           }}
           spaceBetween={8}
-          slidesPerView={3}
+          slidesPerView={4}
           initialSlide={1}
           navigation
           scrollbar={{ draggable: true }}
@@ -38,38 +55,22 @@ function FilterSlide() {
           // }}
           // autoplay={{ delay: 3000 }}
         >
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard style={{ alignItems: "center", border: "1px solid" }} />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
+          {cards.map(card => (
+            <SwiperSlide
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+              key={card.welfareId}
+            >
+              <FilterCard
+                style={{ alignItems: "center", border: "1px solid" }}
+                name={card.welfare_service_name}
+                content={card.welfare_service_content}
+                id={card.welfareId}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </StyledBox>
