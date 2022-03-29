@@ -4,14 +4,21 @@ import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
-import {useDispatch} from 'react-redux';
-import {userData} from '../reducers/profile';
+import { useDispatch } from 'react-redux';
+import { userData } from '../reducers/profile';
+
+const ageMap = new Map();
+ageMap.set('1', '어린이 (0~9)'); //무직
+ageMap.set('2', '청소년 (10~19)'); //창업
+ageMap.set('3', '청년 (20~29)'); //농어업인
+ageMap.set('4', '중/장년 (30~59)'); //중소기업
+ageMap.set('5', '노년 (60~)'); //일반
 
 function Profile() {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [ageRange, setAgeRange] = useState('');
-  const [gender, setGender] = useState('');
+  const [ageRender, setAgeRender] = useState('placeholder');
+  const [gender, setGender] = useState('placeholder');
   const [profileImage, setProfileImage] = useState('');
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
@@ -22,15 +29,14 @@ function Profile() {
   const getProfile = async () => {
     try {
       const axios = getAxios();
-      let response = await axios.get('/api/users');
+      let response = await axios.get('/api/users/profile');
 
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
-      setEmail(response.data.body.user.email);
       setAgeRange(response.data.body.user.ageRange);
       setGender(response.data.body.user.gender);
       setProfileImage(response.data.body.user.profileImageUrl);
-      dispatch(userData(response.data.body.user));
+      setAgeRender(ageMap.get(ageRange));
     } catch (err) {
       console.log(err);
     }
@@ -39,11 +45,12 @@ function Profile() {
   const setProfile = async () => {
     try {
       const axios = getAxios();
-      await axios.post('/api/users/update', {
-        email: email,
-        ageRange: ageRange,
+      await axios.post('/api/users/update/profile', {
+        age: ageRange,
         gender: gender,
       });
+      console.log('ageRange: ', ageRange, 'gender: ', gender);
+      setAgeRender(ageMap.get(ageRange));
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +96,7 @@ function Profile() {
     getProfile();
     getLike();
     getUsed();
-  }, [modify]); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
+  }, [ageRender]); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
 
   return (
     <div>
@@ -104,10 +111,10 @@ function Profile() {
                   <h5>이름: {username}</h5>
                   <h5>
                     연령대:
-                    {ageRange === null ? '수정 버튼을 눌러 정보를 입력해주세요' : ageRange}
+                    {ageRange === null ? '수정 버튼을 눌러 정보를 입력해주세요' : ageRender}
                   </h5>
 
-                  <h5>성별: {gender}</h5>
+                  <h5>성별: {gender === null ? '수정 버튼을 눌러 정보를 입력해주세요' : gender}</h5>
                 </div>
               ) : (
                 <div>
@@ -115,8 +122,9 @@ function Profile() {
                   <img src={profileImage}></img>
                   <ModifyProfile
                     username={username}
-                    setEmail={setEmail}
+                    ageRange={ageRange}
                     setAgeRange={setAgeRange}
+                    gender={gender}
                     setGender={setGender}
                   ></ModifyProfile>
                 </div>
