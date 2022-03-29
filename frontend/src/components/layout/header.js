@@ -1,11 +1,11 @@
 import React from "react";
+import "./header.css";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import Login from "../../pages/Login";
 
-import Login from "../pages/Login.jsx";
-
-function NavBar() {
+const Header = () => {
   return (
-    <div>
+    <header className="header">
       <Navbar bg="primary" variant="dark">
         <Container>
           <Navbar.Brand href="/">소복소복</Navbar.Brand>
@@ -19,8 +19,7 @@ function NavBar() {
           <Login></Login>
         </Container>
       </Navbar>
-    </div>
+    </header>
   );
-}
-
-export default NavBar;
+};
+export default Header;

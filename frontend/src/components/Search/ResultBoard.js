@@ -11,25 +11,25 @@ function ResultBoard() {
   const { keyword } = useSelector(state => state.change);
   const navigate = useNavigate();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
-  const query = searchParams.entries();
-  const [param, value] = query;
-  console.log(param, value);
+  // const query = searchParams.entries();
+  // const [param, value] = query;
+  // console.log(param, value);
 
-  useEffect(() => {
-    const fetchSearch = async () => {
-      try {
-        const request = await axios.get(`/api/welfare/search/${value}`);
-        navigate(`/search?keyword=${value}`);
-        setResult(request.data.body.welfares);
-        console.log(value);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchSearch();
-  }, [value]);
+  // useEffect(() => {
+  //   const fetchSearch = async () => {
+  //     try {
+  //       const request = await axios.get(`/api/welfare/search/${value}`);
+  //       navigate(`/search?keyword=${value}`);
+  //       setResult(request.data.body.welfares);
+  //       console.log(value);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchSearch();
+  // }, [value]);
 
   useEffect(() => {
     const fetchSearch = async () => {
