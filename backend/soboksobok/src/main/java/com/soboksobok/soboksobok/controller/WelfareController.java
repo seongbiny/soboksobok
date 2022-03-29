@@ -80,6 +80,16 @@ public class WelfareController {
         return purposes;
     }
 
+    //    @ApiOperation(value = "사업목적 갯수 출력")
+    @GetMapping("/recommend/grouppopular")
+    public void getwelfaregrouppopular() {
+            
+        // 해당 그룹에서 많이 사용하는 복지들 리스트 n개
+    }
+
+
+
+
     //    @ApiOperation(value = "인기순 복지 리스트")
     @GetMapping("/popular")
     public ApiResponse getwelfarepopular() {
