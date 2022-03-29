@@ -11,7 +11,7 @@ const SidoSelectBox = ({ setIsAll, isAll, setRegion, region }) => {
 
   return (
     <select id="selectSido" value={isAll} onChange={handleChange} readOnly>
-      <option value="null" disabled>
+      <option value="placeholder" disabled>
         선택
       </option>
       <option value="All">전국</option>

@@ -49,12 +49,12 @@ familyMap.set(10, 33); //독거노인
 familyMap.set(11, 34); //취약계층
 
 function FilterChips() {
-  const [value, setValue] = useState([]); //객체로...
-  const [clicked, setCliked] = useState([]); //객체로...
+  const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
+  const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('null');
-  const [region, setRegion] = useState('null');
-  const [child, setChild] = useState('null');
+  const [isAll, setIsAll] = useState('');
+  const [region, setRegion] = useState('');
+  const [child, setChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -116,52 +116,60 @@ function FilterChips() {
     }
   };
 
-  const getFilter = async () => {
-    try {
-      const axios = getAxios();
-      let res = await axios.get('/api/users/update/char');
-      setChild(res.data.body.UserCharacter.child);
-      setRegion(res.data.body.UserCharacter.region);
-
-      // {
-      //   region === '00' ? setIsAll('All') : setIsAll('GwangJu');
-      // }
-
-      setJob(res.data.body.UserCharacter.job);
-      setFamily(res.data.body.UserCharacter.family);
-      console.log(res);
-      let allValue = [];
-      for (let element of job) {
-        await allValue.push(jobMap.get(element));
-      }
-      for (let element of family) {
-        await allValue.push(familyMap.get(element));
-      }
-      console.log(value, '+', allValue);
-      if (JSON.stringify(value) != JSON.stringify(allValue)) {
-        setValue([...allValue]);
-        setCliked([...allValue]);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const getFilter = async () => {
+      try {
+        const axios = getAxios();
+        let res = await axios.get('/api/users/update/char');
+        console.log(res.data.body);
+
+        setRegion(res.data.body.UserCharacter.region);
+        setChild(res.data.body.UserCharacter.child);
+
+        setJob(res.data.body.UserCharacter.job);
+        setFamily(res.data.body.UserCharacter.family);
+        let allValue = [];
+        for (let element of job) {
+          await allValue.push(jobMap.get(element));
+        }
+        for (let element of family) {
+          await allValue.push(familyMap.get(element));
+        }
+        console.log(value, '+', allValue);
+        if (JSON.stringify(value) != JSON.stringify(allValue)) {
+          setValue([...allValue]);
+          setCliked([...allValue]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getFilter();
   }, [value]);
 
+  // useEffect(() => {
+  //   const expectChild = (e) => {
+  //     if (e === null) {
+  //       setChild('placeholder');
+  //     } else {
+  //       setChild(e);
+  //     }
+  //   };
+  //   expectChild(child);
+  //   console.log('child : ', child);
+  // }, [child]);
+
   return (
     <div>
-      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
+      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
-      <p>{value}</p>
+      <p>{value}</p> */}
 
       <MultipleSelectChips
         label="대상특성"
-        value={value}
-        setValue={setValue}
+        value={clicked}
+        setValue={setCliked}
         options={jobChip}
         error={error}
         setError={setError}
