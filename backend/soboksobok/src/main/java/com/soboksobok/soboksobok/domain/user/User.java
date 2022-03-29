@@ -102,6 +102,9 @@ public class User {
     @Column(name = "GU")
     private String gu;
 
+    @Column(name = "USER_GROUP")
+    private int userGroup;
+
     public User(
             @NotNull @Size(max = 64) String userId,
             @NotNull @Size(max = 100) String username,
