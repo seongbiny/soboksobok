@@ -73,8 +73,13 @@ public class UserService {
         User user = getUser(userId);
         System.out.println("userseq: "+user.getUserSeq());
         System.out.println("dto: "+dto.toString());
+        String region = dto.getRegion();
+        String area = region.substring(0,1);
+        String gu = region.substring(1);
+        System.out.println("area: "+area+" gu: "+gu);
         user.setChild(dto.getChild());
-        user.setRegion(dto.getRegion());
+        user.setArea(area);
+        user.setGu(gu);
         userRepository.save(user);
         selectTargetRepository.deleteAllByUser_UserSeq(user.getUserSeq());
         selectFamilyRepository.deleteAllByUser_UserSeq(user.getUserSeq());
