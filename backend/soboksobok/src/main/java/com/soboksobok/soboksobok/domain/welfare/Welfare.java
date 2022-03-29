@@ -36,7 +36,7 @@ public class Welfare {
     @Column(columnDefinition = "TEXT", name = "welfareServiceContent")
     private String welfare_service_content;
 
-    @Column(name = "welfareHowto")
+    @Column(columnDefinition = "TEXT", name = "welfareHowto")
     private String welfare_howto;
 
     @Column(name = "welfareContact")
