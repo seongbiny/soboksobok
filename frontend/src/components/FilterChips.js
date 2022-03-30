@@ -55,7 +55,6 @@ function FilterChips() {
   const [isAll, setIsAll] = useState('All');
   const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
-  const [clickedChild, setClickedChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -86,7 +85,6 @@ function FilterChips() {
   const setFilter = async () => {
     try {
       const axios = getAxios();
-      // console.log(axios.defaults.headers);
 
       const selectJob = [];
       const selectFamily = [];
@@ -126,12 +124,13 @@ function FilterChips() {
 
         setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
-        // if (child != clickedChild) {
-        //   setClickedChild(child);
-        // }
-
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
+
+        {
+          region === '00' || region === null ? setIsAll('All') : setIsAll('GwangJu');
+        }
+
         let allValue = [];
         for (let element of job) {
           await allValue.push(jobMap.get(element));
@@ -150,7 +149,6 @@ function FilterChips() {
     };
     getFilter();
     console.log('rendering !!');
-    console.log('child !!', child);
   }, [value]);
 
   return (
