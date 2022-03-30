@@ -188,7 +188,7 @@ def insertWelfare(request):
 	return render(request,'insert_welfare.html')
 
 
-# 단어 늘여놓기
+# 복지 단어 늘여놓기
 def welfare_word_detail():
 	
 	total = []
@@ -438,7 +438,7 @@ def welfare_word_detail():
 	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv',index=False,encoding='utf-8-sig')
 
 
-# 특성 늘여놓기
+# 복지 특성유무 늘여놓기
 def welfare_detail():
 	
 	total = []
@@ -679,13 +679,13 @@ def welfare_detail():
 		total.append(d)
 
 	result=pd.concat(total)
-
+	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv',index=False,encoding='utf-8-sig')
 	return result
 
-	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv',index=False,encoding='utf-8-sig')
+	
 
 
-# 단어 클러스터링
+# 복지 단어기반 클러스터링
 def word_clustering(request):
 	total = welfare_word_detail()
 
@@ -793,7 +793,7 @@ def word_clustering(request):
 	return
 
 
-# 특성 클러스터링
+# 복지 특성유무기반 클러스터링
 def clustering(request):
 	# total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv', encoding = 'utf-8')
 
@@ -822,19 +822,17 @@ def clustering(request):
 	return
 
 
-# 복지-복지 특성 유사도 계산
-def wel_wel_cosine():
+# 복지 단어 tf-dif 벡터화 
+def wel_wel_word_cosine(request):
+	return
+	
+# 복지 특성유무 벡터화 
+def wel_wel_word_cosine(request):
 	return
 
-
-# 복지-복지 단어 유사도 계산
-def wel_wel_word_cosine():
+# 복지-복지 유사도 계산 
+def wel_wel_cosine(request):
 	return
-
-# 복지-복지 유사도 계산
-def wel_wel(request):
-	return
-
 
 def test(request):
 	welfares = Welfare.objects.all() 
