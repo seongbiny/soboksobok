@@ -52,11 +52,14 @@ function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('All');
+  const [isAll, setIsAll] = useState('');
   const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
+  const [clickRegion, setClickRegion] = useState(false);
+  const [clickChild, setClickChild] = useState(false);
+  const [disable, setDisable] = useState(true);
 
   const jobChip = [
     { label: '학생', value: 15 },
@@ -81,6 +84,15 @@ function FilterChips() {
     { label: '독거노인', value: 33 },
     { label: '저취약계층소득', value: 34 },
   ];
+
+  const isDisable = () => {
+    {
+      clicked != [] && clickRegion != false && clickChild != false
+        ? setDisable(false)
+        : setDisable(true);
+    }
+    console.log(disable);
+  };
 
   const setFilter = async () => {
     try {
@@ -127,10 +139,6 @@ function FilterChips() {
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
 
-        {
-          region === '00' || region === null ? setIsAll('All') : setIsAll('GwangJu');
-        }
-
         let allValue = [];
         for (let element of job) {
           await allValue.push(jobMap.get(element));
@@ -148,13 +156,21 @@ function FilterChips() {
       }
     };
     getFilter();
-    console.log('rendering !!');
-  }, [value]);
+
+    console.log('region', region);
+  }, [value, disable]);
 
   return (
     <div>
-      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
-      <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
+      <SidoSelectBox
+        setIsAll={setIsAll}
+        isAll={isAll}
+        setRegion={setRegion}
+        region={region}
+        isDisable={isDisable}
+        setClickRegion={setClickRegion}
+      />
+      <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
       <p>{value}</p>
 
@@ -165,10 +181,16 @@ function FilterChips() {
         options={jobChip}
         error={error}
         setError={setError}
+        isDisable={isDisable}
       />
 
-      <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
-      <p>{child}</p>
+      <ChildSelectBox
+        child={child}
+        setChild={setChild}
+        setClickChild={setClickChild}
+        isDisable={isDisable}
+      ></ChildSelectBox>
+      {/* <p>{child}</p> */}
 
       <MultipleSelectChips
         label="가구특성"
@@ -177,9 +199,11 @@ function FilterChips() {
         options={familyChip}
         error={error}
         setError={setError}
+        isDisable={isDisable}
       />
       <Button
         variant="primary"
+        disabled={disable}
         onClick={() => {
           setFilter();
         }}

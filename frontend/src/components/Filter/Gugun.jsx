@@ -29,6 +29,14 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
         <option value="15">서구</option>
       </select>
     );
+  } else {
+    return (
+      <select id="selectGugunGwangJu" value={region} onChange={handleChange} readOnly>
+        <option value="" disabled>
+          선택
+        </option>
+      </select>
+    );
   }
 };
 

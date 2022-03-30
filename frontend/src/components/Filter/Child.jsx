@@ -1,6 +1,8 @@
-const ChildSelectBox = ({ child, setChild }) => {
+const ChildSelectBox = ({ child, setChild, setClickChild, isDisable }) => {
   const handleChange = (e) => {
     setChild(e.target.value);
+    setClickChild(true);
+    isDisable();
   };
 
   return (
