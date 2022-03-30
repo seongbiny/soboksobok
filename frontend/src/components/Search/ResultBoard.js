@@ -4,21 +4,24 @@ import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "./Paging.css";
-import Pagination from "react-js-pagination";
+import Pagination from "./Pagination.js";
+// import Pagination from "react-js-pagination";
 
 function ResultBoard() {
   const axios = getAxios();
   const [result, setResult] = useState([]);
   const { keyword } = useSelector(state => state.change);
-  const [page, setPage] = useState(1);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
   const navigate = useNavigate();
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
 
-  const handlePageChange = page => {
-    setPage(page);
-    console.log(page);
-  };
+  function currentPost(tmp) {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    return currentPosts;
+  }
 
   useEffect(() => {
     const fetchSearch = async () => {
@@ -54,7 +57,7 @@ function ResultBoard() {
             </tr>
           </thead>
           <tbody>
-            {result.map(welfare => (
+            {currentPost(result).map(welfare => (
               <tr key={welfare.welfareId}>
                 <td className="text-center">{welfare.welfareId}</td>
                 <StyledTd onClick={e => onClick(welfare.welfareId)}>
@@ -67,13 +70,9 @@ function ResultBoard() {
         </Table>
       </StyledTable>
       <Pagination
-        activePage={page}
-        itemsCountPerPage={10}
-        totalItemsCount={450}
-        pageRangeDisplayed={5}
-        prevPageText={"<"}
-        nextPageText={">"}
-        onChange={handlePageChange}
+        postsPerPage={postsPerPage}
+        totalPosts={result.length}
+        paginate={setCurrentPage}
       />
     </StyledBoard>
   );
