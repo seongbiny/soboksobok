@@ -61,9 +61,10 @@ function QnaDetail() {
 
     const [댓글, 댓글값변경] = useState('');
     const [댓글들, 댓글들변경] = useState([]);
+
     const [new댓글, new댓글값변경] = useState('');
     const [new댓글들, new댓글들변경] = useState([]);
-    // const [editable, setEditable] = useState(false);
+    const [editable, setEditable] = useState('false');
     
     const [qna, setQna] = useState({});
     const axios = getAxios();
@@ -81,13 +82,13 @@ function QnaDetail() {
     const deleteComment = (Id) => {
         axios.delete(`/api/comment/${Id}`)
     } // useEffect
+
     const updateComment = (Id) => {
         axios.patch(`/api/comment/${Id}`, {
-            comment_content: new댓글
+            comment_content: 댓글
         })
-        댓글값변경(Id.comment_content)
+        댓글값변경(댓글)
     }
-
     useEffect(()=> {
         // const fetchQnas = async () => {
         //     const request = await axios.get(`/api/qna/mine/${qnaId}/`);
@@ -166,19 +167,32 @@ function QnaDetail() {
                         댓글들.map((a, i)=> {
                             return(
                                 <div key={i}>
-                                    
-                                    <h4>{a.comment_content}</h4>
+                                    { editable === 'false' ? (
+                                        <h4>{a.comment_content}</h4>
+
+                                    ): (
+                                        <input type="text" value={} onChange={(e) => {댓글값변경(e.target.value)}}/>
+                                    )
+
+                                    }
+
                                     <button onClick={(e)=> {
                                         deleteComment(a.comment_id);
                                         // getComment();
                                     }}>
-                                    x
+                                    삭제
                                     </button>
-                                    <button onClick={(e)=> {
 
-                                        // updateComment(a.comment_id)
+                                    <button onClick={()=> {
+                                        setEditable(!editable)
                                     }}>
-                                    o
+                                    수정
+                                    </button>
+
+                                    <button onClick={()=> {
+                                        updateComment(a.comment_id);
+                                    }}>
+                                    저장
                                     </button>
                                     <hr />
                                 </div>
