@@ -15,10 +15,10 @@ public class Target {
 
     @Id
     @GeneratedValue
-    private Long target_id;
+    private Long targetId;
 
     @Column(length = 50)
-    private String target_name;
+    private String targetName;
 
     @OneToMany
     private List<Welfaretarget> welfaretarget = new ArrayList<>();

@@ -8,28 +8,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import logger from "redux-logger";
+import rootReducer from "./reducers/index";
+import { applyMiddleware, createStore, compose } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-let 초기값 = [{ id: 0, title: "하이" }];
+// import { createStore } from "redux";
 
-function reducer(state = 초기값, 액션) {
-  if (액션.type === "항목추가") {
-    let found = state.findIndex(a => {
-      return a.id === 액션.payload.id;
-    }); // findIndex : array 안에서 원하는 데이터 찾아주는 함수
-    if (found >= 0) {
-      let copy = [...state];
-      copy[found].quan++;
-      return copy;
-    } else {
-      let copy = [...state];
-      copy.push(액션.데이터);
-      return copy;
-    }
-  }
-}
+// let 초기값 = [];
+// function reducer(state = 초기값, 액션) {
+//   if ( 액션.type === '항목추가'){
 
-let store = createStore(reducer);
+//       let copy = [...state];
+//       copy.push(액션.payload);
+
+//       return copy
+//       console.log(copy)
+
+//   } else {
+//     return state
+//   }
+// }
+
+// let store = createStore(reducer);
+
+const enhancer =
+  process.env.NODE_ENV === "production"
+    ? compose(applyMiddleware())
+    : composeWithDevTools(applyMiddleware(logger));
+
+const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -11,8 +11,5 @@ import java.util.List;
 
 @EnableJpaRepositories
 public interface CommentRepository extends JpaRepository<Comment,Long> {
-//    @Query( value = "select i from Comment i left join fetch i.qna " +
-//            "where i.qna.qna_id = :qnaId")
-//    List<Comment> findAllByQnaId(@Param("qnaId") Long qnaId);
 
 }
