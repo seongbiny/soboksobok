@@ -63,8 +63,8 @@ class Welfare(models.Model):
 
 class Welfarefamily(models.Model):
     id = models.BigAutoField(primary_key=True)
-    family = models.ForeignKey(Family, models.DO_NOTHING, blank=True, null=True)
-    welfare = models.ForeignKey(Welfare, models.DO_NOTHING, blank=True, null=True)
+    family_id = models.IntegerField(blank=True, null=True)
+    welfare_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -73,8 +73,8 @@ class Welfarefamily(models.Model):
 
 class Welfarelife(models.Model):
     id = models.BigAutoField(primary_key=True)
-    life = models.ForeignKey(Life, models.DO_NOTHING, blank=True, null=True)
-    welfare = models.ForeignKey(Welfare, models.DO_NOTHING, blank=True, null=True)
+    life_id = models.IntegerField(blank=True, null=True)
+    welfare_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -83,8 +83,8 @@ class Welfarelife(models.Model):
 
 class Welfarepurpose(models.Model):
     id = models.BigAutoField(primary_key=True)
-    purpose = models.ForeignKey(Purpose, models.DO_NOTHING, blank=True, null=True)
-    welfare = models.ForeignKey(Welfare, models.DO_NOTHING, blank=True, null=True)
+    purpose_id = models.IntegerField(blank=True, null=True)
+    welfare_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -93,8 +93,8 @@ class Welfarepurpose(models.Model):
 
 class Welfaretarget(models.Model):
     id = models.BigAutoField(primary_key=True)
-    target = models.ForeignKey(Target, models.DO_NOTHING, blank=True, null=True)
-    welfare = models.ForeignKey(Welfare, models.DO_NOTHING, blank=True, null=True)
+    target_id = models.IntegerField(blank=True, null=True)
+    welfare_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

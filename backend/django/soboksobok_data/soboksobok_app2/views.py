@@ -17,7 +17,7 @@ from scipy.sparse import csr_matrix
 def insertWelfare(request):
 	print("현재 os 경로",os.getcwd())
 	
-	file_path = "C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220324 전체데이터 번호재정의와 정렬.json"
+	file_path = "C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220324 전체데이터 번호재정의와 정렬_json변환용.json"
 	with open(file_path, "r", encoding='UTF8') as json_file:
 		json_data = json.load(json_file)
 		welfares=[]
@@ -111,89 +111,78 @@ def insertWelfare(request):
 	Purpose.objects.bulk_create(purposes)
 
 
-	# # 복지-생애주기 데이터
-	# csv_welfarelife = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarelife oritoid.csv', encoding='cp949')
+	# 복지-생애주기 데이터
+	csv_welfarelife = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarelife oritoid.csv', encoding='cp949')
 	
-	# welfare_lifes = []
+	welfare_lifes = []
 	
-	# for i in range(len(csv_welfarelife)):
-	# 	row = csv_welfarelife.iloc[i]
+	for i in range(len(csv_welfarelife)):
+		row = csv_welfarelife.iloc[i]
 		
-	# 	welfare_life = Welfarelife()
-		
-	# 	welfare = Welfare.objects.filter(welfare_id=row['welfare_id'])
+		welfare_life = Welfarelife()
 
-	# 	life_id = row['welfarelife_life_id']
-	# 	if life_id == 0:
-	# 		life_id = 1
-	# 	life = Life.objects.filter(age_id=life_id)
+		life_id = row['welfarelife_life_id']
+		if life_id == 0:
+			life_id = 1
+		life = Life.objects.filter(age_id=life_id)
 		
-	# 	welfare_life.Welfare = Welfare
-	# 	welfare_life.Life = life
+		welfare_life.welfare_id = row['welfare_id']
+		welfare_life.life_id = life_id
 		
-	# 	welfare_lifes.append(welfare_life)
+		welfare_lifes.append(welfare_life)
 	
-	# Welfarelife.objects.bulk_create(welfare_lifes)
+	Welfarelife.objects.bulk_create(welfare_lifes)
 	
-	# # 복지-가구특성 데이터
-	# csv_welfarefamily = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarefamily oritoid.csv', encoding='cp949')
+	# 복지-가구특성 데이터
+	csv_welfarefamily = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarefamily oritoid.csv', encoding='cp949')
 	
-	# welfare_families = []
+	welfare_families = []
 	
-	# for i in range(len(csv_welfarefamily)):
-	# 	row = csv_welfarefamily.iloc[i]
+	for i in range(len(csv_welfarefamily)):
+		row = csv_welfarefamily.iloc[i]
 		
-	# 	welfare_family = Welfarefamily()
+		welfare_family = Welfarefamily()
 
-	# 	welfare = Welfare.objects.filter(welfare_id=row['welfare_id'])
-	# 	family = Family.objects.filter(family_id = row['welfarefamily_family_id'])
+		welfare_family.welfare_id = row['welfare_id']
+		welfare_family.family_id = row['welfarefamily_family_id']
+		
+		welfare_families.append(welfare_family)
+	
+	Welfarefamily.objects.bulk_create(welfare_families)
+	
+	# 복지-대상특성 데이터
+	csv_welfaretarget = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfaretarget oritoid.csv', encoding='cp949')
+	
+	welfare_targets = []
+	
+	for i in range(len(csv_welfaretarget)):
+		row = csv_welfaretarget.iloc[i]
+		
+		welfare_target = Welfaretarget()
+		
+		welfare_target.Welfare_id = row['welfare_id']
+		welfare_target.Target_id = row['welfaretarget_target_id']
 
-	# 	welfare_family.Welfare = welfare
-	# 	welfare_family.Family = family
-		
-	# 	welfare_families.append(welfare_family)
+		welfare_targets.append(welfare_target)
 	
-	# Welfarefamily.objects.bulk_create(welfare_families)
+	Welfaretarget.objects.bulk_create(welfare_targets)
 	
-	# # 복지-대상특성 데이터
-	# csv_welfaretarget = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfaretarget oritoid.csv', encoding='cp949')
+	# 복지-사업목적 데이터
+	csv_welfarepurpose = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarepurpose oritoid.csv', encoding='cp949')
 	
-	# welfare_targets = []
+	welfare_purposes = []
 	
-	# for i in range(len(csv_welfaretarget)):
-	# 	row = csv_welfaretarget.iloc[i]
+	for i in range(len(csv_welfarepurpose)):
+		row = csv_welfarepurpose.iloc[i]
 		
-	# 	welfare_target = Welfaretarget()
+		welfare_purpose = Welfarepurpose()
 		
-	# 	welfare = Welfare.objects.filter(welfare_id=row['welfare_id'])
-	# 	target = Target.objects.filter(target_id=row['welfaretarget_target_id'])
+		welfare_purpose.welfare_id = row['welfare_id']
+		welfare_purpose.purpose_id = row['welfarepurpose_purpose_id']
 		
-	# 	welfare_target.Welfare = welfare
-	# 	welfare_target.Target = target
-		
-	# 	welfare_targets.append(welfare_target)
+		welfare_purposes.append(welfare_purpose)
 	
-	# Welfaretarget.objects.bulk_create(welfare_targets)
-	
-	# # 복지-사업목적 데이터
-	# csv_welfarepurpose = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarepurpose oritoid.csv', encoding='cp949')
-	
-	# welfare_purposes = []
-	
-	# for i in range(len(csv_welfarepurpose)):
-	# 	row = csv_welfarepurpose.iloc[i]
-		
-	# 	welfare_purpose = Welfarepurpose()
-		
-	# 	welfare = Welfare.objects.filter(welfare_id=row['welfare_id'])
-	# 	purpose = Purpose.objects.filter(purpose_id=row['welfarepurpose_purpose_id'])
-		
-	# 	welfare_purpose.Welfare = welfare
-	# 	welfare_purpose.Purpose = purpose
-		
-	# 	welfare_purposes.append(welfare_purpose)
-	
-	# Welfarepurpose.objects.bulk_create(welfare_purposes)
+	Welfarepurpose.objects.bulk_create(welfare_purposes)
 
 
 	return render(request,'insert_welfare.html')
@@ -830,13 +819,21 @@ def clustering(request):
 		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
 		welfare.update(welfare_group=word.iloc[i]['clustering'])
 
-	return "success"
-
-
-# 복지-복지 유사도 계산
-def wel_wel_cosine(request):
 	return
 
+
+# 복지-복지 특성 유사도 계산
+def wel_wel_cosine():
+	return
+
+
+# 복지-복지 단어 유사도 계산
+def wel_wel_word_cosine():
+	return
+
+# 복지-복지 유사도 계산
+def wel_wel(request):
+	return
 
 
 def test(request):
