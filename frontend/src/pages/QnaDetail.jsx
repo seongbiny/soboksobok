@@ -5,6 +5,7 @@ import { connect, useSelector } from 'react-redux';
 import getAxios from '../api.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
+import Comments from '../components/Comments'
 
 let 글작성틀 = styled.div`
     width: 70%;
@@ -101,7 +102,7 @@ function QnaDetail() {
         // 이거 async 로 바꾸면 글 쓰고 바로 글 목록에 표시가 안된다
         axios.get(`/api/qna/mine/${qnaId}`)
             .then(res => {
-                // console.log(res.data);
+                console.log(res.data);
                 setQna(res.data.body.success);
                 댓글들변경(res.data.body.success.comments)
             })
@@ -164,38 +165,9 @@ function QnaDetail() {
                 </답변내용>
                 <답변들>
                     {
-                        댓글들.map((a, i)=> {
+                        댓글들.map((a)=> {
                             return(
-                                <div key={i}>
-                                    { editable === 'false' ? (
-                                        <h4>{a.comment_content}</h4>
-
-                                    ): (
-                                        <input type="text" onChange={(e) => {댓글값변경(e.target.value)}}/>
-                                    )
-
-                                    }
-
-                                    <button onClick={(e)=> {
-                                        deleteComment(a.comment_id);
-                                        // getComment();
-                                    }}>
-                                    삭제
-                                    </button>
-
-                                    <button onClick={()=> {
-                                        setEditable(!editable)
-                                    }}>
-                                    수정
-                                    </button>
-
-                                    <button onClick={()=> {
-                                        updateComment(a.comment_id);
-                                    }}>
-                                    저장
-                                    </button>
-                                    <hr />
-                                </div>
+                                <Comments key={a.comment_id} id={a.comment_id} content={a.comment_content} />
                             )
                         })
                     }
