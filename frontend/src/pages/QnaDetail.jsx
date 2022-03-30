@@ -57,9 +57,14 @@ function QnaDetail() {
     let navigate = useNavigate();
     let state = useSelector((state) => state)
     const qnaId  = useParams().qnaId;
-    const commentId = useParams().commentId;
+    // const commentId = useParams().commentId;
+
     const [댓글, 댓글값변경] = useState('');
     const [댓글들, 댓글들변경] = useState([]);
+    const [new댓글, new댓글값변경] = useState('');
+    const [new댓글들, new댓글들변경] = useState([]);
+    const [editable, setEditable] = useState(false);
+    
     const [qna, setQna] = useState({});
     const axios = getAxios();
     const createComment = () => {
@@ -71,11 +76,23 @@ function QnaDetail() {
             })
             댓글값변경('');
         }
-
-
     }
-    const deleteComment = () => {
-        axios.delete(`/api/comment/${commentId}`)
+    // console.log(댓글들)
+    const deleteComment = (Id) => {
+        axios.delete(`/api/comment/${Id}`)
+    } // useEffect
+    const updateComment = (Id) => {
+        axios.patch(`/api/comment/${Id}`, {
+            comment_content: new댓글
+        })
+        댓글값변경(Id.comment_content)
+    }
+    const setEdit = () => {
+        if (editable === false) {
+            setEditable(!editable)
+        } else if (editable === true) {
+            setEditable(!editable)
+        }
     }
     useEffect(()=> {
         // const fetchQnas = async () => {
@@ -89,7 +106,7 @@ function QnaDetail() {
         // 이거 async 로 바꾸면 글 쓰고 바로 글 목록에 표시가 안된다
         axios.get(`/api/qna/mine/${qnaId}`)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 setQna(res.data.body.success);
                 댓글들변경(res.data.body.success.comments)
             })
@@ -147,10 +164,7 @@ function QnaDetail() {
                     </답변입력>
                     <Button variant="dark" size="lg" onClick={(e)=> {
                         createComment();
-
-
                     }}
-                    
                     >등록</Button>              
                 </답변내용>
                 <답변들>
@@ -158,11 +172,20 @@ function QnaDetail() {
                         댓글들.map((a, i)=> {
                             return(
                                 <div key={i}>
-                                    <h4>{a.comment_content} - {a.name}</h4>
+                                    
+                                    <h4>{a.comment_content}</h4>
                                     <button onClick={(e)=> {
-                                        deleteComment();
+                                        deleteComment(a.comment_id);
+                                        // getComment();
                                     }}>
                                     x
+                                    </button>
+                                    <button onClick={(e)=> {
+                                        setEdit();
+                                        console.log(editable)
+                                        // updateComment(a.comment_id)
+                                    }}>
+                                    o
                                     </button>
                                     <hr />
                                 </div>
