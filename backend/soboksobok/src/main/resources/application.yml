@@ -5,8 +5,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
 #    url: jdbc:mysql://j6c205.p.ssafy.io:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&autoReconnect=true
-    username: root
-    password: QJdxnlrl407!
+    username: ssafy
+    password: ssafy
     hikari:
       pool-name: jpa-hikari-pool
       maximum-pool-size: 5

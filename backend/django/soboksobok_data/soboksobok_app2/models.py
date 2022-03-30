@@ -40,19 +40,21 @@ class Target(models.Model):
 
 class Welfare(models.Model):
     welfare_id = models.BigIntegerField(primary_key=True)
+    welfare_ori_id = models.CharField(max_length=255, blank=True, null=True)
     welfare_area = models.CharField(max_length=2)
     welfare_child = models.IntegerField(blank=True, null=True)
     welfare_contact = models.CharField(max_length=255, blank=True, null=True)
-    welfare_crit = models.CharField(max_length=255, blank=True, null=True)
+    welfare_crit = models.TextField(blank=True, null=True)
     welfare_dept_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_group = models.BigIntegerField(blank=True, null=True)
     welfare_gu = models.CharField(max_length=2)
-    welfare_howto = models.CharField(max_length=255, blank=True, null=True)
+    welfare_howto = models.TextField(blank=True, null=True)
     welfare_phone = models.CharField(max_length=255, blank=True, null=True)
-    welfare_service_content = models.CharField(max_length=255, blank=True, null=True)
+    welfare_service_content = models.TextField(blank=True, null=True)
     welfare_service_name = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_link = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_name = models.CharField(max_length=255, blank=True, null=True)
-    welfare_target_detail = models.CharField(max_length=255, blank=True, null=True)
+    welfare_target_detail = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
