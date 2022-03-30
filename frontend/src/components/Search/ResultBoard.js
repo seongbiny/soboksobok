@@ -3,33 +3,22 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./Paging.css";
+import Pagination from "react-js-pagination";
 
 function ResultBoard() {
   const axios = getAxios();
   const [result, setResult] = useState([]);
   const { keyword } = useSelector(state => state.change);
+  const [page, setPage] = useState(1);
+
   const navigate = useNavigate();
 
-  // const [searchParams, setSearchParams] = useSearchParams();
-
-  // const query = searchParams.entries();
-  // const [param, value] = query;
-  // console.log(param, value);
-
-  // useEffect(() => {
-  //   const fetchSearch = async () => {
-  //     try {
-  //       const request = await axios.get(`/api/welfare/search/${value}`);
-  //       navigate(`/search?keyword=${value}`);
-  //       setResult(request.data.body.welfares);
-  //       console.log(value);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchSearch();
-  // }, [value]);
+  const handlePageChange = page => {
+    setPage(page);
+    console.log(page);
+  };
 
   useEffect(() => {
     const fetchSearch = async () => {
@@ -77,6 +66,15 @@ function ResultBoard() {
           </tbody>
         </Table>
       </StyledTable>
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={10}
+        totalItemsCount={450}
+        pageRangeDisplayed={5}
+        prevPageText={"<"}
+        nextPageText={">"}
+        onChange={handlePageChange}
+      />
     </StyledBoard>
   );
 }

@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import change from "./change";
-import profile from "./profile";
+import userData from "./userData";
 
 const rootReducer = combineReducers({
   change,
-  profile,
+  userData,
 });
 export default rootReducer;

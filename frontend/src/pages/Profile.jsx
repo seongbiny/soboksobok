@@ -5,7 +5,8 @@ import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
 import { useDispatch } from 'react-redux';
-import { userData } from '../reducers/profile';
+import { userDataName } from '../reducers/userData';
+import { userDataProfile } from '../reducers/userData';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -23,8 +24,8 @@ function Profile() {
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
-
   const dispatch = useDispatch();
+
 
   const getProfile = async () => {
     try {
@@ -37,6 +38,9 @@ function Profile() {
       setGender(response.data.body.user.gender);
       setProfileImage(response.data.body.user.profileImageUrl);
       setAgeRender(ageMap.get(ageRange));
+      dispatch(userDataProfile(response.data.body.user.profileImageUrl));
+      dispatch(userDataName(response.data.body.user.username));
+
     } catch (err) {
       console.log(err);
     }

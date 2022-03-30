@@ -74,8 +74,8 @@ function QnaDetail() {
 
 
     }
-    const deleteComment = () => {
-        axios.delete(`/api/comment/${commentId}`)
+    const deleteComment = (id) => {
+        axios.delete(`/api/comment/${id}`)
     }
     useEffect(()=> {
         // const fetchQnas = async () => {
@@ -159,8 +159,8 @@ function QnaDetail() {
                             return(
                                 <div key={i}>
                                     <h4>{a.comment_content} - {a.name}</h4>
-                                    <button onClick={(e)=> {
-                                        deleteComment();
+                                    <button onClick={(a, e)=> {
+                                        deleteComment(a.commentId);
                                     }}>
                                     x
                                     </button>

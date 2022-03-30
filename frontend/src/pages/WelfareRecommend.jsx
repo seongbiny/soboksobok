@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "../components/WelfareRecommend/Chart";
 import LineChart from "../components/WelfareRecommend/LineChart";
 import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import styled from 'styled-components';
 import { Avatar } from "@mui/material";
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 
 function WelfareRecommend(){
-    const { user } = useSelector(state => state.profile);
+    const {name, profile} = useSelector(state => ({name: state.userData.name,profile: state.userData.profile}), shallowEqual);
+
+    const [username, setUserName] = useState('');
+    const [userProfile, setUserProfile] = useState('');
 
     useEffect(()=>{
-        console.log(user)
+        console.log(name);
+        console.log(profile);
+        // setUserName(name);
+        // setUserProfile(profile);
     },[])
 
     return(

@@ -17,7 +17,7 @@ function Keyword() {
     const fetchWord = async () => {
       try {
         const request = await axios.get("/api/welfare/keyword");
-        setKeywords(request.data.body.keywords.slice(0, 11));
+        setKeywords(request.data.body.keywords.slice(0, 10));
       } catch (err) {
         console.log(err);
       }
