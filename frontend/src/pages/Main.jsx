@@ -1,41 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { Container, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
-import axios from 'axios';
-
 import styled from 'styled-components';
+import getAxios from '../api';
 
-const 소개 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
-`;
+const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
 
-const 탭 = styled.div`
-  margin: 20px;
-`;
-
-const 탭내용 = styled.div`
-  padding: 20px;
-`;
+function isLogin() {
+  const token = localStorage.getItem('jwtToken');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function Main() {
   let navigate = useNavigate();
 
-  let [popular, setPopular] = useState(null);
-  let [recent, setRecent] = useState(null);
+  const [popular, setPopular] = useState([{}]);
+  const [recent, setRecent] = useState([{}]);
 
-  const updatePopular = async () => {
+  const getPopular = async () => {
     try {
-      // 요청 시작 시, 초기화
-      setPopular(null);
-      const response = await axios.get('http://localhost:3000//welfare/popular');
-      setPopular(response.data);
+      const axios = getAxios();
+      let res = await axios.get('/api/welfare/popular');
+      console.log('인기순: ', res.data.body.welfare, typeof res.data.body.welfare);
+      setPopular(res.data.body.welfare);
     } catch (error) {
       console.log(error);
     }
   };
+  const getRecent = async () => {
+    try {
+      const axios = getAxios();
+      let res = await axios.get('/api/welfare/recent');
+      console.log('최신순: ', res.data.body.welfare, typeof res.data.body.welfare);
+      setRecent(res.data.body.welfare);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getPopular();
+    getRecent();
+  }, []);
 
   return (
     <div className="main">
@@ -63,7 +74,12 @@ function Main() {
                 <br />
                 나에게 딱 맞는 복지제도 정보를 찾아보세요
               </p>
-              <Button variant="primary">카카오톡 간편가입</Button>
+
+              {!isLogin() ? (
+                <Button href={KAKAO_AUTH_URL} variant="primary">
+                  카카오톡 간편가입
+                </Button>
+              ) : null}
             </소개>
           </Col>
         </Row>
@@ -91,7 +107,38 @@ function Main() {
                 </Tab>
                 <Tab eventKey="popular-list" title="인기순">
                   <탭내용>
-                    <p>지금 인기있는 복지 혜택을 안내드립니다.</p>
+                    <h5>지금 인기있는 복지 혜택을 안내드립니다.</h5>
+                    {popular.map((item, index) => (
+                      <Fragment key={index}>
+                        <h6>{' - ' + item.welfare_service_name}</h6>
+                        <Button
+                          variant="primary"
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          자세히 보기
+                        </Button>
+                      </Fragment>
+                    ))}
+                  </탭내용>
+                </Tab>
+                <Tab eventKey="recent-list" title="최신순">
+                  <탭내용>
+                    <h5>최신 등록된 복지 혜택을 안내드립니다.</h5>
+                    {recent.map((item, index) => (
+                      <Fragment key={index}>
+                        <h6>{' - ' + item.welfare_service_name}</h6>
+                        <Button
+                          variant="primary"
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          자세히 보기
+                        </Button>
+                      </Fragment>
+                    ))}
                   </탭내용>
                 </Tab>
               </Tabs>
@@ -102,5 +149,19 @@ function Main() {
     </div>
   );
 }
+
+const 소개 = styled.div`
+  margin: 20px;
+  padding: 20px;
+  background-color: #e3f2fd;
+`;
+
+const 탭 = styled.div`
+  margin: 20px;
+`;
+
+const 탭내용 = styled.div`
+  padding: 20px;
+`;
 
 export default Main;
