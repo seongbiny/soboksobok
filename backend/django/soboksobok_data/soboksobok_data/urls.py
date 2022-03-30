@@ -20,5 +20,6 @@ import soboksobok_app.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',soboksobok_app.views.index,name='index'),
+    path('insert_user',soboksobok_app.views.insertWelfare,name='insert_user'),
     # path('qna/',soboksobok_app.views.qna_view,name='qna') # db 연결 확인코드
 ]

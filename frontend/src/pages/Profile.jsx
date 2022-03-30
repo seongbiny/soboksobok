@@ -5,8 +5,6 @@ import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
 import { useDispatch } from 'react-redux';
-import { userDataName } from '../reducers/userData';
-import { userDataProfile } from '../reducers/userData';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -18,14 +16,12 @@ ageMap.set('5', '노년 (60~)'); //일반
 function Profile() {
   const [username, setUsername] = useState('');
   const [ageRange, setAgeRange] = useState('');
-  const [ageRender, setAgeRender] = useState('placeholder');
-  const [gender, setGender] = useState('placeholder');
+  const [ageRender, setAgeRender] = useState('');
+  const [gender, setGender] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
-  const dispatch = useDispatch();
-
 
   const getProfile = async () => {
     try {
@@ -34,13 +30,20 @@ function Profile() {
 
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
-      setAgeRange(response.data.body.user.ageRange);
-      setGender(response.data.body.user.gender);
       setProfileImage(response.data.body.user.profileImageUrl);
-      setAgeRender(ageMap.get(ageRange));
-      dispatch(userDataProfile(response.data.body.user.profileImageUrl));
-      dispatch(userDataName(response.data.body.user.username));
 
+      if (response.data.body.user.ageRange === null) {
+        setAgeRange('placeholder');
+      } else {
+        setAgeRange(response.data.body.user.ageRange);
+        setAgeRender(ageMap.get(ageRange));
+      }
+
+      if (response.data.body.user.gender === null) {
+        setGender('placeholder');
+      } else {
+        setGender(response.data.body.user.gender);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -65,7 +68,7 @@ function Profile() {
     try {
       const axios = getAxios();
       let response = await axios.get('/api/users/like');
-      console.log('찜 : ', response.data);
+      // console.log('찜 : ', response.data.body.likeList);/
       setLiked(response.data.body.likeList);
     } catch (err) {
       console.log(err);
@@ -83,7 +86,7 @@ function Profile() {
     try {
       const axios = getAxios();
       let response = await axios.get('/api/users/used');
-      console.log('사용중 : ', response.data.body.usedWelfareList);
+      // console.log('사용중 : ', response.data.body.usedWelfareList);
       setUsed(response.data.body.usedWelfareList);
     } catch (err) {
       console.log(err);
@@ -99,9 +102,12 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
+  }, [ageRender]); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
+
+  useEffect(() => {
     getLike();
     getUsed();
-  }, [ageRender]); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
+  }, []);
 
   return (
     <div>
@@ -116,10 +122,15 @@ function Profile() {
                   <h5>이름: {username}</h5>
                   <h5>
                     연령대:
-                    {ageRange === null ? '수정 버튼을 눌러 정보를 입력해주세요' : ageRender}
+                    {ageRange === 'placeholder'
+                      ? '수정 버튼을 눌러 정보를 입력해주세요'
+                      : ageRender}
                   </h5>
 
-                  <h5>성별: {gender === null ? '수정 버튼을 눌러 정보를 입력해주세요' : gender}</h5>
+                  <h5>
+                    성별:{' '}
+                    {gender === 'placeholder' ? '수정 버튼을 눌러 정보를 입력해주세요' : gender}
+                  </h5>
                 </div>
               ) : (
                 <div>
