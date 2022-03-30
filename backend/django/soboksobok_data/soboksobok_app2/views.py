@@ -200,7 +200,7 @@ def insertWelfare(request):
 
 
 # 단어 늘여놓기
-def welfare_word_detail(request):
+def welfare_word_detail():
 	
 	total = []
 
@@ -444,11 +444,13 @@ def welfare_word_detail(request):
 		total.append(d)
 
 	result=pd.concat(total)
-	result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv',index=False,encoding='utf-8-sig')
+
+	return result
+	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv',index=False,encoding='utf-8-sig')
 
 
 # 특성 늘여놓기
-def welfare_detail(request):
+def welfare_detail():
 	
 	total = []
 
@@ -688,13 +690,17 @@ def welfare_detail(request):
 		total.append(d)
 
 	result=pd.concat(total)
-	result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv',index=False,encoding='utf-8-sig')
+
+	return result
+
+	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv',index=False,encoding='utf-8-sig')
 
 
 # 단어 클러스터링
 def word_clustering(request):
-	
-	total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv', encoding = 'UTF8')
+	total = welfare_word_detail()
+
+	# total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv', encoding = 'UTF8')
 	
 	data = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220324 전체데이터 번호재정의와 정렬.csv', encoding = 'CP949')
 
@@ -800,7 +806,9 @@ def word_clustering(request):
 
 # 특성 클러스터링
 def clustering(request):
-	total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv', encoding = 'utf-8')
+	# total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv', encoding = 'utf-8')
+
+	total = welfare_detail()
 
 	temp = total.iloc[:, 2:]
 
@@ -809,10 +817,10 @@ def clustering(request):
 	kmeans = SphericalKMeans(n_clusters = 20)
 	labels = kmeans.fit_predict(result)
 
-	word = total.iloc[:, 2:]
+	word = total
 	word['clustering'] = labels[:]
-	idx=total.iloc[:,:1]
-	word = pd.concat([idx,word],axis=1)
+	# idx=total.iloc[:,:1]
+	# word = pd.concat([idx,word],axis=1)
 
 	word.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 complete + 라벨링 + id.csv', encoding = 'utf-8-sig')
 	
@@ -822,7 +830,13 @@ def clustering(request):
 		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
 		welfare.update(welfare_group=word.iloc[i]['clustering'])
 
+	return "success"
+
+
+# 복지-복지 유사도 계산
+def wel_wel_cosine(request):
 	return
+
 
 
 def test(request):
