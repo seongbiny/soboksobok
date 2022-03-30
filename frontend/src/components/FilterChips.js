@@ -122,7 +122,7 @@ function FilterChips() {
       try {
         const axios = getAxios();
         let res = await axios.get('/api/users/update/char');
-        console.log(res.data.body);
+        console.log('userCharacter: ', res.data.body);
 
         setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
@@ -149,14 +149,16 @@ function FilterChips() {
       }
     };
     getFilter();
+    console.log('rendering !!');
+    console.log('child !!', child);
   }, [value]);
 
   return (
     <div>
-      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
+      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
-      <p>{value}</p> */}
+      <p>{value}</p>
 
       <MultipleSelectChips
         label="대상특성"
