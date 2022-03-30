@@ -11,5 +11,5 @@ public class Similarwelfare {
     @Id
     private Long welfare_id;
 
-    private List<Integer>
+//    private List<Integer>
 }

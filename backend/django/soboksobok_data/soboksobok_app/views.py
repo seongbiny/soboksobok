@@ -275,7 +275,7 @@ def user_vectorization(result):
 
 def user_group_mapping(user_vector,user_seq):
 	file_path = os.getcwd()+"/data/"
-	full_welfare = pd.read_csv(file_path+'welfare_clustering.csv')
+	full_welfare = pd.read_csv(file_path+'220330 complete + 라벨링 + id.csv')
 	
 	welfare_mean=[]
 	# n번째 그룹만 뽑기
