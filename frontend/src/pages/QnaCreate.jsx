@@ -4,7 +4,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Container } from 'react-bootstrap';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../CSS/qnacreate.css';
 import { useState } from 'react';
 import getAxios from '../api.js';
@@ -33,6 +33,7 @@ let 버튼위치 = styled.div`
 `
 
 function QnaCreate(props){
+    let navigate = useNavigate();
     let state = useSelector((state) => state)
     let [제목, 제목값변경] = useState('');
     let [내용, 내용값변경] = useState('');
@@ -41,6 +42,23 @@ function QnaCreate(props){
     let 글작성연도 = date.getFullYear();
     let 글작성월 = date.getMonth();
     let 글작성일 = date.getDate();
+    const axios = getAxios();
+
+    const createQna = () => {
+        if (제목 == '') {
+            alert('제목을 입력해주세요')
+        } else if (내용 == '' ) {
+            alert('내용을 입력해주세요')
+        } else if (제목 !== '' && 내용 !== '') {
+            axios.post('/api/qna/mine', {
+                title: 제목,
+                content: 내용,
+            });
+            navigate(`/Qna`)
+        }
+
+        
+    }
     return (
         <Container>
             <글작성틀>
@@ -84,17 +102,18 @@ function QnaCreate(props){
                     <Button variant="secondary" size="lg">취소</Button>
                 </Link>
                 {' '}
-                <Link to = '/Qna'>
+                {/* <Link to = '/Qna'> */}
                 <Button variant="primary" size="lg" onClick={(e) => {
                     // dispatch({ type: '항목추가',payload: { title:제목, year:글작성연도, month:글작성월, day:글작성일 }});
-                    const axios = getAxios();
-                    axios.post('/api/qna/mine', {
-                        title: 제목,
-                        content: 내용,
-                    })
+                    // const axios = getAxios();
+                    // axios.post('/api/qna/mine', {
+                    //     title: 제목,
+                    //     content: 내용,
+                    // })
+                    createQna();
                 }}>등록</Button>
 
-                </Link>
+                {/* </Link> */}
  
                 </버튼위치>
 

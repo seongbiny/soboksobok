@@ -3,33 +3,25 @@ import styled from "styled-components";
 import Table from "react-bootstrap/Table";
 import getAxios from "../../api.js";
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagination.js";
+// import Pagination from "react-js-pagination";
 
 function ResultBoard() {
   const axios = getAxios();
   const [result, setResult] = useState([]);
   const { keyword } = useSelector(state => state.change);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
   const navigate = useNavigate();
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
 
-  // const [searchParams, setSearchParams] = useSearchParams();
-
-  // const query = searchParams.entries();
-  // const [param, value] = query;
-  // console.log(param, value);
-
-  // useEffect(() => {
-  //   const fetchSearch = async () => {
-  //     try {
-  //       const request = await axios.get(`/api/welfare/search/${value}`);
-  //       navigate(`/search?keyword=${value}`);
-  //       setResult(request.data.body.welfares);
-  //       console.log(value);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchSearch();
-  // }, [value]);
+  function currentPost(tmp) {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    return currentPosts;
+  }
 
   useEffect(() => {
     const fetchSearch = async () => {
@@ -65,7 +57,7 @@ function ResultBoard() {
             </tr>
           </thead>
           <tbody>
-            {result.map(welfare => (
+            {currentPost(result).map(welfare => (
               <tr key={welfare.welfareId}>
                 <td className="text-center">{welfare.welfareId}</td>
                 <StyledTd onClick={e => onClick(welfare.welfareId)}>
@@ -77,6 +69,11 @@ function ResultBoard() {
           </tbody>
         </Table>
       </StyledTable>
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={result.length}
+        paginate={setCurrentPage}
+      />
     </StyledBoard>
   );
 }
