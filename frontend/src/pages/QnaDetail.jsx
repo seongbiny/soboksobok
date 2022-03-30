@@ -171,7 +171,7 @@ function QnaDetail() {
                                         <h4>{a.comment_content}</h4>
 
                                     ): (
-                                        <input type="text" value={} onChange={(e) => {댓글값변경(e.target.value)}}/>
+                                        <input type="text" onChange={(e) => {댓글값변경(e.target.value)}}/>
                                     )
 
                                     }
