@@ -52,9 +52,10 @@ function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('');
+  const [isAll, setIsAll] = useState('All');
   const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
+  const [clickedChild, setClickedChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -121,10 +122,13 @@ function FilterChips() {
       try {
         const axios = getAxios();
         let res = await axios.get('/api/users/update/char');
-        console.log(res.data.body);
+        console.log('userCharacter: ', res.data.body);
 
         setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
+        // if (child != clickedChild) {
+        //   setClickedChild(child);
+        // }
 
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
@@ -145,26 +149,16 @@ function FilterChips() {
       }
     };
     getFilter();
+    console.log('rendering !!');
+    console.log('child !!', child);
   }, [value]);
-
-  // useEffect(() => {
-  //   const expectChild = (e) => {
-  //     if (e === null) {
-  //       setChild('placeholder');
-  //     } else {
-  //       setChild(e);
-  //     }
-  //   };
-  //   expectChild(child);
-  //   console.log('child : ', child);
-  // }, [child]);
 
   return (
     <div>
-      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
+      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
-      <p>{value}</p> */}
+      <p>{value}</p>
 
       <MultipleSelectChips
         label="대상특성"

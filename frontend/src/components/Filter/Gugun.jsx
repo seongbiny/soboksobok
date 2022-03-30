@@ -6,8 +6,8 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
 
   if (isAll === 'All') {
     return (
-      <select id="selectGugunAll" defaultValue={region} onClick={handleChange} readOnly>
-        <option value="placeholder" disabled>
+      <select id="selectGugunAll" value={region} onChange={handleChange} readOnly>
+        <option value="" disabled>
           선택
         </option>
         <option value="00" readOnly>
@@ -17,8 +17,8 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
     );
   } else if (isAll === 'GwangJu') {
     return (
-      <select id="selectGugunGwangJu" defaultValue={region} onChange={handleChange} readOnly>
-        <option value="placeholder" disabled>
+      <select id="selectGugunGwangJu" value={region} onChange={handleChange} readOnly>
+        <option value="" disabled>
           선택
         </option>
         <option value="10">전체</option>
@@ -27,14 +27,6 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
         <option value="13">동구</option>
         <option value="14">북구</option>
         <option value="15">서구</option>
-      </select>
-    );
-  } else if (isAll === 'null') {
-    return (
-      <select id="selectDefault" defaultValue={region} onChange={handleChange} readOnly>
-        <option value="placeholder" disabled>
-          선택
-        </option>
       </select>
     );
   }
