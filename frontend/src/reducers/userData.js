@@ -8,8 +8,8 @@ export const userDataProfile = profile => ({
 }); // action 함수
 
 const initialState = {
-  name: "",
-  profile: "",
+  name: "hi",
+  profile: "hi",
 };
 
 // reducer

@@ -1,60 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import { yellow, grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 
 function FilterCard(props) {
-  const [likeBtn, setLikeBtn] = useState(false);
   const { name, content, id } = props;
   let navigate = useNavigate();
 
   const onClick = () => {
     navigate(`/welfare/${id}`);
-    // console.log(e.target);
   };
 
   return (
     <Card
       sx={{
         width: 275,
-        height: 300,
+        height: 275,
         pl: 2,
         pr: 2,
         display: "grid",
         gridTemplateRows: "80% 20%",
+        background: "#DDF0F8",
       }}
-      style={{ border: "1px solid" }}
     >
       <CardContent>
         <Grid container sx={{ mb: 2 }}>
-          <Grid item xs={10}>
-            <Typography variant="h5" component="div" sx={10}>
+          <Grid item>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={10}
+              style={{ color: "#033075", fontWeight: "500" }}
+            >
               {name}
             </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            {likeBtn ? (
-              <StarRoundedIcon
-                sx={{ color: yellow[600], fontSize: 30 }}
-                onClick={() => {
-                  setLikeBtn(false);
-                }}
-              />
-            ) : (
-              <StarBorderRoundedIcon
-                sx={{ color: grey[400], fontSize: 30 }}
-                onClick={() => {
-                  setLikeBtn(true);
-                }}
-              />
-            )}
           </Grid>
         </Grid>
         <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
