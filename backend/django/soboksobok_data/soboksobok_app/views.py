@@ -144,24 +144,23 @@ def arrange(user,selectfamily,selecttarget):
 	elif row==2:
 		child_empty=1
 	# 자녀유무 끝
-	row=cur['region']
-	# row=cur['user_area']
-	# if row==1:
-	# 	gwangju=1
-	# row=cur['user_gu']
-	# if row==0:
-	# 	if gwangju==1:
-	# 		gwangju_gu=1
-	# elif row==1:
-	# 	gwangju_gwangsan=1
-	# elif row==2:
-	# 	gwangju_nam=1
-	# elif row==3:
-	# 	gwangju_dong=1
-	# elif row==4:
-	# 	gwangju_buk=1
-	# elif row==5:
-	# 	gwangju_seo=1
+	row=cur['area']
+	if row==1:
+		gwangju=1
+	row=cur['gu']
+	if row==0:
+		if gwangju==1:
+			gwangju_gu=1
+	elif row==1:
+		gwangju_gwangsan=1
+	elif row==2:
+		gwangju_nam=1
+	elif row==3:
+		gwangju_dong=1
+	elif row==4:
+		gwangju_buk=1
+	elif row==5:
+		gwangju_seo=1
 	# 지역,구 끝
 	# user 데이터 끝 
 	for l in range(1,len(arr)):

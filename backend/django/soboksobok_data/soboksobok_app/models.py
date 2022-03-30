@@ -174,6 +174,8 @@ class User(models.Model):
     user_id = models.CharField(unique=True, max_length=64)
     username = models.CharField(max_length=100)
     user_group = models.IntegerField(blank=True, null=True)
+    area = models.CharField(max_length=255, blank=True, null=True)
+    gu = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
