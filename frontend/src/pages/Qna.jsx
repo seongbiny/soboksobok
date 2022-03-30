@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import getAxios from '../api.js';
-
+import Blank from '../components/Qna/Blank.js';
+import Write from '../components/Qna/BlankWrite.js';
 let 표 = styled.div`
     width: 80%;
     margin-left: auto;
@@ -90,14 +91,21 @@ function Qna(props){
                 <Table striped bordered hover>
                     <thead>
                         <표내용>
-                        <th width='10%'>번호</th>
-                        <th width='70%'>제목</th>
+                        <th width='20%'>번호</th>
+                        <th width='60%'>제목</th>
                         <th width='20%'>등록일</th>
                         </표내용>
 
                     </thead>
 
-                    <tbody>
+                    { qnas.length === 0 ? 
+                        <tr>
+                            <Blank></Blank>
+                            <Write></Write>
+                            <Blank></Blank>
+                        </tr>
+                        : 
+                        <tbody>
                         {
                             qnas.map((a, i)=> {
                                 return (
@@ -111,7 +119,21 @@ function Qna(props){
                                 )
                             })
                         }
-                    </tbody>
+                        </tbody>
+                    }
+                        {/* {
+                            qnas.map((a, i)=> {
+                                return (
+                                    <tr key={i} onClick={()=> {
+                                        navigate(`/QnaDetail/${a.id}` ) 
+                                    }} style={{cursor: 'pointer'}} >
+                                        <중앙정렬 width='10%'>{i+1}</중앙정렬>
+                                        <중앙정렬 width='70%'>{a.title}</중앙정렬>
+                                        <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
+                                    </tr>
+                                )
+                            })
+                        } */}
                 </Table>
                 <페이지번호>
                     <Pagination>
