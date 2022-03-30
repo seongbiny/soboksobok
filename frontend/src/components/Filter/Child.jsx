@@ -7,7 +7,7 @@ const ChildSelectBox = ({ child, setChild }) => {
   return (
     <div>
       <select id="selectChild" defaultValue={child} onChange={handleChange}>
-        <option value="placeholder" disabled>
+        <option value="" disabled>
           선택
         </option>
         <option value="1">있음(출산예정/ 입양예정)</option>

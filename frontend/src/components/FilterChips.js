@@ -52,9 +52,10 @@ function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('');
+  const [isAll, setIsAll] = useState('All');
   const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
+  const [clickedChild, setClickedChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -125,6 +126,9 @@ function FilterChips() {
 
         setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
+        // if (child != clickedChild) {
+        //   setClickedChild(child);
+        // }
 
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
@@ -146,18 +150,6 @@ function FilterChips() {
     };
     getFilter();
   }, [value]);
-
-  // useEffect(() => {
-  //   const expectChild = (e) => {
-  //     if (e === null) {
-  //       setChild('placeholder');
-  //     } else {
-  //       setChild(e);
-  //     }
-  //   };
-  //   expectChild(child);
-  //   console.log('child : ', child);
-  // }, [child]);
 
   return (
     <div>
