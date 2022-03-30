@@ -4,6 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -77,19 +78,49 @@ export default function DetailTaps(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div style={{ marginBottom: "5vh" }}>지원대상</div>
-        <li>{target}</li>
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          누가 받을 수 있나요?
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0 }}>지원대상 |</div>
+          <div>{target}</div>
+        </div>
         <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
           {crit}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div style={{ marginBottom: "5vh" }}>서비스 내용</div>
-        {content}
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          어떤 혜택을 받을 수 있나요?
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0 }}>지원내용 |</div>
+          <div>{content}</div>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <div style={{ marginBottom: "5vh" }}>신청방법</div>
-        {howto}
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          어떻게 신청하나요?
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0 }}>신청방법 |</div>
+          <div>{howto}</div>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
         <div style={{ marginBottom: "5vh" }}>추가정보</div>

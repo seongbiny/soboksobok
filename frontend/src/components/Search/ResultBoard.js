@@ -5,7 +5,6 @@ import getAxios from "../../api.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination.js";
-// import Pagination from "react-js-pagination";
 
 function ResultBoard() {
   const axios = getAxios();

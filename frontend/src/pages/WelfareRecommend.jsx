@@ -9,23 +9,15 @@ import { useSelector, shallowEqual, useStore } from 'react-redux';
 
 
 function WelfareRecommend(){
-    const {name, profile} = useStore(state => 
-        ({name: state.userData.name,profile: state.userData.profile}));
-
-    // const [username, setUserName] = useState('');
-    // const [userProfile, setUserProfile] = useState('');
+    const name = useSelector(state =>state.userData.name);
 
     useEffect(()=>{
         console.log(name);
-        console.log(profile);
-        // setUserName(name);
-        // setUserProfile(profile);
     },[name])
 
     return(
         <StyledContainer>
             <StyledTop>
-                {/* {`이름은${name}이고 프로필은${profile}`} */}
                 <Avatar />
                 <Chart />
                 <LineChart />
