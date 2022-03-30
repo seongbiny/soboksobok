@@ -96,6 +96,7 @@ function Qna(props){
                         </표내용>
 
                     </thead>
+
                     <tbody>
                         {
                             qnas.map((a, i)=> {
