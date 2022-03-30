@@ -63,7 +63,7 @@ function QnaDetail() {
     const [댓글들, 댓글들변경] = useState([]);
     const [new댓글, new댓글값변경] = useState('');
     const [new댓글들, new댓글들변경] = useState([]);
-    const [editable, setEditable] = useState(false);
+    // const [editable, setEditable] = useState(false);
     
     const [qna, setQna] = useState({});
     const axios = getAxios();
@@ -87,13 +87,7 @@ function QnaDetail() {
         })
         댓글값변경(Id.comment_content)
     }
-    const setEdit = () => {
-        if (editable === false) {
-            setEditable(!editable)
-        } else if (editable === true) {
-            setEditable(!editable)
-        }
-    }
+
     useEffect(()=> {
         // const fetchQnas = async () => {
         //     const request = await axios.get(`/api/qna/mine/${qnaId}/`);
@@ -181,8 +175,7 @@ function QnaDetail() {
                                     x
                                     </button>
                                     <button onClick={(e)=> {
-                                        setEdit();
-                                        console.log(editable)
+
                                         // updateComment(a.comment_id)
                                     }}>
                                     o

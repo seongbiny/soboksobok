@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 @Service
@@ -22,4 +23,6 @@ public class WelfareService {
     public List<Welfare> getWelfarebykeyword(String keyword) {
         return welfareRepository.searchWelfare(keyword);
     }
+
+//    public List<Array> getWelfarepurpose(List<Welfare> welfares) { return welfareRepository.exportWelfarePurpose(welfares);}
 }

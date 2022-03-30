@@ -49,11 +49,13 @@ familyMap.set(10, 33); //독거노인
 familyMap.set(11, 34); //취약계층
 
 function FilterChips() {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
+  const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
   const [isAll, setIsAll] = useState('All');
-  const [region, setRegion] = useState('placeholder');
+  const [region, setRegion] = useState('');
   const [child, setChild] = useState('');
+  const [clickedChild, setClickedChild] = useState('');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -89,7 +91,7 @@ function FilterChips() {
       const selectJob = [];
       const selectFamily = [];
 
-      for (let element of value) {
+      for (let element of clicked) {
         if (element >= 15 && element <= 20) {
           selectJob.push(map.get(element));
         } else if (element >= 23 && element <= 34) {
@@ -104,7 +106,7 @@ function FilterChips() {
         family: selectFamily,
       });
 
-      await axios.post('/api/users/update', {
+      await axios.post('/api/users/update/char', {
         child: String(child),
         region: String(region),
         job: selectJob,
@@ -115,42 +117,40 @@ function FilterChips() {
     }
   };
 
-  let settingIsAll = (region) => {
-    if (region === '00') {
-      setIsAll('All');
-      console.log('전국');
-    } else {
-      setIsAll('GwangJu');
-      console.log('광주');
-    }
-  };
-
-  const getFilter = async () => {
-    try {
-      const axios = getAxios();
-      let res = await axios.get('/api/users/update');
-      setChild(res.data.body.UserCharacter.child);
-      setRegion(res.data.body.UserCharacter.region);
-
-      await settingIsAll(region);
-      setJob(...job, res.data.body.UserCharacter.job);
-      setFamily(...family, res.data.body.UserCharacter.family);
-      let allValue = [];
-      for (let element of job) {
-        allValue.push(jobMap.get(element));
-      }
-      for (let element of family) {
-        allValue.push(familyMap.get(element));
-      }
-      setValue(...value, allValue);
-      // console.log(value);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const getFilter = async () => {
+      try {
+        const axios = getAxios();
+        let res = await axios.get('/api/users/update/char');
+        console.log('userCharacter: ', res.data.body);
+
+        setRegion(res.data.body.UserCharacter.region);
+        setChild(res.data.body.UserCharacter.child);
+        // if (child != clickedChild) {
+        //   setClickedChild(child);
+        // }
+
+        setJob(res.data.body.UserCharacter.job);
+        setFamily(res.data.body.UserCharacter.family);
+        let allValue = [];
+        for (let element of job) {
+          await allValue.push(jobMap.get(element));
+        }
+        for (let element of family) {
+          await allValue.push(familyMap.get(element));
+        }
+        console.log(value, '+', allValue);
+        if (JSON.stringify(value) != JSON.stringify(allValue)) {
+          setValue([...allValue]);
+          setCliked([...allValue]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getFilter();
+    console.log('rendering !!');
+    console.log('child !!', child);
   }, [value]);
 
   return (
@@ -162,12 +162,11 @@ function FilterChips() {
 
       <MultipleSelectChips
         label="대상특성"
-        value={value}
-        setValue={setValue}
+        value={clicked}
+        setValue={setCliked}
         options={jobChip}
         error={error}
         setError={setError}
-        // onChange={(e) => setValue(e.currentTarget.value)}
       />
 
       <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
@@ -175,8 +174,8 @@ function FilterChips() {
 
       <MultipleSelectChips
         label="가구특성"
-        value={value}
-        setValue={setValue}
+        value={clicked}
+        setValue={setCliked}
         options={familyChip}
         error={error}
         setError={setError}
@@ -185,7 +184,6 @@ function FilterChips() {
         variant="primary"
         onClick={() => {
           setFilter();
-          // navigate('/', { replace: true });
         }}
       >
         저장

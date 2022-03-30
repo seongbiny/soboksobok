@@ -1,27 +1,15 @@
-import { Form } from 'react-bootstrap';
 import AgeSelectBox from './AgeRange';
 import GenderSelectBox from './Gender';
 
-const ModifyProfile = ({ username, setEmail, setAgeRange, setGender }) => {
+const ModifyProfile = ({ username, ageRange, setAgeRange, gender, setGender }) => {
   return (
     <div>
+      <h5>이름: {username}</h5>
       <h5>
-        이름: {username} <br />
+        연령대: <AgeSelectBox ageRange={ageRange} setAgeRange={setAgeRange}></AgeSelectBox>
       </h5>
       <h5>
-        이메일:{' '}
-        <Form.Control
-          type="text"
-          placeholder="email@example.com"
-          onChange={(e) => setEmail(e.target.value)}
-        />{' '}
-        <br />
-      </h5>
-      <h5>
-        연령대: <AgeSelectBox setAgeRange={setAgeRange}></AgeSelectBox> <br />
-      </h5>
-      <h5>
-        성별: <GenderSelectBox setGender={setGender}></GenderSelectBox> <br />
+        성별: <GenderSelectBox gender={gender} setGender={setGender}></GenderSelectBox>
       </h5>
     </div>
   );
