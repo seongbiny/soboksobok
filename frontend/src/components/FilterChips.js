@@ -48,56 +48,42 @@ familyMap.set(9, 32); //신용불량자
 familyMap.set(10, 33); //독거노인
 familyMap.set(11, 34); //취약계층
 
+const jobChip = [
+  { label: '학생', value: 15 },
+  { label: '무직 (실업자(취업희망자))', value: 16 },
+  { label: '창업(영세자영업(창업)자)', value: 17 },
+  { label: '농어업인', value: 18 },
+  { label: '중소기업(저소득근로자)', value: 19 },
+  { label: '일반', value: 20 },
+];
+
+const familyChip = [
+  { label: '무주택자', value: 23 },
+  { label: '임산부', value: 24 },
+  { label: '미취학', value: 25 },
+  { label: '다문화/탈북민', value: 26 },
+  { label: '다자녀', value: 27 },
+  { label: '보훈대상자', value: 28 },
+  { label: '장애인', value: 29 },
+  { label: '저소득', value: 30 },
+  { label: '한부모/조손', value: 31 },
+  { label: '신용불량자', value: 32 },
+  { label: '독거노인', value: 33 },
+  { label: '저취약계층소득', value: 34 },
+];
+
 function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('');
-  const [region, setRegion] = useState('');
-  const [child, setChild] = useState('');
+  const [isAll, setIsAll] = useState('All');
+  const [region, setRegion] = useState('00');
+  const [child, setChild] = useState('2');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
-  const [clickRegion, setClickRegion] = useState(false);
-  const [clickChild, setClickChild] = useState(false);
-  const [disable, setDisable] = useState(true);
-
-  const jobChip = [
-    { label: '학생', value: 15 },
-    { label: '무직 (실업자(취업희망자))', value: 16 },
-    { label: '창업(영세자영업(창업)자)', value: 17 },
-    { label: '농어업인', value: 18 },
-    { label: '중소기업(저소득근로자)', value: 19 },
-    { label: '일반', value: 20 },
-  ];
-
-  const familyChip = [
-    { label: '무주택자', value: 23 },
-    { label: '임산부', value: 24 },
-    { label: '미취학', value: 25 },
-    { label: '다문화/탈북민', value: 26 },
-    { label: '다자녀', value: 27 },
-    { label: '보훈대상자', value: 28 },
-    { label: '장애인', value: 29 },
-    { label: '저소득', value: 30 },
-    { label: '한부모/조손', value: 31 },
-    { label: '신용불량자', value: 32 },
-    { label: '독거노인', value: 33 },
-    { label: '저취약계층소득', value: 34 },
-  ];
-
-  const isDisable = () => {
-    {
-      clicked != [] && clickRegion != false && clickChild != false
-        ? setDisable(false)
-        : setDisable(true);
-    }
-    console.log(disable);
-  };
 
   const setFilter = async () => {
     try {
-      const axios = getAxios();
-
       const selectJob = [];
       const selectFamily = [];
 
@@ -109,16 +95,17 @@ function FilterChips() {
         }
       }
 
-      console.log({
-        child: String(child),
-        region: String(region),
-        job: selectJob,
-        family: selectFamily,
-      });
+      // await console.log({
+      //   child: child,
+      //   region: region,
+      //   job: selectJob,
+      //   family: selectFamily,
+      // });
 
+      const axios = getAxios();
       await axios.post('/api/users/update/char', {
-        child: String(child),
-        region: String(region),
+        child: child ? child : '2',
+        region: region ? region : '00',
         job: selectJob,
         family: selectFamily,
       });
@@ -139,6 +126,12 @@ function FilterChips() {
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
 
+        if (region === '00' || region === null) {
+          setIsAll('All');
+        } else {
+          setIsAll('GwangJu');
+        }
+
         let allValue = [];
         for (let element of job) {
           await allValue.push(jobMap.get(element));
@@ -147,7 +140,7 @@ function FilterChips() {
           await allValue.push(familyMap.get(element));
         }
         console.log(value, '+', allValue);
-        if (JSON.stringify(value) != JSON.stringify(allValue)) {
+        if (JSON.stringify(value) !== JSON.stringify(allValue)) {
           setValue([...allValue]);
           setCliked([...allValue]);
         }
@@ -158,21 +151,14 @@ function FilterChips() {
     getFilter();
 
     console.log('region', region);
-  }, [value, disable]);
+  }, [value]);
 
   return (
     <div>
-      <SidoSelectBox
-        setIsAll={setIsAll}
-        isAll={isAll}
-        setRegion={setRegion}
-        region={region}
-        isDisable={isDisable}
-        setClickRegion={setClickRegion}
-      />
+      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />
       <p>{region}</p>
-      <p>{value}</p>
+      {/* <p>{value}</p> */}
 
       <MultipleSelectChips
         label="대상특성"
@@ -181,15 +167,9 @@ function FilterChips() {
         options={jobChip}
         error={error}
         setError={setError}
-        isDisable={isDisable}
       />
 
-      <ChildSelectBox
-        child={child}
-        setChild={setChild}
-        setClickChild={setClickChild}
-        isDisable={isDisable}
-      ></ChildSelectBox>
+      <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
       {/* <p>{child}</p> */}
 
       <MultipleSelectChips
@@ -199,11 +179,9 @@ function FilterChips() {
         options={familyChip}
         error={error}
         setError={setError}
-        isDisable={isDisable}
       />
       <Button
         variant="primary"
-        disabled={disable}
         onClick={() => {
           setFilter();
         }}
