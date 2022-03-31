@@ -42,7 +42,7 @@ function ResultBoard() {
 
   const { length: count } = result;
   if (count === 0) {
-    return <p>검색 정보가 없습니다.</p>;
+    return <StyledNo>검색 정보가 없습니다.</StyledNo>;
   }
 
   return (
@@ -77,6 +77,18 @@ function ResultBoard() {
     </StyledBoard>
   );
 }
+const StyledNo = styled.div`
+  box-sizing: border-box;
+  width: 50vw;
+  height: 50vh;
+  border-radius: 20px;
+  border: 1px solid #e9ecef;
+  margin: auto;
+  // display: flex;
+  line-height: 50vh;
+  text-align: center;
+  font-weight: bold;
+`;
 
 const StyledBoard = styled.div`
   box-sizing: border-box;
