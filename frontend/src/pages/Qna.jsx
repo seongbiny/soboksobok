@@ -63,7 +63,7 @@ function Qna(props) {
     return () => setQnas([]);
   }, []);
   return (
-    <Container style={{height:'auto', minHeight:'100%', paddingBottm:'30vh'}}>
+    <Container>
       <표>
         <제목>Q&A 게시판</제목>
         {isLogin() ? (
