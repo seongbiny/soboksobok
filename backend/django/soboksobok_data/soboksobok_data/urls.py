@@ -20,7 +20,7 @@ import soboksobok_app2.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('',soboksobok_app.views.index,name='index'),
+    path('',soboksobok_app.views.index,name='index'),
     path("insertusergroup/<int:user_seq>", soboksobok_app.views.insertusergroupAPI),
     path('insert_user',soboksobok_app.views.insertWelfare,name='insert_user'),
     path('insert_welfare',soboksobok_app2.views.insertWelfare,name='insert_welfare'),

@@ -297,8 +297,8 @@ def user_group_mapping(user_vector,user_seq):
 		df1['mean'] = df1.mean(axis=1)
 		# print(n,"번째 그룹 평균 : ",df1['mean'][0])
 		welfare_mean.append(df1['mean'][0])
-	print(welfare_mean)
 	print("가장 평균이 높은 그룹 : ", welfare_mean.index(max(welfare_mean)))
 	max_group=welfare_mean.index(max(welfare_mean))
 	user=User.objects.filter(user_seq=user_seq)
 	user.update(user_group=max_group)
+	
