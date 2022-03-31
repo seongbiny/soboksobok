@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import styled from 'styled-components';
-import getAxios from '../api';
+import { getAxios } from '../api';
 
 const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
 

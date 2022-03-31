@@ -5,12 +5,12 @@ function Auth() {
   // BE에서 받은 token
   const token = new URL(window.location.href).searchParams.get('token');
 
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   const getToken = async () => {
     try {
       await localStorage.setItem('jwtToken', token);
-      navigate('/', { replace: true });
+      // navigate('/', { replace: true });
     } catch (err) {
       console.log(err);
     }

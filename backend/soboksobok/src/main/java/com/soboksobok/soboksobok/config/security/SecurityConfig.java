@@ -100,7 +100,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/welfare/**")
                 .antMatchers("/qna/**")
-                .antMatchers("/comment/**");
+                .antMatchers("/comment/**")
+                .antMatchers("/auth/**");
 //       web.ignoring().antMatchers(
 //               "swagger-ui.html",   // swgger 사용시
 //               "/index.html",   // front-end 에서 build한 static file

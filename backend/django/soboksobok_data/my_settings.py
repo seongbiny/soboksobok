@@ -4,7 +4,8 @@ DATABASES = {
         'NAME': 'soboksobok',
         'USER': 'ssafy',
         'PASSWORD': 'ssafy',
-        'HOST': '127.0.0.1',
+        # 'HOST': '127.0.0.1',
+        'HOST': 'j6c205.p.ssafy.io',
         'PORT': '3306',
     }
 }

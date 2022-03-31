@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Table from "react-bootstrap/Table";
-import getAxios from "../../api.js";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Pagination from "./Pagination.js";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Table from 'react-bootstrap/Table';
+import { getAxios } from '../../api.js';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Pagination from './Pagination.js';
 // import Pagination from "react-js-pagination";
 
 function ResultBoard() {
   const axios = getAxios();
   const [result, setResult] = useState([]);
-  const { keyword } = useSelector(state => state.change);
+  const { keyword } = useSelector((state) => state.change);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function ResultBoard() {
     fetchSearch();
   }, [keyword]);
 
-  const onClick = id => {
+  const onClick = (id) => {
     navigate(`/welfare/${id}`);
   };
 
@@ -57,10 +57,10 @@ function ResultBoard() {
             </tr>
           </thead>
           <tbody>
-            {currentPost(result).map(welfare => (
+            {currentPost(result).map((welfare) => (
               <tr key={welfare.welfareId}>
                 <td className="text-center">{welfare.welfareId}</td>
-                <StyledTd onClick={e => onClick(welfare.welfareId)}>
+                <StyledTd onClick={(e) => onClick(welfare.welfareId)}>
                   {welfare.welfare_service_name}
                 </StyledTd>
                 <td className="text-center">{welfare.welfare_phone}</td>

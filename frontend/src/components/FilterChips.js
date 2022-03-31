@@ -4,7 +4,7 @@ import MultipleSelectChips from './Filter/MultipleSelectChips.js';
 import SidoSelectBox from './Filter/Sido.jsx';
 import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
-import getAxios from '../api.js';
+import { getAxios, getAxiosDjango } from '../api.js';
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -109,6 +109,10 @@ function FilterChips() {
         job: selectJob,
         family: selectFamily,
       });
+
+      const djangoAxios = getAxiosDjango();
+      let res = await djangoAxios.get('/insertusergroup/user_seq');
+      console.log('django res: ', res);
     } catch (err) {
       console.log(err);
     }
