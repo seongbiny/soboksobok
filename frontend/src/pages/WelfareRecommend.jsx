@@ -11,7 +11,7 @@ import { useSelector, shallowEqual, useStore } from 'react-redux';
 function WelfareRecommend(){
     // const name = useSelector(state =>state.userData.name);
     // const profile = useSelector(state =>state.userData.profile);
-    const [name, setName] = useState('');
+    const [name, setName] = useState('User');
     const [profile, setProfile] = useState('');
 
     useEffect(()=>{

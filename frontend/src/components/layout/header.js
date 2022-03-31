@@ -12,10 +12,10 @@ const Header = () => {
           <Navbar.Brand href="/">소복소복</Navbar.Brand>
           <Nav className="me-auto">
             {/* <Nav.Link href="/">홈</Nav.Link> */}
-            {/* <Nav.Link href="/search">복지검색</Nav.Link>
+            <Nav.Link href="/search">복지검색</Nav.Link>
             <Nav.Link href="/recommend">추천서비스</Nav.Link>
-            <Nav.Link href="/qna">고객센터</Nav.Link> */}
-            <Link to="/search">
+            <Nav.Link href="/qna">고객센터</Nav.Link>
+            {/* <Link to="/search">
               <Button variant="primary">복지검색</Button>
             </Link>
             <Link to="/recommend">
@@ -23,7 +23,7 @@ const Header = () => {
             </Link>
             <Link to="/qna">
               <Button variant="primary">고객센터</Button>
-            </Link>
+            </Link> */}
           </Nav>
           {/* <Button variant="primary">로그인</Button> */}
           <Login></Login>
