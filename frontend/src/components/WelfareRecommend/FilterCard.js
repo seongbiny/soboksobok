@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import styled from "styled-components";
 
 function FilterCard(props) {
   const { name, content, id } = props;
@@ -27,22 +28,18 @@ function FilterCard(props) {
         background: "#DDF0F8",
       }}
     >
-      <CardContent>
+      <CardContent style={{ display: "grid" }}>
         <Grid container sx={{ mb: 2 }}>
-          <Grid item>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={10}
-              style={{ color: "#033075", fontWeight: "500" }}
-            >
-              {name}
-            </Typography>
-          </Grid>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={10}
+            style={{ color: "#033075", fontWeight: "500" }}
+          >
+            {name}
+          </Typography>
         </Grid>
-        <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
-          {content}
-        </Typography>
+        <StyledP>{content}</StyledP>
       </CardContent>
       <CardActions>
         <Button variant="contained" size="small" fullWidth onClick={onClick}>
@@ -52,4 +49,11 @@ function FilterCard(props) {
     </Card>
   );
 }
+const StyledP = styled.p`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: "-webkit-box";
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+`;
 export default FilterCard;

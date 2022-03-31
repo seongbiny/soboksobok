@@ -4,29 +4,21 @@ import LineChart from "../components/WelfareRecommend/LineChart";
 import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import styled from 'styled-components';
-import { Avatar } from "@mui/material";
-import { useSelector, shallowEqual, useStore } from 'react-redux';
 
 
 function WelfareRecommend(){
-    // const name = useSelector(state =>state.userData.name);
-    // const profile = useSelector(state =>state.userData.profile);
     const [name, setName] = useState('User');
     const [profile, setProfile] = useState('');
 
     useEffect(()=>{
-        // console.log(name);
-        // console.log(profile);
-        console.log(localStorage.getItem('name'));
         setName(localStorage.getItem('name'))
-        console.log(localStorage.getItem('profile'));
         setProfile(localStorage.getItem('profile'))
     },[])
 
     return(
         <StyledContainer>
             <StyledTop>
-                <Avatar />
+                <img src={profile}></img>
                 <Chart />
                 <LineChart />
             </StyledTop>
