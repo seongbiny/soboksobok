@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded";
-import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
-import { yellow, blue, grey } from "@mui/material/colors";
-import { Grid, Typography } from "@mui/material";
-import getAxios from "../../api";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import BookmarkRemoveRoundedIcon from '@mui/icons-material/BookmarkRemoveRounded';
+import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
+import { yellow, blue, grey } from '@mui/material/colors';
+import { Grid, Typography } from '@mui/material';
+import { getAxios } from '../../api';
+import styled from 'styled-components';
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
@@ -70,7 +70,7 @@ function DetailMain(props) {
   return (
     <Box
       sx={{
-        "& > :not(style)": {
+        '& > :not(style)': {
           m: 1,
           width: 1000,
           height: 200,
