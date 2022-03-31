@@ -20,13 +20,14 @@ import soboksobok_app2.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',soboksobok_app.views.index,name='index'),
+    # path('',soboksobok_app.views.index,name='index'),
+    path("insertusergroup/<int:user_seq>", soboksobok_app.views.insertusergroupAPI),
     path('insert_user',soboksobok_app.views.insertWelfare,name='insert_user'),
     path('insert_welfare',soboksobok_app2.views.insertWelfare,name='insert_welfare'),
     path('word_clustering',soboksobok_app2.views.word_clustering,name='word_clustering'),
     path('clustering', soboksobok_app2.views.clustering, name='clustering'),
     path('wel_wel', soboksobok_app2.views.wel_wel_cosine, name='wel_wel'),
-    path('user_info',soboksobok_app.views.selectuser,name='user_info'),
+    # path('user_info',soboksobok_app.views.selectuser,name='user_info'),
     path('test', soboksobok_app2.views.test, name='test'),
     # path('qna/',soboksobok_app.views.qna_view,name='qna') # db 연결 확인코드
 ]
