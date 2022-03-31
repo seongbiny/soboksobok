@@ -5,6 +5,7 @@ import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
 import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
 import { userDataName, userDataProfile } from '../reducers/userData';
 
 const ageMap = new Map();
@@ -24,6 +25,11 @@ function Profile() {
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
   const dispatch = useDispatch();
+  const { keyword } = useSelector(state => state.change);
+
+  useEffect(()=>{
+    console.log(keyword)
+  },[keyword])
 
   const getProfile = async () => {
     try {
@@ -33,8 +39,10 @@ function Profile() {
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
       setProfileImage(response.data.body.user.profileImageUrl);
-      dispatch(userDataName(response.data.body.user.username));
-      dispatch(userDataProfile(response.data.body.user.profileImageUrl));
+      // dispatch(userDataName(response.data.body.user.username));
+      // dispatch(userDataProfile(response.data.body.user.profileImageUrl));
+      localStorage.setItem('name', response.data.body.user.username);
+      localStorage.setItem('profile', response.data.body.user.profileImageUrl);
 
       if (response.data.body.user.ageRange === null) {
         setAgeRange('placeholder');

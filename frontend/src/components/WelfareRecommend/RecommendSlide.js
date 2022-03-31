@@ -9,7 +9,7 @@ import getAxios from "../../api";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
-function RecommendSlide() {
+function RecommendSlide(props) {
   const axios = getAxios();
   const [cards, setCards] = useState([]);
 
@@ -27,7 +27,7 @@ function RecommendSlide() {
   return (
     <div className="main-wrap">
       <h2 style={{ marginBottom: "3vh", fontWeight: "600" }}>
-        USER님에게 추천하는 복지
+        {props.name}님에게 추천하는 복지
       </h2>
       <Swiper
         style={{

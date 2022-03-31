@@ -9,11 +9,19 @@ import { useSelector, shallowEqual, useStore } from 'react-redux';
 
 
 function WelfareRecommend(){
-    const name = useSelector(state =>state.userData.name);
+    // const name = useSelector(state =>state.userData.name);
+    // const profile = useSelector(state =>state.userData.profile);
+    const [name, setName] = useState('');
+    const [profile, setProfile] = useState('');
 
     useEffect(()=>{
-        console.log(name);
-    },[name])
+        // console.log(name);
+        // console.log(profile);
+        console.log(localStorage.getItem('name'));
+        setName(localStorage.getItem('name'))
+        console.log(localStorage.getItem('profile'));
+        setProfile(localStorage.getItem('profile'))
+    },[])
 
     return(
         <StyledContainer>
@@ -23,8 +31,8 @@ function WelfareRecommend(){
                 <LineChart />
             </StyledTop>
             <StyledMain>
-                <FilterSlide />
-                <RecommendSlid />
+                <FilterSlide name={name} />
+                <RecommendSlid name={name} />
             </StyledMain>
         </StyledContainer>
     )

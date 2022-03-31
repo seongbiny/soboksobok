@@ -37,7 +37,7 @@ const enhancer =
     ? compose(applyMiddleware())
     : composeWithDevTools(applyMiddleware(logger));
 
-const store = createStore(rootReducer, enhancer);
+const store = createStore(rootReducer, undefined, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
