@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import FilterCard from "./FilterCard";
-import getAxios from "../../api";
+import { getAxios } from "../../api";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";

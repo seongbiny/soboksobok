@@ -7,7 +7,7 @@ import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
-import getAxios from "../../api";
+import { getAxios } from "../../api";
 import styled from "styled-components";
 
 function DetailMain(props) {
@@ -73,7 +73,6 @@ function DetailMain(props) {
           width: 1000,
           height: 200,
         },
-
         mb: 3,
         mt: 3,
       }}

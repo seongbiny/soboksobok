@@ -1,4 +1,4 @@
-const SidoSelectBox = ({ setIsAll, isAll, setRegion, region }) => {
+const SidoSelectBox = ({ setIsAll, isAll, setRegion }) => {
   const handleChange = (e) => {
     setIsAll(e.target.value);
     console.log('SIDO: ', e.target.value);

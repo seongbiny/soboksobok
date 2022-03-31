@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import RecommendCard from "./RecommendCard";
-import getAxios from "../../api";
+import { getAxios } from "../../api";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 

@@ -3,6 +3,7 @@ import Chart from "../components/WelfareRecommend/Chart";
 import LineChart from "../components/WelfareRecommend/LineChart";
 import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
+import ProfileCard from "../components/WelfareRecommend/ProfileCard";
 import styled from 'styled-components';
 
 
@@ -18,7 +19,7 @@ function WelfareRecommend(){
     return(
         <StyledContainer>
             <StyledTop>
-                <img src={profile}></img>
+                <ProfileCard profile={profile} />
                 <Chart />
                 <LineChart />
             </StyledTop>
@@ -32,7 +33,7 @@ function WelfareRecommend(){
 
 const StyledTop = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 20% 40% 40%;
     justify-content: center;
     align-items: center;
     margin-top: 5vh;
