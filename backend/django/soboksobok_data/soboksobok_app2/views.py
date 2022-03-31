@@ -168,7 +168,7 @@ def insertWelfare(request):
 	Welfaretarget.objects.bulk_create(welfare_targets)
 	
 	# 복지-사업목적 데이터
-	csv_welfarepurpose = pd.read_csv(os.getcwd()+"/data/"+"data/220330 welfarepurpose oritoid.csv", encoding='cp949')
+	csv_welfarepurpose = pd.read_csv(os.getcwd()+"/data/"+"220330 welfarepurpose oritoid.csv", encoding='cp949')
 	
 	welfare_purposes = []
 	
