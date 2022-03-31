@@ -96,10 +96,14 @@ public class User {
     @Column(name = "CHILD")
     private String child;
 
-    @Column(name = "REGION")
-    private String region;
+    @Column(name = "AREA")
+    private String area;
 
+    @Column(name = "GU")
+    private String gu;
 
+    @Column(name = "USER_GROUP")
+    private Long userGroup;
 
     public User(
             @NotNull @Size(max = 64) String userId,
