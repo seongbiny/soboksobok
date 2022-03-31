@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import getAxios from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
-import { useDispatch } from 'react-redux';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -30,7 +29,12 @@ function Profile() {
 
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
-      setProfileImage(response.data.body.user.profileImageUrl);
+
+      if (response.data.body.user.profileImageUrl === null) {
+        setProfileImage('/blank-profile.png');
+      } else {
+        setProfileImage(response.data.body.user.profileImageUrl);
+      }
 
       if (response.data.body.user.ageRange === null) {
         setAgeRange('placeholder');
@@ -48,12 +52,12 @@ function Profile() {
       console.log(err);
     }
   };
-  
 
   const setProfile = async () => {
     try {
       const axios = getAxios();
       await axios.post('/api/users/update/profile', {
+        // profile_image_url: profileImage,
         age: ageRange,
         gender: gender,
       });
@@ -118,7 +122,7 @@ function Profile() {
               {modify === 'false' ? (
                 <div>
                   <h1> {username}님 안녕하세요!</h1>
-                  <img src={profileImage}></img>
+                  <img src={profileImage} width="110px"></img>
                   <h5>이름: {username}</h5>
                   <h5>
                     연령대:
@@ -135,7 +139,7 @@ function Profile() {
               ) : (
                 <div>
                   <h1> {username}님 안녕하세요!</h1>
-                  <img src={profileImage}></img>
+                  <img src={profileImage} width="110px"></img>
                   <ModifyProfile
                     username={username}
                     ageRange={ageRange}
