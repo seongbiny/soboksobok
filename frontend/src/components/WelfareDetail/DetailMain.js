@@ -57,8 +57,6 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    // console.log(likeNum);
-    // console.log(usedNum);
     if (likeNum.length !== 0) {
       likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
     }
@@ -75,17 +73,18 @@ function DetailMain(props) {
           width: 1000,
           height: 200,
         },
+
         mb: 3,
         mt: 3,
       }}
     >
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, bgcolor: "#E2ECFD" }}>
         <Grid container>
           <Grid item xs={10}>
             {/* <Typography variant="h4" align="left">
               {Name}
             </Typography> */}
-            <h2>{Name}</h2>
+            <h2 style={{ color: "#033075" }}>{Name}</h2>
           </Grid>
           <Grid item xs={2} align="right">
             <div>

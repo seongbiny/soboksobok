@@ -80,9 +80,9 @@ function QnaDetail() {
         }
     }
     // console.log(댓글들)
-    const deleteComment = (Id) => {
-        axios.delete(`/api/comment/${Id}`)
-    } // useEffect
+    // const deleteComment = (Id) => {
+    //     axios.delete(`/api/comment/${Id}`)
+    // } // useEffect
 
     const updateComment = (Id) => {
         axios.patch(`/api/comment/${Id}`, {

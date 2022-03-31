@@ -123,15 +123,42 @@ export default function DetailTaps(props) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <div style={{ marginBottom: "5vh" }}>추가정보</div>
-        <div style={{ fontWeight: "bold" }}>관련부서</div>
-        <li>{deptName}</li>
-        <li style={{ marginBottom: "5vh" }}>{contact}</li>
-        <div style={{ fontWeight: "bold" }}>전화문의</div>
-        <li style={{ marginBottom: "5vh" }}>{phone}</li>
-        <div style={{ fontWeight: "bold" }}>관련 웹사이트</div>
-        <li>{siteLink}</li>
-        <li>{siteName}</li>
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          궁금한 사항이 더 있어요.
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0, marginBottom: "1vh" }}>
+            관련부서 |
+          </div>
+          <div>{deptName}</div>
+          <div>{contact}</div>
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0, marginBottom: "1vh" }}>
+            전화문의 |
+          </div>
+          <div>{phone}</div>
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "120px", flexShrink: 0 }}>관련 웹사이트 |</div>
+          <div>{siteLink}</div>
+          <div>{siteName}</div>
+        </div>
       </TabPanel>
     </Box>
   );

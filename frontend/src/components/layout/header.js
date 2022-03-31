@@ -6,7 +6,7 @@ import Login from "../../pages/Login";
 const Header = () => {
   return (
     <header className="header">
-      <Navbar bg="primary" variant="dark">
+      <Navbar className="navbar-light" style={{ backgroundColor: "#E2ECFD" }}>
         <Container>
           <Navbar.Brand href="/">소복소복</Navbar.Brand>
           <Nav className="me-auto">
