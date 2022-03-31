@@ -103,7 +103,7 @@ public class User {
     private String gu;
 
     @Column(name = "USER_GROUP")
-    private int userGroup;
+    private Long userGroup;
 
     public User(
             @NotNull @Size(max = 64) String userId,

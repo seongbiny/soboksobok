@@ -85,10 +85,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         System.out.println("CustomOAuth2UserService - updateUser");
         System.out.println("유저는: "+userInfo);
         if (userInfo.getName() != null && !user.getUsername().equals(userInfo.getName())) {
+            System.out.println("유저 이름 갱신");
             user.setUsername(userInfo.getName());
         }
 
         if (userInfo.getImageUrl() != null && !user.getProfileImageUrl().equals(userInfo.getImageUrl())) {
+            System.out.println("유저 프사 갱신");
             user.setProfileImageUrl(userInfo.getImageUrl());
         }
 
