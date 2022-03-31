@@ -23,6 +23,7 @@ public class UserService {
     private final SelectTargetRepository selectTargetRepository;
     private final TargetRepository targetRepository;
     private final FamilyRepository familyRepository;
+    private final QnaRepository qnaRepository;
 
     public User getUser(String userId) {
         return userRepository.findByUserId(userId);
@@ -122,5 +123,16 @@ public class UserService {
         user.setAgeRange(dto.getAge());
         user.setGender(dto.getGender());
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(String userId){
+        User user = getUser(userId);
+        selectTargetRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        selectFamilyRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        userUsedRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        likeWelfareRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        qnaRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        userRepository.delete(user);
     }
 }
