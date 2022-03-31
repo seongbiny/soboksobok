@@ -274,15 +274,16 @@ def user_vectorization(result):
 	return user_vector
 
 def user_group_mapping(user_vector,user_seq):
+	print("user_group_mapping")
 	file_path = os.getcwd()+"/data/"
-	full_welfare = pd.read_csv(file_path+'220330 complete + 라벨링 + id.csv')
+	full_welfare = pd.read_csv(file_path+'220330 complete + 라벨링 + id.csv',)
 	
 	welfare_mean=[]
 	# n번째 그룹만 뽑기
 	# 20은 k의 개수 
 	for n in range(20):
 		welfare= full_welfare.loc[(full_welfare.clustering==n)]
-		welfare=welfare.iloc[:,2:37] #필요한 특성만 뽑기
+		welfare=welfare.iloc[:,3:38] #필요한 특성만 뽑기
 		# arr_select_welfare=[]
 		# for i in range(len(tmp3)):
 		#   row=tmp3.iloc[i] # 복지 혜택 한개
