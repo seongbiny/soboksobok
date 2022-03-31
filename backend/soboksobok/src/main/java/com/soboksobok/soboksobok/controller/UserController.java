@@ -37,7 +37,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public ApiResponse getUserInfo() {
-        System.out.println("테스트트");
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = userService.getUser(principal.getUsername());
@@ -47,7 +46,6 @@ public class UserController {
 
     @GetMapping("/used")
     public ApiResponse getUsedWelfare(){
-        System.out.println("사용중 복지 불러오기");
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
         List<Usedwelfare> used = userService.getAllUsedList();
@@ -144,10 +142,10 @@ public class UserController {
         User user = userService.getUser(principal.getUsername());
         CharacterDto dto = new CharacterDto();
         dto.setChild(user.getChild());
-        dto.setRegion(user.getRegion());
+        String region = user.getArea()+user.getGu();
+        dto.setRegion(region);
         dto.setFamily(userService.getAllSelectFamily(user.getUserSeq()));
         dto.setJob(userService.getAllSelectTarget(user.getUserSeq()));
-        System.out.println("dto: "+dto);
         return ApiResponse.success("UserCharacter",dto);
     }
 
@@ -158,5 +156,14 @@ public class UserController {
         userService.updateUserProfile(dto,user.getUserId());
         String response = "연령대: "+dto.getAge()+" 성별: "+dto.getGender()+" 입력!";
         return ApiResponse.success("Response",response);
+    }
+
+    @DeleteMapping("/delete")
+    public ApiResponse deleteUser(){
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+        String response = user.getUsername()+" 삭제 완료";
+        userService.deleteUser(user.getUserId());
+        return ApiResponse.success("Delete",response);
     }
 }
