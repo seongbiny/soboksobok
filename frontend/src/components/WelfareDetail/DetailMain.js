@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
-import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import BookmarkRemoveRoundedIcon from '@mui/icons-material/BookmarkRemoveRounded';
-import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
-import { yellow, blue, grey } from '@mui/material/colors';
-import { Grid, Typography } from '@mui/material';
-import { getAxios } from '../../api';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded";
+import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
+import { yellow, blue, grey } from "@mui/material/colors";
+import { Grid, Typography } from "@mui/material";
+import { getAxios } from "../../api";
+import styled from "styled-components";
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
@@ -57,8 +57,6 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    // console.log(likeNum);
-    // console.log(usedNum);
     if (likeNum.length !== 0) {
       likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
     }
@@ -70,7 +68,7 @@ function DetailMain(props) {
   return (
     <Box
       sx={{
-        '& > :not(style)': {
+        "& > :not(style)": {
           m: 1,
           width: 1000,
           height: 200,
@@ -79,13 +77,13 @@ function DetailMain(props) {
         mt: 3,
       }}
     >
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, bgcolor: "#E2ECFD" }}>
         <Grid container>
           <Grid item xs={10}>
             {/* <Typography variant="h4" align="left">
               {Name}
             </Typography> */}
-            <h2>{Name}</h2>
+            <h2 style={{ color: "#033075" }}>{Name}</h2>
           </Grid>
           <Grid item xs={2} align="right">
             <div>

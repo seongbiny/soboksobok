@@ -5,6 +5,7 @@ import { connect, useSelector } from 'react-redux';
 import { getAxios } from '../api.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
+import Comments from '../components/Comments'
 
 let 글작성틀 = styled.div`
   width: 70%;
