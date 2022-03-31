@@ -27,7 +27,7 @@ const AxiosDjango = axios.create({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTION',
     'Access-Control-Allow-Headers':
-      'Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization',
+      'Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization, X-Custom-Header',
     'Access-Control-Expose-Headers': 'Content-Length,Content-Range',
   },
 });

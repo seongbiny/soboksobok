@@ -31,7 +31,7 @@ function Profile() {
 
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
-      setUserSeq(response.data.body.user.id);
+      setUserSeq(response.data.body.user.userSeq);
       console.log('userSeq: ', userSeq);
 
       if (response.data.body.user.profileImageUrl === null) {
@@ -66,6 +66,7 @@ function Profile() {
       });
       console.log('ageRange: ', ageRange, 'gender: ', gender);
       setAgeRender(ageMap.get(ageRange));
+
       const djangoAxios = getAxiosDjango();
       let res = await djangoAxios.get(`/insertusergroup/${userSeq}`);
       console.log('django res: ', res);
