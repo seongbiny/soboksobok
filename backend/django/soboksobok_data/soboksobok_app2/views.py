@@ -16,9 +16,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # 복지 데이터 저장
 def insertWelfare(request):
-	print("현재 os 경로",os.getcwd())
+	file_path = os.getcwd()+"/data/"+"220324 전체데이터 번호재정의와 정렬_json변환용.json"
 	
-	file_path = "C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220324 전체데이터 번호재정의와 정렬_json변환용.json"
 	with open(file_path, "r", encoding='UTF8') as json_file:
 		json_data = json.load(json_file)
 		welfares=[]
@@ -48,7 +47,7 @@ def insertWelfare(request):
 
 
 	# 생애주기 데이터
-	csv_life = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/age.csv', encoding='cp949')
+	csv_life = pd.read_csv(os.getcwd()+"/data/"+"age.csv", encoding='cp949')
 	
 	lifes = []
 	
@@ -64,7 +63,7 @@ def insertWelfare(request):
 	Life.objects.bulk_create(lifes)
 	
 	# 가구특성 데이터
-	csv_family = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/family.csv', encoding='cp949')
+	csv_family = pd.read_csv(os.getcwd()+"/data/"+"family.csv", encoding='cp949')
 	
 	families = []
 	
@@ -80,7 +79,7 @@ def insertWelfare(request):
 	Family.objects.bulk_create(families)
 
 	# 대상특성 데이터
-	csv_target = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/target.csv', encoding='cp949')
+	csv_target = pd.read_csv(os.getcwd()+"/data/"+"target.csv", encoding='cp949')
 	
 	targets = []
 	
@@ -96,7 +95,7 @@ def insertWelfare(request):
 	Target.objects.bulk_create(targets)
 
 	# 사업목적 데이터
-	csv_purpose = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/purpose.csv', encoding='cp949')
+	csv_purpose = pd.read_csv(os.getcwd()+"/data/"+"purpose.csv", encoding='cp949')
 	
 	purposes = []
 	
@@ -113,7 +112,7 @@ def insertWelfare(request):
 
 
 	# 복지-생애주기 데이터
-	csv_welfarelife = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarelife oritoid.csv', encoding='cp949')
+	csv_welfarelife = pd.read_csv(os.getcwd()+"/data/"+"220330 welfarelife oritoid.csv", encoding='cp949')
 	
 	welfare_lifes = []
 	
@@ -135,7 +134,7 @@ def insertWelfare(request):
 	Welfarelife.objects.bulk_create(welfare_lifes)
 	
 	# 복지-가구특성 데이터
-	csv_welfarefamily = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarefamily oritoid.csv', encoding='cp949')
+	csv_welfarefamily = pd.read_csv(os.getcwd()+"/data/"+"220330 welfarefamily oritoid.csv", encoding='cp949')
 	
 	welfare_families = []
 	
@@ -152,7 +151,7 @@ def insertWelfare(request):
 	Welfarefamily.objects.bulk_create(welfare_families)
 	
 	# 복지-대상특성 데이터
-	csv_welfaretarget = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfaretarget oritoid.csv', encoding='cp949')
+	csv_welfaretarget = pd.read_csv(os.getcwd()+"/data/"+"220330 welfaretarget oritoid.csv", encoding='cp949')
 	
 	welfare_targets = []
 	
@@ -169,7 +168,7 @@ def insertWelfare(request):
 	Welfaretarget.objects.bulk_create(welfare_targets)
 	
 	# 복지-사업목적 데이터
-	csv_welfarepurpose = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 welfarepurpose oritoid.csv', encoding='cp949')
+	csv_welfarepurpose = pd.read_csv(os.getcwd()+"/data/"+"data/220330 welfarepurpose oritoid.csv", encoding='cp949')
 	
 	welfare_purposes = []
 	
@@ -438,7 +437,7 @@ def welfare_word_detail():
 	result=pd.concat(total)
 
 	return result
-	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv',index=False,encoding='utf-8-sig')
+	# result.to_csv(os.getcwd()+"/data/"+"wordcomplete.csv",index=False,encoding='utf-8-sig')
 
 
 # 복지 특성유무 늘여놓기
@@ -682,7 +681,7 @@ def welfare_detail():
 		total.append(d)
 
 	result=pd.concat(total)
-	# result.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv',index=False,encoding='utf-8-sig')
+	# result.to_csv(os.getcwd()+"/data/"+"complete.csv",index=False,encoding='utf-8-sig')
 	return result
 
 
@@ -692,9 +691,9 @@ def welfare_detail():
 def word_clustering(request):
 	total = welfare_word_detail()
 
-	# total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/wordcomplete.csv', encoding = 'UTF8')
+	# total = pd.read_csv(os.getcwd()+"/data/"+"wordcomplete.csv", encoding = 'UTF8')
 	
-	data = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220324 전체데이터 번호재정의와 정렬.csv', encoding = 'CP949')
+	data = pd.read_csv(os.getcwd()+"/data/"+"220324 전체데이터 번호재정의와 정렬.csv", encoding = 'CP949')
 
 	total_split = total.iloc[2:]
 	data_split = data.iloc[:, :12]
@@ -733,20 +732,20 @@ def word_clustering(request):
 				l1.append(word)
 		word_list.append(l1)
 		
-	with open('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/복지 단어 데이터.txt', 'w') as f:
+	with open(os.getcwd()+"/data/"+"복지 단어 데이터.txt", 'w') as f:
 		for i in range(len(word_list)):
 			for line in word_list[i]:
 				f.write(line)
 				f.write(' ')
 			f.write('\n')
 
-	with open('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/복지 단어 데이터.txt', 'r') as f:
+	with open(os.getcwd()+"/data/"+"복지 단어 데이터.txt", 'r') as f:
 		list_file = f.readlines()
 	list_file = [line.rstrip('\n') for line in list_file]
 	
 	stopwords = []
 
-	file = open('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/불용어.txt', 'r', encoding = 'UTF8')
+	file = open(os.getcwd()+"/data/"+"불용어.txt", 'r', encoding = 'UTF8')
 
 	while (1):
 		line = file.readline()
@@ -785,7 +784,7 @@ def word_clustering(request):
 	
 	word = pd.concat([idx,word],axis=1)
 
-	word.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 wordcomplete + 라벨링 + id.csv', encoding = 'utf-8-sig')
+	word.to_csv(os.getcwd()+"/data/"+"220330 wordcomplete + 라벨링 + id.csv", encoding = 'utf-8-sig')
 	
 	welfares = Welfare.objects.all()
 
@@ -798,7 +797,7 @@ def word_clustering(request):
 
 # 복지 특성유무기반 클러스터링
 def clustering(request):
-	# total = pd.read_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/complete.csv', encoding = 'utf-8')
+	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
 
 	total = welfare_detail()
 
@@ -814,7 +813,7 @@ def clustering(request):
 	# idx=total.iloc[:,:1]
 	# word = pd.concat([idx,word],axis=1)
 
-	word.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/220330 complete + 라벨링 + id.csv', encoding = 'utf-8-sig')
+	word.to_csv(os.getcwd()+"/data/"+"220330 complete + 라벨링 + id.csv", encoding = 'utf-8-sig')
 	
 	welfares = Welfare.objects.all()
 
@@ -842,13 +841,13 @@ def wel_wel_0101_vector():
 # 복지 단어 tf-dif 벡터화 
 def wel_wel_word_cosine():
 
-	with open('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/복지 단어 데이터.txt', 'r') as f:
+	with open(os.getcwd()+"/data/"+"복지 단어 데이터.txt", 'r') as f:
 		list_file = f.readlines()
 	list_file = [line.rstrip('\n') for line in list_file]
 	
 	stopwords = []
 
-	file = open('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/불용어.txt', 'r', encoding = 'UTF8')
+	file = open(os.getcwd()+"/data/"+"불용어.txt", 'r', encoding = 'UTF8')
 
 	while (1):
 		line = file.readline()
@@ -911,9 +910,9 @@ def wel_wel_cosine(request):
 	
 	print(top_10)
 
-	# top_10.to_csv('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/top_10_similar_welfare_id.csv', encoding = 'utf-8-sig')
+	# top_10.to_csv(os.getcwd()+"/data/"+"top_10_similar_welfare_id.csv", encoding = 'utf-8-sig')
 
-	with open('C:/Users/SSAFY/Desktop/pjt/pjt_2/S06P22C205/backend/django/soboksobok_data/data/top_10_similar_welfare_id.txt', 'w') as f:
+	with open(os.getcwd()+"/data/"+"top_10_similar_welfare_id.txt", 'w') as f:
 		for i in range(len(top_10)):
 			f.write(str(i+1))
 			f.write(' :: ')
@@ -930,15 +929,4 @@ def test(request):
 
 		for family in families:
 			print(family.family_id)
-
-
-
-# - welfare/welfarefamily/welfaretarget 등등 csv 파일 → 복지 데이터 늘여놓기, csv파일 만들기 → spherical k-means 클러스터링 (특성 유무)
-
-
-# - 복지데이터+그룹결과.csv
-
-# - 복지데이터늘여놓기+그룹결과.csv
-
-# - 복지데이터+그룹 결과를 DB에 저장
 
