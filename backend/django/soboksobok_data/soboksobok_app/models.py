@@ -2,72 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=150)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
-
-
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
-
-
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
-
-class AuthUserUserPermissions(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
-
-
 class Comment(models.Model):
     comment_id = models.BigIntegerField(primary_key=True)
     comment_content = models.TextField()
@@ -79,50 +13,6 @@ class Comment(models.Model):
     class Meta:
         managed = False
         db_table = 'comment'
-
-
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.PositiveSmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_session'
 
 
 class Family(models.Model):
@@ -181,8 +71,8 @@ class LifeWelfarelife(models.Model):
 
 class Likewelfare(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)
-    welfare = models.ForeignKey('Welfare', models.DO_NOTHING, blank=True, null=True)
+    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq')
+    welfare = models.ForeignKey('Welfare', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -223,7 +113,7 @@ class Qna(models.Model):
 class Selectfamily(models.Model):
     id = models.BigAutoField(primary_key=True)
     family = models.ForeignKey(Family, models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)       
 
     class Meta:
         managed = False
@@ -233,11 +123,19 @@ class Selectfamily(models.Model):
 class Selecttarget(models.Model):
     id = models.BigAutoField(primary_key=True)
     target = models.ForeignKey('Target', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)       
 
     class Meta:
         managed = False
         db_table = 'selecttarget'
+
+
+class Similarwelfare(models.Model):
+    welfare_id = models.BigIntegerField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'similarwelfare'
 
 
 class Target(models.Model):
@@ -260,8 +158,8 @@ class TargetWelfaretarget(models.Model):
 
 class Used(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)
-    welfare = models.ForeignKey('Welfare', models.DO_NOTHING, blank=True, null=True)
+    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq')
+    welfare = models.ForeignKey('Welfare', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -271,17 +169,18 @@ class Used(models.Model):
 class User(models.Model):
     user_seq = models.BigAutoField(primary_key=True)
     age = models.CharField(max_length=255, blank=True, null=True)
+    area = models.CharField(max_length=255, blank=True, null=True)
     birth = models.CharField(max_length=255, blank=True, null=True)
     child = models.CharField(max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    email = models.CharField(unique=True, max_length=512)
-    email_verified_yn = models.CharField(max_length=1)
+    created_at = models.DateTimeField(blank=True, null=True)
     gender = models.CharField(max_length=255, blank=True, null=True)
-    modified_at = models.DateTimeField()
-    password = models.CharField(max_length=128)
-    profile_image_url = models.CharField(max_length=512)
-    provider_type = models.CharField(max_length=20)
-    role_type = models.CharField(max_length=20)
+    gu = models.CharField(max_length=255, blank=True, null=True)
+    modified_at = models.DateTimeField(blank=True, null=True)
+    password = models.CharField(max_length=128, blank=True, null=True)
+    profile_image_url = models.CharField(max_length=512, blank=True, null=True)
+    provider_type = models.CharField(max_length=20, blank=True, null=True)
+    role_type = models.CharField(max_length=20, blank=True, null=True)
+    user_group = models.IntegerField(blank=True, null=True)
     user_id = models.CharField(unique=True, max_length=64)
     username = models.CharField(max_length=100)
 
@@ -302,19 +201,21 @@ class UserRefreshToken(models.Model):
 
 class Welfare(models.Model):
     welfare_id = models.BigIntegerField(primary_key=True)
+    welfare_ori_id = models.CharField(max_length=255, blank=True, null=True)
     welfare_area = models.CharField(max_length=2)
     welfare_child = models.IntegerField(blank=True, null=True)
     welfare_contact = models.CharField(max_length=255, blank=True, null=True)
-    welfare_crit = models.CharField(max_length=255, blank=True, null=True)
+    welfare_crit = models.TextField(blank=True, null=True)
     welfare_dept_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_group = models.BigIntegerField(blank=True, null=True)
     welfare_gu = models.CharField(max_length=2)
-    welfare_howto = models.CharField(max_length=255, blank=True, null=True)
+    welfare_howto = models.TextField(blank=True, null=True)
     welfare_phone = models.CharField(max_length=255, blank=True, null=True)
-    welfare_service_content = models.CharField(max_length=255, blank=True, null=True)
+    welfare_service_content = models.TextField(blank=True, null=True)
     welfare_service_name = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_link = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_name = models.CharField(max_length=255, blank=True, null=True)
-    welfare_target_detail = models.CharField(max_length=255, blank=True, null=True)
+    welfare_target_detail = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
