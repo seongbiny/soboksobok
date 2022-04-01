@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import getAxios from '../api.js';
+import { getAxios } from '../api.js';
 import { useParams } from 'react-router-dom';
 import { Comment } from '@mui/icons-material';
 
