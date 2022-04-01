@@ -51,6 +51,12 @@ public class WelfareRepository {
                 .getResultList();
     }
 
+    public List<Welfare> getMostUserWelfare() {
+        List<Welfare> resultList = em.createQuery("select w from Welfare w order by w.usingusers.size desc", Welfare.class)
+                .getResultList();
+        return resultList.subList(0, 10);
+    }
+
 //    public List<Array> exportWelfarePurpose(List<Welfare> welfareList) {
 //        System.out.println(welfareList);
 //        return new ArrayList<>();

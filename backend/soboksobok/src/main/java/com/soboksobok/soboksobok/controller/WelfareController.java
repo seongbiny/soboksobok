@@ -86,34 +86,29 @@ public class WelfareController {
         return purposes;
     }
 
-
     /////////////////////////////
     //    @ApiOperation(value = "그룹 내에서 가장 많이 사용되는 복지 n개")
-    @GetMapping("/recommend/grouppopular")
-    public ApiResponse getwelfaregrouppopular() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUser(principal.getUsername());
-        Long group = user.getUserGroup();
-        List<Welfare> list = welfareService.getWelfarebygroup(group);
+//    @GetMapping("/recommend/grouppopular")
+//    public Map getwelfaregrouppopular() {
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userService.getUser(principal.getUsername());
+//        Long group = user.getUserGroup();
+//        List<Welfare> list = welfareService.getWelfarebygroup(group);
+//
+//        HashMap<String, Long> popularused = new HashMap<>();
+//
+//
+//
+//        return popularused;
+//        // 해당 그룹에서 많이 사용하는 복지들 리스트 n개
+//    }
 
-        return ApiResponse.success("welfare", list);
-        // 해당 그룹에서 많이 사용하는 복지들 리스트 n개
-    }
-
-
-
-
-
-    ////////////////////////////////
     //    @ApiOperation(value = "인기순 복지 리스트")
     @GetMapping("/popular")
     public ApiResponse getwelfarepopular() {
-        String keyword = "노인";
-        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        List<Welfare> list = welfareService.getPopularWelfare();
         return ApiResponse.success("welfare", list);
     }
-
-
 
     ////////////////////////////
 //    @ApiOperation(value = "최신순 복지 리스트")
@@ -123,8 +118,6 @@ public class WelfareController {
 //        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
 //        return ApiResponse.success("welfare", list);
 //    }
-
-
 
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")

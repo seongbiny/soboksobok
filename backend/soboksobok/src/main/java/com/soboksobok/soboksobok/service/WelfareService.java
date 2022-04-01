@@ -31,5 +31,8 @@ public class WelfareService {
     public List<Welfare> getWelfarebygroup(Long group_id) {
         return welfareRepository.getGroupWelfare(group_id);
     }
-//    public List<Array> getWelfarepurpose(List<Welfare> welfares) { return welfareRepository.exportWelfarePurpose(welfares);}
+
+    public List<Welfare> getPopularWelfare() {
+        return welfareRepository.getMostUserWelfare();
+    }
 }
