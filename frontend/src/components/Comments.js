@@ -37,8 +37,6 @@ const Comments = props => {
       <button
         onClick={() => {
           setEditable(!editable);
-          // setComment(props.댓글)
-          console.log(comment)
         }}
       >
         수정
