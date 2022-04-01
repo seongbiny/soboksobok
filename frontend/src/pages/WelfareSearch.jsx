@@ -23,6 +23,7 @@ const StyledContainer = styled.div`
     display: grid;
     justify-content: center;
     padding-top: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
 `;
 const StyledMain = styled.div`
     display: flex;

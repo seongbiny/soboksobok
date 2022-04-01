@@ -161,6 +161,7 @@ const StyledContainer = styled.div`
   justify-content: center;
   margin-top: 5vh;
   margin-bottom: 5vh;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 const StyledCard = styled.div`
   display: flex;

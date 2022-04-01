@@ -52,6 +52,7 @@ const StyledContainer = styled.div`
     justify-content: center;
     margin: auto;
     grid-template-columns: 70vw;
+    font-family: 'Noto Sans KR', sans-serif;
 `;
 
 export default WelfareRecommend;
