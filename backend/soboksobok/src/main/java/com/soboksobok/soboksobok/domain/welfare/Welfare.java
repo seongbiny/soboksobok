@@ -2,6 +2,7 @@ package com.soboksobok.soboksobok.domain.welfare;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.w3c.dom.Text;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@ToString
 @Table(name = "welfare")
 public class Welfare {
 
