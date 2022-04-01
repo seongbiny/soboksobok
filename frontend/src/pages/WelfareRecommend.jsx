@@ -19,7 +19,7 @@ function WelfareRecommend(){
     return(
         <StyledContainer>
             <StyledTop>
-                <ProfileCard profile={profile} />
+                <ProfileCard profile={profile} name={name} />
                 <Chart />
                 <LineChart />
             </StyledTop>
