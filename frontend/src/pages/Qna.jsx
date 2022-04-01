@@ -53,43 +53,10 @@ function Qna(props){
         setQnas([...datas]) 
     }
 
-<<<<<<< HEAD
-      // }
-      setQnas(datas);
-    };
-    fetchQnas();
-    return () => setQnas([]);
-  }, []);
-  return (
-    <Container>
-      <표>
-        <제목>Q&A 게시판</제목>
-        {isLogin() ? (
-          <Link to="/QnaCreate">
-            <글쓰기버튼>
-              <Button variant="secondary">글쓰기</Button>{' '}
-            </글쓰기버튼>
-          </Link>
-        ) : (
-          <Link to="/">
-            <글쓰기버튼>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  alert('로그인 후 작성해주세요');
-                }}
-              >
-                글쓰기
-              </Button>{' '}
-            </글쓰기버튼>
-          </Link>
-        )}
-=======
     useEffect(()=> {
         fetchQnas();
     }, []);
     return (
->>>>>>> 17619334749e467a6ae3e9c749fc2b3d8c44ca4b
 
         <Container>
             <표>
