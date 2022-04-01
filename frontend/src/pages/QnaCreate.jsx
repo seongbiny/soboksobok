@@ -42,19 +42,21 @@ function QnaCreate(props) {
   let 글작성일 = date.getDate();
   const axios = getAxios();
 
-  const createQna = () => {
-    if (제목 == '') {
-      alert('제목을 입력해주세요');
-    } else if (내용 == '') {
-      alert('내용을 입력해주세요');
-    } else if (제목 !== '' && 내용 !== '') {
-      axios.post('/api/qna/mine', {
-        title: 제목,
-        content: 내용,
-      });
-      navigate(`/Qna`);
-    }
-  };
+    const createQna = async () => {
+        if (제목 == '') {
+            alert('제목을 입력해주세요')
+        } else if (내용 == '' ) {
+            alert('내용을 입력해주세요')
+        } else if (제목 !== '' && 내용 !== '') {
+            await axios.post('/api/qna/mine', {
+                title: 제목,
+                content: 내용,
+            });
+            navigate(`/Qna`)
+        }
+
+        
+    
   return (
     <Container>
       <글작성틀>
@@ -69,32 +71,21 @@ function QnaCreate(props) {
               제목값변경(e.target.value);
             }}
           />
-        </게시글제목>
-        <p>내용</p>
-        <CKEditor
-          editor={ClassicEditor}
-          // data="<p>Hello from CKEditor 5!</p>"
-          // onReady={ editor => {
-          //     // You can store the "editor" and use when it is needed.
-          //     // console.log( 'Editor is ready to use!', editor );
-          // } }
-          // onChange={ ( event, editor ) => {
-          //     const data = editor.getData();
-          //     // console.log( { event, editor, data } );
-          // } }
-          // onBlur={ ( event, editor ) => {
-          //     // console.log( 'Blur.', editor );
-          // } }
-          // onFocus={ ( event, editor ) => {
-          //     // console.log( 'Focus.', editor );
-          // } }
-          onChange={(event, editor) => {
-            // const data = editor.getData().replace(/<((p|\/p)([^>]*)([^a-z]*)(&nbsp;*|br))([^>]*)>|<(p|\/p)([^>]*)>+([\<\/div>]*)/gi,"");
-            const data = editor.getData();
 
-            내용값변경(data);
-          }}
-        />
+                </게시글제목>
+                <p>내용</p> 
+                <CKEditor
+                    editor={ ClassicEditor }
+
+                    onChange={ (event, editor) => {
+                        const data = editor.getData();
+                        
+                        내용값변경(data)
+                    }}
+                    
+                />
+                
+
 
         <버튼위치>
           <Link to="/Qna">
@@ -123,6 +114,7 @@ function QnaCreate(props) {
       </글작성틀>
     </Container>
   );
+}
 }
 export default QnaCreate;
 // function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
