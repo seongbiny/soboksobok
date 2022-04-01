@@ -77,7 +77,6 @@ public class Welfare {
     @OneToMany(mappedBy = "life")
     private List<Welfarelife> welfarelife = new ArrayList<>();
 
-    @OneToMany(mappedBy = "similar")
-    private List<Welfare> similarwelfare = new ArrayList<>();
-
+    @Column(name = "welfareSimilarWelfare")
+    private String welfare_similarwelfare;
 }

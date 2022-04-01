@@ -184,6 +184,9 @@ def insertWelfare(request):
 	
 	Welfarepurpose.objects.bulk_create(welfare_purposes)
 
+	clustering()
+
+	wel_wel_cosine()
 
 	return render(request,'insert_welfare.html')
 
@@ -796,7 +799,7 @@ def word_clustering(request):
 
 
 # 복지 특성유무기반 클러스터링
-def clustering(request):
+def clustering():
 	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
 
 	total = welfare_detail()
@@ -884,7 +887,7 @@ def wel_wel_word_cosine():
 	
 
 # 복지-복지 유사도 계산 및 db 저장
-def wel_wel_cosine(request):
+def wel_wel_cosine():
 	sim_word = wel_wel_word_cosine()
 	vector_0101 = wel_wel_0101_vector()
 	
@@ -908,7 +911,7 @@ def wel_wel_cosine(request):
 			max_10[j] = now
 		top_10.append(max_10)
 	
-	print(top_10)
+	# print(top_10)
 
 	# top_10.to_csv(os.getcwd()+"/data/"+"top_10_similar_welfare_id.csv", encoding = 'utf-8-sig')
 
@@ -919,6 +922,14 @@ def wel_wel_cosine(request):
 			f.write(str(top_10[i]))
 			f.write('\n')
 
+	# db에 문자열로 저장
+
+	welfares = Welfare.objects.all()
+
+	for i in range(len(top_10)):
+		welfare = welfares.filter(welfare_id=i+1)
+		welfare.update(welfare_similar_welfare=top_10[i])
+	
 	return
 
 def test(request):
