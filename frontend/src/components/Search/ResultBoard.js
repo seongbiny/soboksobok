@@ -4,8 +4,7 @@ import Table from "react-bootstrap/Table";
 import { getAxios } from "../../api.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import Pagination from "./Pagination.js";
-import Pagination from "react-js-pagination";
+import Pagination from "./Pagination.js";
 
 function ResultBoard() {
   const axios = getAxios();
@@ -75,17 +74,11 @@ function ResultBoard() {
           </tbody>
         </Table>
       </StyledTable>
-      {/* <Pagination
+      <Pagination
         postsPerPage={postsPerPage}
         totalPosts={result.length}
         paginate={setCurrentPage}
         currentPage={currentPage}
-      /> */}
-      <Pagination
-        activePage={currentPage}
-        itemsCountPerPage={10}
-        totalItemsCount={result.length}
-        onChange={handlePageChange}
       />
     </StyledBoard>
   );
