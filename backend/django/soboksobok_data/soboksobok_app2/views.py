@@ -11,11 +11,14 @@ from pandas import Series,DataFrame
 import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.metrics.pairwise import cosine_similarity
-
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 # Create your views here.
 
 # 복지 데이터 저장
+@api_view(['GET'])
 def insertWelfare(request):
+
 	file_path = os.getcwd()+"/data/"+"220324 전체데이터 번호재정의와 정렬_json변환용.json"
 	
 	with open(file_path, "r", encoding='UTF8') as json_file:
@@ -184,11 +187,8 @@ def insertWelfare(request):
 	
 	Welfarepurpose.objects.bulk_create(welfare_purposes)
 
-	clustering()
-
-	wel_wel_cosine()
-
-	return render(request,'insert_welfare.html')
+	
+	return Response("success")
 
 
 

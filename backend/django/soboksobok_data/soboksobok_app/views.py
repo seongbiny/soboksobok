@@ -12,6 +12,8 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 # Create your views here.
 def index(request):
@@ -54,9 +56,9 @@ def insertWelfare(request):
 
 	return render(request,'insert_welfare.html')
 
-
-def selectuser(request):
-	user_seq=1; #유저 아이디 받아오기
+@api_view(['GET'])
+def insertusergroupAPI(request,user_seq):
+	# user_seq=1; #유저 아이디 받아오기
 	user=User.objects.filter(user_seq=user_seq);
 	# print("user확인 :: ",user.values())
 	#QuerySet()은 리스트이고, 객체는 dictionary 이므로 <variable name>[index]['key'] 의 형식으로 value값에 접근이 가능하다
@@ -71,7 +73,7 @@ def selectuser(request):
 	print(user_vector)
 	user_group_mapping(user_vector,user_seq)
 
-	return render(request,'user_info.html')
+	return Response("success")
 
 
 def arrange(user,selectfamily,selecttarget):
@@ -295,8 +297,8 @@ def user_group_mapping(user_vector,user_seq):
 		df1['mean'] = df1.mean(axis=1)
 		# print(n,"번째 그룹 평균 : ",df1['mean'][0])
 		welfare_mean.append(df1['mean'][0])
-	print(welfare_mean)
 	print("가장 평균이 높은 그룹 : ", welfare_mean.index(max(welfare_mean)))
 	max_group=welfare_mean.index(max(welfare_mean))
 	user=User.objects.filter(user_seq=user_seq)
 	user.update(user_group=max_group)
+	
