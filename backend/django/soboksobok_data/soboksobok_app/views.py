@@ -71,10 +71,30 @@ def insertusergroupAPI(request,user_seq):
 	result=arrange(user,selectfamily,selecttarget)
 	user_vector=user_vectorization(result)
 	print(user_vector)
+	# DBSCAN or Spherical K-Means
 	user_group_mapping(user_vector,user_seq)
 
 	return Response("success")
 
+@api_view(['GET'])
+def insertusergroupAPI_DBSCAN(request,user_seq):
+	# user_seq=1; #유저 아이디 받아오기
+	user=User.objects.filter(user_seq=user_seq);
+	# print("user확인 :: ",user.values())
+	#QuerySet()은 리스트이고, 객체는 dictionary 이므로 <variable name>[index]['key'] 의 형식으로 value값에 접근이 가능하다
+	# print("user이름 :: ",user.values()[0]['username'])
+	selectfamily=Selectfamily.objects.filter(user_seq=user_seq);
+	selecttarget=Selecttarget.objects.filter(user_seq=user_seq);
+	# print("selectfamily :: ",selectfamily.values())
+	# print("selecttarget :: ",selecttarget.values())
+
+	result=arrange(user,selectfamily,selecttarget)
+	user_vector=user_vectorization(result)
+	print(user_vector)
+	# DBSCAN or Spherical K-Means
+	user_group_mapping_dbscan(user_vector,user_seq)
+
+	return Response("success")
 
 def arrange(user,selectfamily,selecttarget):
 	total = []
@@ -303,3 +323,33 @@ def user_group_mapping(user_vector,user_seq):
 	user=User.objects.filter(user_seq=user_seq)
 	user.update(user_group=max_group)
 	
+def user_group_mapping_dbscan(user_vector,user_seq):
+	print("user_group_mapping_dbscan")
+
+	file_path = os.getcwd()+"/data/"
+	full_welfare = pd.read_csv(file_path+'welfare+DBSCAN.csv',)
+	
+	welfare_mean=[]
+	# n번째 그룹만 뽑기
+	#최소값과 최대값 구하기
+	max_value=full_welfare['clustering'].max()
+	min_value=full_welfare['clustering'].min()
+
+	for n in range(min_value,max_value+1):
+		welfare= full_welfare.loc[(full_welfare.clustering==n)]
+		welfare=welfare.iloc[:,3:38] #필요한 특성만 뽑기
+		# arr_select_welfare=[]
+		# for i in range(len(tmp3)):
+		#   row=tmp3.iloc[i] # 복지 혜택 한개
+		#   ori_id=row[1] # welfare_id
+		#   arr_select_welfare.append(ori_id)
+		welfare_vector=csr_matrix(welfare, shape=None, dtype=None, copy=False) # 벡터화 
+		genre_sim = cosine_similarity(user_vector, welfare_vector)
+		df1 = pd.DataFrame(data=genre_sim)
+		df1['mean'] = df1.mean(axis=1)
+		# print(n,"번째 그룹 평균 : ",df1['mean'][0])
+		welfare_mean.append(df1['mean'][0])
+	print("가장 평균이 높은 그룹 : ", welfare_mean.index(max(welfare_mean)))
+	max_group=welfare_mean.index(max(welfare_mean))
+	user=User.objects.filter(user_seq=user_seq)
+	user.update(user_group=max_group)

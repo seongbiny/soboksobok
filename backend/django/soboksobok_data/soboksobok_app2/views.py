@@ -14,6 +14,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from konlpy import utils
+from sklearn.cluster import DBSCAN
 
 # Create your views here.
 
@@ -695,12 +696,12 @@ def welfare_detail():
 		total.append(d)
 
 	result=pd.concat(total)
-	# result.to_csv(os.getcwd()+"/data/"+"complete.csv",index=False,encoding='utf-8-sig')
+	result.to_csv(os.getcwd()+"/data/"+"complete.csv",index=False,encoding='utf-8-sig')
 	return result
 
 
 @api_view(['GET'])
-# 복지 특성유무기반 클러스터링
+# 복지 특성유무기반 Spherical K-means 클러스터링
 def clustering(request):
 	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
 
@@ -728,6 +729,36 @@ def clustering(request):
 
 	return Response('clustering done')
 
+# 복지 특성유무기반 DBSCAN 클러스터링 
+@api_view(['GET'])
+def dbscan(request):
+	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
+	total = welfare_detail()
+
+	temp = total.iloc[:, 2:]
+
+	model = DBSCAN(min_samples=6)
+	labels = model.fit_predict(temp)
+
+	# result=csr_matrix(temp, shape=None, dtype=None, copy=False)
+
+	# kmeans = SphericalKMeans(n_clusters = 20)
+	# labels = kmeans.fit_predict(result)
+
+	word = total
+	word['clustering'] = labels[:]
+	# idx=total.iloc[:,:1]
+	# word = pd.concat([idx,word],axis=1)
+
+	word.to_csv(os.getcwd()+"/data/"+"welfare+DBSCAN.csv", encoding = 'utf-8-sig')
+	
+	welfares = Welfare.objects.all()
+
+	for i in range(len(word)):
+		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
+		welfare.update(welfare_group=word.iloc[i]['clustering'])
+
+	return Response('DBSCAN done')
 
 # 복지 특성유무 벡터화 
 def wel_wel_0101_vector():
@@ -886,9 +917,9 @@ def wel_wel_cosine(request):
 
 	welfares = Welfare.objects.all()
 
-	for i in range(len(top_10)):
-		welfare = welfares.filter(welfare_id=i+1)
-		welfare.update(welfare_similar_welfare=top_10[i])
+	# for i in range(len(top_10)):
+	# 	welfare = welfares.filter(welfare_id=i+1)
+	# 	welfare.update(welfare_similar_welfare=top_10[i])
 	
 	return Response('wel_wel_cosine done')
 
