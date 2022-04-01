@@ -31,6 +31,10 @@ function Profile() {
 
       console.log('카카오 : ', response.data);
       setUsername(response.data.body.user.username);
+      setProfileImage(response.data.body.user.profileImageUrl);
+
+      localStorage.setItem('name', response.data.body.user.username);
+      localStorage.setItem('profile', response.data.body.user.profileImageUrl);
       setUserSeq(response.data.body.user.userSeq);
       console.log('userSeq: ', userSeq);
 
