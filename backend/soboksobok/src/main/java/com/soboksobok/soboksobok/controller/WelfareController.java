@@ -1,6 +1,7 @@
 package com.soboksobok.soboksobok.controller;
 
 import com.soboksobok.soboksobok.domain.Keyword;
+import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import com.soboksobok.soboksobok.domain.user.User;
 import com.soboksobok.soboksobok.domain.welfare.Welfare;
 import com.soboksobok.soboksobok.domain.welfare.Welfarepurpose;
@@ -86,22 +87,29 @@ public class WelfareController {
         return purposes;
     }
 
-    /////////////////////////////
-    //    @ApiOperation(value = "그룹 내에서 가장 많이 사용되는 복지 n개")
-//    @GetMapping("/recommend/grouppopular")
-//    public Map getwelfaregrouppopular() {
-//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = userService.getUser(principal.getUsername());
-//        Long group = user.getUserGroup();
-//        List<Welfare> list = welfareService.getWelfarebygroup(group);
-//
-//        HashMap<String, Long> popularused = new HashMap<>();
-//
-//
-//
-//        return popularused;
-//        // 해당 그룹에서 많이 사용하는 복지들 리스트 n개
-//    }
+//    @ApiOperation(value = "그룹 내에서 가장 많이 사용되는 복지 n개")
+    @GetMapping("/recommend/grouppopular")
+    public Map getwelfaregrouppopular() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+        Long group = user.getUserGroup();
+        List<Welfare> list = welfareService.getWelfarebygroup(group);
+
+        HashMap<String, Long> popularused = new HashMap<>();
+
+        for (int i = 0; i < list.size(); i ++) {
+            String name = list.get(i).getWelfare_service_name();
+            List<Usedwelfare> userlist = list.get(i).getUsingusers();
+            if (popularused.get(name) == null) {
+                popularused.put(name, (long) userlist.size());
+            } else {
+                popularused.put(name, popularused.get(name) + userlist.size());
+            }
+        }
+
+        return popularused;
+        // 해당 그룹에서 많이 사용하는 복지들 리스트 n개
+    }
 
     //    @ApiOperation(value = "인기순 복지 리스트")
     @GetMapping("/popular")
@@ -110,14 +118,14 @@ public class WelfareController {
         return ApiResponse.success("welfare", list);
     }
 
-    ////////////////////////////
-//    @ApiOperation(value = "최신순 복지 리스트")
-//    @GetMapping("/recent")
-//    public ApiResponse getwelfarerecent() {
-//        String keyword = "청년";
-//        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
-//        return ApiResponse.success("welfare", list);
-//    }
+    //////////////////////////
+    @ApiOperation(value = "최신순 복지 리스트")
+    @GetMapping("/recent")
+    public ApiResponse getwelfarerecent() {
+        String keyword = "청년";
+        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+        return ApiResponse.success("welfare", list);
+    }
 
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
