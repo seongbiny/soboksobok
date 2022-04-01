@@ -160,6 +160,7 @@ const StyledContainer = styled.div`
   display: grid;
   justify-content: center;
   margin-top: 5vh;
+  margin-bottom: 5vh;
 `;
 const StyledCard = styled.div`
   display: flex;
