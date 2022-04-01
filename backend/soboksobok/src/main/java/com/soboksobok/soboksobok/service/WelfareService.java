@@ -24,5 +24,12 @@ public class WelfareService {
         return welfareRepository.searchWelfare(keyword);
     }
 
+    public List<Welfare> getSimilarWelfare(Long welfare_id) {
+        return welfareRepository.getSimilar(welfare_id);
+    }
+
+    public List<Welfare> getWelfarebygroup(Long group_id) {
+        return welfareRepository.getGroupWelfare(group_id);
+    }
 //    public List<Array> getWelfarepurpose(List<Welfare> welfares) { return welfareRepository.exportWelfarePurpose(welfares);}
 }

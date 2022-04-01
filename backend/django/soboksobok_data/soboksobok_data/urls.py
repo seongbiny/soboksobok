@@ -25,10 +25,8 @@ urlpatterns = [
     path("insertdata/", soboksobok_app2.views.insertWelfare),
     # 위에까지 rest api 
     path('insert_user',soboksobok_app.views.insertWelfare,name='insert_user'),
-    path('insert_welfare',soboksobok_app2.views.insertWelfare,name='insert_welfare'),
-    path('word_clustering',soboksobok_app2.views.word_clustering,name='word_clustering'),
-    path('clustering', soboksobok_app2.views.clustering, name='clustering'),
-    path('wel_wel', soboksobok_app2.views.wel_wel_cosine, name='wel_wel'),
+    path('insert_welfare',soboksobok_app2.views.insert_welfare,name='insert_welfare'),
+    path('user_info',soboksobok_app.views.selectuser,name='user_info'),
     path('test', soboksobok_app2.views.test, name='test'),
     # path('qna/',soboksobok_app.views.qna_view,name='qna') # db 연결 확인코드
 ]

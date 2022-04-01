@@ -1006,3 +1006,148 @@ def word_clustering(request):
 	# 	welfare.update(welfare_group=word.iloc[i]['clustering'])
 
 	return
+
+
+# 복지 특성유무기반 클러스터링
+def clustering():
+	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
+
+	total = welfare_detail()
+
+	temp = total.iloc[:, 2:]
+
+	result=csr_matrix(temp, shape=None, dtype=None, copy=False)
+
+	kmeans = SphericalKMeans(n_clusters = 20)
+	labels = kmeans.fit_predict(result)
+
+	word = total
+	word['clustering'] = labels[:]
+	# idx=total.iloc[:,:1]
+	# word = pd.concat([idx,word],axis=1)
+
+	word.to_csv(os.getcwd()+"/data/"+"220330 complete + 라벨링 + id.csv", encoding = 'utf-8-sig')
+	
+	welfares = Welfare.objects.all()
+
+	for i in range(len(word)):
+		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
+		welfare.update(welfare_group=word.iloc[i]['clustering'])
+
+	return
+
+
+
+
+# 복지 특성유무 벡터화 
+def wel_wel_0101_vector():
+
+	total = welfare_detail()
+
+	total = total.iloc[:, 2:]
+
+	vector = csr_matrix(total, shape=None, dtype=None, copy=False)
+
+	return vector
+
+
+# 복지 단어 tf-dif 벡터화 
+def wel_wel_word_cosine():
+
+	with open(os.getcwd()+"/data/"+"복지 단어 데이터.txt", 'r') as f:
+		list_file = f.readlines()
+	list_file = [line.rstrip('\n') for line in list_file]
+	
+	stopwords = []
+
+	file = open(os.getcwd()+"/data/"+"불용어.txt", 'r', encoding = 'UTF8')
+
+	while (1):
+		line = file.readline()
+		try:
+			escape = line.index('\n')
+		except:
+			escape = len(line)
+		
+		if line:
+			stopwords.append(line[0:escape])
+		else:
+			break
+		
+	file.close()
+
+	for i in range(0, len(stopwords)+1):
+		for j in range(0, len(list_file)):
+			if i==len(stopwords) : 
+				list_file[j] = re.sub('은지원 대상', '', list_file[j])
+			else : 
+				list_file[j] = re.sub(stopwords[i], '', list_file[j])
+
+	corpus_welfare = list_file
+	tfidfv_welfare = TfidfVectorizer(min_df = 5, max_features = 150, ngram_range=(1, 3)).fit(list_file)
+
+	welfare=tfidfv_welfare.transform(corpus_welfare).toarray()
+
+	genre_sim = cosine_similarity(welfare, welfare)
+
+	num_welfare = len(welfare)
+	genre_sim[range(num_welfare), range(num_welfare)] = 0
+
+	return genre_sim
+	
+
+# 복지-복지 유사도 계산 및 db 저장
+def wel_wel_cosine():
+	sim_word = wel_wel_word_cosine()
+	vector_0101 = wel_wel_0101_vector()
+	
+	sim_0101 = cosine_similarity(vector_0101, vector_0101)
+
+	sim_0101[range(len(sim_0101)), range(len(sim_0101))] = 0
+
+	sim = (sim_0101 + sim_word) / 2
+	
+	top_10 = []
+
+	for i in range(len(sim)):
+		max_10 = sorted(sim[i], reverse=True)[:10]
+		for j in range(10):
+			z = 0
+			now = np.where(sim[i]==max_10[j])[0][z]
+			if j != 0:
+				while now in max_10:
+					z += 1
+					now = np.where(sim[i]==max_10[j])[0][z]
+			max_10[j] = now
+		top_10.append(max_10)
+	
+	# print(top_10)
+
+	# top_10.to_csv(os.getcwd()+"/data/"+"top_10_similar_welfare_id.csv", encoding = 'utf-8-sig')
+
+	with open(os.getcwd()+"/data/"+"top_10_similar_welfare_id.txt", 'w') as f:
+		for i in range(len(top_10)):
+			f.write(str(i+1))
+			f.write(' :: ')
+			f.write(str(top_10[i]))
+			f.write('\n')
+
+	# db에 문자열로 저장
+
+	welfares = Welfare.objects.all()
+
+	for i in range(len(top_10)):
+		welfare = welfares.filter(welfare_id=i+1)
+		welfare.update(welfare_similar_welfare=top_10[i])
+	
+	return
+
+def test(request):
+	welfares = Welfare.objects.all() 
+	for i in range(len(welfares)):
+
+		families = Welfarefamily.objects.filter(welfare=welfares[i])
+
+		for family in families:
+			print(family.family_id)
+
