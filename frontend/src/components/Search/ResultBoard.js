@@ -25,6 +25,10 @@ function ResultBoard() {
     return currentPosts;
   }
 
+  const handlePageChange = currPage => {
+    setCurrPage(currPage);
+  };
+
   useEffect(() => {
     const fetchSearch = async () => {
       try {
@@ -81,7 +85,7 @@ function ResultBoard() {
         activePage={currentPage}
         itemsCountPerPage={10}
         totalItemsCount={result.length}
-        // onChange={}
+        onChange={handlePageChange}
       />
     </StyledBoard>
   );
