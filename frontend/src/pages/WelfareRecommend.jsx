@@ -5,7 +5,6 @@ import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import ProfileCard from "../components/WelfareRecommend/ProfileCard";
 import styled from 'styled-components';
-import axios from 'axios';
 
 
 function WelfareRecommend(){
