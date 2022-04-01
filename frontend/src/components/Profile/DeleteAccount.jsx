@@ -7,6 +7,7 @@ const DeleteAccount = () => {
   let navigate = useNavigate();
 
   const [show, setShow] = useState(false);
+  const [showDone, setShowDone] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -28,7 +29,6 @@ const DeleteAccount = () => {
         onClick={() => {
           handleShow();
         }}
-        // 로그아웃 시키고 메인 페이지로 보내주는 작업 처리하기
       >
         회원탈퇴
       </Button>
@@ -44,14 +44,29 @@ const DeleteAccount = () => {
             onClick={() => {
               handleClose();
               getDelete();
+              setShowDone(true);
               localStorage.removeItem('jwtToken');
-              navigate('/', { replace: true });
             }}
           >
             탈퇴
           </Button>
           <Button variant="primary" onClick={handleClose}>
             취소
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showDone}>
+        <Modal.Body>탈퇴가 완료되었습니다.</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowDone(false);
+              navigate('/', { replace: true });
+            }}
+          >
+            메인으로 가기
           </Button>
         </Modal.Footer>
       </Modal>
