@@ -1,10 +1,16 @@
 package com.soboksobok.soboksobok.domain.welfare;
 
 import com.soboksobok.soboksobok.domain.Purpose;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Welfarepurpose {
 
     @Id
