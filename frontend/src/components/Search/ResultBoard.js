@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import getAxios from "../../api.js";
+import { getAxios } from "../../api.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Pagination from "./Pagination.js";
-// import Pagination from "react-js-pagination";
+// import Pagination from "./Pagination.js";
+import Pagination from "react-js-pagination";
 
 function ResultBoard() {
   const axios = getAxios();
@@ -17,11 +17,17 @@ function ResultBoard() {
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
+  const [currPage, setCurrPage] = useState(0);
+
   function currentPost(tmp) {
     let currentPosts = 0;
     currentPosts = tmp.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   }
+
+  const handlePageChange = currPage => {
+    setCurrPage(currPage);
+  };
 
   useEffect(() => {
     const fetchSearch = async () => {
@@ -42,7 +48,7 @@ function ResultBoard() {
 
   const { length: count } = result;
   if (count === 0) {
-    return <p>검색 정보가 없습니다.</p>;
+    return <StyledNo>검색 정보가 없습니다.</StyledNo>;
   }
 
   return (
@@ -69,14 +75,33 @@ function ResultBoard() {
           </tbody>
         </Table>
       </StyledTable>
-      <Pagination
+      {/* <Pagination
         postsPerPage={postsPerPage}
         totalPosts={result.length}
         paginate={setCurrentPage}
+        currentPage={currentPage}
+      /> */}
+      <Pagination
+        activePage={currentPage}
+        itemsCountPerPage={10}
+        totalItemsCount={result.length}
+        onChange={handlePageChange}
       />
     </StyledBoard>
   );
 }
+const StyledNo = styled.div`
+  box-sizing: border-box;
+  width: 50vw;
+  height: 50vh;
+  border-radius: 20px;
+  border: 1px solid #e9ecef;
+  margin: auto;
+  // display: flex;
+  line-height: 50vh;
+  text-align: center;
+  font-weight: bold;
+`;
 
 const StyledBoard = styled.div`
   box-sizing: border-box;

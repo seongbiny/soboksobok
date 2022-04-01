@@ -2,11 +2,11 @@ import styled from "styled-components";
 import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import { useEffect, useState } from "react";
-import getAxios from "../../api";
+import { getAxios } from "../../api";
 
 const Container = styled.div`
   max-width: 800px;
-  margin-right: 3vw;
+  padding: 5vh;
 `;
 
 function Chart() {
@@ -39,16 +39,11 @@ function Chart() {
       try {
         const request = await axios.get("/api/welfare/recommend/purpose");
         // console.log(request.data);
-        console.log(Object.keys(request.data).slice(0, 5));
-        console.log(Object.values(request.data).slice(0, 5));
-        await setLabel(Object.keys(request.data).slice(0, 5));
-        await setDatas(Object.values(request.data).slice(0, 5));
-        // let sortarr = Object.keys(request.data).sort(function (a, b) {
-        //   return request.data[b] - request.data[a];
-        // });
-        // console.log(sortarr);
-        // await console.log(label);
-        // await console.log(datas);
+        let wel = request.data;
+        // console.log(Object.keys(request.data).slice(0, 5));
+        // console.log(Object.values(request.data).slice(0, 5));
+        await setLabel(Object.keys(wel).slice(0, 5));
+        await setDatas(Object.values(wel).slice(0, 5));
       } catch (err) {
         console.log(err);
       }

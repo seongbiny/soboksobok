@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
-import getAxios from '../api.js';
+import { getAxios, getAxiosDjango } from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
-import { useDispatch } from 'react-redux';
+import DeleteAccount from '../components/Profile/DeleteAccount';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -14,6 +14,7 @@ ageMap.set('4', '중/장년 (30~59)'); //중소기업
 ageMap.set('5', '노년 (60~)'); //일반
 
 function Profile() {
+  const [userSeq, setUserSeq] = useState('');
   const [username, setUsername] = useState('');
   const [ageRange, setAgeRange] = useState('');
   const [ageRender, setAgeRender] = useState('');
@@ -32,6 +33,17 @@ function Profile() {
       setUsername(response.data.body.user.username);
       setProfileImage(response.data.body.user.profileImageUrl);
 
+      localStorage.setItem('name', response.data.body.user.username);
+      localStorage.setItem('profile', response.data.body.user.profileImageUrl);
+      setUserSeq(response.data.body.user.userSeq);
+      console.log('userSeq: ', userSeq);
+
+      if (response.data.body.user.profileImageUrl === null) {
+        setProfileImage('/blank-profile.png');
+      } else {
+        setProfileImage(response.data.body.user.profileImageUrl);
+      }
+
       if (response.data.body.user.ageRange === null) {
         setAgeRange('placeholder');
       } else {
@@ -48,7 +60,6 @@ function Profile() {
       console.log(err);
     }
   };
-  
 
   const setProfile = async () => {
     try {
@@ -59,6 +70,10 @@ function Profile() {
       });
       console.log('ageRange: ', ageRange, 'gender: ', gender);
       setAgeRender(ageMap.get(ageRange));
+
+      const djangoAxios = getAxiosDjango();
+      let res = await djangoAxios.get(`/insertusergroup/${userSeq}`);
+      console.log('django res: ', res);
     } catch (err) {
       console.log(err);
     }
@@ -118,7 +133,7 @@ function Profile() {
               {modify === 'false' ? (
                 <div>
                   <h1> {username}님 안녕하세요!</h1>
-                  <img src={profileImage}></img>
+                  <img src={profileImage} width="110px"></img>
                   <h5>이름: {username}</h5>
                   <h5>
                     연령대:
@@ -131,11 +146,12 @@ function Profile() {
                     성별:{' '}
                     {gender === 'placeholder' ? '수정 버튼을 눌러 정보를 입력해주세요' : gender}
                   </h5>
+                  <h5>{userSeq}</h5>
                 </div>
               ) : (
                 <div>
                   <h1> {username}님 안녕하세요!</h1>
-                  <img src={profileImage}></img>
+                  <img src={profileImage} width="110px"></img>
                   <ModifyProfile
                     username={username}
                     ageRange={ageRange}
@@ -168,6 +184,7 @@ function Profile() {
               <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
               <FilterChips></FilterChips>
             </필터>
+            <DeleteAccount></DeleteAccount>
           </Col>
           <Col xs={6} md={4}>
             <리스트>

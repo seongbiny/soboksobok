@@ -1,9 +1,16 @@
-html {
+/* /* html {
     height: 50%;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 body {
     height: 50%;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 #wrapper{
     height: 50%;
+  } */
+
+  @font-face{
+    font-family: 'Noto Sans KR', sans-serif;
+    src: url("../font/NotoSansKR-Medium.otf");
   }

@@ -21,4 +21,5 @@ public interface QnaRepository extends JpaRepository<Qna,Long> {
     @Query( value = "select i from Qna i left join fetch i.user " +
             "where i.user.userSeq = :userId and i.qna_id = :qnaId")
     Optional<Qna> findByQnaIdAndUserId(@Param("qnaId") Long qna_id, @Param("userId") Long userId);
+    void deleteAllByUser_UserSeq(Long userSeq);
 }
