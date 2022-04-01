@@ -4,7 +4,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Container } from 'react-bootstrap';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import '../CSS/qnacreate.css';
 import { useState } from 'react';
 import getAxios from '../api.js';
@@ -31,7 +31,8 @@ let 버튼위치 = styled.div`
     text-align: center;
 `
 
-function QnaCreate(props){
+function QnaPatch(props){
+    let navigate = useNavigate();
     let state = useSelector((state) => state)
     let [제목, 제목값변경] = useState('');
     let [내용, 내용값변경] = useState('');
@@ -40,32 +41,27 @@ function QnaCreate(props){
     const [qna, setQna] = useState({});
 
     const axios = getAxios();
-    useEffect(()=> {
+    const getQna = () => {
         axios.get(`/api/qna/mine/${qnaId}`)
             .then(res => {
-                // console.log(1)
-                // console.log(res);
-                
-                // setQna(res.data.body.success);
-
                 제목값변경(res.data.body.success.title);
                 내용값변경(res.data.body.success.content);
-                console.log(제목)
-                console.log(내용)
             })
             .catch(err => console.log(err))
+    }
+    const patchQna = () => {
+        axios.patch(`/api/qna/mine/${qnaId}`, {
+            title: 제목,
+            content: 내용,
+        });
+        navigate(`/QnaDetail/${qnaId}`)
+
+    }
+    useEffect(()=> {
+        getQna();
     
     }, []);
-    // useEffect(()=> {
-    //     axios.patch(`/api/qna/mine/${qnaId}`) 
-    //         .then(res => {
-    //             console.log(1)
-    //             console.log(res);
-    //             setQna(res.data.body.success);
-    //         })
-    //         .catch(err => console.log(err))
-    
-    // }, []);
+
     return (
         <Container>
             <글작성틀>
@@ -83,20 +79,7 @@ function QnaCreate(props){
                 <CKEditor
                     editor={ ClassicEditor  }
                     data={ 내용 || ""}
-                    // onReady={ editor => {
-                    //     // You can store the "editor" and use when it is needed.
-                    //     console.log( 'Editor is ready to use!', editor );
-                    // } }
-                    // onChange={ ( event, editor ) => {
-                    //     const data = editor.getData();
-                    //     // console.log( { event, editor, data } );
-                    // } }
-                    // onBlur={ ( event, editor ) => {
-                    //     // console.log( 'Blur.', editor );
-                    // } }
-                    // onFocus={ ( event, editor ) => {
-                    //     // console.log( 'Focus.', editor );
-                    // } }
+
                     onChange={ (event, editor) => {
                         const data = editor.getData();
                         
@@ -110,17 +93,11 @@ function QnaCreate(props){
                     <Button variant="secondary" size="lg">취소</Button>
                 </Link>
                 {' '}
-                <Link to = '/Qna'>
                 <Button variant="primary" size="lg" onClick={(e) => {
-                    // dispatch({ type: '항목추가',payload: { title:제목, year:글작성연도, month:글작성월, day:글작성일 }});
-                    const axios = getAxios();
-                    axios.patch(`/api/qna/mine/${qnaId}`, {
-                        title: 제목,
-                        content: 내용,
-                    })
+                    patchQna();
+
                 }}>등록</Button>
 
-                </Link>
  
                 </버튼위치>
 
@@ -132,7 +109,7 @@ function QnaCreate(props){
         
     )
 }
-export default QnaCreate;
+export default QnaPatch;
 // function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
 
 //     return {

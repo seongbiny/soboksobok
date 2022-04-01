@@ -54,11 +54,10 @@ let 답변들 = styled.div`
     margin-top: 5%;
     margin-bottom: 5%;
 `
-function QnaDetail() {
+function QnaDetail(props) {
     let navigate = useNavigate();
     let state = useSelector((state) => state)
     const qnaId  = useParams().qnaId;
-    // const commentId = useParams().commentId;
 
     const [댓글, 댓글값변경] = useState('');
     const [댓글들, 댓글들변경] = useState([]);
@@ -69,44 +68,42 @@ function QnaDetail() {
     
     const [qna, setQna] = useState({});
     const axios = getAxios();
-    const createComment = () => {
+
+    const deleteQna = async () => {
+        await axios.delete(`/api/qna/mine/${qnaId}`);
+        navigate(`/Qna/`)
+    }
+    const createComment =  () => {
         if (댓글 == '') {
             alert('댓글을 입력하세요')
         } else if (댓글 !== '') {
             axios.post(`/api/comment/${qnaId}`, {
                 comment_content: 댓글,
             })
-            댓글값변경('');
+            .then(res => {
+                댓글값변경('');
+                getComment();
+            })
         }
     }
-    // console.log(댓글들)
-    // const deleteComment = (Id) => {
-    //     axios.delete(`/api/comment/${Id}`)
-    // } // useEffect
-
     const updateComment = (Id) => {
         axios.patch(`/api/comment/${Id}`, {
             comment_content: 댓글
         })
         댓글값변경(댓글)
     }
-    useEffect(()=> {
-        // const fetchQnas = async () => {
-        //     const request = await axios.get(`/api/qna/mine/${qnaId}/`);
-        //     const  datas = request.data.body.success;
-
-        //     setQna(datas)
-        // }
-        // fetchQnas();
-        // return () => setQna([]);
-        // 이거 async 로 바꾸면 글 쓰고 바로 글 목록에 표시가 안된다
+    const getComment = () => {
         axios.get(`/api/qna/mine/${qnaId}`)
-            .then(res => {
-                console.log(res.data);
-                setQna(res.data.body.success);
-                댓글들변경(res.data.body.success.comments)
-            })
-            .catch(err => console.log(err))
+        .then(res => {
+            console.log(res.data);
+            setQna(res.data.body.success);
+            댓글들변경(res.data.body.success.comments)
+        })
+        .catch(err => console.log(err))
+    }
+    useEffect(()=> {
+
+        getComment();
         
     }, []);
 
@@ -128,15 +125,11 @@ function QnaDetail() {
                     }}
                     
                     >수정</Button>{' '}
-                    <Link to ='/Qna'>
                     <Button variant="danger" size="lg" onClick={(e)=> {
-                        const axios = getAxios();
-                        axios.delete(`/api/qna/mine/${qnaId}`)
-                        navigate(`/Qna/`)
+                        deleteQna();
 
                     }}>삭제</Button>
 
-                    </Link>
 
                 </버튼들>
 
@@ -155,7 +148,7 @@ function QnaDetail() {
                     답변
                 </답변>
                 <답변내용>
-                    <답변입력 value={댓글} onChange={(e) => {댓글값변경(e.target.value)}}>
+                    <답변입력 value={댓글}  onChange={(e) => {댓글값변경(e.target.value)}}>
                         
                     </답변입력>
                     <Button variant="dark" size="lg" onClick={(e)=> {
@@ -167,7 +160,7 @@ function QnaDetail() {
                     {
                         댓글들.map((a)=> {
                             return(
-                                <Comments key={a.comment_id} id={a.comment_id} content={a.comment_content} />
+                                <Comments key={a.comment_id} id={a.comment_id} content={a.comment_content} getComment={getComment} />
                             )
                         })
                     }
@@ -179,7 +172,6 @@ function QnaDetail() {
                 </Link>
                 </버튼들>
             </글작성틀>
-            {/* <button className="post-view-go-list-btn" onClick={() => history.goBack()}>목록</button> */}
             
         </Container>
 

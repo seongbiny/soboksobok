@@ -6,6 +6,7 @@ import { connect, useSelector } from 'react-redux';
 import getAxios from '../api.js';
 import Blank from '../components/Qna/Blank.js';
 import Write from '../components/Qna/BlankWrite.js';
+import '../CSS/app.css';
 let 표 = styled.div`
     width: 80%;
     margin-left: auto;
@@ -15,9 +16,10 @@ let 표 = styled.div`
 `
 let 제목 = styled.h1`
     text-align: center;
+    font-family: 'Noto Sans KR', sans-serif;
 `
-let 글쓰기버튼 = styled.div`
-    text-align: right;
+let 글쓰기버튼 = styled.span`
+    float: right;
     margin-bottom: 1%;
 `
 let 페이지번호 = styled.div`
@@ -46,22 +48,16 @@ function Qna(props){
     let state = useSelector((state) => state)
     let [qnas, setQnas] = useState([]);
     const axios = getAxios();
+
+    const fetchQnas = async () => {
+        const request = await axios.get('/api/qna/mine/');
+
+        const datas = request.data.body.success;
+        setQnas([...datas]) 
+    }
+
     useEffect(()=> {
-        const fetchQnas = async () => {
-            const request = await axios.get('/api/qna/mine/');
-
-            const datas = request.data.body.success;
-            // if (datas.length != 0) {
-            //     const ids = await datas.map(data => data.id);
-            //     const titles = await datas.map(data => data.title);
-            //     const arr = Array.from({id:ids, title:titles})
-            //     setQnas( arr );
-
-            // }
-           setQnas(datas) 
-        }
         fetchQnas();
-        return () => setQnas([]);
     }, []);
     return (
 
@@ -72,7 +68,7 @@ function Qna(props){
                 </제목>
                 {isLogin() ? (
                     <Link to = '/QnaCreate'>
-                    <글쓰기버튼>
+                    <글쓰기버튼 >
                         <Button variant="secondary">글쓰기</Button>{' '}
                     </글쓰기버튼>
                     </Link>
@@ -88,7 +84,7 @@ function Qna(props){
                     </Link>
                 )}
 
-                <Table striped bordered hover>
+                <Table striped bordered hover >
                     <thead>
                         <표내용>
                         <th width='20%'>번호</th>
@@ -99,21 +95,26 @@ function Qna(props){
                     </thead>
 
                     { qnas.length === 0 ? 
-                        <tr>
-                            <Blank></Blank>
+                        <tbody>
+                            <tr>
+                            {/* <Blank></Blank> */}
                             <Write></Write>
-                            <Blank></Blank>
-                        </tr>
+                            {/* <Blank></Blank> */}
+                            </tr>
+
+
+                        </tbody>
+
                         : 
                         <tbody>
-                        {
+                        {   
                             qnas.map((a, i)=> {
                                 return (
                                     <tr key={i} onClick={()=> {
                                         navigate(`/QnaDetail/${a.id}` ) 
                                     }} style={{cursor: 'pointer'}} >
-                                        <중앙정렬 width='10%'>{i+1}</중앙정렬>
-                                        <중앙정렬 width='70%'>{a.title}</중앙정렬>
+                                        <중앙정렬 width='20%'>{i+1}</중앙정렬>
+                                        <중앙정렬 width='60%'>{a.title}</중앙정렬>
                                         <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
                                     </tr>
                                 )
@@ -121,29 +122,9 @@ function Qna(props){
                         }
                         </tbody>
                     }
-                        {/* {
-                            qnas.map((a, i)=> {
-                                return (
-                                    <tr key={i} onClick={()=> {
-                                        navigate(`/QnaDetail/${a.id}` ) 
-                                    }} style={{cursor: 'pointer'}} >
-                                        <중앙정렬 width='10%'>{i+1}</중앙정렬>
-                                        <중앙정렬 width='70%'>{a.title}</중앙정렬>
-                                        <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
-                                    </tr>
-                                )
-                            })
-                        } */}
+
                 </Table>
-                <페이지번호>
-                    <Pagination>
-                        <Pagination.First />
-                        <Pagination.Prev />
-                        <Pagination.Item active>{1}</Pagination.Item>
-                        <Pagination.Next />
-                        <Pagination.Last />
-                    </Pagination>
-                </페이지번호>
+
 
 
             </표>

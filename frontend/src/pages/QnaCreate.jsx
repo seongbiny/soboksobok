@@ -44,13 +44,13 @@ function QnaCreate(props){
     let 글작성일 = date.getDate();
     const axios = getAxios();
 
-    const createQna = () => {
+    const createQna = async () => {
         if (제목 == '') {
             alert('제목을 입력해주세요')
         } else if (내용 == '' ) {
             alert('내용을 입력해주세요')
         } else if (제목 !== '' && 내용 !== '') {
-            axios.post('/api/qna/mine', {
+            await axios.post('/api/qna/mine', {
                 title: 제목,
                 content: 내용,
             });
@@ -73,23 +73,8 @@ function QnaCreate(props){
                 <p>내용</p> 
                 <CKEditor
                     editor={ ClassicEditor }
-                    // data="<p>Hello from CKEditor 5!</p>"
-                    // onReady={ editor => {
-                    //     // You can store the "editor" and use when it is needed.
-                    //     // console.log( 'Editor is ready to use!', editor );
-                    // } }
-                    // onChange={ ( event, editor ) => {
-                    //     const data = editor.getData();
-                    //     // console.log( { event, editor, data } );
-                    // } }
-                    // onBlur={ ( event, editor ) => {
-                    //     // console.log( 'Blur.', editor );
-                    // } }
-                    // onFocus={ ( event, editor ) => {
-                    //     // console.log( 'Focus.', editor );
-                    // } }
+
                     onChange={ (event, editor) => {
-                        // const data = editor.getData().replace(/<((p|\/p)([^>]*)([^a-z]*)(&nbsp;*|br))([^>]*)>|<(p|\/p)([^>]*)>+([\<\/div>]*)/gi,"");
                         const data = editor.getData();
                         
                         내용값변경(data)
