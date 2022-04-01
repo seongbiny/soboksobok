@@ -95,7 +95,6 @@ function QnaDetail(props) {
     const getComment = () => {
         axios.get(`/api/qna/mine/${qnaId}`)
         .then(res => {
-            console.log(res.data);
             setQna(res.data.body.success);
             댓글들변경(res.data.body.success.comments)
         })
@@ -122,19 +121,15 @@ function QnaDetail(props) {
           >
             수정
           </Button>{' '}
-          <Link to="/Qna">
             <Button
               variant="danger"
               size="lg"
               onClick={(e) => {
-                const axios = getAxios();
-                axios.delete(`/api/qna/mine/${qnaId}`);
-                navigate(`/Qna/`);
+                deleteQna();
               }}
             >
               삭제
             </Button>
-          </Link>
         </버튼들>
 
         <hr></hr>

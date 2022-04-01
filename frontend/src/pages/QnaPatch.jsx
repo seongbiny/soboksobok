@@ -105,12 +105,3 @@ function QnaPatch(props){
   );
 }
 export default QnaPatch;
-// function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
-
-//     return {
-//         state: state
-
-//     }
-// }
-
-// export default connect(state를props화)(QnaCreate)
