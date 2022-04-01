@@ -15,7 +15,7 @@ function WelfareRecommend(){
         setName(localStorage.getItem('name'))
         setProfile(localStorage.getItem('profile'))
     },[])
-
+    
     return(
         <StyledContainer>
             <StyledTop>

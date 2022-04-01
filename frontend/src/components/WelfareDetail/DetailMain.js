@@ -68,11 +68,12 @@ function DetailMain(props) {
   return (
     <Box
       sx={{
-        "& > :not(style)": {
-          m: 1,
-          width: 1000,
-          height: 200,
-        },
+        // "& > :not(style)": {
+        //   m: 1,
+        //   width: 1000,
+        //   height: 200,
+        // },
+        width: 1014,
         mb: 3,
         mt: 3,
       }}
@@ -80,9 +81,6 @@ function DetailMain(props) {
       <Paper elevation={3} sx={{ p: 3, bgcolor: "#E2ECFD" }}>
         <Grid container>
           <Grid item xs={10}>
-            {/* <Typography variant="h4" align="left">
-              {Name}
-            </Typography> */}
             <h2 style={{ color: "#033075" }}>{Name}</h2>
           </Grid>
           <Grid item xs={2} align="right">
