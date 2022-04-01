@@ -34,7 +34,7 @@ let 버튼들 = styled.div`
 `;
 let 답변입력 = styled.textarea`
   width: 90%;
-  min-height: 120px;
+  min-height: 70px;
   resize: none;
 `;
 let 답변 = styled.h2`
@@ -42,6 +42,7 @@ let 답변 = styled.h2`
   padding-bottom: 2%;
 `;
 let 답변내용 = styled.div`
+    display: flex;
     width: 100%
     margin-top: 5%;
     margin-bottom: 5%;
@@ -107,7 +108,7 @@ function QnaDetail(props) {
     }, []);
 
   return (
-    <Container>
+    <Container style={{marginBottom: '2vh'}}>
       <글작성틀>
         <게시판이름>Q&A</게시판이름>
 
