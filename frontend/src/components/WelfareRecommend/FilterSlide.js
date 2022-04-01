@@ -5,13 +5,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import FilterCard from "./FilterCard";
-import getAxios from "../../api";
+import { getAxios } from "../../api";
+import styled from "styled-components";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
-function FilterSlide() {
+function FilterSlide(props) {
   const axios = getAxios();
   const [cards, setCards] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCard = async () => {
@@ -26,10 +30,31 @@ function FilterSlide() {
     fetchCard();
   }, []);
 
+  const { length: count } = cards;
+  if (count === 0) {
+    return (
+      <StyledBox>
+        <h2 style={{ margin: "auto", color: "#033075" }}>
+          추천 복지가 없습니다.
+        </h2>
+        <div style={{ width: "15vw", height: "5vh", margin: "auto" }}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              navigate("/filter");
+            }}
+          >
+            맞춤필터 설정하러가기
+          </Button>
+        </div>
+      </StyledBox>
+    );
+  }
+
   return (
     <div className="main-wrap">
       <h2 style={{ marginBottom: "3vh", fontWeight: "600" }}>
-        USER님에게 추천하는 복지
+        {props.name}님에게 추천하는 복지
       </h2>
       <Swiper
         style={{
@@ -67,4 +92,14 @@ function FilterSlide() {
     </div>
   );
 }
+const StyledBox = styled.div`
+  box-sizing: border-box;
+  width: 60vw;
+  height: 20vh;
+  background: #ddf0f8;
+  margin: auto;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+`;
 export default FilterSlide;

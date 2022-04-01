@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Table from "react-bootstrap/Table";
-import getAxios from "../../api.js";
+import { getAxios } from "../../api.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination.js";

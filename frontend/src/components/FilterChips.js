@@ -4,7 +4,7 @@ import MultipleSelectChips from './Filter/MultipleSelectChips.js';
 import SidoSelectBox from './Filter/Sido.jsx';
 import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
-import getAxios from '../api.js';
+import { getAxios, getAxiosDjango } from '../api.js';
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -73,6 +73,7 @@ const familyChip = [
 ];
 
 function FilterChips() {
+  const [userSeq, setUserSeq] = useState('');
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
@@ -109,6 +110,10 @@ function FilterChips() {
         job: selectJob,
         family: selectFamily,
       });
+
+      const djangoAxios = getAxiosDjango();
+      let res = await djangoAxios.get(`/insertusergroup/${userSeq}`);
+      console.log('django res: ', res);
     } catch (err) {
       console.log(err);
     }
@@ -120,6 +125,8 @@ function FilterChips() {
         const axios = getAxios();
         let res = await axios.get('/api/users/update/char');
         console.log('userCharacter: ', res.data.body);
+        setUserSeq(res.data.body.user.userSeq);
+        console.log('userSeq: ', userSeq);
 
         setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
