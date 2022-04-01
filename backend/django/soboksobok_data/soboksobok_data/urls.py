@@ -21,7 +21,7 @@ import soboksobok_app2.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',soboksobok_app.views.index,name='index'),
-    path('usergroup/<int:user_seq>/', soboksobok_app.views.insertusergroupAPI),
+    path('insertusergroup/<int:user_seq>', soboksobok_app.views.insertusergroupAPI),
     path('database/all/', soboksobok_app2.views.insertWelfare),
     path('clustering/',soboksobok_app2.views.clustering),
     path('welfare/cosine/',soboksobok_app2.views.wel_wel_cosine),

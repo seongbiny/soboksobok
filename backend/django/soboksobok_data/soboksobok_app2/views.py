@@ -718,7 +718,7 @@ def clustering(request):
 	# idx=total.iloc[:,:1]
 	# word = pd.concat([idx,word],axis=1)
 
-	# word.to_csv(os.getcwd()+"/data/"+"220330 complete + 라벨링 + id.csv", encoding = 'utf-8-sig')
+	word.to_csv(os.getcwd()+"/data/"+"welfare+clustering.csv", encoding = 'utf-8-sig')
 	
 	welfares = Welfare.objects.all()
 
