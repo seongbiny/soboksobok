@@ -54,6 +54,7 @@ function QnaCreate(props) {
             });
             navigate(`/Qna`)
         }
+    }
 
         
     
@@ -115,7 +116,7 @@ function QnaCreate(props) {
     </Container>
   );
 }
-}
+
 export default QnaCreate;
 // function state를props화(state){  //redux store 데이터 가져와서 props로 변환해주는 함수
 
