@@ -25,7 +25,7 @@ function FilterCard(props) {
         pr: 2,
         display: "grid",
         gridTemplateRows: "80% 20%",
-        background: "#DDF0F8",
+        background: "#E3F2FD",
       }}
     >
       <CardContent style={{ display: "grid" }}>
