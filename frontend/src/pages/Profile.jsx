@@ -51,10 +51,12 @@ function Profile() {
         setAgeRender(ageMap.get(ageRange));
       }
 
-      if (response.data.body.user.gender === null) {
+      if (response.data.body.user.male === null) {
         setGender('placeholder');
-      } else {
-        setGender(response.data.body.user.gender);
+      } else if (response.data.body.user.male === 1) {
+        setGender('male');
+      } else if (response.data.body.user.male === 0) {
+        setGender('female');
       }
     } catch (err) {
       console.log(err);
