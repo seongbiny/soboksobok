@@ -6,7 +6,9 @@ import { getAxios } from "../../api";
 
 const Container = styled.div`
   max-width: 800px;
-  padding: 5vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  padding-left: 5vh;
 `;
 
 function Chart() {

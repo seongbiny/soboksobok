@@ -6,7 +6,7 @@ function ProfileCard(props) {
     <StyledCard>
       {props.profile === null ? (
         <img
-          src="blank-profile.png/"
+          src="/blank-profile.png"
           alt="profile"
           style={{ objectFit: "cover", width: "100%", maxHeight: "100%" }}
         ></img>
@@ -17,13 +17,21 @@ function ProfileCard(props) {
           style={{ objectFit: "cover", width: "100%", maxHeight: "100%" }}
         ></img>
       )}
-      <div>{props.name}님</div>
+      {props.name === null ? (
+        <div></div>
+      ) : (
+        <div style={{ color: "#033075", margin: "auto" }}>{props.name}님</div>
+      )}
     </StyledCard>
   );
 }
-
 const StyledCard = styled.div`
   box-sizing: border-box;
-  background: pink;
+  // border: 1px solid;
+  display: grid;
+  border-radius: 20px;
+  background-color: #90caf9;
+  height: 35vh;
+  font-weight: bold;
 `;
 export default ProfileCard;
