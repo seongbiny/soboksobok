@@ -54,7 +54,7 @@ const StyledContainer = styled.div`
   align-items: center;
   height: 10vh;
   border-radius: 20px;
-  background: #eff2fa;
+  background: #e3f2fd;
 `;
 
 const StyledBox = styled.div`

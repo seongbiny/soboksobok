@@ -90,7 +90,7 @@ export default function DetailTaps(props) {
           <div style={{ width: "80px", flexShrink: 0 }}>지원대상 |</div>
           <div>{target}</div>
         </div>
-        <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
+        <Box sx={{ bgcolor: "#E3F2FD", borderRadius: 2, p: 2, mt: 3 }}>
           {crit}
         </Box>
       </TabPanel>

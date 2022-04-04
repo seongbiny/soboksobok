@@ -6,9 +6,9 @@ import { getAxios } from "../../api";
 
 const Container = styled.div`
   max-width: 800px;
-  padding-top: 5vh;
-  padding-bottom: 5vh;
-  padding-left: 5vh;
+  padding-top: 7vh;
+  padding-bottom: 7vh;
+  padding-left: 7vh;
 `;
 
 function Chart() {
@@ -30,6 +30,7 @@ function Chart() {
           "rgb(255, 205, 86)",
           "rgb(255, 105, 86)",
           "rgb(155, 205, 86)",
+          "rgb(155, 305, 86)",
         ],
         hoverOffset: 4,
       },
@@ -39,13 +40,17 @@ function Chart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const request = await axios.get("/api/welfare/recommend/purpose");
+        // const request = await axios.get("/api/welfare/recommend/purpose");
+        const request = await axios.get("/api/welfare/recommend/grouppopular");
         console.log(request.data);
-        let wel = request.data;
-        // console.log(Object.keys(request.data).slice(0, 5));
-        // console.log(Object.values(request.data).slice(0, 5));
-        await setLabel(Object.keys(wel).slice(0, 5));
-        await setDatas(Object.values(wel).slice(0, 5));
+        // let wel = request.data;
+        // await setLabel(Object.keys(wel).slice(0, 6));
+        // await setDatas(Object.values(wel).slice(0, 6));
+        let wel = request.data.map(a => a.welfare_service_name);
+        // console.log(wel);
+        await setLabel(wel);
+        let view = request.data.map(a => a.welfare_view);
+        await setDatas(view);
       } catch (err) {
         console.log(err);
       }
