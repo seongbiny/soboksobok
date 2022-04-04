@@ -9,7 +9,13 @@ const Header = () => {
     <header className="header">
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="/">소복소복</Navbar.Brand>
+          <Navbar.Brand href="/">
+            <img
+              src="soboksobok_logo/sobok_w.png"
+              style={{ width: 120 }}
+              alt="logo"
+            />
+          </Navbar.Brand>
           <Nav className="me-auto">
             {/* <Nav.Link href="/">홈</Nav.Link> */}
             <Nav.Link href="/search">복지검색</Nav.Link>
