@@ -4,7 +4,6 @@ import com.soboksobok.soboksobok.domain.Keyword;
 import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import com.soboksobok.soboksobok.domain.user.User;
 import com.soboksobok.soboksobok.domain.welfare.Welfare;
-import com.soboksobok.soboksobok.domain.welfare.Welfarepurpose;
 import com.soboksobok.soboksobok.service.KeywordService;
 import com.soboksobok.soboksobok.service.UserService;
 import com.soboksobok.soboksobok.service.WelfareService;
@@ -58,29 +57,29 @@ public class WelfareController {
     }
 
 //    @ApiOperation(value = "사업목적 갯수 출력")
-    @GetMapping("/recommend/purpose")
-    public Map getwelfarepurpose() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUser(principal.getUsername());
-        Long group = user.getUserGroup();
-        List<Welfare> list = welfareService.getWelfarebygroup(group);
-
-        HashMap<String, Long> purposes = new HashMap<>();
-
-        for (int i = 0; i < list.size(); i ++) {
-            List<Welfarepurpose> welfarepurposes = list.get(i).getWelfarepurpose();
-            for (int j = 0; j < welfarepurposes.size(); j++) {
-                String purposename = welfarepurposes.get(j).getPurpose().getPurpose_name();
-                if (purposes.get(purposename) == null) {
-                    purposes.put(purposename, 1L);
-                } else {
-                    purposes.put(purposename, purposes.get(purposename) + 1L);
-                }
-            }
-        }
-
-        return purposes;
-    }
+//    @GetMapping("/recommend/purpose")
+//    public Map getwelfarepurpose() {
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userService.getUser(principal.getUsername());
+//        Long group = user.getUserGroup();
+//        List<Welfare> list = welfareService.getWelfarebygroup(group);
+//
+//        HashMap<String, Long> purposes = new HashMap<>();
+//
+//        for (int i = 0; i < list.size(); i ++) {
+//            List<Welfarepurpose> welfarepurposes = list.get(i).getWelfarepurpose();
+//            for (int j = 0; j < welfarepurposes.size(); j++) {
+//                String purposename = welfarepurposes.get(j).getPurpose().getPurpose_name();
+//                if (purposes.get(purposename) == null) {
+//                    purposes.put(purposename, 1L);
+//                } else {
+//                    purposes.put(purposename, purposes.get(purposename) + 1L);
+//                }
+//            }
+//        }
+//
+//        return purposes;
+//    }
 
 //    @ApiOperation(value = "그룹 내에서 가장 많이 사용되는 복지 n개")
     @GetMapping("/recommend/grouppopular")
