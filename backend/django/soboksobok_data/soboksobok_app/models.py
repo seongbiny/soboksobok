@@ -1,14 +1,12 @@
 from django.db import models
 
-# Create your models here.
-
 class Comment(models.Model):
     comment_id = models.BigIntegerField(primary_key=True)
     comment_content = models.TextField()
     comment_created_at = models.DateTimeField(blank=True, null=True)
     comment_updated_at = models.DateTimeField(blank=True, null=True)
-    comment_qna = models.ForeignKey('Qna', models.DO_NOTHING, blank=True, null=True)
-    comment_user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
+    comment_qna = models.ForeignKey('Qna', models.DO_NOTHING, blank=True, null=True)        
+    comment_user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)      
 
     class Meta:
         managed = False
@@ -79,24 +77,6 @@ class Likewelfare(models.Model):
         db_table = 'likewelfare'
 
 
-class Purpose(models.Model):
-    purpose_id = models.BigIntegerField(primary_key=True)
-    purpose_name = models.CharField(max_length=50, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'purpose'
-
-
-class PurposeWelfarepurpose(models.Model):
-    purpose_purpose = models.ForeignKey(Purpose, models.DO_NOTHING)
-    welfarepurpose = models.OneToOneField('Welfarepurpose', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'purpose_welfarepurpose'
-
-
 class Qna(models.Model):
     qna_id = models.BigIntegerField(primary_key=True)
     qna_content = models.TextField()
@@ -113,7 +93,7 @@ class Qna(models.Model):
 class Selectfamily(models.Model):
     id = models.BigAutoField(primary_key=True)
     family = models.ForeignKey(Family, models.DO_NOTHING, blank=True, null=True)
-    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)       
+    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -123,19 +103,11 @@ class Selectfamily(models.Model):
 class Selecttarget(models.Model):
     id = models.BigAutoField(primary_key=True)
     target = models.ForeignKey('Target', models.DO_NOTHING, blank=True, null=True)
-    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)       
+    user_seq = models.ForeignKey('User', models.DO_NOTHING, db_column='user_seq', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'selecttarget'
-
-
-class Similarwelfare(models.Model):
-    welfare_id = models.BigIntegerField(primary_key=True)
-
-    class Meta:
-        managed = False
-        db_table = 'similarwelfare'
 
 
 class Target(models.Model):
@@ -169,18 +141,17 @@ class Used(models.Model):
 class User(models.Model):
     user_seq = models.BigAutoField(primary_key=True)
     age = models.CharField(max_length=255, blank=True, null=True)
-    area = models.CharField(max_length=255, blank=True, null=True)
     birth = models.CharField(max_length=255, blank=True, null=True)
     child = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
-    gender = models.CharField(max_length=255, blank=True, null=True)
-    gu = models.CharField(max_length=255, blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
     modified_at = models.DateTimeField(blank=True, null=True)
     password = models.CharField(max_length=128, blank=True, null=True)
     profile_image_url = models.CharField(max_length=512, blank=True, null=True)
     provider_type = models.CharField(max_length=20, blank=True, null=True)
     role_type = models.CharField(max_length=20, blank=True, null=True)
-    user_group = models.IntegerField(blank=True, null=True)
+    user_group = models.BigIntegerField(blank=True, null=True)
     user_id = models.CharField(unique=True, max_length=64)
     username = models.CharField(max_length=100)
 
@@ -202,20 +173,25 @@ class UserRefreshToken(models.Model):
 class Welfare(models.Model):
     welfare_id = models.BigIntegerField(primary_key=True)
     welfare_ori_id = models.CharField(max_length=255, blank=True, null=True)
-    welfare_area = models.CharField(max_length=2)
     welfare_child = models.IntegerField(blank=True, null=True)
     welfare_contact = models.CharField(max_length=255, blank=True, null=True)
     welfare_crit = models.TextField(blank=True, null=True)
+    welfare_date = models.TextField(blank=True, null=True)
     welfare_dept_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_female = models.BigIntegerField(blank=True, null=True)
     welfare_group = models.BigIntegerField(blank=True, null=True)
-    welfare_gu = models.CharField(max_length=2)
     welfare_howto = models.TextField(blank=True, null=True)
+    welfare_male = models.BigIntegerField(blank=True, null=True)
     welfare_phone = models.CharField(max_length=255, blank=True, null=True)
     welfare_service_content = models.TextField(blank=True, null=True)
     welfare_service_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_service_purpose = models.TextField(blank=True, null=True)
+    welfare_service_type = models.CharField(max_length=255, blank=True, null=True)
+    welfare_similar_welfare = models.CharField(max_length=255, blank=True, null=True)       
     welfare_site_link = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_name = models.CharField(max_length=255, blank=True, null=True)
     welfare_target_detail = models.TextField(blank=True, null=True)
+    welfare_view = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -240,16 +216,6 @@ class Welfarelife(models.Model):
     class Meta:
         managed = False
         db_table = 'welfarelife'
-
-
-class Welfarepurpose(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    purpose = models.ForeignKey(Purpose, models.DO_NOTHING, blank=True, null=True)
-    welfare = models.ForeignKey(Welfare, models.DO_NOTHING, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'welfarepurpose'
 
 
 class Welfaretarget(models.Model):
