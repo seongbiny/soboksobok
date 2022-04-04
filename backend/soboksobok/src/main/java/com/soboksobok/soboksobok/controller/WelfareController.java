@@ -66,21 +66,16 @@ public class WelfareController {
         List<Welfare> list = welfareService.getWelfarebygroup(group);
 
         HashMap<String, Long> purposes = new HashMap<>();
-        purposes.put("일자리", 0L);
-        purposes.put("주거", 0L);
-        purposes.put("일상생활", 0L);
-        purposes.put("신체건강 및 보건의료", 0L);
-        purposes.put("정신건강 및 심리정서", 0L);
-        purposes.put("보호 및 돌봄/요양", 0L);
-        purposes.put("보육 및 교육", 0L);
-        purposes.put("문화 및 여가", 0L);
-        purposes.put("안전 및 권익보장", 0L);
 
         for (int i = 0; i < list.size(); i ++) {
             List<Welfarepurpose> welfarepurposes = list.get(i).getWelfarepurpose();
             for (int j = 0; j < welfarepurposes.size(); j++) {
                 String purposename = welfarepurposes.get(j).getPurpose().getPurpose_name();
-                purposes.put(purposename, purposes.get(purposename)+1L);
+                if (purposes.get(purposename) == null) {
+                    purposes.put(purposename, 1L);
+                } else {
+                    purposes.put(purposename, purposes.get(purposename) + 1L);
+                }
             }
         }
 
