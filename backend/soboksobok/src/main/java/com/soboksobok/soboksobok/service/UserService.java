@@ -74,13 +74,7 @@ public class UserService {
         User user = getUser(userId);
         System.out.println("userseq: "+user.getUserSeq());
         System.out.println("dto: "+dto.toString());
-        String region = dto.getRegion();
-        String area = region.substring(0,1);
-        String gu = region.substring(1);
-        System.out.println("area: "+area+" gu: "+gu);
         user.setChild(dto.getChild());
-        user.setArea(area);
-        user.setGu(gu);
         userRepository.save(user);
         selectTargetRepository.deleteAllByUser_UserSeq(user.getUserSeq());
         selectFamilyRepository.deleteAllByUser_UserSeq(user.getUserSeq());
@@ -121,7 +115,14 @@ public class UserService {
     public void updateUserProfile(ProfileDto dto, String userId){
         User user = getUser(userId);
         user.setAgeRange(dto.getAge());
-        user.setGender(dto.getGender());
+        if(dto.getGender().equals("male")){
+            user.setMale(1L);
+            user.setFemale(0L);
+        }
+        else{
+            user.setMale(0L);
+            user.setFemale(1L);
+        }
         userRepository.save(user);
     }
 
