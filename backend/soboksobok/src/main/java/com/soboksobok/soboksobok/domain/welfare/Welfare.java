@@ -69,8 +69,8 @@ public class Welfare {
     @Column(name = "welfareMale")
     private Long welfare_male;
 
-    @Column(name = "welfareFemail")
-    private Long welfare_femail;
+    @Column(name = "welfareFemale")
+    private Long welfare_female;
 
     @Column(name = "welfareGroup")
     private Long welfare_group;

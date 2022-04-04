@@ -344,7 +344,7 @@ def user_group_mapping_dbscan(user_vector,user_seq):
 
 	for n in range(min_value,max_value+1):
 		welfare= full_welfare.loc[(full_welfare.clustering==n)]
-		welfare=welfare.iloc[:,3:38] #필요한 특성만 뽑기
+		welfare=welfare.iloc[:,3:31] #필요한 특성만 뽑기
 		# arr_select_welfare=[]
 		# for i in range(len(tmp3)):
 		#   row=tmp3.iloc[i] # 복지 혜택 한개
@@ -356,6 +356,7 @@ def user_group_mapping_dbscan(user_vector,user_seq):
 		df1['mean'] = df1.mean(axis=1)
 		# print(n,"번째 그룹 평균 : ",df1['mean'][0])
 		welfare_mean.append(df1['mean'][0])
+	print("평균 리스트: ",welfare_mean)
 	print("가장 평균이 높은 그룹 : ", welfare_mean.index(max(welfare_mean)))
 	max_group=welfare_mean.index(max(welfare_mean))
 	user=User.objects.filter(user_seq=user_seq)

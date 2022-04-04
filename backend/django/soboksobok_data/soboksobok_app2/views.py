@@ -23,7 +23,7 @@ file_path=os.getcwd()+"/data/"
 # 복지 데이터 저장
 @api_view(['GET'])
 def insertWelfare(request):
-	file_name="220404 행안부 공공서비스_openapi2_utf8.json"
+	file_name="220404 행안부 공공서비스_openapi.json"
 	# file_path = os.getcwd()+"/data/"+"220324 전체데이터 번호재정의와 정렬_json변환용.json"
 	
 	with open(file_path+file_name, "r", encoding='UTF8') as json_file:
@@ -109,23 +109,7 @@ def insertWelfare(request):
 	
 	Target.objects.bulk_create(targets)
 
-	# 사업목적 데이터
-	# file_name="purpose.csv"
-	# csv_purpose = pd.read_csv(file_path+file_name, encoding='cp949')
-	
-	# purposes = []
-	
-	# for i in range(len(csv_purpose)):
-	# 	row = csv_purpose.iloc[i]
-		
-	# 	purpose = Purpose()
-	# 	purpose.purpose_id = row['purpose_id']
-	# 	purpose.purpose_name = row['purpose_name']
-		
-	# 	purposes.append(purpose)
-	
-	# Purpose.objects.bulk_create(purposes)
-
+	print("기본 데이터  완료")
 
 	# 복지-생애주기 데이터
 	file_name="220404 행안부 welfarelife.csv"
@@ -135,15 +119,15 @@ def insertWelfare(request):
 	
 	for i in range(len(csv_welfarelife)):
 		row = csv_welfarelife.iloc[i]
-		
+		print("row",row)
 		welfare_life = Welfarelife()
 
 		life_id = row['welfarelife_life_id']
 		if life_id == 0:
 			life_id = 1
 		life = Life.objects.filter(age_id=life_id)
-		
-		welfare_life.welfare_id = row['welfare_id']
+		# print("id : ",row['welfare_id'])
+		welfare_life.welfare_id = row['癤퓑elfare_id']
 		welfare_life.life_id = life_id
 		
 		welfare_lifes.append(welfare_life)
@@ -160,7 +144,7 @@ def insertWelfare(request):
 		
 		welfare_family = Welfarefamily()
 
-		welfare_family.welfare_id = row['welfare_id']
+		welfare_family.welfare_id = row['癤퓑elfare_id']
 		welfare_family.family_id = row['welfarefamily_family_id']
 		
 		welfare_families.append(welfare_family)
@@ -177,31 +161,11 @@ def insertWelfare(request):
 		row = csv_welfaretarget.iloc[i]
 		
 		welfare_target = Welfaretarget()
-		welfare_target.welfare_id = row['welfare_id']
+		welfare_target.welfare_id = row['癤퓑elfare_id']
 		welfare_target.target_id = row['welfaretarget_target_id']
-		print("id :: ",row['welfare_id'],)
 		welfare_targets.append(welfare_target)
 	
 	Welfaretarget.objects.bulk_create(welfare_targets)
-	
-	# 복지-사업목적 데이터
-	# file_name="행안부welfarepurpose.csv"
-	# csv_welfarepurpose = pd.read_csv(file_path+file_name, encoding='cp949')
-
-	# welfare_purposes = []
-	
-	# for i in range(len(csv_welfarepurpose)):
-	# 	row = csv_welfarepurpose.iloc[i]
-		
-	# 	welfare_purpose = Welfarepurpose()
-		
-	# 	welfare_purpose.welfare_id = row['welfare_id']
-	# 	welfare_purpose.purpose_id = row['welfarepurpose_purpose_id']
-		
-	# 	welfare_purposes.append(welfare_purpose)
-	
-	# Welfarepurpose.objects.bulk_create(welfare_purposes)
-
 	
 	return Response("success")
 
@@ -214,24 +178,13 @@ def welfare_word_detail():
 	welfare = Welfare.objects.all()
 	family = Welfarefamily.objects.all()
 	life = Welfarelife.objects.all()
-	purpose = Welfarepurpose.objects.all()
 	target = Welfaretarget.objects.all()
 
 	family_idx=0
 	target_idx=0
 	age_idx=0
-	purpose_idx=0
 
 	for j in range(len(welfare)):
-		area="전국"
-		gwangju="@"
-		area_gu="전국구"
-		gwangju_gu="@"
-		gwangju_gwangsan="@"
-		gwangju_nam="@"
-		gwangju_dong="@"
-		gwangju_buk="@"
-		gwangju_seo="@"
 		age09="@"
 		age1019="@"
 		age2029="@"
@@ -245,29 +198,21 @@ def welfare_word_detail():
 		job_defalut="@"
 		child_ok="@"
 		child_empty="@"
+		female='@'
+		male='@'
 		not_have_house="@"
 		pregnant="@"
-		nonstudent="@"
+		alone="@"
 		other_culture="@"
 		many_child="@"
 		national_merit="@"
 		disabled="@"
-		low_income="@"
+		new="@"
 		single_parent="@"
-		bad_credit="@"
+		many_family="@"
 		alone_old_man="@"
 		vulnerable="@"
-		none_of_them="@" 
-		purpose_none_of_them="@"
-		safe="@"
-		culture="@"
-		education="@"
-		protect="@"
-		for_job="@"
-		for_house="@"
-		normal_life="@"
-		physical_health="@"
-		mental_health="@"
+		none_of_them="@"
 		
 		# 초기 값 설정
 		w=welfare[j] #복지 혜택 하나
@@ -277,26 +222,18 @@ def welfare_word_detail():
 		# tmp=cur.iloc[:,2:]
 		# row=tmp.iloc[j]
 		# len_row=row.count() # column 개수 세기
-		if w.welfare_area == '1':
-			gwangju = "광주광역시"
-			if w.welfare_gu == '0':
-				gwangju_gu = "전체"
-			elif w.welfare_gu == '1':
-				gwangju_gwangsan = "광산구"
-			elif w.welfare_gu == '2':
-				gwangju_nam = "남구"
-			elif w.welfare_gu == '3':
-				gwangju_dong = "동구"
-			elif w.welfare_gu == '4':
-				gwangju_buk = "북구"
-			elif w.welfare_gu == '5':
-				gwangju_seo = "서구"
-		# 지역,구 끝
 
 		if w.welfare_child == 1:
 			child_ok = "자녀있음"
 		elif w.welfare_child == 2:
 			child_empty = "자녀없음/상관없음"
+		# 자녀유무 끝
+		# temp 데이터 끝
+
+		if w.welfare_female == 1:
+			female = "여성"
+		if w.welfare_male == 1:
+			male = "남성"
 		# 자녀유무 끝
 		# temp 데이터 끝
 
@@ -309,7 +246,7 @@ def welfare_word_detail():
 			elif nfi == 1:
 				pregnant = "임산부"
 			elif nfi == 2:
-				nonstudent = "미취학"
+				alone = "1인가구"
 			elif nfi == 3:
 				other_culture = "다문화/탈북민"
 			elif nfi == 4:
@@ -319,13 +256,13 @@ def welfare_word_detail():
 			elif nfi == 6:
 				disabled = "장애인"
 			elif nfi == 7:
-				low_income = "저소득층"
+				new = "신규전입"
 			elif nfi == 8:
 				single_parent = "한부모/조손"
 			elif nfi == 9:
-				bad_credit = "신용불량자"
+				many_family = "확대가족"
 			elif nfi == 10:
-				alone_old_man = "독거노인"
+				alone_old_man = "요양환자/치매환자"
 			elif nfi == 11:
 				vulnerable = "취약계층"
 			elif nfi == 12:
@@ -371,46 +308,10 @@ def welfare_word_detail():
 				age3039 = "중장년"
 				age60 = "노년"
 		# 나이 끝
-
-		p = purpose.filter(welfare_id=w_id)
-
-		for np in p:
-			npi = np.purpose_id
-			if npi == 0:
-				for_job = "일자리"
-			elif npi == 1:
-				for_house = "주거"
-			elif npi == 2:
-				normal_life = "일상생활"
-			elif npi == 3:
-				physical_health = "신체건강/보건의료"
-			elif npi == 4:
-				mental_health = "정신건강/심리정서"
-			elif npi == 5:
-				protect = "보호/돌봄/요양"
-			elif npi == 6:
-				education = "보육/교육"
-			elif npi == 7:
-				culture = "문화/여가"
-			elif npi == 8:
-				safe = "안전/권익보장"
-			elif npi == 9:
-				purpose_none_of_them = "사업목적해당없음"
-			# 사업목적 끝
-		
 		# 데이터 받기 완료        
 		d=pd.DataFrame({
 			'아이디':[w_id],
 			'ori_아이디':[ori_id],
-			'전국':[area],
-			'광주':[gwangju],
-			'전국구':[area_gu],
-			'광주구':[gwangju_gu],
-			'광주 광산구':[gwangju_gwangsan],
-			'광주 남구':[gwangju_nam],
-			'광주 동구':[gwangju_dong],
-			'광주 북구':[gwangju_buk],
-			'광주 서구':[gwangju_seo],
 			'아동':[age09],
 			'청소년':[age1019],
 			'청년':[age2029],
@@ -424,34 +325,26 @@ def welfare_word_detail():
 			'일반':[job_defalut],
 			'자녀여부 있음':[child_ok],
 			'자녀여부 없음':[child_empty],
+			'여성':[female],
+			'남성':[male],
 			'무주택자':[not_have_house],
 			'임산부':[pregnant],
-			'미취학':[nonstudent],
+			'1인가구':[alone],
 			'다문화/탈북민':[other_culture],
 			'다자녀':[many_child],
 			'보훈대상자/국가유공자':[national_merit],
 			'장애인':[disabled],
-			'저소득':[low_income],
+			'신규전입':[new],
 			'한부모/조손':[single_parent],
-			'신용불량자':[bad_credit],
-			'독거노인':[alone_old_man],
+			'확대가족':[many_family],
+			'요양환자/치매환자':[alone_old_man],
 			'취약계층':[vulnerable],
 			'해당없음':[none_of_them],
-			'일자리':[for_job],
-			'주거':[for_house],
-			'일상생활':[normal_life],
-			'신체건강 및 보건의료':[physical_health],
-			'정신건강 및 심리정서':[mental_health],
-			'사업목적해당없음':[purpose_none_of_them],
-			'안전 및 권익보장':[safe],
-			'문화 및 여가':[culture],
-			'보육 및 교육':[education],
-			'보호 및 돌봄/요양':[protect],
 			})
 		total.append(d)
 
 	result=pd.concat(total)
-	result_name="result.csv"
+	result_name="welfare_word_result.csv"
 	result.to_csv(os.getcwd()+"/data/"+result_name,index=False,encoding='utf-8-sig')
 	return result_name
 	
@@ -779,13 +672,13 @@ def welfare_word_split():
 
 	result_name = welfare_word_detail()
 	total=pd.read_csv(os.getcwd()+"/data/"+result_name)
-	data = pd.read_csv(os.getcwd()+"/data/"+"행안부datautf.csv")
+	data = pd.read_csv(os.getcwd()+"/data/"+"220404 행안부 공공서비스_openapi.csv")
 
 	print("total",total)
 	print("welfare_word_split ::",data.head())
 
 	total_split = total.iloc[:, 2:]
-	data_split = data.iloc[:, :12]
+	data_split = data.iloc[:, :16]
 
 	print("total_split::",len(total_split))
 	print("data_split::",len(data_split))
@@ -796,11 +689,11 @@ def welfare_word_split():
 	# result= data_split.append(total_split)
 	result = pd.concat([data_split, total_split],axis=1)
 
-	name_list=['전국','광주','전국구','광주구','광주 광산구','광주 남구','광주 동구','광주 북구','광주 서구','아동','청소년','청년','중장년','노년','학생','무직','창업','농어업인'
-	,'중소기업','일반','자녀여부 있음','자녀여부 없음','무주택자','임산부','미취학','다문화/탈북민','다자녀','보훈대상자/국가유공자','장애인','저소득','한부모/조손','신용불량자',
-	'독거노인','취약계층','해당없음','일자리','주거','일상생활','신체건강 및 보건의료','정신건강 및 심리정서','사업목적해당없음','안전 및 권익보장','문화 및 여가','보육 및 교육','보호 및 돌봄/요양']
+	name_list=['아동','청소년','청년','중장년','노년','학생','무직','창업','농어업인'
+	,'중소기업','일반','자녀여부 있음','자녀여부 없음','여성','남성','무주택자','임산부','1인가구','다문화/탈북민','다자녀','보훈대상자/국가유공자','장애인','신규전입','한부모/조손','확대가족',
+	'요양환자/치매환자','취약계층','해당없음']
 
-	text=result['welfare_service_name'] + ' ' + result['welfare_target_detail']+' '+ result['welfare_crit']+' '+result['welfare_service_content']
+	text=result['welfare_service_name'] + ' ' + result['welfare_target_detail']+' '+ result['welfare_crit']+' '+result['welfare_service_content']+' '+result['welfare_service_purpose']
 	print(text)
 
 	for i in range(len(name_list)):

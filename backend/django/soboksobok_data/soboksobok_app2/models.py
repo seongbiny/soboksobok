@@ -20,13 +20,13 @@ class Life(models.Model):
         db_table = 'life'
 
 
-class Purpose(models.Model):
-    purpose_id = models.BigIntegerField(primary_key=True)
-    purpose_name = models.CharField(max_length=50, blank=True, null=True)
+# class Purpose(models.Model):
+#     purpose_id = models.BigIntegerField(primary_key=True)
+#     purpose_name = models.CharField(max_length=50, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'purpose'
+#     class Meta:
+#         managed = False
+#         db_table = 'purpose'
 
 
 class Target(models.Model):
@@ -41,21 +41,25 @@ class Target(models.Model):
 class Welfare(models.Model):
     welfare_id = models.BigIntegerField(primary_key=True)
     welfare_ori_id = models.CharField(max_length=255, blank=True, null=True)
-    welfare_area = models.CharField(max_length=2)
     welfare_child = models.IntegerField(blank=True, null=True)
     welfare_contact = models.CharField(max_length=255, blank=True, null=True)
     welfare_crit = models.TextField(blank=True, null=True)
+    welfare_date = models.TextField(blank=True, null=True)
     welfare_dept_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_female = models.BigIntegerField(blank=True, null=True)
     welfare_group = models.BigIntegerField(blank=True, null=True)
-    welfare_gu = models.CharField(max_length=2)
     welfare_howto = models.TextField(blank=True, null=True)
+    welfare_male = models.BigIntegerField(blank=True, null=True)
     welfare_phone = models.CharField(max_length=255, blank=True, null=True)
     welfare_service_content = models.TextField(blank=True, null=True)
     welfare_service_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_service_purpose = models.TextField(blank=True, null=True)
+    welfare_service_type = models.CharField(max_length=255, blank=True, null=True)
+    welfare_similar_welfare = models.CharField(max_length=255, blank=True, null=True)       
     welfare_site_link = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_name = models.CharField(max_length=255, blank=True, null=True)
-    welfare_similar_welfare = models.CharField(max_length=255, blank=True, null=True)
     welfare_target_detail = models.TextField(blank=True, null=True)
+    welfare_view = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -82,14 +86,14 @@ class Welfarelife(models.Model):
         db_table = 'welfarelife'
 
 
-class Welfarepurpose(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    purpose_id = models.IntegerField(blank=True, null=True)
-    welfare_id = models.IntegerField(blank=True, null=True)
+# class Welfarepurpose(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     purpose_id = models.IntegerField(blank=True, null=True)
+#     welfare_id = models.IntegerField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'welfarepurpose'
+#     class Meta:
+#         managed = False
+#         db_table = 'welfarepurpose'
 
 
 class Welfaretarget(models.Model):
