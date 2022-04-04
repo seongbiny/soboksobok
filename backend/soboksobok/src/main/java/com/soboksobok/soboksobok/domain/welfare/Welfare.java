@@ -30,6 +30,15 @@ public class Welfare {
     @Column(name = "welfareDeptName")
     private String welfare_dept_name;
 
+    @Column(name = "welfareServiceType")
+    private String welfare_service_type;
+
+    @Column(columnDefinition = "TEXT", name = "welfareDate")
+    private String welfare_date;
+
+    @Column(columnDefinition = "TEXT", name = "welfareServicePurpose")
+    private String welfare_service_purpose;
+
     @Column(columnDefinition = "TEXT", name = "welfareTargetDetail")
     private String welfare_target_detail;
 
@@ -54,16 +63,17 @@ public class Welfare {
     @Column(name = "welfareSiteLink")
     private String welfare_site_link;
 
+    @Column(name = "welfareView")
+    private Long welfare_view;
+
+    @Column(name = "welfareMale")
+    private Long welfare_male;
+
+    @Column(name = "welfareFemail")
+    private Long welfare_femail;
+
     @Column(name = "welfareGroup")
     private Long welfare_group;
-
-    @Column(length = 2)
-    @NotNull
-    private String welfare_area;
-
-    @Column(length = 2)
-    @NotNull
-    private String welfare_gu;
 
     @Column(columnDefinition = "TINYINT", length = 2)
     private Long welfare_child;
@@ -73,9 +83,6 @@ public class Welfare {
 
     @OneToMany(mappedBy = "family")
     private List<Welfarefamily> welfarefamily = new ArrayList<>();
-
-    @OneToMany(mappedBy = "purpose")
-    private List<Welfarepurpose> welfarepurpose = new ArrayList<>();
 
     @OneToMany(mappedBy = "life")
     private List<Welfarelife> welfarelife = new ArrayList<>();
