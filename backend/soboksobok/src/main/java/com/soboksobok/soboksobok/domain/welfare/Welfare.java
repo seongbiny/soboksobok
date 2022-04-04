@@ -1,7 +1,9 @@
 package com.soboksobok.soboksobok.domain.welfare;
 
+import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.w3c.dom.Text;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@ToString
 @Table(name = "welfare")
 public class Welfare {
 
@@ -77,5 +80,9 @@ public class Welfare {
     @OneToMany(mappedBy = "life")
     private List<Welfarelife> welfarelife = new ArrayList<>();
 
+    @OneToMany(mappedBy = "welfare")
+    private List<Usedwelfare> usingusers = new ArrayList<>();
 
+    @Column(name = "welfareSimilarWelfare")
+    private String welfare_similarwelfare;
 }

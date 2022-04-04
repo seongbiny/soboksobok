@@ -54,6 +54,7 @@ class Welfare(models.Model):
     welfare_service_name = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_link = models.CharField(max_length=255, blank=True, null=True)
     welfare_site_name = models.CharField(max_length=255, blank=True, null=True)
+    welfare_similar_welfare = models.CharField(max_length=255, blank=True, null=True)
     welfare_target_detail = models.TextField(blank=True, null=True)
 
     class Meta:
@@ -99,3 +100,11 @@ class Welfaretarget(models.Model):
     class Meta:
         managed = False
         db_table = 'welfaretarget'
+
+class Welfare_similarwelfare(models.Model):
+    welfare_welfare_id = models.BigIntegerField(primary_key=True)
+    similarwelfare_welfare_id = models.BigIntegerField
+
+    class Meta:
+        managed = False
+        db_table = 'similarwelfare'
