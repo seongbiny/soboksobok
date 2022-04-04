@@ -86,20 +86,17 @@ public class User {
     @Column(name = "AGE")
     private String ageRange;
 
-    @Column(name = "GENDER")
-    private String gender;
+    @Column(name = "MALE")
+    private Long male;
+
+    @Column(name = "FEMALE")
+    private Long female;
 
     @Column(name = "BIRTH")
     private String birth;
 
     @Column(name = "CHILD")
     private String child;
-
-    @Column(name = "AREA")
-    private String area;
-
-    @Column(name = "GU")
-    private String gu;
 
     @Column(name = "USER_GROUP")
     private Long userGroup;
