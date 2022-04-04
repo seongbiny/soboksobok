@@ -5,26 +5,46 @@ import FilterSlide from "../components/WelfareRecommend/FilterSlide";
 import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import ProfileCard from "../components/WelfareRecommend/ProfileCard";
 import styled from 'styled-components';
+import { getAxios } from "../api";
+import Norecommend from "../components/WelfareRecommend/Norecommend";
 
 
 function WelfareRecommend(){
+    const axios = getAxios();
     const [name, setName] = useState('User');
     const [profile, setProfile] = useState('');
+    const [cards, setCards] = useState([]);
 
     useEffect(()=>{
         setName(localStorage.getItem('name'))
         setProfile(localStorage.getItem('profile'))
     },[])
+
+    useEffect(() => {
+        const fetchCard = async () => {
+          try {
+            const request = await axios.get("/api/welfare/recommend");
+            console.log(request.data.body.welfare);
+            setCards(request.data.body.welfare);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        fetchCard();
+      }, []);
     
     return(
         <StyledContainer>
             <StyledTop>
-                <ProfileCard profile={profile} />
+                <ProfileCard profile={profile} name={name} />
                 <Chart />
                 <LineChart />
             </StyledTop>
             <StyledMain>
-                <FilterSlide name={name} />
+                { cards.length === 0 ? 
+                <Norecommend></Norecommend> :
+                <FilterSlide name={name} cards={cards} />
+                }
                 <RecommendSlid name={name} />
             </StyledMain>
         </StyledContainer>
@@ -37,14 +57,14 @@ const StyledTop = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 5vh;
-    margin-bottom: 5vh;
+    // margin-bottom: 5vh;
 `;
 const StyledMain = styled.div`
     display: grid;
     justify-content: center;
-    margin-bottom: 5vh;
-    margin-top: 5vh;
-    grid-row-gap: 20px;
+    // margin-bottom: 5vh;
+    // margin-top: 5vh;
+    grid-row-gap: 10vh;
     width: 70vw;
 `;
 const StyledContainer = styled.div`
@@ -53,6 +73,7 @@ const StyledContainer = styled.div`
     margin: auto;
     grid-template-columns: 70vw;
     font-family: 'Noto Sans KR', sans-serif;
+    margin-bottom: 5vh;
 `;
 
 export default WelfareRecommend;
