@@ -20,7 +20,7 @@ function ProfileCard(props) {
       {props.name === null ? (
         <div></div>
       ) : (
-        <div style={{ color: "#033075", margin: "auto" }}>{props.name}님</div>
+        <StyledName>{props.name}님</StyledName>
       )}
     </StyledCard>
   );
@@ -31,7 +31,13 @@ const StyledCard = styled.div`
   display: grid;
   border-radius: 20px;
   background-color: #90caf9;
-  height: 35vh;
+`;
+const StyledName = styled.div`
+  color: "#033075";
   font-weight: bold;
+  height: 5vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 `;
 export default ProfileCard;
