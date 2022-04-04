@@ -74,7 +74,7 @@ def insertusergroupAPI(request,user_seq):
 	# DBSCAN or Spherical K-Means
 	user_group_mapping(user_vector,user_seq)
 
-	return Response("success")
+	return render(request,'user_info.html')
 
 @api_view(['GET'])
 def insertusergroupAPI_DBSCAN(request,user_seq):
@@ -103,15 +103,15 @@ def arrange(user,selectfamily,selecttarget):
 	cur=arr[0]
 	family_idx=0
 	target_idx=0
-	area=1
-	gwangju=0
-	area_gu=1
-	gwangju_gu=0
-	gwangju_gwangsan=0
-	gwangju_nam=0
-	gwangju_dong=0
-	gwangju_buk=0
-	gwangju_seo=0
+	# area=1
+	# gwangju=0
+	# area_gu=1
+	# gwangju_gu=0
+	# gwangju_gwangsan=0
+	# gwangju_nam=0
+	# gwangju_dong=0
+	# gwangju_buk=0
+	# gwangju_seo=0
 	age09=0
 	age1019=0
 	age2029=0
@@ -125,23 +125,24 @@ def arrange(user,selectfamily,selecttarget):
 	job_defalut=0
 	child_ok=0
 	child_empty=0
+	female=0
+	male=0
 	not_have_house=0
 	pregnant=0
-	nonstudent=0
+	alone=0
 	other_culture=0
 	many_child=0
 	national_merit=0
 	disabled=0
-	low_income=0
+	new=0
 	single_parent=0
-	bad_credit=0
+	many_family=0
 	alone_old_man=0
 	vulnerable=0
 	none_of_them=0  # 초기 값 설정
 	
 	# row=cur.iloc[j] #유저 한명
 	id=int(cur['user_seq']) #유저 아이디
-	print("user id :: ",id)
 	row=cur['age']
 	if row==1:
 		age09=1
@@ -166,24 +167,30 @@ def arrange(user,selectfamily,selecttarget):
 	elif row==2:
 		child_empty=1
 	# 자녀유무 끝
-	row=cur['area']
-	if row==1:
-		gwangju=1
-	row=cur['gu']
-	if row==0:
-		if gwangju==1:
-			gwangju_gu=1
-	elif row==1:
-		gwangju_gwangsan=1
-	elif row==2:
-		gwangju_nam=1
-	elif row==3:
-		gwangju_dong=1
-	elif row==4:
-		gwangju_buk=1
-	elif row==5:
-		gwangju_seo=1
+	# row=cur['area']
+	# if row==1:
+	# 	gwangju=1
+	# row=cur['gu']
+	# if row==0:
+	# 	if gwangju==1:
+	# 		gwangju_gu=1
+	# elif row==1:
+	# 	gwangju_gwangsan=1
+	# elif row==2:
+	# 	gwangju_nam=1
+	# elif row==3:
+	# 	gwangju_dong=1
+	# elif row==4:
+	# 	gwangju_buk=1
+	# elif row==5:
+	# 	gwangju_seo=1
 	# 지역,구 끝
+	row=cur['female']
+	if row==1:
+		female=1
+	row=cur['male']
+	if row==1:
+		male=1
 	# user 데이터 끝 
 	for l in range(1,len(arr)):
 		welfare_data=arr[l] # selectfamily, selecttarget 데이터
@@ -200,7 +207,7 @@ def arrange(user,selectfamily,selecttarget):
 				elif(row==1):
 					pregnant=1
 				elif(row==2):
-					nonstudent=1
+					alone=1
 				elif(row==3):
 					other_culture=1
 				elif(row==4):
@@ -210,11 +217,11 @@ def arrange(user,selectfamily,selecttarget):
 				elif(row==6):
 					disabled=1
 				elif(row==7):
-					low_income=1
+					new=1
 				elif(row==8):
 					single_parent=1
 				elif(row==9):
-					bad_credit=1
+					many_family=1
 				elif(row==10):
 					alone_old_man=1
 				elif(row==11):
@@ -246,15 +253,15 @@ def arrange(user,selectfamily,selecttarget):
 	# 데이터 받기 완료        
 	d=pd.DataFrame({
 		# '아이디':[id],
-		'전국':[area],
-		'광주':[gwangju],
-		'전국구':[area_gu],
-		'광주구':[gwangju_gu],
-		'광주 광산구':[gwangju_gwangsan],
-		'광주 남구':[gwangju_nam],
-		'광주 동구':[gwangju_dong],
-		'광주 북구':[gwangju_buk],
-		'광주 서구':[gwangju_seo],
+		# '전국':[area],
+		# '광주':[gwangju],
+		# '전국구':[area_gu],
+		# '광주구':[gwangju_gu],
+		# '광주 광산구':[gwangju_gwangsan],
+		# '광주 남구':[gwangju_nam],
+		# '광주 동구':[gwangju_dong],
+		# '광주 북구':[gwangju_buk],
+		# '광주 서구':[gwangju_seo],
 		'아동':[age09],
 		'청소년':[age1019],
 		'청년':[age2029],
@@ -268,19 +275,21 @@ def arrange(user,selectfamily,selecttarget):
 		'일반':[job_defalut],
 		'자녀여부 있음':[child_ok],
 		'자녀여부 없음':[child_empty],
+		'여성':[female],
+		'남성':[male],
 		'무주택자':[not_have_house],
 		'임산부':[pregnant],
-		'미취학':[nonstudent],
+		'1인가구':[alone],
 		'다문화/탈북민':[other_culture],
 		'다자녀':[many_child],
 		'보훈대상자/국가유공자':[national_merit],
 		'장애인':[disabled],
-		'저소득':[low_income],
+		'신규전입':[new],
 		'한부모/조손':[single_parent],
-		'신용불량자':[bad_credit],
-		'독거노인':[alone_old_man],
+		'확대가족':[many_family],
+		'요양환자/치매환자':[alone_old_man],
 		'취약계층':[vulnerable],
-		'해당없음':[none_of_them]
+		'해당없음':[none_of_them],
 		})
 	total.append(d)
 	result=pd.concat(total)
@@ -324,8 +333,6 @@ def user_group_mapping(user_vector,user_seq):
 	user.update(user_group=max_group)
 	
 def user_group_mapping_dbscan(user_vector,user_seq):
-	print("user_group_mapping_dbscan")
-
 	file_path = os.getcwd()+"/data/"
 	full_welfare = pd.read_csv(file_path+'welfare+DBSCAN.csv',)
 	

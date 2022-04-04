@@ -9,6 +9,7 @@ COPY . .
 RUN apt-get update \
   && apt-get install -y 
 RUN pip install -r requirements.txt
+RUN apt-get install default-jdk -y
 
 WORKDIR ./soboksobok_data
 # manage.py를 실행할 수 있는 디렉토리로 이동합니다.
