@@ -799,7 +799,7 @@ def wel_wel_cosine(request):
 			max_10[j] = now
 		top_10.append(max_10)
 	
-	print(top_10)
+	print(top_10[:10])
 
 	# top_10.to_csv(os.getcwd()+"/data/"+"top_10_similar_welfare_id.csv", encoding = 'utf-8-sig')
 
@@ -812,9 +812,9 @@ def wel_wel_cosine(request):
 
 	welfares = Welfare.objects.all()
 
-	# for i in range(len(top_10)):
-	# 	welfare = welfares.filter(welfare_id=i+1)
-	# 	welfare.update(welfare_similar_welfare=top_10[i])
+	for i in range(len(top_10)):
+		welfare = welfares.filter(welfare_id=i+1)
+		welfare.update(welfare_similar_welfare=top_10[i])
 	
 	return Response('wel_wel_cosine done')
 
