@@ -1,11 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { getAxios } from '../../api.js';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { getAxios } from "../../api.js";
+import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from 'react-redux';
-import { changeInput } from '../../reducers/change.js';
+import { useDispatch } from "react-redux";
+import { changeInput } from "../../reducers/change.js";
 
 function Keyword() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function Keyword() {
   useEffect(() => {
     const fetchWord = async () => {
       try {
-        const request = await axios.get('/api/welfare/keyword');
+        const request = await axios.get("/api/welfare/keyword");
         setKeywords(request.data.body.keywords.slice(0, 10));
       } catch (err) {
         console.log(err);
@@ -25,7 +25,7 @@ function Keyword() {
     fetchWord();
   }, []);
 
-  const onClick = (word) => {
+  const onClick = word => {
     dispatch(changeInput(word));
     navigate(`/search?keyword=${word}`);
   };
@@ -34,11 +34,11 @@ function Keyword() {
     <StyledBox>
       <div
         style={{
-          background: '#E7F0FD',
-          width: '100%',
-          height: '100%',
-          lineHeight: '8vh',
-          borderRadius: '15px 15px 0px 0px',
+          background: "#E3F2FD",
+          width: "100%",
+          height: "100%",
+          lineHeight: "8vh",
+          borderRadius: "15px 15px 0px 0px",
         }}
       >
         인기 검색어
@@ -46,11 +46,11 @@ function Keyword() {
       <div></div>
       {keywords.map((keyword, i) => (
         <StyledLi>
-          <div style={{ flexBasis: '30%' }}>{i + 1}</div>
+          <div style={{ flexBasis: "30%" }}>{i + 1}</div>
           <div
             key={keyword.keywordId}
-            style={{ flexBasis: '70%', textAlign: 'left' }}
-            onClick={(e) => onClick(keyword.keywordName)}
+            style={{ flexBasis: "70%", textAlign: "left" }}
+            onClick={e => onClick(keyword.keywordName)}
           >
             {keyword.keywordName}
           </div>
