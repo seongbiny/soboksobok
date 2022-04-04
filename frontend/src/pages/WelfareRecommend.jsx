@@ -34,17 +34,16 @@ function WelfareRecommend(){
       }, []);
     
     return(
-        <StyledContainer>
+        (cards.length) === 0 ? 
+            <Norecommend profile={profile} name={name}></Norecommend> :
+            <StyledContainer>
             <StyledTop>
                 <ProfileCard profile={profile} name={name} />
                 <Chart />
                 <LineChart />
             </StyledTop>
             <StyledMain>
-                { cards.length === 0 ? 
-                <Norecommend></Norecommend> :
                 <FilterSlide name={name} cards={cards} />
-                }
                 <RecommendSlid name={name} />
             </StyledMain>
         </StyledContainer>
