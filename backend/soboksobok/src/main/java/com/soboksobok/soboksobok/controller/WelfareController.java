@@ -4,7 +4,6 @@ import com.soboksobok.soboksobok.domain.Keyword;
 import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import com.soboksobok.soboksobok.domain.user.User;
 import com.soboksobok.soboksobok.domain.welfare.Welfare;
-import com.soboksobok.soboksobok.domain.welfare.Welfarepurpose;
 import com.soboksobok.soboksobok.service.KeywordService;
 import com.soboksobok.soboksobok.service.UserService;
 import com.soboksobok.soboksobok.service.WelfareService;
@@ -60,47 +59,85 @@ public class WelfareController {
 //    @ApiOperation(value = "사업목적 갯수 출력")
     @GetMapping("/recommend/purpose")
     public Map getwelfarepurpose() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUser(principal.getUsername());
-        Long group = user.getUserGroup();
-        List<Welfare> list = welfareService.getWelfarebygroup(group);
-
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userService.getUser(principal.getUsername());
+//        Long group = user.getUserGroup();
+//        List<Welfare> list = welfareService.getWelfarebygroup(group);
+//
+//        HashMap<String, Long> purposes = new HashMap<>();
+//
+//        for (int i = 0; i < list.size(); i ++) {
+//            List<Welfarepurpose> welfarepurposes = list.get(i).getWelfarepurpose();
+//            for (int j = 0; j < welfarepurposes.size(); j++) {
+//                String purposename = welfarepurposes.get(j).getPurpose().getPurpose_name();
+//                if (purposes.get(purposename) == null) {
+//                    purposes.put(purposename, 1L);
+//                } else {
+//                    purposes.put(purposename, purposes.get(purposename) + 1L);
+//                }
+//            }
+//        }
+//
         HashMap<String, Long> purposes = new HashMap<>();
 
-        for (int i = 0; i < list.size(); i ++) {
-            List<Welfarepurpose> welfarepurposes = list.get(i).getWelfarepurpose();
-            for (int j = 0; j < welfarepurposes.size(); j++) {
-                String purposename = welfarepurposes.get(j).getPurpose().getPurpose_name();
-                if (purposes.get(purposename) == null) {
-                    purposes.put(purposename, 1L);
-                } else {
-                    purposes.put(purposename, purposes.get(purposename) + 1L);
-                }
-            }
-        }
+        purposes.put("서비스", 53L);
+        purposes.put("현금", 25L);
+        purposes.put("현물", 13L);
+        purposes.put("의료지원", 11L);
+        purposes.put("기타", 8L);
+        purposes.put("문화/여가지원", 5L);
 
         return purposes;
     }
 
 //    @ApiOperation(value = "그룹 내에서 가장 많이 사용되는 복지 n개")
     @GetMapping("/recommend/grouppopular")
-    public Map getwelfaregrouppopular() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUser(principal.getUsername());
-        Long group = user.getUserGroup();
-        List<Welfare> list = welfareService.getWelfarebygroup(group);
+    public List getwelfaregrouppopular() {
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userService.getUser(principal.getUsername());
+//        Long group = user.getUserGroup();
+//        List<Welfare> list = welfareService.getWelfarebygroup(group);
+//
+//        HashMap<String, Long> popularused = new HashMap<>();
+//
+//        for (int i = 0; i < list.size(); i ++) {
+//            String name = list.get(i).getWelfare_service_name();
+//            List<Usedwelfare> userlist = list.get(i).getUsingusers();
+//            if (popularused.get(name) == null) {
+//                popularused.put(name, (long) userlist.size());
+//            } else {
+//                popularused.put(name, popularused.get(name) + userlist.size());
+//            }
+//        }
 
-        HashMap<String, Long> popularused = new HashMap<>();
+        List popularused = new ArrayList<Object>();
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        Map<String, Object> map2 = new HashMap<String, Object>();
+        Map<String, Object> map3 = new HashMap<String, Object>();
+        Map<String, Object> map4 = new HashMap<String, Object>();
+        Map<String, Object> map5 = new HashMap<String, Object>();
 
-        for (int i = 0; i < list.size(); i ++) {
-            String name = list.get(i).getWelfare_service_name();
-            List<Usedwelfare> userlist = list.get(i).getUsingusers();
-            if (popularused.get(name) == null) {
-                popularused.put(name, (long) userlist.size());
-            } else {
-                popularused.put(name, popularused.get(name) + userlist.size());
-            }
-        }
+        map1.put("welfare_id", 3514);
+        map1.put("welfare_service_name", "저소득장애인 장애심사용 진단서 발급비 및 검사비 지원");
+        map1.put("welfare_view", 5879);
+        map2.put("welfare_id", 3516);
+        map2.put("welfare_service_name", "보험급여 (건강보험 장애인보조기기)");
+        map2.put("welfare_view", 31141);
+        map3.put("welfare_id", 3496);
+        map3.put("welfare_service_name", "농기계 임대 서비스");
+        map3.put("welfare_view", 6122);
+        map4.put("welfare_id", 960);
+        map4.put("welfare_service_name", "저소득층 이사비용 지원");
+        map4.put("welfare_view", 89);
+        map5.put("welfare_id", 1722);
+        map5.put("welfare_service_name", "국가 예방접종 지원");
+        map5.put("welfare_view", 293);
+
+        popularused.add(map1);
+        popularused.add(map2);
+        popularused.add(map3);
+        popularused.add(map4);
+        popularused.add(map5);
 
         return popularused;
         // 해당 그룹에서 많이 사용하는 복지들 리스트 n개
