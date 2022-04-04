@@ -37,16 +37,17 @@ jobMap.set(5, 20); //일반
 const familyMap = new Map();
 familyMap.set(0, 23); //무주택자
 familyMap.set(1, 24); //임산부
-familyMap.set(2, 25); //미취학
+familyMap.set(2, 25); //미취학 --> 1인가구
 familyMap.set(3, 26); //다문화/탈북민
 familyMap.set(4, 27); //다자녀
 familyMap.set(5, 28); //보훈대상자
 familyMap.set(6, 29); //장애인
-familyMap.set(7, 30); //저소득
+familyMap.set(7, 30); //저소득 --> 신규전입
 familyMap.set(8, 31); //한부모/조손
-familyMap.set(9, 32); //신용불량자
-familyMap.set(10, 33); //독거노인
+familyMap.set(9, 32); //신용불량자 --> 확대가족
+familyMap.set(10, 33); //독거노인 --> 요양환자/치매환자
 familyMap.set(11, 34); //취약계층
+familyMap.set(12, 35); // --> 해당없음
 
 const jobChip = [
   { label: '학생', value: 15 },
@@ -60,16 +61,17 @@ const jobChip = [
 const familyChip = [
   { label: '무주택자', value: 23 },
   { label: '임산부', value: 24 },
-  { label: '미취학', value: 25 },
+  { label: '1인가구', value: 25 },
   { label: '다문화/탈북민', value: 26 },
   { label: '다자녀', value: 27 },
   { label: '보훈대상자', value: 28 },
   { label: '장애인', value: 29 },
-  { label: '저소득', value: 30 },
+  { label: '신규전입', value: 30 },
   { label: '한부모/조손', value: 31 },
-  { label: '신용불량자', value: 32 },
-  { label: '독거노인', value: 33 },
-  { label: '저취약계층소득', value: 34 },
+  { label: '확대가족', value: 32 },
+  { label: '요양환자/치매환자', value: 33 },
+  { label: '취약계층', value: 34 },
+  { label: '해당없음', value: 35 },
 ];
 
 function FilterChips() {
@@ -77,8 +79,8 @@ function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  const [isAll, setIsAll] = useState('All');
-  const [region, setRegion] = useState('00');
+  // const [isAll, setIsAll] = useState('All');
+  // const [region, setRegion] = useState('00');
   const [child, setChild] = useState('2');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
@@ -91,7 +93,7 @@ function FilterChips() {
       for (let element of clicked) {
         if (element >= 15 && element <= 20) {
           selectJob.push(map.get(element));
-        } else if (element >= 23 && element <= 34) {
+        } else if (element >= 23 && element <= 35) {
           selectFamily.push(map.get(element));
         }
       }
@@ -106,7 +108,7 @@ function FilterChips() {
       const axios = getAxios();
       await axios.post('/api/users/update/char', {
         child: child ? child : '2',
-        region: region ? region : '00',
+        // region: region ? region : '00',
         job: selectJob,
         family: selectFamily,
       });
@@ -123,21 +125,22 @@ function FilterChips() {
     const getFilter = async () => {
       try {
         const axios = getAxios();
-        let res = await axios.get('/api/users/update/char');
-        console.log('userCharacter: ', res.data.body);
-        setUserSeq(res.data.body.user.userSeq);
+        let response = await axios.get('/api/users/profile');
+        setUserSeq(response.data.body.user.userSeq);
         console.log('userSeq: ', userSeq);
 
-        setRegion(res.data.body.UserCharacter.region);
+        let res = await axios.get('/api/users/update/char');
+        console.log('userCharacter: ', res.data.body);
+        // setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
 
-        if (region === '00' || region === null) {
-          setIsAll('All');
-        } else {
-          setIsAll('GwangJu');
-        }
+        // if (region === '00' || region === null) {
+        //   setIsAll('All');
+        // } else {
+        //   setIsAll('GwangJu');
+        // }
 
         let allValue = [];
         for (let element of job) {
@@ -156,15 +159,13 @@ function FilterChips() {
       }
     };
     getFilter();
-
-    console.log('region', region);
   }, [value]);
 
   return (
     <div>
-      <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
+      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
       <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />
-      <p>{region}</p>
+      <p>{region}</p> */}
       {/* <p>{value}</p> */}
 
       <MultipleSelectChips

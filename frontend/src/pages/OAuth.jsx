@@ -9,7 +9,7 @@ function Auth() {
 
   const getToken = async () => {
     try {
-      await localStorage.setItem('jwtToken', token);
+      await localStorage.setItem('token', token);
       navigate('/', { replace: true });
     } catch (err) {
       console.log(err);

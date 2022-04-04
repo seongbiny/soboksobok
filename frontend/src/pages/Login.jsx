@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
 function isLogin() {
-  const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem('token');
   if (token) {
     return true;
   } else {
@@ -12,7 +12,8 @@ function isLogin() {
 }
 
 function Login() {
-  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  // const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
   let navigate = useNavigate();
 
   return (
@@ -32,7 +33,9 @@ function Login() {
           <Button
             variant="primary"
             onClick={() => {
-              localStorage.removeItem('jwtToken');
+              localStorage.removeItem('token');
+              localStorage.removeItem('name');
+              localStorage.removeItem('profile');
               navigate('/', { replace: true });
             }}
           >
