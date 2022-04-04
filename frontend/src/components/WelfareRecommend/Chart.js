@@ -38,7 +38,7 @@ function Chart() {
     const fetchData = async () => {
       try {
         const request = await axios.get("/api/welfare/recommend/purpose");
-        // console.log(request.data);
+        console.log(request.data);
         let wel = request.data;
         // console.log(Object.keys(request.data).slice(0, 5));
         // console.log(Object.values(request.data).slice(0, 5));
