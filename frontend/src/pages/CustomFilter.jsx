@@ -1,10 +1,8 @@
 import React from 'react';
-
 import FilterChips from '../components/FilterChips';
-
 import styled from 'styled-components';
 
-const 소개 = styled.div`
+const StyledContainer = styled.div`
   margin: 20px;
   padding: 20px;
   background-color: #e3f2fd;
@@ -12,11 +10,9 @@ const 소개 = styled.div`
 
 function CustomFilter() {
   return (
-    <div>
-      <소개>
-        <FilterChips></FilterChips>
-      </소개>
-    </div>
+    <StyledContainer>
+      <FilterChips></FilterChips>
+    </StyledContainer>
   );
 }
 
