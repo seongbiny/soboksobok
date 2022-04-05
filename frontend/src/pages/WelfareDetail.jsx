@@ -159,7 +159,7 @@ const StyledContainer = styled.div`
   box-sizing: border-box;
   display: grid;
   justify-content: center;
-  margin-top: 5vh;
+  margin-top: 17vh;
   margin-bottom: 5vh;
   font-family: 'Noto Sans KR', sans-serif;
 `;

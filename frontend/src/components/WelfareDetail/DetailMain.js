@@ -78,7 +78,7 @@ function DetailMain(props) {
         mt: 3,
       }}
     >
-      <Paper elevation={3} sx={{ p: 3, bgcolor: "#E2ECFD" }}>
+      <Paper elevation={3} sx={{ p: 3, bgcolor: "#E3F2FD" }}>
         <Grid container>
           <Grid item xs={10}>
             <h2 style={{ color: "#033075" }}>{Name}</h2>
