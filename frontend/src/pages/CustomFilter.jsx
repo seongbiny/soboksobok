@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FilterChips from '../components/FilterChips';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
 
 function isLogin() {
@@ -14,17 +13,6 @@ function isLogin() {
 }
 
 function CustomFilter() {
-  const checkLogin = () => {
-    if (!isLogin()) {
-      // alert('로그인해주세요');
-      <LoginModal></LoginModal>;
-    }
-  };
-
-  useEffect(() => {
-    checkLogin();
-  }, []);
-
   return (
     <StyledContainer>
       {isLogin() ? (
@@ -32,7 +20,7 @@ function CustomFilter() {
           <FilterChips></FilterChips>
         </StyledFilterBox>
       ) : (
-        <div></div>
+        <LoginModal></LoginModal>
       )}
     </StyledContainer>
   );
