@@ -30,7 +30,14 @@ let 버튼위치 = styled.div`
   padding-top: 3%;
   text-align: center;
 `;
-
+function isLogin() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 function QnaPatch(props){
     let navigate = useNavigate();
     let state = useSelector((state) => state)
@@ -57,14 +64,23 @@ function QnaPatch(props){
         navigate(`/QnaDetail/${qnaId}`)
 
     }
+    const checkLogin = () => {
+        if (!isLogin()) {
+            alert('로그인해주세요')
+            navigate(`/` )
+        } else {
+            getQna()
+        }
+    }
     useEffect(()=> {
-        getQna();
+        checkLogin();
     
     }, []);
 
     return (
         <Container>
-            <글작성틀>
+            {isLogin() ? (
+                <글작성틀>
                 <게시판이름>
                     Q&A
                 </게시판이름>
@@ -102,7 +118,11 @@ function QnaPatch(props){
                 </버튼위치>
 
             
-      </글작성틀>
+                </글작성틀>
+            ):(
+                <div></div>
+            )}
+            
     </Container>
   );
 }
