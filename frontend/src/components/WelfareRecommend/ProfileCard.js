@@ -8,13 +8,25 @@ function ProfileCard(props) {
         <img
           src="/blank-profile.png"
           alt="profile"
-          style={{ objectFit: "cover", width: "100%", maxHeight: "100%" }}
+          style={{
+            objectFit: "cover",
+            width: "100%",
+            maxHeight: "100%",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+          }}
         ></img>
       ) : (
         <img
           src={props.profile}
           alt="profile"
-          style={{ objectFit: "cover", width: "100%", maxHeight: "100%" }}
+          style={{
+            objectFit: "cover",
+            width: "100%",
+            maxHeight: "100%",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+          }}
         ></img>
       )}
       {props.name === null ? (
