@@ -106,18 +106,22 @@ export default function DetailTaps(props) {
           </div>
           <StyledP>{target}</StyledP>
         </div>
-        <Box
-          sx={{
-            bgcolor: "#90CAF9",
-            borderRadius: 2,
-            p: 2,
-            mt: 3,
-            color: "#033075",
-            fontFamily: "Noto Sans KR",
-          }}
-        >
-          {crit}
-        </Box>
+        {crit !== null ? (
+          <Box
+            sx={{
+              bgcolor: "#90CAF9",
+              borderRadius: 2,
+              p: 2,
+              mt: 3,
+              color: "#033075",
+              fontFamily: "Noto Sans KR",
+            }}
+          >
+            {crit}
+          </Box>
+        ) : (
+          <div></div>
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div

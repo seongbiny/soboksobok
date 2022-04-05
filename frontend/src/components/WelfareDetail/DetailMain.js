@@ -68,11 +68,6 @@ function DetailMain(props) {
   return (
     <Box
       sx={{
-        // "& > :not(style)": {
-        //   m: 1,
-        //   width: 1000,
-        //   height: 200,
-        // },
         width: 1014,
         mb: 3,
         mt: 3,
@@ -91,6 +86,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setLikeBtn(false);
                     unlikeAxios();
+                    alert("찜해제했습니다.");
                   }}
                 />
               ) : (
@@ -99,6 +95,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setLikeBtn(true);
                     likeAxios();
+                    alert("찜했습니다.");
                   }}
                 />
               )}
@@ -108,6 +105,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setCheckBtn(false);
                     unusedAxios();
+                    alert("사용해제했습니다.");
                   }}
                 />
               ) : (
@@ -116,6 +114,7 @@ function DetailMain(props) {
                   onClick={() => {
                     setCheckBtn(true);
                     usedAxios();
+                    alert("사용중입니다.");
                   }}
                 />
               )}

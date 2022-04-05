@@ -29,7 +29,7 @@ function RecommendSlide(props) {
           height: "35vh",
           borderRadius: "12px",
         }}
-        spaceBetween={8}
+        spaceBetween={20}
         slidesPerView={4}
         slidesPerGroup={4}
         initialSlide={1}

@@ -33,8 +33,8 @@ function ResultBoard() {
       try {
         const request = await axios.get(`/api/welfare/search/${keyword}`);
         navigate(`/search?keyword=${keyword}`);
-        setResult(request.data.body.welfares);
-        console.log(request.data);
+        setResult(request.data);
+        // console.log(request.data);
       } catch (err) {
         console.log(err);
       }
@@ -59,17 +59,17 @@ function ResultBoard() {
             <tr>
               <th width="10%">번호</th>
               <th width="70%">제목</th>
-              <th width="20%">연락처</th>
+              <th width="20%">조회수</th>
             </tr>
           </thead>
           <tbody>
             {currentPost(result).map(welfare => (
-              <tr key={welfare.welfareId}>
-                <td className="text-center">{welfare.welfareId}</td>
-                <StyledTd onClick={e => onClick(welfare.welfareId)}>
-                  {welfare.welfare_service_name}
+              <tr key={welfare[0]}>
+                <td className="text-center">{welfare[0]}</td>
+                <StyledTd onClick={e => onClick(welfare[0])}>
+                  {welfare[1]}
                 </StyledTd>
-                <td className="text-center">{welfare.welfare_phone}</td>
+                <td className="text-center">{welfare[2]}</td>
               </tr>
             ))}
           </tbody>
