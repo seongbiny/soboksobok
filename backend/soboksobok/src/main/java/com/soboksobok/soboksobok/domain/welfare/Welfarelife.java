@@ -1,9 +1,15 @@
 package com.soboksobok.soboksobok.domain.welfare;
 import com.soboksobok.soboksobok.domain.Life;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@ToString
 public class Welfarelife {
 
     @Id

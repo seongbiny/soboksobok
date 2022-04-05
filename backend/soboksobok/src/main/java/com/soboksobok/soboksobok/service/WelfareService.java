@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 @Service
@@ -35,4 +34,6 @@ public class WelfareService {
     public List<Welfare> getPopularWelfare() {
         return welfareRepository.getMostUserWelfare();
     }
+
+    public List<Welfare> getPopularInGroup(Long group) { return welfareRepository.getGroupPopularWelfare(group); }
 }
