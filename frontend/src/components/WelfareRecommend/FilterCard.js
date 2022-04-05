@@ -63,15 +63,10 @@ const StyledP = styled.div`
   word-wrap: break-word;
 `;
 const StyledLi = styled.div`
-  // box-sizing: border-box;
-  // display: flex;
   &:hover {
-    // text-decoration: underline;
-    // text-decoration-color: #033075;
-    // text-decoration-thickness: 1px;
     text-decoration: none;
     display: inline;
-    box-shadow: inset 0 -10px 0 hsla(53, 90%, 83%, 0.93);
+    box-shadow: 0 -6px rgba(75, 112, 253, 0.3) inset;
   }
   cursor: pointer;
 `;
