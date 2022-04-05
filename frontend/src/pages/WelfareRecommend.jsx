@@ -70,7 +70,7 @@ function WelfareRecommend(){
 
 const StyledTop = styled.div`
     display: grid;
-    grid-template-columns: 20% 40% 40%;
+    grid-template-columns: 20% 30% 50%;
     justify-content: center;
     align-items: center;
     margin-top: 5vh;
