@@ -75,7 +75,7 @@ function QnaDetail(props) {
 
 
     const [editable, setEditable] = useState('false');
-    
+    const [check, setCheck] = useState(false);
     const [qna, setQna] = useState({});
     const axios = getAxios();
 
@@ -105,10 +105,14 @@ function QnaDetail(props) {
     const getComment = () => {
         axios.get(`/api/qna/mine/${qnaId}`)
         .then(res => {
+            setCheck(true);
             setQna(res.data.body.success);
             댓글들변경(res.data.body.success.comments)
         })
-        .catch(err => console.log(err))
+        .catch(err => 
+          { alert('잘못된 접근입니다')
+            navigate('/');
+          console.log(err)})
     }
     const checkLogin = () => {
       if (!isLogin()) {
@@ -126,7 +130,7 @@ function QnaDetail(props) {
 
   return (
     <Container style={{marginBottom: '2vh'}}>
-      {isLogin() ? (
+      {isLogin() && check ? (
         <글작성틀>
         <게시판이름>Q&A</게시판이름>
 
