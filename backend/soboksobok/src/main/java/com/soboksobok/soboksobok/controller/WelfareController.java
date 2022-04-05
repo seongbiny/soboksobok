@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Entity;
 import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -34,15 +35,16 @@ public class WelfareController {
 //    @ApiOperation(value = "단일복지 상세데이터")
     @GetMapping("/{welfare_id}")
     public ApiResponse getwelfare(@PathVariable("welfare_id") Long welfare_id) {
+        welfareService.raiseview(welfare_id);
         Welfare welfare = welfareService.getWelfare(welfare_id);
         return ApiResponse.success("welfare", welfare);
     }
 
 //    @ApiOperation(value = "단일복지 유사복지 리스트")
     @GetMapping("/{welfare_id}/recommend")
-    public ApiResponse getwelfarelike(@PathVariable("welfare_id") Long welfare_id) {
-        List<Welfare> list = welfareService.getSimilarWelfare(welfare_id);
-        return ApiResponse.success("welfare", list);
+    public List getwelfarelike(@PathVariable("welfare_id") Long welfare_id) {
+        List list = welfareService.getSimilarWelfare(welfare_id);
+        return list;
     }
 
 //    @ApiOperation(value = "사용자 추천 복지 리스트")
@@ -66,39 +68,50 @@ public class WelfareController {
         LinkedHashMap<String, Long> purposes = new LinkedHashMap<>();
 
         for (int i = 0; i < list.size(); i ++) {
-            String purposename = list.get(i).getWelfare_service_purpose();
-            if (purposename.contains("\\/")) {
-                System.out.println(purposename);
-                System.out.println("\\/가 있음!");
-                purposename.replace("\\/", "/");
-            }
-            if (purposename.contains("||")) {
-                String[] purposelist = purposename.split("||");
-                for (int j = 0; j < purposelist.length; j ++) {
-                    String nowpurposename = purposelist[j];
-                    if (purposes.get(nowpurposename) == null) {
-                        purposes.put(nowpurposename, 1L);
+            String purposename = list.get(i).getWelfare_service_type();
+            if (purposename != null) {
+//                if (purposename.contains("\\/")) {
+//                    System.out.println(purposename);
+//                    System.out.println("\\/가 있음!");
+//                    purposename.replace("\\/", "/");
+//                }
+                if (purposename.contains("||")) {
+                    String[] purposelist = purposename.split("\\|\\|");
+                    for (int j = 0; j < purposelist.length; j++) {
+                        String nowpurposename = purposelist[j];
+                        if (nowpurposename.contains("(")) {
+                            String [] spl = nowpurposename.split("\\(");
+                            nowpurposename = spl[0];
+                        }
+                        if (purposes.get(nowpurposename) == null) {
+                            purposes.put(nowpurposename, 1L);
+                        } else {
+                            purposes.put(nowpurposename, purposes.get(nowpurposename) + 1L);
+                        }
+                    }
+                } else
+                {
+                    if (purposename.contains("(")) {
+                        String [] spl = purposename.split("\\(");
+                        purposename = spl[0];
+                    }
+                    if (purposes.get(purposename) == null) {
+                        purposes.put(purposename, 1L);
                     } else {
-                        purposes.put(nowpurposename, purposes.get(nowpurposename) + 1L);
+                        purposes.put(purposename, purposes.get(purposename) + 1L);
                     }
                 }
             }
-            else {
-                if (purposes.get(purposename) == null) {
-                    purposes.put(purposename, 1L);
-                } else {
-                    purposes.put(purposename, purposes.get(purposename) + 1L);
-                }
-            }
         }
-
-        if (purposes.size() <= 6) {
-            return purposes;
-        } else {
-            LinkedHashMap<String, Long> result = sortMapByValue(purposes);
-            Integer cut = 6;
-            return (Map) result.entrySet().stream().limit(6);
-        }
+        System.out.println(purposes);
+        return purposes;
+//        if (purposes.size() <= 6) {
+//            return purposes;
+//        } else {
+//            LinkedHashMap<String, Long> result = sortMapByValue(purposes);
+//
+//            return (Map) result.entrySet().stream().limit(6);
+//        }
 //
 //        HashMap<String, Long> purposes = new HashMap<>();
 //
@@ -128,6 +141,7 @@ public class WelfareController {
             newmap.put("welfare_id", list.get(i).getWelfareId());
             newmap.put("welfare_service_name", list.get(i).getWelfare_service_name());
             newmap.put("welfare_view", list.get(i).getWelfare_view());
+            newmap.put("welfare_service_content", list.get(i).getWelfare_service_content());
 
             popularview.add(newmap);
         }
@@ -183,10 +197,10 @@ public class WelfareController {
 
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
-    public ApiResponse welfaresearch(@PathVariable("keyword") String keyword) {
+    public List welfaresearch(@PathVariable("keyword") String keyword) {
         keywordService.getOrsetKeywordbyname(keyword);
-        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
-        return ApiResponse.success("welfares", list);
+        List list = welfareService.getWelfarebykeyword(keyword);
+        return list;
     }
 
 //    @ApiOperation(value = "검색어 키워드 출력")

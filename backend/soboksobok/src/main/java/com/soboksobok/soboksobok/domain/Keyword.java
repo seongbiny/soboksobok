@@ -1,8 +1,6 @@
 package com.soboksobok.soboksobok.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +10,8 @@ import javax.persistence.Id;
 @Entity
 @Getter @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Keyword {
 
     @Id

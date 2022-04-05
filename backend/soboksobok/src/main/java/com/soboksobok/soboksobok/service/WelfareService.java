@@ -19,11 +19,11 @@ public class WelfareService {
         return welfareRepository.findByWelfareId(welfare_id);
     }
 
-    public List<Welfare> getWelfarebykeyword(String keyword) {
+    public List getWelfarebykeyword(String keyword) {
         return welfareRepository.searchWelfare(keyword);
     }
 
-    public List<Welfare> getSimilarWelfare(Long welfare_id) {
+    public List getSimilarWelfare(Long welfare_id) {
         return welfareRepository.getSimilar(welfare_id);
     }
 
@@ -36,4 +36,5 @@ public class WelfareService {
     }
 
     public List<Welfare> getPopularInGroup(Long group) { return welfareRepository.getGroupPopularWelfare(group); }
+
 }
