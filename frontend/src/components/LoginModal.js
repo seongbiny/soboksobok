@@ -28,6 +28,7 @@ function LoginModal() {
 
 const StyledContainer = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
+  margin-top: 200px;
 `;
 
 export default LoginModal;

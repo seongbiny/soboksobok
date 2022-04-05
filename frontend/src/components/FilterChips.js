@@ -118,7 +118,7 @@ function FilterChips() {
       });
 
       const djangoAxios = getAxiosDjango();
-      let res = await djangoAxios.get(`/insertusergroup/${userSeq}`);
+      let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
       console.log('django res: ', res);
     } catch (err) {
       console.log(err);
@@ -163,7 +163,7 @@ function FilterChips() {
       }
     };
     getFilter();
-  }, [value]);
+  }, []);
 
   return (
     <StyledFilterSet>

@@ -63,7 +63,6 @@ const MultipleSelectChips = ({ value, setValue, options, label, error, setError 
                   key={i}
                   color="primary"
                   variant={value.find((e) => e === option.value) ? 'default' : 'outlined'}
-                  // variant={value.find((e) => e === option.value) ? 'outlined' : 'default'}
                   label={<Typography variant="body2">{`${option.label}`}</Typography>}
                   clickable
                   onClick={() => handleClick(option.value)}
