@@ -24,6 +24,16 @@ const Norecommend = props => {
             }}
           ></img>
         )}
+        {props.name === null ? (
+          <div style={{ marginTop: "1vh", marginBottom: "1vh" }}>
+            안녕하세요!
+          </div>
+        ) : (
+          <div style={{ marginTop: "1vh", marginBottom: "1vh" }}>
+            <div>안녕하세요!</div>
+            <div>{props.name}님</div>
+          </div>
+        )}
       </StyledProfile>
       <StyledBox>
         <h2 style={{ margin: "auto", color: "#033075" }}>
@@ -46,13 +56,18 @@ const Norecommend = props => {
 const StyledProfile = styled.div`
   box-sizing: border-box;
   text-align: center;
+  display: grid;
+  border-radius: 20px;
+  background-color: #e3f2fd;
+  width: 30vh;
+  margin: auto;
+  color: #033075;
 `;
 const StyledContainer = styled.div`
   display: grid;
   justify-content: center;
   align-items: center;
   margin-top: 20vh;
-  //   margin-bottom: 5vh;
   grid-row-gap: 15vh;
 `;
 const StyledBox = styled.div`

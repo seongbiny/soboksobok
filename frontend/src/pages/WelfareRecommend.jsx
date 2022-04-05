@@ -69,7 +69,10 @@ const StyledMain = styled.div`
 const StyledContainer = styled.div`
     display: grid;
     justify-content: center;
-    margin: auto;
+    margin-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
     grid-template-columns: 70vw;
     font-family: 'Noto Sans KR', sans-serif;
     margin-bottom: 5vh;
