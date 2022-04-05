@@ -12,10 +12,11 @@ SwiperCore.use([Pagination, Autoplay, Navigation]);
 function RecommendSlide(props) {
   const { title, content, id } = useSelector(state => state.welData);
 
-  // useEffect(() => {
-  //   console.log(title);
-  //   console.log(id);
-  // }, []);
+  useEffect(() => {
+    // console.log(title);
+    // console.log(id);
+    console.log(content);
+  }, []);
 
   return (
     <div className="main-wrap">
@@ -28,7 +29,7 @@ function RecommendSlide(props) {
           height: "35vh",
           borderRadius: "12px",
         }}
-        spaceBetween={8}
+        spaceBetween={20}
         slidesPerView={4}
         slidesPerGroup={4}
         initialSlide={1}
@@ -61,6 +62,7 @@ function RecommendSlide(props) {
             }}
             title={title[0]}
             id={id[0]}
+            content={content[0]}
           />
         </SwiperSlide>
         <SwiperSlide
@@ -69,7 +71,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard title={title[1]} id={id[1]} />
+          <RecommendCard title={title[1]} id={id[1]} content={content[1]} />
         </SwiperSlide>
         <SwiperSlide
           style={{
@@ -77,7 +79,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard title={title[2]} id={id[2]} />
+          <RecommendCard title={title[2]} id={id[2]} content={content[2]} />
         </SwiperSlide>
         <SwiperSlide
           style={{
@@ -85,7 +87,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard title={title[3]} id={id[3]} />
+          <RecommendCard title={title[3]} id={id[3]} content={content[3]} />
         </SwiperSlide>
         <SwiperSlide
           style={{
@@ -93,7 +95,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard title={title[4]} id={id[4]} />
+          <RecommendCard title={title[4]} id={id[4]} content={content[4]} />
         </SwiperSlide>
         <SwiperSlide
           style={{
@@ -101,7 +103,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard title={title[5]} id={id[5]} />
+          <RecommendCard title={title[5]} id={id[5]} content={content[5]} />
         </SwiperSlide>
       </Swiper>
     </div>

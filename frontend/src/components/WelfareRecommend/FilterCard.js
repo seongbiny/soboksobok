@@ -20,7 +20,7 @@ function FilterCard(props) {
     <Card
       sx={{
         width: 275,
-        height: 275,
+        height: 250,
         pl: 2,
         pr: 2,
         display: "grid",
@@ -49,11 +49,16 @@ function FilterCard(props) {
     </Card>
   );
 }
-const StyledP = styled.p`
+const StyledP = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
-  display: "-webkit-box";
-  -webkit-line-clamp: 1;
+  white-space: normal;
+  line-height: 1.5;
+  height: 4.5em;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  word-wrap: break-word;
 `;
 export default FilterCard;
