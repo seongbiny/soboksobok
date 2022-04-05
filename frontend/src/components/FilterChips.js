@@ -198,14 +198,14 @@ function FilterChips() {
       </StyledFamilyArea>
 
       <Button
+        variant="primary"
         style={{
           marginTop: "2%",
-          paddingRight: "9%",
-          paddingLeft: "9%",
+          width: "250px",
         }}
         onClick={() => {
           setFilter();
-          navigate("/", { replace: true });
+          // navigate('/', { replace: true });
         }}
       >
         저장

@@ -20,7 +20,7 @@ function FilterCard(props) {
     <Card
       sx={{
         width: 275,
-        height: 275,
+        height: 250,
         pl: 2,
         pr: 2,
         display: "grid",
@@ -31,12 +31,13 @@ function FilterCard(props) {
       <CardContent style={{ display: "grid" }}>
         <Grid container sx={{ mb: 2 }}>
           <Typography
+            onClick={onClick}
             variant="h6"
             component="div"
             sx={10}
             style={{ color: "#033075", fontFamily: "Noto Sans KR" }}
           >
-            {name}
+            <StyledLi>{name}</StyledLi>
           </Typography>
         </Grid>
         <StyledP>{content}</StyledP>
@@ -49,11 +50,24 @@ function FilterCard(props) {
     </Card>
   );
 }
-const StyledP = styled.p`
+const StyledP = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
-  display: "-webkit-box";
-  -webkit-line-clamp: 1;
+  white-space: normal;
+  line-height: 1.5;
+  height: 4.5em;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  word-wrap: break-word;
+`;
+const StyledLi = styled.div`
+  &:hover {
+    text-decoration: none;
+    display: inline;
+    box-shadow: 0 -6px rgba(75, 112, 253, 0.3) inset;
+  }
+  cursor: pointer;
 `;
 export default FilterCard;

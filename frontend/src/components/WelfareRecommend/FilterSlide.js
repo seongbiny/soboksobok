@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
@@ -6,8 +6,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import FilterCard from "./FilterCard";
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
@@ -20,10 +18,10 @@ function FilterSlide(props) {
       <Swiper
         style={{
           width: "70vw",
-          height: "35vh",
+          height: "40vh",
           borderRadius: "12px",
         }}
-        spaceBetween={8}
+        spaceBetween={20}
         slidesPerView={4}
         slidesPerGroup={4}
         initialSlide={1}
