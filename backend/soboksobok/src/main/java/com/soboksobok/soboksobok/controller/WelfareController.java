@@ -59,9 +59,9 @@ public class WelfareController {
 //    @ApiOperation(value = "사업목적 갯수 출력")
     @GetMapping("/recommend/purpose")
     public Map getwelfarepurpose() {
-//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = userService.getUser(principal.getUsername());
-        Long group = 10L;
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+        Long group = user.getUserGroup();
         List<Welfare> list = welfareService.getWelfarebygroup(group);
 
         LinkedHashMap<String, Long> purposes = new LinkedHashMap<>();
@@ -78,6 +78,10 @@ public class WelfareController {
                     String[] purposelist = purposename.split("\\|\\|");
                     for (int j = 0; j < purposelist.length; j++) {
                         String nowpurposename = purposelist[j];
+                        if (nowpurposename.contains("(")) {
+                            String [] spl = nowpurposename.split("\\(");
+                            nowpurposename = spl[0];
+                        }
                         if (purposes.get(nowpurposename) == null) {
                             purposes.put(nowpurposename, 1L);
                         } else {
@@ -86,6 +90,10 @@ public class WelfareController {
                     }
                 } else
                 {
+                    if (purposename.contains("(")) {
+                        String [] spl = purposename.split("\\(");
+                        purposename = spl[0];
+                    }
                     if (purposes.get(purposename) == null) {
                         purposes.put(purposename, 1L);
                     } else {
