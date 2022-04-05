@@ -1,23 +1,12 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import styled from "styled-components";
 import MultipleSelectChips from "./Filter/MultipleSelectChips.js";
 import SidoSelectBox from "./Filter/Sido.jsx";
 import GugunSelectBox from "./Filter/Gugun.jsx";
 import ChildSelectBox from "./Filter/Child.jsx";
 import { getAxios, getAxiosDjango } from "../api.js";
 import { useNavigate } from "react-router-dom";
-=======
-import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import styled from 'styled-components';
-import MultipleSelectChips from './Filter/MultipleSelectChips.js';
-import SidoSelectBox from './Filter/Sido.jsx';
-import GugunSelectBox from './Filter/Gugun.jsx';
-import ChildSelectBox from './Filter/Child.jsx';
-import { getAxios, getAxiosDjango } from '../api.js';
-import { useNavigate } from 'react-router-dom';
->>>>>>> f61cb0377e05da4f2324fe2f3afcc4312f671190
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -129,13 +118,8 @@ function FilterChips() {
       });
 
       const djangoAxios = getAxiosDjango();
-<<<<<<< HEAD
-      let res = await djangoAxios.get(`insertusergroup/dbscan/${userSeq}`);
-      console.log("django res: ", res);
-=======
       let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
-      console.log('django res: ', res);
->>>>>>> f61cb0377e05da4f2324fe2f3afcc4312f671190
+      console.log("django res: ", res);
     } catch (err) {
       console.log(err);
     }
@@ -196,7 +180,7 @@ function FilterChips() {
       />
 
       <StyledChildArea>
-        <h5 style={{ marginBottom: '15px' }}>
+        <h5 style={{ marginBottom: "15px" }}>
           <b>자녀</b>
         </h5>
         <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
@@ -215,9 +199,9 @@ function FilterChips() {
 
       <Button
         style={{
-          marginTop: '2%',
-          paddingRight: '9%',
-          paddingLeft: '9%',
+          marginTop: "2%",
+          paddingRight: "9%",
+          paddingLeft: "9%",
         }}
         onClick={() => {
           setFilter();
