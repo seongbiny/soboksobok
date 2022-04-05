@@ -4,11 +4,13 @@ import SearchBar from '../components/Search/SearchBar';
 import ResultBoard from '../components/Search/ResultBoard';
 import Keyword from '../components/Search/Keyword';
 
+
 function Search(){
+
     return(
         <StyledContainer>
             <h1>통합검색</h1>
-            <SearchBar />
+            <SearchBar/>
             <StyledMain>
                 <ResultBoard />
                 <Keyword />
@@ -21,6 +23,8 @@ const StyledContainer = styled.div`
     display: grid;
     justify-content: center;
     padding-top: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 12vh;
 `;
 const StyledMain = styled.div`
     display: flex;

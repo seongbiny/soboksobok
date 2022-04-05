@@ -7,7 +7,7 @@ import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
 import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
-import getAxios from "../../api";
+import { getAxios } from "../../api";
 import styled from "styled-components";
 
 function DetailMain(props) {
@@ -20,50 +20,43 @@ function DetailMain(props) {
   const usedNum = props.usedNum;
   const axios = getAxios();
 
-  const likeAxios = () => {
-    axios
-      .put(`/api/users/like/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  const likeAxios = async () => {
+    try {
+      const request = await axios.put(`/api/users/like/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const unlikeAxios = () => {
-    axios
-      .delete(`/api/users/like/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const unlikeAxios = async () => {
+    try {
+      const request = await axios.delete(`/api/users/like/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const usedAxios = () => {
-    axios
-      .put(`/api/users/used/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const usedAxios = async () => {
+    try {
+      const request = await axios.put(`/api/users/used/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const unusedAxios = () => {
-    axios
-      .delete(`/api/users/used/${welfareId}`)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  const unusedAxios = async () => {
+    try {
+      const request = await axios.delete(`/api/users/used/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    // console.log(likeNum);
-    // console.log(usedNum);
     if (likeNum.length !== 0) {
       likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
     }
@@ -75,22 +68,20 @@ function DetailMain(props) {
   return (
     <Box
       sx={{
-        "& > :not(style)": {
-          m: 1,
-          width: 1000,
-          height: 200,
-        },
+        // "& > :not(style)": {
+        //   m: 1,
+        //   width: 1000,
+        //   height: 200,
+        // },
+        width: 1014,
         mb: 3,
         mt: 3,
       }}
     >
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, bgcolor: "#E3F2FD" }}>
         <Grid container>
           <Grid item xs={10}>
-            {/* <Typography variant="h4" align="left">
-              {Name}
-            </Typography> */}
-            <h2>{Name}</h2>
+            <h2 style={{ color: "#033075" }}>{Name}</h2>
           </Grid>
           <Grid item xs={2} align="right">
             <div>

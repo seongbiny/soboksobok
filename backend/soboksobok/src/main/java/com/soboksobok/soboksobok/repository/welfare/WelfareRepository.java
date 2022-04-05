@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -28,4 +30,8 @@ public class WelfareRepository {
                 .getResultList();
     }
 
+//    public List<Array> exportWelfarePurpose(List<Welfare> welfareList) {
+//        System.out.println(welfareList);
+//        return new ArrayList<>();
+//    }
 }

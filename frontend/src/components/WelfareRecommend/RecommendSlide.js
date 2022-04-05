@@ -1,80 +1,84 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import styled from "styled-components";
 import RecommendCard from "./RecommendCard";
+import { getAxios } from "../../api";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
-const StyledBox = styled.div`
-  // border: 1px solid;
-  width: 80vw;
-`;
+function RecommendSlide(props) {
+  const axios = getAxios();
+  const [cards, setCards] = useState([]);
 
-function RecommendSlide() {
+  useEffect(() => {
+    const fetchCard = async () => {
+      try {
+        // const request = await axios.get('/api/welfare/');
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCard();
+  }, []);
+
   return (
-    <StyledBox>
-      <div className="main-wrap">
-        <h1 style={{ marginBottom: "5vh" }}>USER님에게 추천하는 복지</h1>
-        <Swiper
+    <div className="main-wrap">
+      <h2 style={{ marginBottom: "3vh", fontWeight: "600" }}>
+        {props.name}님에게 추천하는 복지
+      </h2>
+      <Swiper
+        style={{
+          width: "70vw",
+          height: "35vh",
+          borderRadius: "12px",
+        }}
+        spaceBetween={8}
+        slidesPerView={4}
+        initialSlide={1}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        loop
+        autoplay={{ delay: 2000 }}
+      >
+        <SwiperSlide
           style={{
-            width: "80vw",
-            height: "40vh",
-            // backgroundColor: "#FFF5F1",
-            borderRadius: "12px",
-            // border: "1px solid",
+            display: "flex",
+            justifyContent: "center",
           }}
-          spaceBetween={8}
-          slidesPerView={3}
-          initialSlide={1}
-          navigation
-          scrollbar={{ draggable: true }}
-          loop
-          // pagination={{
-          //   clickable: true,
-          // }}
-          // autoplay={{ delay: 3000 }}
         >
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <RecommendCard
-              style={{ alignItems: "center", border: "1px solid" }}
-            />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <RecommendCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <RecommendCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <RecommendCard />
-          </SwiperSlide>
-        </Swiper>
-      </div>
-    </StyledBox>
+          <RecommendCard
+            style={{ alignItems: "center", border: "1px solid" }}
+          />
+        </SwiperSlide>
+        <SwiperSlide
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <RecommendCard />
+        </SwiperSlide>
+        <SwiperSlide
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <RecommendCard />
+        </SwiperSlide>
+        <SwiperSlide
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <RecommendCard />
+        </SwiperSlide>
+      </Swiper>
+    </div>
   );
 }
 export default RecommendSlide;
