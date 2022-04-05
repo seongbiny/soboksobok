@@ -36,4 +36,5 @@ public class WelfareService {
     }
 
     public List<Welfare> getPopularInGroup(Long group) { return welfareRepository.getGroupPopularWelfare(group); }
+
 }

@@ -35,6 +35,7 @@ public class WelfareController {
 //    @ApiOperation(value = "단일복지 상세데이터")
     @GetMapping("/{welfare_id}")
     public ApiResponse getwelfare(@PathVariable("welfare_id") Long welfare_id) {
+        welfareService.raiseview(welfare_id);
         Welfare welfare = welfareService.getWelfare(welfare_id);
         return ApiResponse.success("welfare", welfare);
     }

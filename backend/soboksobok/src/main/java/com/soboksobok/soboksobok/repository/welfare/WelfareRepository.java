@@ -15,7 +15,9 @@ public class WelfareRepository {
     private EntityManager em;
 
     public Welfare findByWelfareId(Long id) {
-        return em.find(Welfare.class, id);
+        Welfare welfare = em.find(Welfare.class, id);
+        welfare.setWelfare_view(welfare.getWelfare_view() + 1);
+        return welfare;
     }
 
     public List<Welfare> findAllWelfare() {
@@ -46,7 +48,7 @@ public class WelfareRepository {
     }
 
     public List<Welfare> getGroupWelfare(Long group_id) {
-        return em.createQuery("select w from Welfare w where w.welfare_group = :group_id", Welfare.class)
+        return em.createQuery("select w from Welfare w where w.welfare_group = :group_id order by w.usingusers.size desc", Welfare.class)
                 .setParameter("group_id", group_id)
                 .getResultList();
     }
