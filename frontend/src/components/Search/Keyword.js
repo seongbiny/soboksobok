@@ -17,6 +17,7 @@ function Keyword() {
       try {
         const request = await axios.get("/api/welfare/keyword");
         setKeywords(request.data.body.keywords.slice(0, 10));
+        // console.log(request.data.body.keywords);
       } catch (err) {
         console.log(err);
       }
@@ -44,10 +45,9 @@ function Keyword() {
       </div>
       <div></div>
       {keywords.map((keyword, i) => (
-        <StyledLi>
+        <StyledLi key={i}>
           <div style={{ flexBasis: "30%" }}>{i + 1}</div>
           <div
-            key={keyword.keywordId}
             style={{ flexBasis: "70%", textAlign: "left" }}
             onClick={e => onClick(keyword.keywordName)}
           >

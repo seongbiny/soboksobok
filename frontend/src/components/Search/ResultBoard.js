@@ -4,37 +4,35 @@ import Table from "react-bootstrap/Table";
 import { getAxios } from "../../api.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Pagination from "./Pagination.js";
+import PaginationBtn from "./PaginationBtn";
+import { paginate } from "./paginate";
 
 function ResultBoard() {
   const axios = getAxios();
-  const [result, setResult] = useState([]);
   const { keyword } = useSelector(state => state.change);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
   const navigate = useNavigate();
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
 
-  const [currPage, setCurrPage] = useState(0);
+  const [welfares, setWelfares] = useState({
+    data: "",
+    pageSize: 10, // 한 페이지에 보여줄 데이터 개수
+    currentPage: 1, // 현재 활성화된 페이지 위치
+  });
 
-  function currentPost(tmp) {
-    let currentPosts = 0;
-    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
-    return currentPosts;
-  }
-
-  const handlePageChange = currPage => {
-    setCurrPage(currPage);
+  const handlePageChange = page => {
+    setWelfares({ ...welfares, currentPage: page });
+    // console.log(page);
   };
+
+  const { data, pageSize, currentPage } = welfares;
+  const pagedWelfares = paginate(data, currentPage, pageSize); // 페이지 별로 데이터가 속한 배열을 얻어옴
 
   useEffect(() => {
     const fetchSearch = async () => {
       try {
         const request = await axios.get(`/api/welfare/search/${keyword}`);
         navigate(`/search?keyword=${keyword}`);
-        setResult(request.data.body.welfares);
-        console.log(request.data);
+        setWelfares({ ...welfares, data: request.data });
+        // console.log(request.data);
       } catch (err) {
         console.log(err);
       }
@@ -46,7 +44,7 @@ function ResultBoard() {
     navigate(`/welfare/${id}`);
   };
 
-  const { length: count } = result;
+  const { length: count } = data;
   if (count === 0) {
     return <StyledNo>검색 정보가 없습니다.</StyledNo>;
   }
@@ -59,28 +57,30 @@ function ResultBoard() {
             <tr>
               <th width="10%">번호</th>
               <th width="70%">제목</th>
-              <th width="20%">연락처</th>
+              <th width="20%">조회수</th>
             </tr>
           </thead>
           <tbody>
-            {currentPost(result).map(welfare => (
-              <tr key={welfare.welfareId}>
-                <td className="text-center">{welfare.welfareId}</td>
-                <StyledTd onClick={e => onClick(welfare.welfareId)}>
-                  {welfare.welfare_service_name}
+            {pagedWelfares.map(welfare => (
+              <tr key={welfare[0]}>
+                <td>{welfare[0]}</td>
+                <StyledTd onClick={e => onClick(welfare[0])}>
+                  {welfare[1]}
                 </StyledTd>
-                <td className="text-center">{welfare.welfare_phone}</td>
+                <td>{welfare[2]}</td>
               </tr>
             ))}
           </tbody>
         </Table>
       </StyledTable>
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={result.length}
-        paginate={setCurrentPage}
-        currentPage={currentPage}
-      />
+      <StyledPage>
+        <PaginationBtn
+          itemsCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </StyledPage>
     </StyledBoard>
   );
 }
@@ -97,11 +97,17 @@ const StyledNo = styled.div`
   font-weight: bold;
 `;
 
+const StyledPage = styled.div`
+  margin: 0 auto;
+  margin-top: 10px;
+`;
+
 const StyledBoard = styled.div`
   box-sizing: border-box;
   width: 50vw;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5vh;
 `;
 const StyledTable = styled.div`
   box-sizing: border-box;

@@ -45,11 +45,12 @@ function WelfareDetail() {
     const fetchRecommend = async () => {
       try {
         const request = await axios.get(`/api/welfare/${welfareId}/recommend`);
-        const datas = request.data.body.welfare;
+        console.log(request.data)
+        // const datas = request.data.body.welfare;
         // const ids = await datas.map(data => data.welfareId);
-        // setRecommend(ids);
-        console.log(datas.slice(undefined, 3));
-        setRecommend(datas.slice(undefined, 3));
+        setRecommend(request.data.slice(0,3));
+        // console.log(datas.slice(undefined, 3));
+        // setRecommend(datas.slice(undefined, 3));
       } catch (err) {
         console.log(err);
       }
