@@ -21,7 +21,8 @@ function Login() {
       {!isLogin() ? (
         <div>
           <a href={KAKAO_AUTH_URL}>
-            <img src="/kakao/kakao_login_small.png" id="kakao-login-btn" />
+            {/* <img src="/kakao/kakao_login_small.png" id="kakao-login-btn" /> */}
+            <Button variant="primary">로그인</Button>
           </a>
         </div>
       ) : (
@@ -36,7 +37,8 @@ function Login() {
               localStorage.removeItem('token');
               localStorage.removeItem('name');
               localStorage.removeItem('profile');
-              navigate('/', { replace: true });
+              // navigate('/', { replace: true });
+              window.location.replace('/');
             }}
           >
             로그아웃

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Button, Tabs, Tab, ListGroup } from 'react-bootstrap';
+import { Button, Tabs, Tab, ListGroup, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import styled from 'styled-components';
@@ -50,51 +50,47 @@ function Main() {
     getPopular();
     getRecent();
     isLogin();
-  }, [isLogin]);
+  }, []);
 
   return (
     <div className="main">
       <StyledContainer>
         <StyledIntro>
-          <div style={{ marginTop: '170px' }}>
-            <h4>
-              <b className="white">소개해요 복지! 소중해요 행복!</b>
-            </h4>
+          <StyledIntroMain>
+            <div className="intro-text-area" style={{ marginTop: '170px' }}>
+              <h4>
+                <b className="white">소개해요 복지! 소중해요 행복!</b>
+              </h4>
 
-            <p>
-              소복소복은 사용자에게 맞춤 복지 정보를 제공합니다.
-              <br />
-              가구상황, 관심주제를 입력하여 더욱 정확한 맞춤 복지를 추천받으세요.
-              <br />
-              ‘소복소복’에 가입하고 나에게 딱 맞는 복지제도 정보를 찾아보세요
-            </p>
+              <p>
+                소복소복은 사용자에게 맞춤 복지 정보를 제공합니다.
+                <br />
+                가구상황, 관심주제를 입력하여 더욱 정확한 맞춤 복지를 추천받으세요.
+                <br />
+                ‘소복소복’에 가입하고 나에게 딱 맞는 복지제도 정보를 찾아보세요
+              </p>
 
-            {!token ? (
-              <Button href={KAKAO_AUTH_URL} variant="primary">
-                카카오톡 간편가입
-              </Button>
-            ) : null}
-          </div>
-          <img src="/drawKit/DrawKit (1).png" id="main-image" width="450px" />
+              {!token ? (
+                <Button href={KAKAO_AUTH_URL} variant="primary">
+                  카카오톡 간편가입
+                </Button>
+              ) : null}
+            </div>
+            <img src="/drawKit/SVG/DrawKit (2).svg" alt="main-image" width="450px" />
+          </StyledIntroMain>
         </StyledIntro>
 
-        {/* <div class="custom-shape-divider-bottom-1649090626">
-          <svg
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-              class="shape-fill"
-            ></path>
-          </svg>
-        </div> */}
+        <StyledBottomBackground>
+          <img
+            src="/background/layered-waves-haikei.svg"
+            alt="main-image"
+            style={{ width: '100%', zIndex: '-1' }}
+          />
 
-        <StyledSearchBar>
-          <SearchBar></SearchBar>
-        </StyledSearchBar>
+          <SearchBar
+            style={{ margin: '0px 20px 0px 20px', padding: '5% 5%', zIndex: '2' }}
+          ></SearchBar>
+        </StyledBottomBackground>
 
         <StyledTab>
           <Tabs
@@ -130,8 +126,7 @@ function Main() {
                   style={{
                     paddingLeft: '5%',
                     paddingRight: '5%',
-                    justifyContent: 'spaceBetween',
-                    verticalAlign: 'center',
+                    // justifyContent: 'center',
                   }}
                 >
                   {popular.map((item, index) => (
@@ -139,18 +134,37 @@ function Main() {
                       key={index}
                       style={{
                         display: 'flex',
+                        // justifyItems: 'spaceAround',
+                        // alignItems: 'spaceAround',
                       }}
                     >
-                      <h6>{' - ' + item.welfare_service_name}</h6>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => {
-                          navigate(`/welfare/${item.welfareId}`);
-                        }}
-                      >
-                        자세히 보기
-                      </Button>
+                      <Stack direction="horizontal" gap={3}>
+                        <h6 style={{ marginTop: '0.5rem', width: '250px' }}>
+                          {item.welfare_service_name}
+                        </h6>
+                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                        <h6
+                          style={{
+                            marginTop: '0.5rem',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            width: '600px',
+                          }}
+                        >
+                          {item.welfare_target_detail}
+                        </h6>
+                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          자세히 보기
+                        </Button>
+                      </Stack>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
@@ -173,9 +187,11 @@ function Main() {
                       key={index}
                       style={{
                         display: 'flex',
+                        justifyItems: 'center',
+                        alignItems: 'center',
                       }}
                     >
-                      <h6>{item.welfare_service_name}</h6>
+                      <h6 style={{ marginTop: '0.5rem' }}>{item.welfare_service_name}</h6>
                       <Button
                         variant="primary"
                         size="sm"
@@ -206,21 +222,39 @@ const StyledContainer = styled.div`
 const StyledIntro = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  margintop: 170px;
   padding: 5% 10%;
   background-color: #90caf9;
   width: 100vw;
-  justify-content: space-around;
+  // justify-content: space-around;
   color: black;
 `;
 
-const StyledSearchBar = styled.div`
-  margin: 50px 220px 0px 220px;
+const StyledIntroMain = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margintop: 170px;
+  justify-content: space-around;
+  background-color: #90caf9;
 `;
+
+const StyledBottomBackground = styled.div`
+  // display: flex;
+  width: 100vw;
+  position: relative;
+`;
+
 const StyledTab = styled.div`
   margin: 50px 220px 200px 220px;
+  //position: absolute;
+  z-index: 2;
 `;
 
 const StyledTabContent = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 `;
 
