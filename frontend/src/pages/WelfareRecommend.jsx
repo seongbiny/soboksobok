@@ -39,7 +39,7 @@ function WelfareRecommend(){
         const fetchCard = async () => {
           try {
             const request = await axios.get("/api/welfare/recommend");
-            console.log(request.data.body.welfare);
+            // console.log(request.data.body.welfare);
             setCards(request.data.body.welfare);
           } catch (err) {
             console.log(err);

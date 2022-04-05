@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
-
 import { useDispatch } from "react-redux";
 import { changeInput } from "../../reducers/change.js";
 

@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -233,8 +234,10 @@ export default function DetailTaps(props) {
           >
             관련 웹사이트 |
           </div>
-          <StyledP>{siteLink}</StyledP>
-          <StyledP>{siteName}</StyledP>
+          <StyledP style={{ marginRight: "1vw" }}>{siteName}</StyledP>
+          <StyledP>
+            <a href={siteLink}>{siteLink}</a>
+          </StyledP>
         </div>
       </TabPanel>
     </Box>
