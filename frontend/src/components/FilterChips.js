@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import MultipleSelectChips from "./Filter/MultipleSelectChips.js";
-import SidoSelectBox from "./Filter/Sido.jsx";
-import GugunSelectBox from "./Filter/Gugun.jsx";
-import ChildSelectBox from "./Filter/Child.jsx";
-import { getAxios, getAxiosDjango } from "../api.js";
-import { useNavigate } from "react-router-dom";
-=======
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -17,7 +7,6 @@ import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
 import { getAxios, getAxiosDjango } from '../api.js';
 import { useNavigate } from 'react-router-dom';
->>>>>>> f61cb0377e05da4f2324fe2f3afcc4312f671190
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -63,40 +52,40 @@ familyMap.set(11, 34); //취약계층
 familyMap.set(12, 35); // --> 해당없음
 
 const jobChip = [
-  { label: "학생", value: 15 },
-  { label: "무직 (실업자(취업희망자))", value: 16 },
-  { label: "창업(영세자영업(창업)자)", value: 17 },
-  { label: "농어업인", value: 18 },
-  { label: "중소기업(저소득근로자)", value: 19 },
-  { label: "일반", value: 20 },
+  { label: '학생', value: 15 },
+  { label: '무직 (실업자(취업희망자))', value: 16 },
+  { label: '창업(영세자영업(창업)자)', value: 17 },
+  { label: '농어업인', value: 18 },
+  { label: '중소기업(저소득근로자)', value: 19 },
+  { label: '일반', value: 20 },
 ];
 
 const familyChip = [
-  { label: "무주택자", value: 23 },
-  { label: "임산부", value: 24 },
-  { label: "1인가구", value: 25 },
-  { label: "다문화/탈북민", value: 26 },
-  { label: "다자녀", value: 27 },
-  { label: "보훈대상자", value: 28 },
-  { label: "장애인", value: 29 },
-  { label: "신규전입", value: 30 },
-  { label: "한부모/조손", value: 31 },
-  { label: "확대가족", value: 32 },
-  { label: "요양환자/치매환자", value: 33 },
-  { label: "취약계층", value: 34 },
-  { label: "해당없음", value: 35 },
+  { label: '무주택자', value: 23 },
+  { label: '임산부', value: 24 },
+  { label: '1인가구', value: 25 },
+  { label: '다문화/탈북민', value: 26 },
+  { label: '다자녀', value: 27 },
+  { label: '보훈대상자', value: 28 },
+  { label: '장애인', value: 29 },
+  { label: '신규전입', value: 30 },
+  { label: '한부모/조손', value: 31 },
+  { label: '확대가족', value: 32 },
+  { label: '요양환자/치매환자', value: 33 },
+  { label: '취약계층', value: 34 },
+  { label: '해당없음', value: 35 },
 ];
 
 function FilterChips() {
   let navigate = useNavigate();
 
-  const [userSeq, setUserSeq] = useState("");
+  const [userSeq, setUserSeq] = useState('');
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   // const [isAll, setIsAll] = useState('All');
   // const [region, setRegion] = useState('00');
-  const [child, setChild] = useState("2");
+  const [child, setChild] = useState('2');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
 
@@ -121,21 +110,16 @@ function FilterChips() {
       // });
 
       const axios = getAxios();
-      await axios.post("/api/users/update/char", {
-        child: child ? child : "2",
+      await axios.post('/api/users/update/char', {
+        child: child ? child : '2',
         // region: region ? region : '00',
         job: selectJob,
         family: selectFamily,
       });
 
       const djangoAxios = getAxiosDjango();
-<<<<<<< HEAD
-      let res = await djangoAxios.get(`insertusergroup/dbscan/${userSeq}`);
-      console.log("django res: ", res);
-=======
       let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
       console.log('django res: ', res);
->>>>>>> f61cb0377e05da4f2324fe2f3afcc4312f671190
     } catch (err) {
       console.log(err);
     }
@@ -145,12 +129,12 @@ function FilterChips() {
     const getFilter = async () => {
       try {
         const axios = getAxios();
-        let response = await axios.get("/api/users/profile");
+        let response = await axios.get('/api/users/profile');
         setUserSeq(response.data.body.user.userSeq);
-        console.log("userSeq: ", userSeq);
+        console.log('userSeq: ', userSeq);
 
-        let res = await axios.get("/api/users/update/char");
-        console.log("userCharacter: ", res.data.body);
+        let res = await axios.get('/api/users/update/char');
+        console.log('userCharacter: ', res.data.body);
         // setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
         setJob(res.data.body.UserCharacter.job);
@@ -169,7 +153,7 @@ function FilterChips() {
         for (let element of family) {
           await allValue.push(familyMap.get(element));
         }
-        console.log(value, "+", allValue);
+        console.log(value, '+', allValue);
         if (JSON.stringify(value) !== JSON.stringify(allValue)) {
           setValue([...allValue]);
           setCliked([...allValue]);
@@ -221,7 +205,7 @@ function FilterChips() {
         }}
         onClick={() => {
           setFilter();
-          navigate("/", { replace: true });
+          // navigate('/', { replace: true });
         }}
       >
         저장

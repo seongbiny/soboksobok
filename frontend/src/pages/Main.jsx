@@ -4,19 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import styled from 'styled-components';
 import { getAxios } from '../api';
-import Norecommend from '../components/WelfareRecommend/Norecommend';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
-import RecommendSlide from '../components/WelfareRecommend/RecommendSlide';
 
 function Main() {
-  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
 
   const [name, setName] = useState('User');
   const [popular, setPopular] = useState([{}]);
-  const [recent, setRecent] = useState([{}]);
   const [token, setToken] = useState('');
   const [cards, setCards] = useState([]);
 
@@ -35,6 +32,7 @@ function Main() {
       console.log('카카오 : ', response.data);
       localStorage.setItem('name', response.data.body.user.username);
       localStorage.setItem('profile', response.data.body.user.profileImageUrl);
+      await setName(localStorage.getItem('name'));
     } catch (err) {
       console.log(err);
     }
@@ -45,16 +43,6 @@ function Main() {
       let res = await axios.get('/api/welfare/popular');
       console.log('인기순: ', res.data.body.welfare, typeof res.data.body.welfare);
       setPopular(res.data.body.welfare);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getRecent = async () => {
-    try {
-      let res = await axios.get('/api/welfare/recent');
-      console.log('최신순: ', res.data.body.welfare, typeof res.data.body.welfare);
-      setRecent(res.data.body.welfare);
     } catch (error) {
       console.log(error);
     }
@@ -72,12 +60,12 @@ function Main() {
 
   useEffect(() => {
     getPopular();
-    getRecent();
     isLogin();
     fetchCard();
     getProfile();
-    setName(localStorage.getItem('name'));
-  }, []);
+
+    console.log('name: ', name);
+  }, [name]);
 
   return (
     <div className="main">
@@ -113,37 +101,30 @@ function Main() {
           </StyledSearchBar>
 
           <StyledTab>
-            <Tabs
-              defaultActiveKey={token ? 'home' : 'popular-list'}
-              id="uncontrolled-tab-example"
-              className="mb-3"
-            >
-              {token ? (
-                <Tab eventKey="home" title="맞춤형 복지 안내">
-                  {cards.length === 0 ? (
-                    <Fragment>
-                      <h5 style={{ padding: '1% 6.5%' }}>
-                        <b>알맞은 복지 카테고리를 선택하고 맞춤 복지 혜택을 안내받으세요.</b>
-                      </h5>
-                      <Button
-                        variant="primary"
-                        style={{ margin: '1% 6.5%' }}
-                        onClick={() => {
-                          navigate('/filter');
-                        }}
-                      >
-                        정보 입력하기
-                      </Button>
-                    </Fragment>
-                  ) : (
-                    // <Norecommend profile={profile} name={name}></Norecommend>
-                    <StyledMain>
-                      <FilterSlide name={name} cards={cards} />
-                      <RecommendSlide name={name} />
-                    </StyledMain>
-                  )}
-                </Tab>
-              ) : null}
+            <Tabs defaultActiveKey="home" id="main-welfare-tab" className="mb-3">
+              <Tab eventKey="home" title="맞춤형 복지 안내">
+                {cards.length === 0 ? (
+                  <Fragment>
+                    <h5 style={{ padding: '1% 6.5%' }}>
+                      <b>알맞은 복지 카테고리를 선택하고 맞춤 복지 혜택을 안내받으세요.</b>
+                    </h5>
+                    <Button
+                      variant="primary"
+                      style={{ margin: '1% 6.5%' }}
+                      onClick={() => {
+                        navigate('/filter');
+                      }}
+                    >
+                      정보 입력하기
+                    </Button>
+                  </Fragment>
+                ) : (
+                  // <Norecommend profile={profile} name={name}></Norecommend>
+                  <StyledWelfare>
+                    <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  </StyledWelfare>
+                )}
+              </Tab>
 
               <Tab eventKey="popular-list" title="인기순">
                 <h5 style={{ padding: '1% 6.5%' }}>
@@ -168,7 +149,12 @@ function Main() {
                       }}
                     >
                       <Stack direction="horizontal" gap={3}>
-                        <h6 style={{ marginTop: '0.5rem', width: '250px' }}>
+                        <h6
+                          style={{ marginTop: '0.5rem', width: '250px' }}
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
                           {item.welfare_service_name}
                         </h6>
                         <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
@@ -183,7 +169,7 @@ function Main() {
                         >
                           {item.welfare_target_detail}
                         </h6>
-                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                        {/* <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
                         <Button
                           variant="primary"
                           size="sm"
@@ -191,62 +177,8 @@ function Main() {
                             navigate(`/welfare/${item.welfareId}`);
                           }}
                         >
-                          자세히 보기
-                        </Button>
-                      </Stack>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Tab>
-
-              <Tab eventKey="recent-list" title="최신순">
-                <h5 style={{ padding: '1% 6.5%' }}>
-                  <b>최신 등록된 복지 혜택을 안내드립니다.</b>
-                </h5>
-                <ListGroup
-                  variant="flush"
-                  style={{
-                    paddingLeft: '5%',
-                    paddingRight: '5%',
-                    display: 'flex',
-                    // justifyContent: 'spaceBetween',
-                    // alignContent: 'center',
-                  }}
-                >
-                  {recent.map((item, index) => (
-                    <ListGroup.Item
-                      key={index}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'spaceAround',
-                      }}
-                    >
-                      <Stack direction="horizontal" gap={3}>
-                        <h6 style={{ marginTop: '0.5rem', width: '250px' }}>
-                          {item.welfare_service_name}
-                        </h6>
-                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
-                        <h6
-                          style={{
-                            marginTop: '0.5rem',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            width: '500px',
-                          }}
-                        >
-                          {item.welfare_target_detail}
-                        </h6>
-                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={() => {
-                            navigate(`/welfare/${item.welfareId}`);
-                          }}
-                        >
-                          자세히 보기
-                        </Button>
+                          더보기
+                        </Button> */}
                       </Stack>
                     </ListGroup.Item>
                   ))}
@@ -289,13 +221,13 @@ const StyledIntroMain = styled.div`
 
 const StyledBottomBackground = styled.div`
   width: 100vw;
-  height: 120vh;
+  height: 150vh;
   position: relative;
   background-image: url('/background/layered-waves-haikei.svg');
 `;
 
 const StyledSearchBar = styled.div`
-  margin: 0px 220px 100px 220px;
+  margin: 0px 220px 50px 220px;
   z-index: 2;
 `;
 
@@ -307,13 +239,10 @@ const StyledTab = styled.div`
   z-index: 2;
 `;
 
-const StyledMain = styled.div`
-  display: grid;
-  justify-content: center;
-  // margin-bottom: 5vh;
-  // margin-top: 5vh;
-  grid-row-gap: 10vh;
-  width: 70vw;
+const StyledWelfare = styled.div`
+  margin: 5% 5%;
+  width: 300px;
+  // max-width: 80%;
 `;
 
 export default Main;

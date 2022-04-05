@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import { getAxios, getAxiosDjango } from '../api.js';
 import ModifyProfile from '../components/Profile/Modify';
 import DeleteAccount from '../components/Profile/DeleteAccount';
+import UserProfile from '../components/Profile/UserProfile';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -128,105 +129,74 @@ function Profile() {
 
   return (
     <div>
-      <Container>
-        <Row>
-          <Col xs={12} md={8}>
-            <소개>
-              {modify === 'false' ? (
-                <div>
-                  <h1> {username}님 안녕하세요!</h1>
-                  <img src={profileImage} width="110px"></img>
-                  <h5>이름: {username}</h5>
-                  <h5>
-                    연령대:
-                    {ageRange === 'placeholder'
-                      ? '수정 버튼을 눌러 정보를 입력해주세요'
-                      : ageRender}
-                  </h5>
+      <StyledContainer>
+        <StyledLeftArea>
+          <UserProfile
+            modify={modify}
+            setModify={setModify}
+            setProfile={setProfile}
+            profileImage={profileImage}
+            username={username}
+            ageRange={ageRange}
+            ageRender={ageRender}
+            setAgeRange={setAgeRange}
+            gender={gender}
+            setGender={setGender}
+          ></UserProfile>
 
-                  <h5>
-                    성별:{' '}
-                    {gender === 'placeholder' ? '수정 버튼을 눌러 정보를 입력해주세요' : gender}
-                  </h5>
-                  <h5>{userSeq}</h5>
-                </div>
-              ) : (
-                <div>
-                  <h1> {username}님 안녕하세요!</h1>
-                  <img src={profileImage} width="110px"></img>
-                  <ModifyProfile
-                    username={username}
-                    ageRange={ageRange}
-                    setAgeRange={setAgeRange}
-                    gender={gender}
-                    setGender={setGender}
-                  ></ModifyProfile>
-                </div>
-              )}
+          <div
+            className="filterChips"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
+            <FilterChips></FilterChips>
+          </div>
 
-              <Button
-                variant="primary"
-                onClick={() => {
-                  setModify('ture');
-                }}
-              >
-                수정
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  setModify('false');
-                  setProfile();
-                }}
-              >
-                저장
-              </Button>
-            </소개>
-            <필터>
-              <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
-              <FilterChips></FilterChips>
-            </필터>
-            <DeleteAccount></DeleteAccount>
-          </Col>
-          <Col xs={6} md={4}>
-            <리스트>
-              <h5>
-                찜한 복지 <br />
-              </h5>
+          <Tabs defaultActiveKey="like" id="user-welfare-tab" className="mb-3">
+            <Tab eventKey="like" title="찜한 복지">
               <h6>{renderLiked()}</h6>
-              <br />
-              <h5>
-                사용 중인 복지 <br />
-              </h5>
+            </Tab>
+
+            <Tab eventKey="used" title="사용 중인 복지">
               <h6>{renderUsed()}</h6>
-            </리스트>
-          </Col>
-        </Row>
-      </Container>
+            </Tab>
+          </Tabs>
+
+          <DeleteAccount></DeleteAccount>
+        </StyledLeftArea>
+      </StyledContainer>
     </div>
   );
 }
 
-const 소개 = styled.div`
-  margin: 20px;
-  padding: 20px;
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: black;
+  background-color: #90caf9;
+  width: 100vw;
 `;
 
-const 필터 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  background-color: #e3f2fd;
+const StyledLeftArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 150vh;
 `;
 
-const 리스트 = styled.div`
-  margin: 20px;
-  padding: 20px;
-  positoin: sticky;
-  width: 175px;
-  display: inline-block;
-  right: 10%;
-  top: 94%;
-  background-color: #e3f2fd;
-`;
+// const StyledRightArea = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   padding-top: 10%;
+//   width: 40vw;
+//   height: 150vh;
+// `;
 
 export default Profile;
