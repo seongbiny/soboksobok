@@ -307,14 +307,6 @@ const StyledTab = styled.div`
   z-index: 2;
 `;
 
-const StyledTop = styled.div`
-  display: grid;
-  grid-template-columns: 20% 40% 40%;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5vh;
-  // margin-bottom: 5vh;
-`;
 const StyledMain = styled.div`
   display: grid;
   justify-content: center;
