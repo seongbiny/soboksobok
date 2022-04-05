@@ -20,7 +20,7 @@ function FilterSlide(props) {
       <Swiper
         style={{
           width: "70vw",
-          height: "35vh",
+          height: "40vh",
           borderRadius: "12px",
         }}
         spaceBetween={20}
