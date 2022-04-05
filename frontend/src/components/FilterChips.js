@@ -5,6 +5,7 @@ import SidoSelectBox from './Filter/Sido.jsx';
 import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
 import { getAxios, getAxiosDjango } from '../api.js';
+import { useNavigate } from 'react-router-dom';
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -75,6 +76,8 @@ const familyChip = [
 ];
 
 function FilterChips() {
+  let navigate = useNavigate();
+
   const [userSeq, setUserSeq] = useState('');
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
@@ -192,6 +195,7 @@ function FilterChips() {
         variant="primary"
         onClick={() => {
           setFilter();
+          navigate('/', { replace: true });
         }}
       >
         저장
