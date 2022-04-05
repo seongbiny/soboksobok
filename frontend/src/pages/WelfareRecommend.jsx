@@ -14,15 +14,11 @@ function WelfareRecommend(){
     const [name, setName] = useState('User');
     const [profile, setProfile] = useState('');
     const [cards, setCards] = useState([]);
-    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(()=>{
-        isLogin===true && (setName(localStorage.getItem('name')));
-        isLogin===true && setProfile(localStorage.getItem('profile'));
-        if (localStorage.getItem('token')) {
-            setIsLogin(true)
-        }
-    },[isLogin])
+        setName(localStorage.getItem('name'))
+        setProfile(localStorage.getItem('profile'))
+    },[])
 
     useEffect(() => {
         const fetchCard = async () => {
@@ -38,7 +34,6 @@ function WelfareRecommend(){
       }, []);
     
     return(
-        isLogin === true ? (
         (cards.length) === 0 ? 
             <Norecommend profile={profile} name={name}></Norecommend> :
             <StyledContainer>
@@ -51,9 +46,7 @@ function WelfareRecommend(){
                 <FilterSlide name={name} cards={cards} />
                 <RecommendSlid name={name} />
             </StyledMain>
-        </StyledContainer>) : (
-            <div style={{marginTop: '20vh', fontFamily: 'Noto Sans KR', fontSize: '7vh', textAlign:'center'}}>로그인해주세요!</div>
-        )
+        </StyledContainer>
     )
 }
 
