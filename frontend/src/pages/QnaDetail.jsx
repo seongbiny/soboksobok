@@ -54,6 +54,14 @@ let 답변들 = styled.div`
     margin-top: 5%;
     margin-bottom: 5%;
 `
+function isLogin() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
 function QnaDetail(props) {
     let navigate = useNavigate();
     let state = useSelector((state) => state)
@@ -102,15 +110,24 @@ function QnaDetail(props) {
         })
         .catch(err => console.log(err))
     }
+    const checkLogin = () => {
+      if (!isLogin()) {
+          alert('로그인해주세요')
+          navigate(`/` )
+      } else {
+          getComment()
+      }
+  }
     useEffect(()=> {
 
-        getComment();
+        checkLogin();
         
     }, []);
 
   return (
     <Container style={{marginBottom: '2vh'}}>
-      <글작성틀>
+      {isLogin() ? (
+        <글작성틀>
         <게시판이름>Q&A</게시판이름>
 
         <버튼들>
@@ -172,6 +189,10 @@ function QnaDetail(props) {
                 </Link>
                 </버튼들>
             </글작성틀>
+      ):(
+        <div></div>
+      )}
+      
             
         </Container>
 

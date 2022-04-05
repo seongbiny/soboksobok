@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, Component } from 'react';
 import styled from 'styled-components';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -30,7 +30,14 @@ let 버튼위치 = styled.div`
   padding-top: 3%;
   text-align: center;
 `;
-
+function isLogin() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
 function QnaCreate(props) {
   let navigate = useNavigate();
   let state = useSelector((state) => state);
@@ -56,11 +63,19 @@ function QnaCreate(props) {
             navigate(`/Qna`)
         }
     }
-        
-    
+    const checkLogin = () => {
+      if (!isLogin()) {
+          alert('로그인해주세요')
+          navigate(`/` )
+      } 
+  }  
+  useEffect(()=>{
+    checkLogin();
+    }, [])
   return (
     <Container>
-      <글작성틀>
+      {isLogin() ? (
+        <글작성틀>
         <게시판이름>Q&A</게시판이름>
         <게시글제목>
           <p>제목</p>
@@ -108,6 +123,11 @@ function QnaCreate(props) {
           {/* </Link> */}
         </버튼위치>
       </글작성틀>
+      ):(
+        <div></div>
+
+      )}
+      
     </Container>
   );
 }
