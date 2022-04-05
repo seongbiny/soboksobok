@@ -52,7 +52,7 @@ function WelfareRecommend(){
                 <RecommendSlid name={name} />
             </StyledMain>
         </StyledContainer>) : (
-            <div style={{marginTop: '20vh'}}>로그인해주세요</div>
+            <div style={{marginTop: '20vh', fontFamily: 'Noto Sans KR', fontSize: '7vh', textAlign:'center'}}>로그인해주세요!</div>
         )
     )
 }
