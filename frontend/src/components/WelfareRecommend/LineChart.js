@@ -3,7 +3,6 @@ import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { getAxios } from "../../api";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import {
   welDataName,
@@ -24,12 +23,10 @@ function Chart() {
   const dispatch = useDispatch();
 
   const data = {
-    // labels: ["1번", "2번", "3번", "4번", "5번"],
     labels: label,
     datasets: [
       {
         label: "인기 복지 조회 순",
-        // data: [65, 59, 80, 81, 56, 55, 40],
         data: datas,
         axis: "y",
         backgroundColor: [
@@ -39,8 +36,6 @@ function Chart() {
           "rgba(75, 192, 192, 0.5)",
           "rgba(54, 162, 235, 0.5)",
           "rgba(153, 102, 255, 0.5)",
-          // "rgba(153, 102, 255, 0.2)",
-          // "rgba(201, 203, 207, 0.2)",
         ],
         borderColor: [
           "rgb(255, 99, 132)",
@@ -49,8 +44,6 @@ function Chart() {
           "rgb(75, 192, 192)",
           "rgb(54, 162, 235)",
           "rgb(153, 102, 255)",
-          // "rgb(153, 102, 255)",
-          // "rgb(201, 203, 207)",
         ],
         borderWidth: 1,
       },
@@ -74,7 +67,6 @@ function Chart() {
     const fetchData = async () => {
       try {
         const request = await axios.get("/api/welfare/recommend/grouppopular");
-        console.log(request.data);
         let wel = request.data.map(a => a.welfare_service_name);
         await setLabel(wel);
         await dispatch(welDataName(wel));

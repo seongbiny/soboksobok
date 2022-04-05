@@ -9,14 +9,8 @@ import { useSelector } from "react-redux";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
-function RecommendSlide(props) {
+function RecommendSlide() {
   const { title, content, id } = useSelector(state => state.welData);
-
-  useEffect(() => {
-    // console.log(title);
-    // console.log(id);
-    console.log(content);
-  }, []);
 
   return (
     <div className="main-wrap">
