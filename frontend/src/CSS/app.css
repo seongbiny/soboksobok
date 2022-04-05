@@ -10,7 +10,32 @@ body {
     height: 50%;
   } */
 
-  @font-face{
-    font-family: 'Noto Sans KR', sans-serif;
-    src: url("../font/NotoSansKR-Medium.otf");
-  }
+@font-face {
+  font-family: 'Noto Sans KR', sans-serif;
+  src: url('../font/NotoSansKR-Medium.otf');
+}
+
+/* #header .navbar {
+  background: #90caf9;
+} */
+
+.custom-shape-divider-bottom-1649090626 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1649090626 svg {
+  position: relative;
+  display: block;
+  width: calc(126% + 1.3px);
+  height: 59px;
+}
+
+.custom-shape-divider-bottom-1649090626 .shape-fill {
+  fill: #ffffff;
+}
