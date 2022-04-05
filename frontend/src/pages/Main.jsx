@@ -166,6 +166,9 @@ function Main() {
                             overflow: 'hidden',
                             width: '500px',
                           }}
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
                         >
                           {item.welfare_target_detail}
                         </h6>
