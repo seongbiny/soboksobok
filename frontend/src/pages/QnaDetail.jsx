@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Modal } from 'react-bootstrap';
 import { connect, useSelector } from 'react-redux';
 import { getAxios } from '../api.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import Comments from '../components/Comments'
 import '../CSS/app.css';
 let 글작성틀 = styled.div`
   width: 70%;
+  margin-top: 10%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 5%;
@@ -34,12 +35,11 @@ let 버튼들 = styled.div`
   text-align: right;
 `;
 let 답변입력 = styled.textarea`
-  width: 90%;
+  width: 100%;
   min-height: 70px;
   resize: none;
 `;
 let 답변 = styled.h2`
-  padding-left: 5%;
   padding-bottom: 2%;
 `;
 let 답변내용 = styled.div`
@@ -50,6 +50,7 @@ let 답변내용 = styled.div`
 
 `;
 let 답변들 = styled.div`
+    
     width: 100%
     margin-top: 5%;
     margin-bottom: 5%;
@@ -72,7 +73,11 @@ function QnaDetail(props) {
   const [new댓글, new댓글값변경] = useState('');
   const [new댓글들, new댓글들변경] = useState([]);
   // const [editable, setEditable] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showDone, setShowDone] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
     const [editable, setEditable] = useState('false');
     const [check, setCheck] = useState(false);
@@ -136,8 +141,8 @@ function QnaDetail(props) {
 
         <버튼들>
           <Button
-            variant="primary"
-            size="lg"
+            variant="secondary"
+            size="sm"
             onClick={(e) => {
               navigate(`/QnaPatch/${qnaId}`);
             }}
@@ -146,15 +151,36 @@ function QnaDetail(props) {
           </Button>{' '}
             <Button
               variant="danger"
-              size="lg"
+              size="sm"
               onClick={(e) => {
-                deleteQna();
+                // deleteQna();
+                handleShow();
               }}
             >
               삭제
             </Button>
         </버튼들>
-
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>글 삭제</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>글삭제 하시겠습니까?</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="danger"
+            onClick={() => {
+              handleClose();
+              deleteQna();
+              setShowDone(true);
+            }}
+          >
+            삭제
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            취소
+          </Button>
+        </Modal.Footer>
+      </Modal>
         <hr></hr>
 
         <제목>{qna.title}</제목>
@@ -172,7 +198,7 @@ function QnaDetail(props) {
                     <답변입력 value={댓글}  onChange={(e) => {댓글값변경(e.target.value)}}>
                         
                     </답변입력>
-                    <Button variant="dark" size="lg" onClick={(e)=> {
+                    <Button variant="dark" size="sm" onClick={(e)=> {
                         createComment();
                     }}
                     >등록</Button>              
@@ -189,7 +215,7 @@ function QnaDetail(props) {
                 
                 <버튼들>
                 <Link to = '/Qna'>
-                    <Button variant="secondary" size="lg">목록</Button>
+                    <Button variant="secondary" size="sm">목록</Button>
                 </Link>
                 </버튼들>
             </글작성틀>

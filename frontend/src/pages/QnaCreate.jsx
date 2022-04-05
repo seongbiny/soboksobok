@@ -1,32 +1,33 @@
-import React, { useEffect, Component } from 'react';
+import React, { useEffect} from 'react';
 import styled from 'styled-components';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Button, Container } from 'react-bootstrap';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../CSS/qnacreate.css';
 import { useState } from 'react';
 import { getAxios } from '../api.js';
 import ReactHtmlParser from 'react-html-parser';
 import '../CSS/app.css';
-let 게시판이름 = styled.h1`
+let BoardName = styled.h1`
   text-align: center;
   margin-bottom: 5%;
 `;
 
-let 게시글제목 = styled.div`
+let QnaName = styled.div`
   width: 100%;
   margin-bottom: 2%;
 `;
-let 글작성틀 = styled.div`
+let WritePlace = styled.div`
   width: 70%;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 5%;
+  margin-top: 10%;
+  padding-bottom: 15%;
   font-family: 'Noto Sans KR', sans-serif;
 `;
-let 버튼위치 = styled.div`
+let ButtonPlace = styled.div`
   padding-top: 3%;
   text-align: center;
 `;
@@ -41,27 +42,26 @@ function isLogin() {
 function QnaCreate(props) {
   let navigate = useNavigate();
   let state = useSelector((state) => state);
-  let [제목, 제목값변경] = useState('');
-  let [내용, 내용값변경] = useState('');
-  let dispatch = useDispatch();
-  let date = new Date();
-  let 글작성연도 = date.getFullYear();
-  let 글작성월 = date.getMonth();
-  let 글작성일 = date.getDate();
+  let [title, setTitle] = useState('');
+  let [content, setContent] = useState('');
+
+  const qnaId  = useParams().qnaId;
   const axios = getAxios();
 
     const createQna = async () => {
-        if (제목 == '') {
+        if (title == '') {
             alert('제목을 입력해주세요')
-        } else if (내용 == '' ) {
+        } else if (content == '' ) {
             alert('내용을 입력해주세요')
-        } else if (제목 !== '' && 내용 !== '') {
+        } else if (title !== '' && content !== '') {
             await axios.post('/api/qna/mine', {
-                title: 제목,
-                content: 내용,
+                title: title,
+                content: content,
             });
             navigate(`/Qna`)
+            
         }
+        
     }
     const checkLogin = () => {
       if (!isLogin()) {
@@ -75,20 +75,20 @@ function QnaCreate(props) {
   return (
     <Container>
       {isLogin() ? (
-        <글작성틀>
-        <게시판이름>Q&A</게시판이름>
-        <게시글제목>
+        <WritePlace>
+        <BoardName>Q&A</BoardName>
+        <QnaName>
           <p>제목</p>
           <input
             type="text"
             maxLength="50"
             style={{ width: '100%' }}
             onChange={(e) => {
-              제목값변경(e.target.value);
+              setTitle(e.target.value);
             }}
           />
 
-                </게시글제목>
+                </QnaName>
                 <p>내용</p> 
                 <CKEditor
                     editor={ ClassicEditor }
@@ -96,14 +96,14 @@ function QnaCreate(props) {
                     onChange={ (event, editor) => {
                         const data = editor.getData();
                         
-                        내용값변경(data)
+                        setContent(data)
                     }}
                     
                 />
                 
 
 
-        <버튼위치>
+        <ButtonPlace>
           <Link to="/Qna">
             <Button variant="secondary" size="lg">
               취소
@@ -121,8 +121,8 @@ function QnaCreate(props) {
             등록
           </Button>
           {/* </Link> */}
-        </버튼위치>
-      </글작성틀>
+        </ButtonPlace>
+      </WritePlace>
       ):(
         <div></div>
 
