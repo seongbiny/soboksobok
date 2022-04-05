@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
 function RecommendCard(props) {
-  const { name, content, id } = props;
+  const { title, id } = props;
   let navigate = useNavigate();
 
   const onClick = () => {
@@ -31,12 +31,12 @@ function RecommendCard(props) {
         <Grid container sx={{ mb: 2 }}>
           <Grid>
             <Typography
-              variant="h5"
+              variant="h6"
               component="div"
               sx={10}
-              style={{ color: "#033075", fontWeight: "500" }}
+              style={{ color: "#033075", fontFamily: "Noto Sans KR" }}
             >
-              아동수당 지급
+              {title}
             </Typography>
           </Grid>
         </Grid>

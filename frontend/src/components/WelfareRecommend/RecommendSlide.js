@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import RecommendCard from "./RecommendCard";
-import { getAxios } from "../../api";
+import { useSelector } from "react-redux";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
 function RecommendSlide(props) {
-  const axios = getAxios();
-  const [cards, setCards] = useState([]);
+  const { title, content, id } = useSelector(state => state.welData);
 
-  useEffect(() => {
-    const fetchCard = async () => {
-      try {
-        // const request = await axios.get('/api/welfare/');
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchCard();
-  }, []);
+  // useEffect(() => {
+  //   console.log(title);
+  //   console.log(id);
+  // }, []);
 
   return (
     <div className="main-wrap">
@@ -37,11 +30,23 @@ function RecommendSlide(props) {
         }}
         spaceBetween={8}
         slidesPerView={4}
+        slidesPerGroup={4}
         initialSlide={1}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         loop
-        autoplay={{ delay: 2000 }}
+        autoplay={{ delay: 5000 }}
+        breakpoints={{
+          0: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1280: {
+            slidesPerView: 4,
+          },
+        }}
       >
         <SwiperSlide
           style={{
@@ -50,7 +55,12 @@ function RecommendSlide(props) {
           }}
         >
           <RecommendCard
-            style={{ alignItems: "center", border: "1px solid" }}
+            style={{
+              alignItems: "center",
+              border: "1px solid",
+            }}
+            title={title[0]}
+            id={id[0]}
           />
         </SwiperSlide>
         <SwiperSlide
@@ -59,7 +69,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard />
+          <RecommendCard title={title[1]} id={id[1]} />
         </SwiperSlide>
         <SwiperSlide
           style={{
@@ -67,7 +77,7 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard />
+          <RecommendCard title={title[2]} id={id[2]} />
         </SwiperSlide>
         <SwiperSlide
           style={{
@@ -75,7 +85,23 @@ function RecommendSlide(props) {
             justifyContent: "center",
           }}
         >
-          <RecommendCard />
+          <RecommendCard title={title[3]} id={id[3]} />
+        </SwiperSlide>
+        <SwiperSlide
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <RecommendCard title={title[4]} id={id[4]} />
+        </SwiperSlide>
+        <SwiperSlide
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <RecommendCard title={title[5]} id={id[5]} />
         </SwiperSlide>
       </Swiper>
     </div>

@@ -20,7 +20,7 @@ function ProfileCard(props) {
       {props.name === null ? (
         <div></div>
       ) : (
-        <StyledName>{props.name}님</StyledName>
+        <StyledName>안녕하세요 {props.name}님!</StyledName>
       )}
     </StyledCard>
   );
@@ -35,7 +35,7 @@ const StyledCard = styled.div`
 const StyledName = styled.div`
   color: "#033075";
   font-weight: bold;
-  height: 5vh;
+  height: 6vh;
   display: grid;
   justify-content: center;
   align-items: center;
