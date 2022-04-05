@@ -6,23 +6,33 @@ import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import ProfileCard from "../components/WelfareRecommend/ProfileCard";
 import styled from 'styled-components';
 import { getAxios } from "../api";
+import { useNavigate } from 'react-router-dom';
 import Norecommend from "../components/WelfareRecommend/Norecommend";
 
+const isLogin = () => {
+    if(localStorage.getItem('token')) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function WelfareRecommend(){
     const axios = getAxios();
     const [name, setName] = useState('User');
     const [profile, setProfile] = useState('');
     const [cards, setCards] = useState([]);
-    const [isLogin, setIsLogin] = useState(false);
+    let navigate = useNavigate();
 
     useEffect(()=>{
-        isLogin===true && (setName(localStorage.getItem('name')));
-        isLogin===true && setProfile(localStorage.getItem('profile'));
-        if (localStorage.getItem('token')) {
-            setIsLogin(true)
+        if (!isLogin()) {
+            alert('로그인해주세요')
+            navigate('/') 
+        } else {
+            setName(localStorage.getItem('name'));
+            setProfile(localStorage.getItem('profile'));
         }
-    },[isLogin])
+    }, [])
 
     useEffect(() => {
         const fetchCard = async () => {
@@ -38,7 +48,7 @@ function WelfareRecommend(){
       }, []);
     
     return(
-        isLogin === true ? (
+        isLogin() ? (
         (cards.length) === 0 ? 
             <Norecommend profile={profile} name={name}></Norecommend> :
             <StyledContainer>
@@ -52,7 +62,7 @@ function WelfareRecommend(){
                 <RecommendSlid name={name} />
             </StyledMain>
         </StyledContainer>) : (
-            <div style={{marginTop: '20vh', fontFamily: 'Noto Sans KR', fontSize: '7vh', textAlign:'center'}}>로그인해주세요!</div>
+            <div style={{marginTop: '40vh', fontFamily: 'Noto Sans KR', fontSize: '7vh', textAlign:'center'}}></div>
         )
     )
 }
