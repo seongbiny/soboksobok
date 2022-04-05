@@ -1,27 +1,27 @@
 .footer {
-    /* height: 7vh; */
-    margin-top: auto;
-    background-color: #E3F2FD;
-    width: 100%;
-    bottom: 0px;
-    /* position: absolute; */
-    box-sizing: border-box;
-    padding: 1vw;
+  /* height: 7vh; */
+  margin-top: auto;
+  background-color: #e3f2fd;
+  width: 100%;
+  bottom: 0px;
+  /* position: absolute; */
+  box-sizing: border-box;
+  padding: 1vw;
+  width: 100vw;
 }
 
 .section {
-    display: flex;
-    /* margin: 1vw; */
-    font-size: small;
+  display: flex;
+  /* margin: 1vw; */
+  font-size: small;
 }
 .section > div > p {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .address {
-    display: flex;
-    flex-direction: column;
-    /* margin-left: 1vw; */
-    font-size: small;
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 1vw; */
+  font-size: small;
 }
-

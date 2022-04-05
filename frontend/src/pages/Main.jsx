@@ -81,31 +81,21 @@ function Main() {
         </StyledIntro>
 
         <StyledBottomBackground>
-          <img
-            src="/background/layered-waves-haikei.svg"
-            alt="main-image"
-            style={{ width: '100%', zIndex: '-1' }}
-          />
+          <StyledSearchBar>
+            <SearchBar></SearchBar>
+          </StyledSearchBar>
 
-          <SearchBar
-            style={{ margin: '0px 20px 0px 20px', padding: '5% 5%', zIndex: '2' }}
-          ></SearchBar>
-        </StyledBottomBackground>
-
-        <StyledTab>
-          <Tabs
-            defaultActiveKey={token ? 'home' : 'popular-list'}
-            id="uncontrolled-tab-example"
-            className="mb-3"
-          >
-            {token ? (
-              <Tab eventKey="home" title="맞춤형 복지 안내">
-                <StyledTabContent>
-                  <h2>맞춤형 복지 안내</h2>
-                  <p>
-                    내 정보 페이지에서 정보를 입력하면 더욱 자세한 맞춤 복지 혜택을 안내받을 수
-                    있습니다.
-                  </p>
+          <StyledTab>
+            <Tabs
+              defaultActiveKey={token ? 'home' : 'popular-list'}
+              id="uncontrolled-tab-example"
+              className="mb-3"
+            >
+              {token ? (
+                <Tab eventKey="home" title="맞춤형 복지 안내">
+                  <h5 style={{ padding: '1% 6.5%' }}>
+                    <b>알맞은 복지 카테고리를 선택하고 맞춤 복지 혜택을 안내받으세요.</b>
+                  </h5>
                   <Button
                     variant="primary"
                     onClick={() => {
@@ -114,19 +104,21 @@ function Main() {
                   >
                     정보 입력하기
                   </Button>
-                </StyledTabContent>
-              </Tab>
-            ) : null}
+                </Tab>
+              ) : null}
 
-            <Tab eventKey="popular-list" title="인기순">
-              <StyledTabContent>
-                <h5>지금 인기있는 복지 혜택을 안내드립니다.</h5>
+              <Tab eventKey="popular-list" title="인기순">
+                <h5 style={{ padding: '1% 6.5%' }}>
+                  <b>지금 인기있는 복지 혜택을 안내드립니다.</b>
+                </h5>
                 <ListGroup
                   variant="flush"
                   style={{
                     paddingLeft: '5%',
                     paddingRight: '5%',
-                    // justifyContent: 'center',
+                    display: 'flex',
+                    // justifyContent: 'spaceBetween',
+                    // alignContent: 'center',
                   }}
                 >
                   {popular.map((item, index) => (
@@ -134,8 +126,7 @@ function Main() {
                       key={index}
                       style={{
                         display: 'flex',
-                        // justifyItems: 'spaceAround',
-                        // alignItems: 'spaceAround',
+                        justifyContent: 'spaceAround',
                       }}
                     >
                       <Stack direction="horizontal" gap={3}>
@@ -149,7 +140,7 @@ function Main() {
                             textOverflow: 'ellipsis',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
-                            width: '600px',
+                            width: '500px',
                           }}
                         >
                           {item.welfare_target_detail}
@@ -168,18 +159,20 @@ function Main() {
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
-              </StyledTabContent>
-            </Tab>
-            <Tab eventKey="recent-list" title="최신순">
-              <StyledTabContent>
-                <h5>최신 등록된 복지 혜택을 안내드립니다.</h5>
+              </Tab>
+
+              <Tab eventKey="recent-list" title="최신순">
+                <h5 style={{ padding: '1% 6.5%' }}>
+                  <b>최신 등록된 복지 혜택을 안내드립니다.</b>
+                </h5>
                 <ListGroup
                   variant="flush"
                   style={{
                     paddingLeft: '5%',
                     paddingRight: '5%',
-                    justifyContent: 'spaceBetween',
-                    verticalAlign: 'center',
+                    display: 'flex',
+                    // justifyContent: 'spaceBetween',
+                    // alignContent: 'center',
                   }}
                 >
                   {recent.map((item, index) => (
@@ -187,27 +180,43 @@ function Main() {
                       key={index}
                       style={{
                         display: 'flex',
-                        justifyItems: 'center',
-                        alignItems: 'center',
+                        justifyContent: 'spaceAround',
                       }}
                     >
-                      <h6 style={{ marginTop: '0.5rem' }}>{item.welfare_service_name}</h6>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => {
-                          navigate(`/welfare/${item.welfareId}`);
-                        }}
-                      >
-                        자세히 보기
-                      </Button>
+                      <Stack direction="horizontal" gap={3}>
+                        <h6 style={{ marginTop: '0.5rem', width: '250px' }}>
+                          {item.welfare_service_name}
+                        </h6>
+                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                        <h6
+                          style={{
+                            marginTop: '0.5rem',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            width: '500px',
+                          }}
+                        >
+                          {item.welfare_target_detail}
+                        </h6>
+                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          자세히 보기
+                        </Button>
+                      </Stack>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
-              </StyledTabContent>
-            </Tab>
-          </Tabs>
-        </StyledTab>
+              </Tab>
+            </Tabs>
+          </StyledTab>
+        </StyledBottomBackground>
       </StyledContainer>
     </div>
   );
@@ -241,21 +250,23 @@ const StyledIntroMain = styled.div`
 `;
 
 const StyledBottomBackground = styled.div`
-  // display: flex;
   width: 100vw;
+  height: 120vh;
   position: relative;
+  background-image: url('/background/layered-waves-haikei.svg');
+`;
+
+const StyledSearchBar = styled.div`
+  margin: 0px 220px 100px 220px;
+  z-index: 2;
 `;
 
 const StyledTab = styled.div`
   margin: 50px 220px 200px 220px;
-  //position: absolute;
+  background: white;
+  border-radius: 5px;
+  padding: 3% 5%;
   z-index: 2;
-`;
-
-const StyledTabContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
 `;
 
 export default Main;
