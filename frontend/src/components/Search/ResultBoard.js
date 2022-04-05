@@ -34,6 +34,7 @@ function ResultBoard() {
         const request = await axios.get(`/api/welfare/search/${keyword}`);
         navigate(`/search?keyword=${keyword}`);
         setResult(request.data.body.welfares);
+        console.log(request.data);
       } catch (err) {
         console.log(err);
       }

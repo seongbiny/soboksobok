@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { getAxios } from "../api";
 import { useNavigate } from 'react-router-dom';
 import Norecommend from "../components/WelfareRecommend/Norecommend";
+import { useSelector } from "react-redux";
 
 const isLogin = () => {
     if(localStorage.getItem('token')) {
@@ -23,8 +24,11 @@ function WelfareRecommend(){
     const [profile, setProfile] = useState('');
     const [cards, setCards] = useState([]);
     let navigate = useNavigate();
+    const {title, content, id} = useSelector(state => state.welData);
 
     useEffect(()=>{
+        console.log(title);
+        console.log(id);
         if (!isLogin()) {
             alert('로그인해주세요')
             navigate('/') 
@@ -80,7 +84,7 @@ const StyledMain = styled.div`
     justify-content: center;
     // margin-bottom: 5vh;
     // margin-top: 5vh;
-    grid-row-gap: 10vh;
+    grid-row-gap: 2vh;
     width: 70vw;
 `;
 const StyledContainer = styled.div`

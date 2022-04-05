@@ -20,7 +20,8 @@ function getAxios() {
 }
 
 const AxiosDjango = axios.create({
-  baseURL: 'http://j6c205.p.ssafy.io:8000',
+  // baseURL: 'http://j6c205.p.ssafy.io:8000',
+  baseURL: "http://localhost:8000",
   // headers: {
   //   'Content-type': 'application/json',
   //   'Access-Control-Allow-Origin': '*',

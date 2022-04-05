@@ -3,6 +3,12 @@ import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { getAxios } from "../../api";
+import { useDispatch } from "react-redux";
+import {
+  welDataName,
+  welDataContent,
+  welDataId,
+} from "../../reducers/welData.js";
 
 const Container = styled.div`
   max-width: 800px;
@@ -15,6 +21,7 @@ function Chart() {
   const axios = getAxios();
   const [label, setLabel] = useState([]);
   const [datas, setDatas] = useState([]);
+  const dispatch = useDispatch();
 
   const data = {
     // labels: ["Red", "Blue", "Yellow"],
@@ -40,17 +47,15 @@ function Chart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const request = await axios.get("/api/welfare/recommend/purpose");
         const request = await axios.get("/api/welfare/recommend/grouppopular");
         console.log(request.data);
-        // let wel = request.data;
-        // await setLabel(Object.keys(wel).slice(0, 6));
-        // await setDatas(Object.values(wel).slice(0, 6));
         let wel = request.data.map(a => a.welfare_service_name);
-        // console.log(wel);
         await setLabel(wel);
+        await dispatch(welDataName(wel));
         let view = request.data.map(a => a.welfare_view);
         await setDatas(view);
+        let welNum = request.data.map(a => a.welfare_id);
+        await dispatch(welDataId(welNum));
       } catch (err) {
         console.log(err);
       }

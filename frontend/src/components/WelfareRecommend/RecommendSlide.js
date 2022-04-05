@@ -27,7 +27,7 @@ function RecommendSlide(props) {
   return (
     <div className="main-wrap">
       <h2 style={{ marginBottom: "3vh", fontWeight: "600" }}>
-        {props.name}님에게 추천하는 복지
+        지금 인기있는 복지
       </h2>
       <Swiper
         style={{
