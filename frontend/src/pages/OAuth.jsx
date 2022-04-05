@@ -9,8 +9,8 @@ function Auth() {
 
   const getToken = async () => {
     try {
-      await localStorage.setItem('jwtToken', token);
-      navigate('/', { replace: true });
+      await localStorage.setItem('token', token);
+      navigate('/filter', { replace: true });
     } catch (err) {
       console.log(err);
     }

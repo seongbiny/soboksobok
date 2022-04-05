@@ -10,4 +10,6 @@ import java.util.List;
 public interface LikeWelfareRepository extends JpaRepository<Likewelfare, Long> {
     List<Likewelfare> findByUser_UserSeq(Long userSeq);
     List<Likewelfare> findAll();
+    void deleteByUser_UserSeqAndWelfare_WelfareId(Long userSeq, Long welfareId);
+    void deleteAllByUser_UserSeq(Long userSeq);
 }

@@ -4,10 +4,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -38,8 +38,17 @@ function a11yProps(index) {
   };
 }
 
-export default function DetailTaps() {
+export default function DetailTaps(props) {
   const [value, setValue] = React.useState(0);
+  const target = props.target;
+  const crit = props.crit;
+  const howto = props.howto;
+  const contact = props.contact;
+  const phone = props.phone;
+  const deptName = props.deptName;
+  const siteLink = props.siteLink;
+  const siteName = props.siteName;
+  const content = props.content;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,25 +78,95 @@ export default function DetailTaps() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <li>
-          국내의 대학(대학원 제외)에 재학 중이거나, 입학예정인 대한민국 국민에게
-          지원합니다.
-        </li>
-        <Box sx={{ bgcolor: "#dee2e6", borderRadius: 2, p: 2, mt: 3 }}>
-          대출 신청일 현재 만 35세 이하인 기초생활수급자 및 학자금지원 8구간
-          이하 국내 고등교육기관 학부생을 지원합니다. <br />
-          다자녀(3자녀 이상)가구 학부생의 경우 학자금지원 관계없이 취업 후 상환
-          학자금대출 이용 가능합니다.
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          누가 받을 수 있나요?
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0 }}>지원대상 |</div>
+          <div>{target}</div>
+        </div>
+        <Box
+          sx={{
+            bgcolor: "#90CAF9",
+            borderRadius: 2,
+            p: 2,
+            mt: 3,
+            color: "#033075",
+          }}
+        >
+          {crit}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          어떤 혜택을 받을 수 있나요?
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0 }}>지원내용 |</div>
+          <div>{content}</div>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          어떻게 신청하나요?
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0 }}>신청방법 |</div>
+          <div>{howto}</div>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+          궁금한 사항이 더 있어요.
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0, marginBottom: "1vh" }}>
+            관련부서 |
+          </div>
+          <div>{deptName}</div>
+          <div>{contact}</div>
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "80px", flexShrink: 0, marginBottom: "1vh" }}>
+            전화문의 |
+          </div>
+          <div>{phone}</div>
+        </div>
+        <div style={{ display: "flex" }}>
+          <Avatar
+            sx={{ width: 20, height: 20 }}
+            style={{ marginRight: "10px" }}
+            src="/broken-image.jpg"
+          />
+          <div style={{ width: "120px", flexShrink: 0 }}>관련 웹사이트 |</div>
+          <div>{siteLink}</div>
+          <div>{siteName}</div>
+        </div>
       </TabPanel>
     </Box>
   );

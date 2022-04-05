@@ -1,6 +1,7 @@
 package com.soboksobok.soboksobok.service;
 
 import com.soboksobok.soboksobok.domain.dto.CharacterDto;
+import com.soboksobok.soboksobok.domain.dto.ProfileDto;
 import com.soboksobok.soboksobok.domain.user.*;
 import com.soboksobok.soboksobok.repository.user.*;
 import com.soboksobok.soboksobok.repository.welfare.FamilyRepository;
@@ -22,6 +23,7 @@ public class UserService {
     private final SelectTargetRepository selectTargetRepository;
     private final TargetRepository targetRepository;
     private final FamilyRepository familyRepository;
+    private final QnaRepository qnaRepository;
 
     public User getUser(String userId) {
         return userRepository.findByUserId(userId);
@@ -43,8 +45,9 @@ public class UserService {
         userUsedRepository.save(used);
     }
 
+    @Transactional
     public void deleteUserUsedRepository(Usedwelfare used){
-        userUsedRepository.delete(used);
+        userUsedRepository.deleteByUser_UserSeqAndWelfare_WelfareId(used.getUser().getUserSeq(),used.getWelfare().getWelfareId());
     }
 
     public List<Likewelfare> getLike(User user){
@@ -61,8 +64,9 @@ public class UserService {
         likeWelfareRepository.save(like);
     }
 
+    @Transactional
     public void deleteLikeRepository(Likewelfare like){
-        likeWelfareRepository.delete(like);
+        likeWelfareRepository.deleteByUser_UserSeqAndWelfare_WelfareId(like.getUser().getUserSeq(), like.getWelfare().getWelfareId());
     }
 
     @Transactional
@@ -70,8 +74,13 @@ public class UserService {
         User user = getUser(userId);
         System.out.println("userseq: "+user.getUserSeq());
         System.out.println("dto: "+dto.toString());
+        String region = dto.getRegion();
+        String area = region.substring(0,1);
+        String gu = region.substring(1);
+        System.out.println("area: "+area+" gu: "+gu);
         user.setChild(dto.getChild());
-        user.setRegion(dto.getRegion());
+        user.setArea(area);
+        user.setGu(gu);
         userRepository.save(user);
         selectTargetRepository.deleteAllByUser_UserSeq(user.getUserSeq());
         selectFamilyRepository.deleteAllByUser_UserSeq(user.getUserSeq());
@@ -107,5 +116,23 @@ public class UserService {
             res.add(i.getTarget().getTargetId());
         }
         return res;
+    }
+
+    public void updateUserProfile(ProfileDto dto, String userId){
+        User user = getUser(userId);
+        user.setAgeRange(dto.getAge());
+        user.setGender(dto.getGender());
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(String userId){
+        User user = getUser(userId);
+        selectTargetRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        selectFamilyRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        userUsedRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        likeWelfareRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        qnaRepository.deleteAllByUser_UserSeq(user.getUserSeq());
+        userRepository.delete(user);
     }
 }

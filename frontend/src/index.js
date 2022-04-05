@@ -8,24 +8,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import logger from "redux-logger";
+import rootReducer from "./reducers/index";
+import { applyMiddleware, createStore, compose } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-let 초기값 = [];
-function reducer(state = 초기값, 액션) {
-  if ( 액션.type === '항목추가'){
+// import { createStore } from "redux";
 
+// let 초기값 = [];
+// function reducer(state = 초기값, 액션) {
+//   if ( 액션.type === '항목추가'){
 
-      let copy = [...state];
-      copy.push(액션.payload);
+//       let copy = [...state];
+//       copy.push(액션.payload);
 
-      return copy
+//       return copy
+//       console.log(copy)
 
-  } else {
-    return state
-  }
-}
+//   } else {
+//     return state
+//   }
+// }
 
-let store = createStore(reducer);
+// let store = createStore(reducer);
+
+const enhancer =
+  process.env.NODE_ENV === "production"
+    ? compose(applyMiddleware())
+    : composeWithDevTools(applyMiddleware(logger));
+
+const store = createStore(rootReducer, undefined, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>
