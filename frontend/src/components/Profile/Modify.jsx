@@ -5,7 +5,6 @@ const ModifyProfile = ({ username, ageRange, setAgeRange, gender, setGender }) =
   return (
     <div>
       <h5>이름: {username}</h5>
-      <h5></h5>
       <h5>
         연령대: <AgeSelectBox ageRange={ageRange} setAgeRange={setAgeRange}></AgeSelectBox>
       </h5>
