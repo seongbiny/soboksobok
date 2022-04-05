@@ -173,13 +173,13 @@ public class WelfareController {
     }
 
     //////////////////////////
-    @ApiOperation(value = "최신순 복지 리스트")
-    @GetMapping("/recent")
-    public ApiResponse getwelfarerecent() {
-        String keyword = "청년";
-        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
-        return ApiResponse.success("welfare", list);
-    }
+//    @ApiOperation(value = "최신순 복지 리스트")
+//    @GetMapping("/recent")
+//    public ApiResponse getwelfarerecent() {
+//        String keyword = "청년";
+//        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
+//        return ApiResponse.success("welfare", list);
+//    }
 
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
