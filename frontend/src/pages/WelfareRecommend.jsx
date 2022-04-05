@@ -87,7 +87,7 @@ const StyledMain = styled.div`
 const StyledContainer = styled.div`
     display: grid;
     justify-content: center;
-    margin-top: 5vh;
+    margin-top: 10vh;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: auto;

@@ -11,10 +11,11 @@ import {
 } from "../../reducers/welData.js";
 
 const Container = styled.div`
-  max-width: 800px;
-  padding-top: 7vh;
-  padding-bottom: 7vh;
-  padding-left: 7vh;
+  // max-width: 800px;
+  // padding-top: 7vh;
+  // padding-bottom: 7vh;
+  // padding-left: 7vh;
+  padding: 3vh;
 `;
 
 function Chart() {
@@ -32,12 +33,12 @@ function Chart() {
         // data: [300, 50, 100, 50, 20],
         data: datas,
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 105, 86)",
-          "rgb(155, 205, 86)",
-          "rgb(155, 305, 86)",
+          "rgba(238, 102, 121, 1)",
+          "rgba(255, 127, 14, 1)",
+          "rgba(255, 198, 0, 1)",
+          "rgba(112, 173, 70, 1)",
+          "rgba(98, 181, 229, 1)",
+          "#52489C",
         ],
         hoverOffset: 4,
       },
