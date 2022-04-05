@@ -12,15 +12,16 @@ let 표 = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-top: 10%;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 let 제목 = styled.h1`
-    text-align: center;
-    font-family: 'Noto Sans KR', sans-serif;
-`
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
+`;
 let 글쓰기버튼 = styled.span`
-    float: right;
-    margin-bottom: 1%;
-`
+  float: right;
+  margin-bottom: 1%;
+`;
 let 페이지번호 = styled.div`
   display: grid;
   justify-content: center;
@@ -33,98 +34,101 @@ let 중앙정렬 = styled.td`
 `;
 
 function isLogin() {
-  const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem('token');
   if (token) {
     return true;
   } else {
     return false;
   }
-}  
-function Qna(props){
-    let navigate = useNavigate();
-    let state = useSelector((state) => state)
-    let [qnas, setQnas] = useState([]);
-    const axios = getAxios();
+}
+function Qna(props) {
+  let navigate = useNavigate();
+  let state = useSelector((state) => state);
+  let [qnas, setQnas] = useState([]);
+  const axios = getAxios();
 
-    const fetchQnas = async () => {
-        const request = await axios.get('/api/qna/mine/');
+  const fetchQnas = async () => {
+    const request = await axios.get('/api/qna/mine/');
 
         const datas = request.data.body.success;
         setQnas([...datas]) 
     }
-
-    useEffect(()=> {
-        fetchQnas();
+    const checkLogin = () => {
+        if (!isLogin()) {
+            alert('로그인해주세요')
+            navigate(`/` )
+        } else {
+            fetchQnas()
+        }
+    }
+    useEffect(()=>{
+        checkLogin();
     }, []);
+
     return (
-
         <Container>
+
+        {isLogin() ? (
             <표>
-                <제목>
-                    Q&A 게시판
-                </제목>
-                {isLogin() ? (
-                    <Link to = '/QnaCreate'>
-                    <글쓰기버튼 >
-                        <Button variant="secondary">글쓰기</Button>{' '}
-                    </글쓰기버튼>
-                    </Link>
-                ):(                   
-                    
-                    <Link to = '/'>
-                    <글쓰기버튼>
-                        <Button variant="secondary" onClick={() => {
-                        alert('로그인 후 작성해주세요')
-                        }}>글쓰기</Button>{' '}
-                        
-                    </글쓰기버튼>
-                    </Link>
-                )}
+            <제목>
+                Q&A 게시판
+            </제목>
 
-                <Table striped bordered hover >
-                    <thead>
-                        <표내용>
-                        <th width='20%'>번호</th>
-                        <th width='60%'>제목</th>
-                        <th width='20%'>등록일</th>
-                        </표내용>
+                <Link to = '/QnaCreate'>
+                <글쓰기버튼 >
+                    <Button variant="secondary">글쓰기</Button>{' '}
+                </글쓰기버튼>
+                </Link>
 
-                    </thead>
+            <Table striped bordered hover >
+                <thead>
+                    <표내용>
+                    <th width='20%'>번호</th>
+                    <th width='60%'>제목</th>
+                    <th width='20%'>등록일</th>
+                    </표내용>
 
-                    { qnas.length === 0 ? 
-                        <tbody>
-                            <tr>
-                            {/* <Blank></Blank> */}
-                            <Write></Write>
-                            {/* <Blank></Blank> */}
-                            </tr>
+                </thead>
+
+                { qnas.length === 0 ? 
+                    <tbody>
+                        <tr>
+                        {/* <Blank></Blank> */}
+                        <Write></Write>
+                        {/* <Blank></Blank> */}
+                        </tr>
 
 
-                        </tbody>
+                    </tbody>
 
-                        : 
-                        <tbody>
-                        {   
-                            qnas.map((a, i)=> {
-                                return (
-                                    <tr key={i} onClick={()=> {
-                                        navigate(`/QnaDetail/${a.id}` ) 
-                                    }} style={{cursor: 'pointer'}} >
-                                        <중앙정렬 width='20%'>{i+1}</중앙정렬>
-                                        <중앙정렬 width='60%'>{a.title}</중앙정렬>
-                                        <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
-                                    </tr>
-                                )
-                            })
-                        }
-                        </tbody>
+                    : 
+                    <tbody>
+                    {   
+                        qnas.map((a, i)=> {
+                            return (
+                                <tr key={i} onClick={()=> {
+                                    navigate(`/QnaDetail/${a.id}` ) 
+                                }} style={{cursor: 'pointer'}} >
+                                    <중앙정렬 width='20%'>{i+1}</중앙정렬>
+                                    <중앙정렬 width='60%'>{a.title}</중앙정렬>
+                                    <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
+                                </tr>
+                            )
+                        })
                     }
+                    </tbody>
+                }
 
-                </Table>
+            </Table>
 
 
 
-            </표>
+        </표>
+        ): (
+            // navigate(`/` )
+            <div></div>
+        )}
+
         </Container>
 
 

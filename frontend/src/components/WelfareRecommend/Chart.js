@@ -3,16 +3,26 @@ import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { getAxios } from "../../api";
+import { useDispatch } from "react-redux";
+import {
+  welDataName,
+  welDataContent,
+  welDataId,
+} from "../../reducers/welData.js";
 
 const Container = styled.div`
-  max-width: 800px;
-  padding: 5vh;
+  // max-width: 800px;
+  // padding-top: 7vh;
+  // padding-bottom: 7vh;
+  // padding-left: 7vh;
+  padding: 3vh;
 `;
 
 function Chart() {
   const axios = getAxios();
   const [label, setLabel] = useState([]);
   const [datas, setDatas] = useState([]);
+  const dispatch = useDispatch();
 
   const data = {
     // labels: ["Red", "Blue", "Yellow"],
@@ -23,11 +33,12 @@ function Chart() {
         // data: [300, 50, 100, 50, 20],
         data: datas,
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-          "rgb(255, 105, 86)",
-          "rgb(155, 205, 86)",
+          "rgba(238, 102, 121, 1)",
+          "rgba(255, 127, 14, 1)",
+          "rgba(255, 198, 0, 1)",
+          "rgba(112, 173, 70, 1)",
+          "rgba(98, 181, 229, 1)",
+          "#52489C",
         ],
         hoverOffset: 4,
       },
@@ -37,13 +48,15 @@ function Chart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const request = await axios.get("/api/welfare/recommend/purpose");
+        const request = await axios.get("/api/welfare/recommend/grouppopular");
         console.log(request.data);
-        let wel = request.data;
-        // console.log(Object.keys(request.data).slice(0, 5));
-        // console.log(Object.values(request.data).slice(0, 5));
-        await setLabel(Object.keys(wel).slice(0, 5));
-        await setDatas(Object.values(wel).slice(0, 5));
+        let wel = request.data.map(a => a.welfare_service_name);
+        await setLabel(wel);
+        await dispatch(welDataName(wel));
+        let view = request.data.map(a => a.welfare_view);
+        await setDatas(view);
+        let welNum = request.data.map(a => a.welfare_id);
+        await dispatch(welDataId(welNum));
       } catch (err) {
         console.log(err);
       }

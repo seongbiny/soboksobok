@@ -6,12 +6,13 @@ import { getAxios } from '../api.js';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import Comments from '../components/Comments'
-
+import '../CSS/app.css';
 let 글작성틀 = styled.div`
   width: 70%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 5%;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 let 게시판이름 = styled.h1`
   text-align: center;

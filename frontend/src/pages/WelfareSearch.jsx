@@ -24,6 +24,7 @@ const StyledContainer = styled.div`
     justify-content: center;
     padding-top: 30px;
     font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 12vh;
 `;
 const StyledMain = styled.div`
     display: flex;

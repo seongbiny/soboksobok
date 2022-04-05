@@ -30,11 +30,11 @@ function Profile() {
       let response = await axios.get('/api/users/profile');
 
       console.log('카카오 : ', response.data);
-      setUsername(response.data.body.user.username);
-      setProfileImage(response.data.body.user.profileImageUrl);
+      setUsername(localStorage.getItem('name'));
+      setProfileImage(localStorage.getItem('profile'));
 
-      localStorage.setItem('name', response.data.body.user.username);
-      localStorage.setItem('profile', response.data.body.user.profileImageUrl);
+      // localStorage.setItem('name', response.data.body.user.username);
+      // localStorage.setItem('profile', response.data.body.user.profileImageUrl);
       setUserSeq(response.data.body.user.userSeq);
       console.log('userSeq: ', userSeq);
 
@@ -51,10 +51,12 @@ function Profile() {
         setAgeRender(ageMap.get(ageRange));
       }
 
-      if (response.data.body.user.gender === null) {
+      if (response.data.body.user.male === null) {
         setGender('placeholder');
-      } else {
-        setGender(response.data.body.user.gender);
+      } else if (response.data.body.user.male === 1) {
+        setGender('male');
+      } else if (response.data.body.user.male === 0) {
+        setGender('female');
       }
     } catch (err) {
       console.log(err);

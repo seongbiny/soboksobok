@@ -25,16 +25,16 @@ function FilterCard(props) {
         pr: 2,
         display: "grid",
         gridTemplateRows: "80% 20%",
-        background: "#DDF0F8",
+        background: "#E3F2FD",
       }}
     >
       <CardContent style={{ display: "grid" }}>
         <Grid container sx={{ mb: 2 }}>
           <Typography
-            variant="h5"
+            variant="h6"
             component="div"
             sx={10}
-            style={{ color: "#033075", fontWeight: "500" }}
+            style={{ color: "#033075", fontFamily: "Noto Sans KR" }}
           >
             {name}
           </Typography>

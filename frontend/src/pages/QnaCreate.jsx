@@ -9,7 +9,7 @@ import '../CSS/qnacreate.css';
 import { useState } from 'react';
 import { getAxios } from '../api.js';
 import ReactHtmlParser from 'react-html-parser';
-
+import '../CSS/app.css';
 let 게시판이름 = styled.h1`
   text-align: center;
   margin-bottom: 5%;
@@ -24,6 +24,7 @@ let 글작성틀 = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-top: 5%;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 let 버튼위치 = styled.div`
   padding-top: 3%;

@@ -15,7 +15,10 @@ import NotFound from "./pages/NotFound";
 import Layout from "./components/layout/layout";
 import "./CSS/app.css";
 
+
+
 function App() {
+  const token = localStorage.getItem('jwtToken');
   return (
     <div id="wrapper">
       <Layout>

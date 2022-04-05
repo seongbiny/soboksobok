@@ -45,7 +45,7 @@ const DeleteAccount = () => {
               handleClose();
               getDelete();
               setShowDone(true);
-              localStorage.removeItem('jwtToken');
+              localStorage.removeItem('token');
             }}
           >
             탈퇴
