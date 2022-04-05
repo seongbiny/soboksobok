@@ -74,7 +74,7 @@ function Profile() {
       setAgeRender(ageMap.get(ageRange));
 
       const djangoAxios = getAxiosDjango();
-      let res = await djangoAxios.get(`/insertusergroup/${userSeq}`);
+      let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
       console.log('django res: ', res);
     } catch (err) {
       console.log(err);

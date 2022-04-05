@@ -7,6 +7,7 @@ import { getAxios } from '../api.js';
 import Blank from '../components/Qna/Blank.js';
 import Write from '../components/Qna/BlankWrite.js';
 import '../CSS/app.css';
+import LoginModal from '../components/LoginModal.js';
 let 표 = styled.div`
   width: 80%;
   margin-left: auto;
@@ -50,91 +51,79 @@ function Qna(props) {
   const fetchQnas = async () => {
     const request = await axios.get('/api/qna/mine/');
 
-        const datas = request.data.body.success;
-        setQnas([...datas]) 
+    const datas = request.data.body.success;
+    setQnas([...datas]);
+  };
+  const checkLogin = () => {
+    if (!isLogin()) {
+      alert('로그인해주세요');
+      navigate(`/`);
+    } else {
+      fetchQnas();
     }
-    const checkLogin = () => {
-        if (!isLogin()) {
-            alert('로그인해주세요')
-            navigate(`/` )
-        } else {
-            fetchQnas()
-        }
-    }
-    useEffect(()=>{
-        checkLogin();
-    }, []);
+  };
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
-    return (
-        <Container>
+  return (
+    <Container>
+      {isLogin() ? (
+        <표>
+          <제목>Q&A 게시판</제목>
 
-        {isLogin() ? (
-            <표>
-            <제목>
-                Q&A 게시판
-            </제목>
+          <Link to="/QnaCreate">
+            <글쓰기버튼>
+              <Button variant="secondary">글쓰기</Button>{' '}
+            </글쓰기버튼>
+          </Link>
 
-                <Link to = '/QnaCreate'>
-                <글쓰기버튼 >
-                    <Button variant="secondary">글쓰기</Button>{' '}
-                </글쓰기버튼>
-                </Link>
+          <Table striped bordered hover>
+            <thead>
+              <표내용>
+                <th width="20%">번호</th>
+                <th width="60%">제목</th>
+                <th width="20%">등록일</th>
+              </표내용>
+            </thead>
 
-            <Table striped bordered hover >
-                <thead>
-                    <표내용>
-                    <th width='20%'>번호</th>
-                    <th width='60%'>제목</th>
-                    <th width='20%'>등록일</th>
-                    </표내용>
-
-                </thead>
-
-                { qnas.length === 0 ? 
-                    <tbody>
-                        <tr>
-                        {/* <Blank></Blank> */}
-                        <Write></Write>
-                        {/* <Blank></Blank> */}
-                        </tr>
-
-
-                    </tbody>
-
-                    : 
-                    <tbody>
-                    {   
-                        qnas.map((a, i)=> {
-                            return (
-                                <tr key={i} onClick={()=> {
-                                    navigate(`/QnaDetail/${a.id}` ) 
-                                }} style={{cursor: 'pointer'}} >
-                                    <중앙정렬 width='20%'>{i+1}</중앙정렬>
-                                    <중앙정렬 width='60%'>{a.title}</중앙정렬>
-                                    <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                }
-
-            </Table>
-
-
-
+            {qnas.length === 0 ? (
+              <tbody>
+                <tr>
+                  {/* <Blank></Blank> */}
+                  <Write></Write>
+                  {/* <Blank></Blank> */}
+                </tr>
+              </tbody>
+            ) : (
+              <tbody>
+                {qnas.map((a, i) => {
+                  return (
+                    <tr
+                      key={i}
+                      onClick={() => {
+                        navigate(`/QnaDetail/${a.id}`);
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <중앙정렬 width="20%">{i + 1}</중앙정렬>
+                      <중앙정렬 width="60%">{a.title}</중앙정렬>
+                      <중앙정렬 width="20%">
+                        {a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일
+                      </중앙정렬>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
+          </Table>
         </표>
-        ): (
-            // navigate(`/` )
-            <div></div>
-        )}
-
-        </Container>
-
-
-
-
-    )
+      ) : (
+        // navigate(`/` )
+        <LoginModal></LoginModal>
+      )}
+    </Container>
+  );
 }
 
 export default Qna;
