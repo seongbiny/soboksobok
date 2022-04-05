@@ -7,25 +7,23 @@ import { getAxios } from '../api.js';
 import Blank from '../components/Qna/Blank.js';
 import Write from '../components/Qna/BlankWrite.js';
 import '../CSS/app.css';
-let 표 = styled.div`
+let TablePlace = styled.div`
+  margin-top: 10%;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 10%;
   font-family: 'Noto Sans KR', sans-serif;
 `;
-let 제목 = styled.h1`
+let Title = styled.h1`
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif;
 `;
-let 글쓰기버튼 = styled.span`
+let WriteButton = styled.span`
   float: right;
   margin-bottom: 1%;
 `;
-let 페이지번호 = styled.div`
-  display: grid;
-  justify-content: center;
-`;
+
 let 표내용 = styled.tr`
   text-align: center;
 `;
@@ -69,18 +67,18 @@ function Qna(props) {
         <Container>
 
         {isLogin() ? (
-            <표>
-            <제목>
+            <TablePlace>
+            <Title>
                 Q&A 게시판
-            </제목>
+            </Title>
 
                 <Link to = '/QnaCreate'>
-                <글쓰기버튼 >
+                <WriteButton >
                     <Button variant="secondary">글쓰기</Button>{' '}
-                </글쓰기버튼>
+                </WriteButton>
                 </Link>
 
-            <Table striped bordered hover >
+            <Table bordered hover >
                 <thead>
                     <표내용>
                     <th width='20%'>번호</th>
@@ -123,7 +121,7 @@ function Qna(props) {
 
 
 
-        </표>
+        </TablePlace>
         ): (
             // navigate(`/` )
             <div></div>
