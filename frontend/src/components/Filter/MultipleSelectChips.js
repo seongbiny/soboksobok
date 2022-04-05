@@ -4,7 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import styled from 'styled-components';
 import { makeStyles, FormLabel, Chip, Typography, FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,16 +44,11 @@ const MultipleSelectChips = ({ value, setValue, options, label, error, setError 
   };
 
   return (
-    <>
+    <StyledContainer>
       <div className={classes.container}>
-        {label && (
-          <FormLabel error={Boolean(error)}>
-            <Typography variant="body2">{`${label}${value.length ? ':' : ''} ${options
-              .filter((option) => value.indexOf(option.value) !== -1)
-              .map((option) => option.label)
-              .join(', ')}`}</Typography>
-          </FormLabel>
-        )}
+        <h5>
+          <b>{label}</b>
+        </h5>
         {Boolean(error) && (
           <FormHelperText className={classes.formHelperText} error={Boolean(error)}>
             {error}
@@ -77,9 +72,14 @@ const MultipleSelectChips = ({ value, setValue, options, label, error, setError 
             : null}
         </div>
       </div>
-    </>
+    </StyledContainer>
   );
 };
+
+const StyledContainer = styled.div`
+  font-family: 'Noto Sans KR', sans-serif;
+  margin-bottom: 2%;
+`;
 
 MultipleSelectChips.propTypes = {
   label: PropTypes.string,
