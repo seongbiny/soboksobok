@@ -30,11 +30,11 @@ function Profile() {
       let response = await axios.get('/api/users/profile');
 
       console.log('카카오 : ', response.data);
-      setUsername(response.data.body.user.username);
-      setProfileImage(response.data.body.user.profileImageUrl);
+      setUsername(localStorage.getItem('name'));
+      setProfileImage(localStorage.getItem('profile'));
 
-      localStorage.setItem('name', response.data.body.user.username);
-      localStorage.setItem('profile', response.data.body.user.profileImageUrl);
+      // localStorage.setItem('name', response.data.body.user.username);
+      // localStorage.setItem('profile', response.data.body.user.profileImageUrl);
       setUserSeq(response.data.body.user.userSeq);
       console.log('userSeq: ', userSeq);
 
