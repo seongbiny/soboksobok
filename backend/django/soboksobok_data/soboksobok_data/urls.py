@@ -21,12 +21,12 @@ import soboksobok_app2.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',soboksobok_app.views.index,name='index'),
-    path('insertusergroup/<int:user_seq>', soboksobok_app.views.insertusergroupAPI),
-    path('insertusergroup/dbscan/<int:user_seq>', soboksobok_app.views.insertusergroupAPI_DBSCAN),
     path('database/all/', soboksobok_app2.views.insertWelfare),
-    path('clustering/',soboksobok_app2.views.clustering),
-    path('welfare/cosine/',soboksobok_app2.views.wel_wel_cosine),
     path('dbscan/',soboksobok_app2.views.dbscan),
+    path('welfare/cosine/',soboksobok_app2.views.wel_wel_cosine),
+    path('insertusergroup/dbscan/<int:user_seq>', soboksobok_app.views.insertusergroupAPI_DBSCAN),
+    # path('insertusergroup/<int:user_seq>', soboksobok_app.views.insertusergroupAPI),
+    # path('clustering/',soboksobok_app2.views.clustering),
     # 위에까지 rest api 
     path('insert_user',soboksobok_app.views.insertWelfare,name='insert_user'),
     # path('user_info',soboksobok_app.views.selectuser,name='user_info'),

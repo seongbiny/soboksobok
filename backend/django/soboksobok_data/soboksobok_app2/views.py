@@ -6,7 +6,6 @@ import os
 import re
 from konlpy.tag import Okt
 from sklearn.feature_extraction.text import TfidfVectorizer
-from soyclustering import SphericalKMeans
 from pandas import Series,DataFrame
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -119,7 +118,6 @@ def insertWelfare(request):
 	
 	for i in range(len(csv_welfarelife)):
 		row = csv_welfarelife.iloc[i]
-		print("row",row)
 		welfare_life = Welfarelife()
 
 		life_id = row['welfarelife_life_id']
@@ -166,23 +164,18 @@ def insertWelfare(request):
 		welfare_targets.append(welfare_target)
 	
 	Welfaretarget.objects.bulk_create(welfare_targets)
-	
-	return Response("success")
+	print("데이터 넣기 완료")
 
+	return Response("success")
 
 # 복지 단어 늘여놓기
 def welfare_word_detail():
-	
 	total = []
 
 	welfare = Welfare.objects.all()
 	family = Welfarefamily.objects.all()
 	life = Welfarelife.objects.all()
 	target = Welfaretarget.objects.all()
-
-	family_idx=0
-	target_idx=0
-	age_idx=0
 
 	for j in range(len(welfare)):
 		age09="@"
@@ -238,7 +231,6 @@ def welfare_word_detail():
 		# temp 데이터 끝
 
 		f = family.filter(welfare_id=w_id)
-
 		for nf in f:
 			nfi = nf.family_id
 			if nfi == 0:
@@ -348,10 +340,8 @@ def welfare_word_detail():
 	result.to_csv(os.getcwd()+"/data/"+result_name,index=False,encoding='utf-8-sig')
 	return result_name
 	
-
 # 복지 특성유무 늘여놓기
 def welfare_detail():
-	
 	total = []
 
 	welfare = Welfare.objects.all()
@@ -363,7 +353,6 @@ def welfare_detail():
 	family_idx=0
 	target_idx=0
 	age_idx=0
-	# purpose_idx=0
 
 	for j in range(len(welfare)):
 		age09=0
@@ -394,40 +383,12 @@ def welfare_detail():
 		alone_old_man=0
 		vulnerable=0
 		none_of_them=0 #가구 특성
-		# purpose_none_of_them=0
-		# safe=0
-		# culture=0
-		# education=0
-		# protect=0
-		# for_job=0
-		# for_house=0
-		# normal_life=0
-		# physical_health=0
-		# mental_health=0
 		
 		# 초기 값 설정
 		w=welfare[j] #복지 혜택 하나
 		# temp 시작
 		w_id=w.welfare_id
 		ori_id = w.welfare_ori_id
-		# tmp=cur.iloc[:,2:]
-		# row=tmp.iloc[j]
-		# len_row=row.count() # column 개수 세기
-		# if w.welfare_area == '1':
-		# 	gwangju = 1
-		# 	if w.welfare_gu == '0':
-		# 		gwangju_gu = 1
-		# 	elif w.welfare_gu == '1':
-		# 		gwangju_gwangsan = 1
-		# 	elif w.welfare_gu == '2':
-		# 		gwangju_nam = 1
-		# 	elif w.welfare_gu == '3':
-		# 		gwangju_dong = 1
-		# 	elif w.welfare_gu == '4':
-		# 		gwangju_buk = 1
-		# 	elif w.welfare_gu == '5':
-		# 		gwangju_seo = 1
-		# 지역,구 끝
 
 		if w.welfare_female == 1:
 			female = 1
@@ -510,45 +471,10 @@ def welfare_detail():
 				age09 = age1019 = age2029 = age3039 = age60 = 1
 		# 나이 끝
 
-		# p = purpose.filter(welfare_id=w_id)
-
-		# for np in p:
-		# 	npi = np.purpose_id
-		# 	if npi == 0:
-		# 		for_job = 1
-		# 	elif npi == 1:
-		# 		for_house = 1
-		# 	elif npi == 2:
-		# 		normal_life = 1
-		# 	elif npi == 3:
-		# 		physical_health = 1
-		# 	elif npi == 4:
-		# 		mental_health = 1
-		# 	elif npi == 5:
-		# 		protect = 1
-		# 	elif npi == 6:
-		# 		education = 1
-		# 	elif npi == 7:
-		# 		culture = 1
-		# 	elif npi == 8:
-		# 		safe = 1
-		# 	elif npi == 9:
-		# 		purpose_none_of_them = 1
-		# 	# 사업목적 끝
-		
 		# 데이터 받기 완료        
 		d=pd.DataFrame({
 			'아이디':[w_id],
 			'ori_아이디':[ori_id],
-			# '전국':[area],
-			# '광주':[gwangju],
-			# '전국구':[area_gu],
-			# '광주구':[gwangju_gu],
-			# '광주 광산구':[gwangju_gwangsan],
-			# '광주 남구':[gwangju_nam],
-			# '광주 동구':[gwangju_dong],
-			# '광주 북구':[gwangju_buk],
-			# '광주 서구':[gwangju_seo],
 			'아동':[age09],
 			'청소년':[age1019],
 			'청년':[age2029],
@@ -577,16 +503,6 @@ def welfare_detail():
 			'요양환자/치매환자':[alone_old_man],
 			'취약계층':[vulnerable],
 			'해당없음':[none_of_them],
-			# '일자리':[for_job],
-			# '주거':[for_house],
-			# '일상생활':[normal_life],
-			# '신체건강 및 보건의료':[physical_health],
-			# '정신건강 및 심리정서':[mental_health],
-			# '사업목적해당없음':[purpose_none_of_them],
-			# '안전 및 권익보장':[safe],
-			# '문화 및 여가':[culture],
-			# '보육 및 교육':[education],
-			# '보호 및 돌봄/요양':[protect],
 			})
 		total.append(d)
 
@@ -594,61 +510,30 @@ def welfare_detail():
 	result.to_csv(os.getcwd()+"/data/"+"complete.csv",index=False,encoding='utf-8-sig')
 	return result
 
-
-@api_view(['GET'])
-# 복지 특성유무기반 Spherical K-means 클러스터링
-def clustering(request):
-	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
-
-	total = welfare_detail()
-
-	temp = total.iloc[:, 2:]
-
-	result=csr_matrix(temp, shape=None, dtype=None, copy=False)
-
-	kmeans = SphericalKMeans(n_clusters = 20)
-	labels = kmeans.fit_predict(result)
-
-	word = total
-	word['clustering'] = labels[:]
-	# idx=total.iloc[:,:1]
-	# word = pd.concat([idx,word],axis=1)
-
-	word.to_csv(os.getcwd()+"/data/"+"welfare+clustering.csv", encoding = 'utf-8-sig')
-	
-	welfares = Welfare.objects.all()
-
-	for i in range(len(word)):
-		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
-		welfare.update(welfare_group=word.iloc[i]['clustering'])
-
-	return Response('clustering done')
-
 # 복지 특성유무기반 DBSCAN 클러스터링 
 @api_view(['GET'])
 def dbscan(request):
-	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
+	ex=welfare_word_detail()
+	total_word = pd.read_csv(os.getcwd()+"/data/"+"welfare_word_result.csv", encoding = 'utf-8')
 	total = welfare_detail()
-
+	
 	temp = total.iloc[:, 2:]
 
 	model = DBSCAN(min_samples=6)
 	labels = model.fit_predict(temp)
 
-	# result=csr_matrix(temp, shape=None, dtype=None, copy=False)
-
-	# kmeans = SphericalKMeans(n_clusters = 20)
-	# labels = kmeans.fit_predict(result)
-
 	word = total
 	word['clustering'] = labels[:]
+	word2=total_word
+	word2['clustering'] = labels[:]
 	# idx=total.iloc[:,:1]
 	# word = pd.concat([idx,word],axis=1)
 
 	word.to_csv(os.getcwd()+"/data/"+"welfare+DBSCAN.csv", encoding = 'utf-8-sig')
+	word2.to_csv(os.getcwd()+"/data/"+"welfare_word+DBSCAN.csv", encoding = 'utf-8-sig')
 	
+	# DB에 저장하는 코드 
 	welfares = Welfare.objects.all()
-
 	for i in range(len(word)):
 		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
 		welfare.update(welfare_group=word.iloc[i]['clustering'])
@@ -665,7 +550,6 @@ def wel_wel_0101_vector():
 	vector = csr_matrix(total, shape=None, dtype=None, copy=False)
 
 	return vector
-
 
 # 복지 단어 나누기 && 불용어 처리 
 def welfare_word_split():
@@ -769,7 +653,6 @@ def wel_wel_word_cosine():
 
 	return genre_sim
 	
-
 # 복지-복지 유사도 계산 및 db 저장
 @api_view(['GET'])
 def wel_wel_cosine(request):
@@ -1075,3 +958,33 @@ def wel_wel_cosine(request):
 # 		welfare.update(welfare_similar_welfare=top_10[i])
 	
 # 	return
+
+
+# @api_view(['GET'])
+# # 복지 특성유무기반 Spherical K-means 클러스터링
+# def clustering(request):
+# 	# total = pd.read_csv(os.getcwd()+"/data/"+"complete.csv", encoding = 'utf-8')
+
+# 	total = welfare_detail()
+
+# 	temp = total.iloc[:, 2:]
+
+# 	result=csr_matrix(temp, shape=None, dtype=None, copy=False)
+
+# 	kmeans = SphericalKMeans(n_clusters = 20)
+# 	labels = kmeans.fit_predict(result)
+
+# 	word = total
+# 	word['clustering'] = labels[:]
+# 	# idx=total.iloc[:,:1]
+# 	# word = pd.concat([idx,word],axis=1)
+
+# 	word.to_csv(os.getcwd()+"/data/"+"welfare+clustering.csv", encoding = 'utf-8-sig')
+	
+# 	welfares = Welfare.objects.all()
+
+# 	for i in range(len(word)):
+# 		welfare = welfares.filter(welfare_id=word.iloc[i]['아이디'])
+# 		welfare.update(welfare_group=word.iloc[i]['clustering'])
+
+# 	return Response('clustering done')
