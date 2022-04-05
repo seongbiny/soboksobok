@@ -68,16 +68,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = new User(
                 userInfo.getId(),
                 userInfo.getName(),
-                userInfo.getEmail(),
-                "Y",
+//                userInfo.getEmail(),
+//                "Y",
                 userInfo.getImageUrl(),
                 providerType,
                 RoleType.USER,
                 now,
-                now,
-                userInfo.getAgeRange(),
-                userInfo.getGender(),
-                userInfo.getBirth()
+                now
         );
 
 
@@ -88,24 +85,26 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         System.out.println("CustomOAuth2UserService - updateUser");
         System.out.println("유저는: "+userInfo);
         if (userInfo.getName() != null && !user.getUsername().equals(userInfo.getName())) {
+            System.out.println("유저 이름 갱신");
             user.setUsername(userInfo.getName());
         }
 
         if (userInfo.getImageUrl() != null && !user.getProfileImageUrl().equals(userInfo.getImageUrl())) {
+            System.out.println("유저 프사 갱신");
             user.setProfileImageUrl(userInfo.getImageUrl());
         }
 
-        if(userInfo.getAgeRange() != null && !user.getAgeRange().equals(userInfo.getAgeRange())){
-            user.setAgeRange(userInfo.getAgeRange());
-        }
-
-        if(userInfo.getGender() != null && !user.getGender().equals(userInfo.getGender())){
-            user.setGender(userInfo.getGender());
-        }
-
-        if(userInfo.getBirth() != null && !user.getBirth().equals(userInfo.getBirth())){
-            user.setBirth(userInfo.getBirth());
-        }
+//        if(userInfo.getAgeRange() != null && !user.getAgeRange().equals(userInfo.getAgeRange())){
+//            user.setAgeRange(userInfo.getAgeRange());
+//        }
+//
+//        if(userInfo.getGender() != null && !user.getGender().equals(userInfo.getGender())){
+//            user.setGender(userInfo.getGender());
+//        }
+//
+//        if(userInfo.getBirth() != null && !user.getBirth().equals(userInfo.getBirth())){
+//            user.setBirth(userInfo.getBirth());
+//        }
 
         return user;
     }

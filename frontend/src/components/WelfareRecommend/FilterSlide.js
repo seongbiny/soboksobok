@@ -1,78 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import styled from "styled-components";
 import FilterCard from "./FilterCard";
+// import { getAxios } from "../../api";
+import styled from "styled-components";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
-const StyledBox = styled.div`
-  // border: 1px solid;
-  width: 80vw;
-`;
+function FilterSlide(props) {
+  // const axios = getAxios();
+  // const [cards, setCards] = useState([]);
+  // const navigate = useNavigate();
 
-function FilterSlide() {
+  // useEffect(() => {
+  //   const fetchCard = async () => {
+  //     try {
+  //       const request = await axios.get("/api/welfare/recommend");
+  //       console.log(request.data.body.welfare);
+  //       setCards(request.data.body.welfare);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchCard();
+  // }, []);
+
+  // const { length: count } = cards;
+  // if (count === 0) {
+  //   return (
+  //     <StyledBox>
+  //       <h2 style={{ margin: "auto", color: "#033075" }}>
+  //         추천 복지가 없습니다.
+  //       </h2>
+  //       <div style={{ width: "15vw", height: "5vh", margin: "auto" }}>
+  //         <Button
+  //           variant="primary"
+  //           onClick={() => {
+  //             navigate("/filter");
+  //           }}
+  //         >
+  //           맞춤필터 설정하러가기
+  //         </Button>
+  //       </div>
+  //     </StyledBox>
+  //   );
+  // }
+
   return (
-    <StyledBox>
-      <div className="main-wrap">
-        <h1 style={{ marginBottom: "5vh" }}>USER님에게 추천하는 복지</h1>
-        <Swiper
-          style={{
-            width: "80vw",
-            height: "40vh",
-            // backgroundColor: "#FFF5F1",
-            borderRadius: "12px",
-            // border: "1px solid",
-          }}
-          spaceBetween={8}
-          slidesPerView={3}
-          initialSlide={1}
-          navigation
-          scrollbar={{ draggable: true }}
-          loop
-          // pagination={{
-          //   clickable: true,
-          // }}
-          // autoplay={{ delay: 3000 }}
-        >
+    <StyledBox className="main-wrap">
+      <h2 style={{ marginBottom: "3vh", fontWeight: "600" }}>
+        {props.name}님에게 추천하는 복지
+      </h2>
+      <Swiper
+        style={{
+          width: "70vw",
+          height: "35vh",
+          borderRadius: "12px",
+        }}
+        spaceBetween={8}
+        slidesPerView={4}
+        initialSlide={1}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        loop
+        autoplay={{ delay: 2000 }}
+      >
+        {props.cards.map(card => (
           <SwiperSlide
             style={{
               display: "flex",
               justifyContent: "center",
             }}
+            key={card.welfareId}
           >
-            <FilterCard style={{ alignItems: "center", border: "1px solid" }} />
+            <FilterCard
+              style={{
+                alignItems: "center",
+              }}
+              name={card.welfare_service_name}
+              content={card.welfare_service_content}
+              id={card.welfareId}
+            />
           </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-          <SwiperSlide
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <FilterCard />
-          </SwiperSlide>
-        </Swiper>
-      </div>
+        ))}
+      </Swiper>
     </StyledBox>
   );
 }
+const StyledBox = styled.div`
+  box-sizing: border-box;
+  margin-bottom: 5vh;
+  margin-top: 5vh;
+`;
 export default FilterSlide;

@@ -1,24 +1,56 @@
-import React, { useState } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import { yellow, grey } from "@mui/material/colors";
-import Grid from "@mui/material/Grid";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import { yellow, grey } from '@mui/material/colors';
+import Grid from '@mui/material/Grid';
+import { getAxios } from '../../api';
 
 function DetailCard(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const welfare = props.recommend;
+  const likeNum = props.likeNum;
+  const welfareId = welfare.welfareId;
+  const axios = getAxios();
 
-  console.log(welfare);
+  const likeAxios = async () => {
+    try {
+      const request = await axios.put(`/api/users/like/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const unlikeAxios = async () => {
+    try {
+      const request = await axios.delete(`/api/users/like/${welfareId}`);
+      console.log(request.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (likeNum.length !== 0) {
+      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    }
+  }, []);
+
+  let navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/welfare/${welfareId}`);
+    console.log('클릭');
+    window.location.reload();
+  };
 
   return (
-    <Card
-      sx={{ width: 275, p: 2, display: "grid", gridTemplateRows: "80% 20%" }}
-    >
+    <Card sx={{ width: 275, p: 2, display: 'grid', gridTemplateRows: '80% 20%' }}>
       <CardContent>
         <Grid container sx={{ mb: 2 }}>
           <Grid item xs={10}>
@@ -32,6 +64,7 @@ function DetailCard(props) {
                 sx={{ color: yellow[600], fontSize: 30 }}
                 onClick={() => {
                   setLikeBtn(false);
+                  unlikeAxios();
                 }}
               />
             ) : (
@@ -39,6 +72,7 @@ function DetailCard(props) {
                 sx={{ color: grey[400], fontSize: 30 }}
                 onClick={() => {
                   setLikeBtn(true);
+                  likeAxios();
                 }}
               />
             )}
@@ -55,7 +89,7 @@ function DetailCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" size="small" fullWidth>
+        <Button variant="contained" size="small" fullWidth onClick={handleClick}>
           상세보기
         </Button>
       </CardActions>
