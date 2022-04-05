@@ -236,7 +236,7 @@ export default function DetailTaps(props) {
           </div>
           <StyledP style={{ marginRight: "1vw" }}>{siteName}</StyledP>
           <StyledP>
-            <Link to={siteLink}>{siteLink}</Link>
+            <a href={siteLink}>{siteLink}</a>
           </StyledP>
         </div>
       </TabPanel>
