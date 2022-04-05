@@ -36,7 +36,7 @@ function RecommendCard(props) {
             sx={10}
             style={{ color: "#033075", fontFamily: "Noto Sans KR" }}
           >
-            {title}
+            <StyledLi>{title}</StyledLi>
           </Typography>
         </Grid>
         <StyledP>{content}</StyledP>
@@ -60,5 +60,13 @@ const StyledP = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
+`;
+const StyledLi = styled.div`
+  &:hover {
+    text-decoration: none;
+    display: inline;
+    box-shadow: 0 -6px rgba(75, 112, 253, 0.3) inset;
+  }
+  cursor: pointer;
 `;
 export default RecommendCard;
