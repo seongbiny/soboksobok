@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import MultipleSelectChips from "./Filter/MultipleSelectChips.js";
@@ -6,6 +7,17 @@ import GugunSelectBox from "./Filter/Gugun.jsx";
 import ChildSelectBox from "./Filter/Child.jsx";
 import { getAxios, getAxiosDjango } from "../api.js";
 import { useNavigate } from "react-router-dom";
+=======
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import styled from 'styled-components';
+import MultipleSelectChips from './Filter/MultipleSelectChips.js';
+import SidoSelectBox from './Filter/Sido.jsx';
+import GugunSelectBox from './Filter/Gugun.jsx';
+import ChildSelectBox from './Filter/Child.jsx';
+import { getAxios, getAxiosDjango } from '../api.js';
+import { useNavigate } from 'react-router-dom';
+>>>>>>> f61cb0377e05da4f2324fe2f3afcc4312f671190
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -117,8 +129,13 @@ function FilterChips() {
       });
 
       const djangoAxios = getAxiosDjango();
+<<<<<<< HEAD
       let res = await djangoAxios.get(`insertusergroup/dbscan/${userSeq}`);
       console.log("django res: ", res);
+=======
+      let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
+      console.log('django res: ', res);
+>>>>>>> f61cb0377e05da4f2324fe2f3afcc4312f671190
     } catch (err) {
       console.log(err);
     }
@@ -162,17 +179,15 @@ function FilterChips() {
       }
     };
     getFilter();
-  }, [value]);
+  }, []);
 
   return (
-    <div>
+    <StyledFilterSet>
       {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
-      <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />
-      <p>{region}</p> */}
-      {/* <p>{value}</p> */}
+            <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />*/}
 
       <MultipleSelectChips
-        label="대상특성"
+        label="직장"
         value={clicked}
         setValue={setCliked}
         options={jobChip}
@@ -180,19 +195,30 @@ function FilterChips() {
         setError={setError}
       />
 
-      <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
-      {/* <p>{child}</p> */}
+      <StyledChildArea>
+        <h5 style={{ marginBottom: '15px' }}>
+          <b>자녀</b>
+        </h5>
+        <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
+      </StyledChildArea>
 
-      <MultipleSelectChips
-        label="가구특성"
-        value={clicked}
-        setValue={setCliked}
-        options={familyChip}
-        error={error}
-        setError={setError}
-      />
+      <StyledFamilyArea>
+        <MultipleSelectChips
+          label="상황"
+          value={clicked}
+          setValue={setCliked}
+          options={familyChip}
+          error={error}
+          setError={setError}
+        />
+      </StyledFamilyArea>
+
       <Button
-        variant="primary"
+        style={{
+          marginTop: '2%',
+          paddingRight: '9%',
+          paddingLeft: '9%',
+        }}
         onClick={() => {
           setFilter();
           navigate("/", { replace: true });
@@ -200,8 +226,27 @@ function FilterChips() {
       >
         저장
       </Button>
-    </div>
+    </StyledFilterSet>
   );
 }
+
+const StyledFilterSet = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledFamilyArea = styled.div`
+  width: 70%;
+`;
+
+const StyledChildArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-bottom: 2%;
+  align-items: center;
+`;
 
 export default FilterChips;

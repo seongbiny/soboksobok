@@ -54,6 +54,14 @@ let 답변들 = styled.div`
     margin-top: 5%;
     margin-bottom: 5%;
 `
+function isLogin() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
 function QnaDetail(props) {
     let navigate = useNavigate();
     let state = useSelector((state) => state)
@@ -67,7 +75,7 @@ function QnaDetail(props) {
 
 
     const [editable, setEditable] = useState('false');
-    
+    const [check, setCheck] = useState(false);
     const [qna, setQna] = useState({});
     const axios = getAxios();
 
@@ -97,20 +105,33 @@ function QnaDetail(props) {
     const getComment = () => {
         axios.get(`/api/qna/mine/${qnaId}`)
         .then(res => {
+            setCheck(true);
             setQna(res.data.body.success);
             댓글들변경(res.data.body.success.comments)
         })
-        .catch(err => console.log(err))
+        .catch(err => 
+          { alert('잘못된 접근입니다')
+            navigate('/');
+          console.log(err)})
     }
+    const checkLogin = () => {
+      if (!isLogin()) {
+          alert('로그인해주세요')
+          navigate(`/` )
+      } else {
+          getComment()
+      }
+  }
     useEffect(()=> {
 
-        getComment();
+        checkLogin();
         
     }, []);
 
   return (
     <Container style={{marginBottom: '2vh'}}>
-      <글작성틀>
+      {isLogin() && check ? (
+        <글작성틀>
         <게시판이름>Q&A</게시판이름>
 
         <버튼들>
@@ -172,6 +193,10 @@ function QnaDetail(props) {
                 </Link>
                 </버튼들>
             </글작성틀>
+      ):(
+        <div></div>
+      )}
+      
             
         </Container>
 

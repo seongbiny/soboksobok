@@ -9,7 +9,7 @@ import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 import RecommendSlide from '../components/WelfareRecommend/RecommendSlide';
 
 function Main() {
-  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
@@ -307,14 +307,6 @@ const StyledTab = styled.div`
   z-index: 2;
 `;
 
-const StyledTop = styled.div`
-  display: grid;
-  grid-template-columns: 20% 40% 40%;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5vh;
-  // margin-bottom: 5vh;
-`;
 const StyledMain = styled.div`
   display: grid;
   justify-content: center;
