@@ -58,47 +58,50 @@ public class WelfareController {
 //    @ApiOperation(value = "사업목적 갯수 출력")
     @GetMapping("/recommend/purpose")
     public Map getwelfarepurpose() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUser(principal.getUsername());
-        Long group = user.getUserGroup();
+//        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = userService.getUser(principal.getUsername());
+        Long group = 10L;
         List<Welfare> list = welfareService.getWelfarebygroup(group);
 
         LinkedHashMap<String, Long> purposes = new LinkedHashMap<>();
 
         for (int i = 0; i < list.size(); i ++) {
-            String purposename = list.get(i).getWelfare_service_purpose();
-            if (purposename.contains("\\/")) {
-                System.out.println(purposename);
-                System.out.println("\\/가 있음!");
-                purposename.replace("\\/", "/");
-            }
-            if (purposename.contains("||")) {
-                String[] purposelist = purposename.split("||");
-                for (int j = 0; j < purposelist.length; j ++) {
-                    String nowpurposename = purposelist[j];
-                    if (purposes.get(nowpurposename) == null) {
-                        purposes.put(nowpurposename, 1L);
+            String purposename = list.get(i).getWelfare_service_type();
+            if (purposename != null) {
+//                if (purposename.contains("\\/")) {
+//                    System.out.println(purposename);
+//                    System.out.println("\\/가 있음!");
+//                    purposename.replace("\\/", "/");
+//                }
+                if (purposename.contains("||")) {
+                    String[] purposelist = purposename.split("\\|\\|");
+                    for (int j = 0; j < purposelist.length; j++) {
+                        String nowpurposename = purposelist[j];
+                        if (purposes.get(nowpurposename) == null) {
+                            purposes.put(nowpurposename, 1L);
+                        } else {
+                            purposes.put(nowpurposename, purposes.get(nowpurposename) + 1L);
+                        }
+                    }
+                } else
+                {
+                    if (purposes.get(purposename) == null) {
+                        purposes.put(purposename, 1L);
                     } else {
-                        purposes.put(nowpurposename, purposes.get(nowpurposename) + 1L);
+                        purposes.put(purposename, purposes.get(purposename) + 1L);
                     }
                 }
             }
-            else {
-                if (purposes.get(purposename) == null) {
-                    purposes.put(purposename, 1L);
-                } else {
-                    purposes.put(purposename, purposes.get(purposename) + 1L);
-                }
-            }
         }
-
-        if (purposes.size() <= 6) {
-            return purposes;
-        } else {
-            LinkedHashMap<String, Long> result = sortMapByValue(purposes);
-            Integer cut = 6;
-            return (Map) result.entrySet().stream().limit(6);
-        }
+        System.out.println(purposes);
+        return purposes;
+//        if (purposes.size() <= 6) {
+//            return purposes;
+//        } else {
+//            LinkedHashMap<String, Long> result = sortMapByValue(purposes);
+//
+//            return (Map) result.entrySet().stream().limit(6);
+//        }
 //
 //        HashMap<String, Long> purposes = new HashMap<>();
 //
@@ -128,6 +131,7 @@ public class WelfareController {
             newmap.put("welfare_id", list.get(i).getWelfareId());
             newmap.put("welfare_service_name", list.get(i).getWelfare_service_name());
             newmap.put("welfare_view", list.get(i).getWelfare_view());
+            newmap.put("welfare_service_content", list.get(i).getWelfare_service_content());
 
             popularview.add(newmap);
         }
