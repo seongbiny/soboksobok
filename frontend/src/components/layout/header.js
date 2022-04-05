@@ -1,20 +1,16 @@
-import React from "react";
-import "./header.css";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
-import Login from "../../pages/Login";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './header.css';
+import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import Login from '../../pages/Login';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header className="header">
-      <Navbar bg="primary" variant="dark">
+    <header className="header" id="header">
+      <Navbar className="navbar" bg="primary" variant="dark" fixed="top">
         <Container>
           <Navbar.Brand href="/">
-            <img
-              src="soboksobok_logo/sobok_w.png"
-              style={{ width: 120 }}
-              alt="logo"
-            />
+            <img src="soboksobok_logo/sobok_w.png" style={{ width: 120 }} alt="logo" />
           </Navbar.Brand>
           <Nav className="me-auto">
             {/* <Nav.Link href="/">홈</Nav.Link> */}
