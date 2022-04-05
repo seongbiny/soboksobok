@@ -51,6 +51,12 @@ public class WelfareRepository {
                 .getResultList();
     }
 
+    public List<Welfare> getGroupPopularWelfare(Long group_id) {
+        return em.createQuery("select w from Welfare w where w.welfare_group = :group_id order by w.welfare_view desc" , Welfare.class)
+                .setParameter("group_id", group_id)
+                .getResultList().subList(0, 10);
+    }
+
     public List<Welfare> getMostUserWelfare() {
         List<Welfare> resultList = em.createQuery("select w from Welfare w order by w.usingusers.size desc", Welfare.class)
                 .getResultList();
