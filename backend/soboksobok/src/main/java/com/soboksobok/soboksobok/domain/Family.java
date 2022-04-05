@@ -1,9 +1,7 @@
 package com.soboksobok.soboksobok.domain;
 
 import com.soboksobok.soboksobok.domain.welfare.Welfarefamily;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +10,8 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "family")
 public class Family {
 

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Entity;
 import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -40,9 +41,9 @@ public class WelfareController {
 
 //    @ApiOperation(value = "단일복지 유사복지 리스트")
     @GetMapping("/{welfare_id}/recommend")
-    public ApiResponse getwelfarelike(@PathVariable("welfare_id") Long welfare_id) {
-        List<Welfare> list = welfareService.getSimilarWelfare(welfare_id);
-        return ApiResponse.success("welfare", list);
+    public List getwelfarelike(@PathVariable("welfare_id") Long welfare_id) {
+        List list = welfareService.getSimilarWelfare(welfare_id);
+        return list;
     }
 
 //    @ApiOperation(value = "사용자 추천 복지 리스트")
@@ -187,10 +188,10 @@ public class WelfareController {
 
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
-    public ApiResponse welfaresearch(@PathVariable("keyword") String keyword) {
+    public List welfaresearch(@PathVariable("keyword") String keyword) {
         keywordService.getOrsetKeywordbyname(keyword);
-        List<Welfare> list = welfareService.getWelfarebykeyword(keyword);
-        return ApiResponse.success("welfares", list);
+        List list = welfareService.getWelfarebykeyword(keyword);
+        return list;
     }
 
 //    @ApiOperation(value = "검색어 키워드 출력")

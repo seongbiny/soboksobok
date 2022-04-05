@@ -23,24 +23,24 @@ public class WelfareRepository {
                 .getResultList();
     }
 
-    public List<Welfare> searchWelfare(String keyword) {
-        return em.createQuery("select w from Welfare w where w.welfare_service_name like concat('%', :keyword, '%')", Welfare.class)
+    public List searchWelfare(String keyword) {
+
+        return em.createQuery("select w.welfareId, w.welfare_service_name, w.welfare_view from Welfare w where w.welfare_service_name like concat('%', :keyword, '%')")
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
 
-    public List<Welfare> getSimilar(Long id) {
+    public List getSimilar(Long id) {
         String similar_words = em.find(Welfare.class, id).getWelfare_similarwelfare().replace("[", "").replace("]", "");
 
         String[] sim_words = similar_words.split(", ");
         List<Long> similars = new ArrayList<>(10);
 
         for (int i = 0; i < sim_words.length; i ++) {
-            System.out.println(sim_words[i]);
             similars.add(Long.valueOf(sim_words[i]));
         }
 
-        return em.createQuery("select w from Welfare w where w.welfareId in :similars ", Welfare.class)
+        return em.createQuery("select w.welfareId, w.welfare_service_name, w.welfare_service_content from Welfare w where w.welfareId in :similars ")
                 .setParameter("similars", similars)
                 .getResultList();
     }
