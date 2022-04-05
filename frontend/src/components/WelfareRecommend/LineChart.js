@@ -21,7 +21,7 @@ function Chart() {
     labels: label,
     datasets: [
       {
-        label: "데이터",
+        label: "받을 수 있는 지원유형",
         // data: [65, 59, 80, 81, 56, 55, 40],
         data: datas,
         backgroundColor: [

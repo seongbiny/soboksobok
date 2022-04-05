@@ -57,6 +57,8 @@ function Chart() {
         await setDatas(view);
         let welNum = request.data.map(a => a.welfare_id);
         await dispatch(welDataId(welNum));
+        let con = request.data.map(a => a.welfare_service_content);
+        await dispatch(welDataContent(con));
       } catch (err) {
         console.log(err);
       }
