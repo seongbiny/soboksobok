@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
 import "swiper/css";
@@ -6,8 +6,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import FilterCard from "./FilterCard";
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
