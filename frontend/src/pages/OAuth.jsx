@@ -10,7 +10,8 @@ function Auth() {
   const getToken = async () => {
     try {
       await localStorage.setItem('token', token);
-      navigate('/filter', { replace: true });
+      navigate('/', { replace: true });
+      // navigate('/filter', { replace: true });
     } catch (err) {
       console.log(err);
     }
