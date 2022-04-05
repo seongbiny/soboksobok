@@ -20,7 +20,7 @@ function RecommendCard(props) {
     <Card
       sx={{
         width: 275,
-        height: 275,
+        height: 250,
         pl: 2,
         pr: 2,
         display: "grid",
