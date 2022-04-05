@@ -131,43 +131,66 @@ function Profile() {
     <div>
       <StyledContainer>
         <StyledLeftArea>
-          <UserProfile
-            modify={modify}
-            setModify={setModify}
-            setProfile={setProfile}
-            profileImage={profileImage}
-            username={username}
-            ageRange={ageRange}
-            ageRender={ageRender}
-            setAgeRange={setAgeRange}
-            gender={gender}
-            setGender={setGender}
-          ></UserProfile>
+          <StyledComponent>
+            <UserProfile
+              modify={modify}
+              setModify={setModify}
+              setProfile={setProfile}
+              profileImage={profileImage}
+              username={username}
+              ageRange={ageRange}
+              ageRender={ageRender}
+              setAgeRange={setAgeRange}
+              gender={gender}
+              setGender={setGender}
+            ></UserProfile>
 
-          <div
-            className="filterChips"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
-            <FilterChips></FilterChips>
-          </div>
+            <hr
+              style={{
+                margin: '5% 0 5% 0',
+              }}
+            />
 
-          <Tabs defaultActiveKey="like" id="user-welfare-tab" className="mb-3">
-            <Tab eventKey="like" title="찜한 복지">
-              <h6>{renderLiked()}</h6>
-            </Tab>
+            <div
+              className="filterChips"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
+              <FilterChips></FilterChips>
+            </div>
 
-            <Tab eventKey="used" title="사용 중인 복지">
-              <h6>{renderUsed()}</h6>
-            </Tab>
-          </Tabs>
+            <hr
+              style={{
+                margin: '5% 0 5% 0',
+              }}
+            />
+            <StyledTab>
+              <Tabs defaultActiveKey="like" id="user-welfare-tab">
+                <Tab eventKey="like" title="찜한 복지">
+                  <h6>{renderLiked()}</h6>
+                </Tab>
 
-          <DeleteAccount></DeleteAccount>
+                <Tab eventKey="used" title="사용 중인 복지">
+                  <h6>{renderUsed()}</h6>
+                </Tab>
+              </Tabs>
+            </StyledTab>
+
+            <hr
+              style={{
+                margin: '5% 0 5% 0',
+              }}
+            />
+
+            <StyledDeleteBtn>
+              <DeleteAccount></DeleteAccount>
+            </StyledDeleteBtn>
+          </StyledComponent>
         </StyledLeftArea>
       </StyledContainer>
     </div>
@@ -187,16 +210,27 @@ const StyledLeftArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 150vh;
+  // height: 200vh;
+  margin: 15% 0;
 `;
 
-// const StyledRightArea = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   padding-top: 10%;
-//   width: 40vw;
-//   height: 150vh;
-// `;
+const StyledComponent = styled.div`
+  margin: 0% 5%;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  padding: 3% 5%;
+`;
+
+const StyledTab = styled.div`
+  margin: 0% 5%;
+  background: white;
+  border-radius: 5px;
+  padding: 1%;
+`;
+
+const StyledDeleteBtn = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export default Profile;

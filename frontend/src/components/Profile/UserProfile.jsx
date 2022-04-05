@@ -18,7 +18,12 @@ const UserProfile = ({
       {modify === 'false' ? (
         <div
           className="userProfileBox"
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '3%',
+          }}
         >
           <img
             src={profileImage}
@@ -58,7 +63,7 @@ const UserProfile = ({
               <Button
                 variant="primary"
                 size="sm"
-                style={{ width: '50px' }}
+                style={{ width: '80px' }}
                 onClick={() => {
                   setModify('ture');
                 }}
@@ -68,7 +73,7 @@ const UserProfile = ({
               <Button
                 variant="primary"
                 size="sm"
-                style={{ width: '50px' }}
+                style={{ width: '80px' }}
                 onClick={() => {
                   setModify('false');
                   setProfile();
@@ -80,7 +85,15 @@ const UserProfile = ({
           </div>
         </div>
       ) : (
-        <div className="userProfileBox" style={{ display: 'flex', alignItems: 'center' }}>
+        <div
+          className="userProfileBox"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '3%',
+          }}
+        >
           <img
             src={profileImage}
             style={{
@@ -112,7 +125,7 @@ const UserProfile = ({
               <Button
                 variant="primary"
                 size="sm"
-                style={{ width: '50px' }}
+                style={{ width: '80px' }}
                 onClick={() => {
                   setModify('ture');
                 }}
@@ -122,7 +135,7 @@ const UserProfile = ({
               <Button
                 variant="primary"
                 size="sm"
-                style={{ width: '50px' }}
+                style={{ width: '80px' }}
                 onClick={() => {
                   setModify('false');
                   setProfile();
