@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
+// import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import { getAxios, getAxiosDjango } from '../api.js';
@@ -9,6 +9,7 @@ import { paginate } from "../components/Search/paginate";
 import _ from "lodash";
 import Pagination from "@mui/material/Pagination";
 import { useNavigate } from "react-router-dom";
+import Stack from "@mui/material/Stack";
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -32,7 +33,6 @@ const PaginationBtn = props => {
     </Stack>
   );
 }
-
 function Profile() {
   const [userSeq, setUserSeq] = useState('');
   const [username, setUsername] = useState('');
@@ -56,10 +56,13 @@ function Profile() {
     currentPageu: 1, // 현재 활성화된 페이지 위치
   });
   
-  const handlePageChange = page => {
+  const handlePageChangel = page => {
     setWelLikes({ ...welLikes, currentPagel: page });
+  };
+  const handlePageChangeu = page => {
     setWelUsed({ ...welUsed, currentPageu: page });
   };
+
   const { datal, pageSizel, currentPagel } = welLikes;
   const { datau, pageSizeu, currentPageu } = welUsed;
   const pagedWelLikes = paginate(datal, currentPagel, pageSizel); // 페이지 별로 데이터가 속한 배열을 얻어옴
@@ -196,45 +199,38 @@ function Profile() {
               <h5>카테고리 설정 (추천 복지 선택에 도움을 줍니다)</h5>
               <FilterChips></FilterChips>
             </div>
-
-            <hr
-              style={{
-                margin: '5% 0 5% 0',
-              }}
-            />
-            <StyledTab>
-              <Tabs defaultActiveKey="like" id="user-welfare-tab">
-                <Tab eventKey="like" title="찜한 복지">
+            <StyledCard>
+              <StyledBox>
+                <div style={{fontSize: 'x-large'}}>찜한 복지</div>
+                <StyledContent>
                   {pagedWelLikes.map(wel=>(
                     <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
-                  ))}
-                </Tab>
-
-                <Tab eventKey="used" title="사용 중인 복지">
-                  {pagedWelUsed.map(wel=>(
-                    <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
-                  ))}
-                </Tab>
-              </Tabs>
-              {Tab === "찜한 복지" ? 
-                <PaginationBtn
-                  itemsCount={countl}
-                  pageSize={pageSizel}
-                  onPageChange={handlePageChange}
-                /> :
-                <PaginationBtn
-                  itemsCount={countu}
-                  pageSize={pageSizeu}
-                  onPageChange={handlePageChange}
-                />
-            }
-            </StyledTab>
-
-            <hr
-              style={{
-                margin: '5% 0 5% 0',
-              }}
-            />
+                  ))} 
+                </StyledContent>
+                <StyledPage>
+                    <PaginationBtn
+                      itemsCount={countl}
+                      pageSize={pageSizel}
+                      onPageChange={handlePageChangel}
+                    />
+                </StyledPage>
+              </StyledBox>
+              <StyledBox>
+                <div style={{fontSize: 'x-large'}}>사용 중 복지</div>
+                <div>
+                    {pagedWelUsed.map(wel=>(
+                      <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
+                    ))}
+                </div>
+                <StyledPage>
+                    <PaginationBtn
+                      itemsCount={countu}
+                      pageSize={pageSizeu}
+                      onPageChange={handlePageChangeu}
+                    />
+                </StyledPage>
+              </StyledBox>
+            </StyledCard>
 
             <StyledDeleteBtn>
               <DeleteAccount></DeleteAccount>
@@ -244,7 +240,34 @@ function Profile() {
       </StyledContainer>
     </div>
   );
-}
+};
+const StyledContent = styled.div`
+  // background-color: white;
+  // width: 100%;
+  // height: 100%;
+  // text-align: center;
+`;
+const StyledCard = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5vh;
+`;
+const StyledPage = styled.div`
+  margin: 0 auto;
+  // margin-top: 10px;
+`;
+const StyledBox = styled.div`
+  box-sizing: border;
+  border: 10px solid #90CAF9;
+  height: 50vh;
+  width: 25vw;
+  text-align: center;
+  display: grid;
+  align-items: center;
+  border-radius: 30px;
+  grid-template-rows: 15% 70% 15%;
+  font-family: 'Noto Sans KR', sans-serif;
+`;
 const StyledH = styled.h6`
   &:hover {
     text-decoration: underline;
@@ -273,13 +296,6 @@ const StyledComponent = styled.div`
   background: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
   padding: 3% 5%;
-`;
-
-const StyledTab = styled.div`
-  margin: 0% 5%;
-  background: white;
-  border-radius: 5px;
-  padding: 1%;
 `;
 
 const StyledDeleteBtn = styled.div`
