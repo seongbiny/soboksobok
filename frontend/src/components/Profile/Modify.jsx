@@ -1,7 +1,7 @@
 import AgeSelectBox from './AgeRange';
 import GenderSelectBox from './Gender';
 
-const ModifyProfile = ({ username, ageRange, setAgeRange, gender, setGender }) => {
+const ModifyProfile = ({ ageRange, setAgeRange, gender, setGender }) => {
   return (
     <div>
       <h6>

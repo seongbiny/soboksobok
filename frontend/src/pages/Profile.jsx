@@ -229,7 +229,7 @@ const StyledTab = styled.div`
 
 const StyledDeleteBtn = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 `;
 
 export default Profile;

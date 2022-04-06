@@ -150,49 +150,47 @@ function Main() {
               </Tab>
 
               <Tab eventKey="popular-list" title="인기순">
-                <h5 style={{ padding: '1% 6.5%' }}>
+                <h5 style={{ padding: '1%' }}>
                   <b>지금 인기있는 복지 혜택을 안내드립니다.</b>
                 </h5>
-                <ListGroup
-                  variant="flush"
-                  style={{
-                    padding: '0 5%',
-                    display: 'flex',
-                  }}
-                >
+                <ListGroup variant="flush">
                   {popular.map((item, index) => (
                     <ListGroup.Item
                       key={index}
                       style={{
                         display: 'flex',
-                        justifyContent: 'spaceAround',
+                        alignItems: 'center',
                       }}
                     >
-                      <Stack direction="horizontal" gap={3}>
-                        <h6
-                          style={{ marginTop: '0.5rem', width: '250px' }}
-                          onClick={() => {
-                            navigate(`/welfare/${item.welfareId}`);
-                          }}
-                        >
-                          {item.welfare_service_name}
-                        </h6>
-                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
-                        <h6
-                          style={{
-                            marginTop: '0.5rem',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            width: '500px',
-                          }}
-                          onClick={() => {
-                            navigate(`/welfare/${item.welfareId}`);
-                          }}
-                        >
-                          {item.welfare_target_detail}
-                        </h6>
-                        {/* <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                      <strong
+                        style={{
+                          // marginTop: '0.5rem',
+                          width: '200px',
+                          fontSize: '13px',
+                        }}
+                        onClick={() => {
+                          navigate(`/welfare/${item.welfareId}`);
+                        }}
+                      >
+                        {item.welfare_service_name}
+                      </strong>
+                      <div className="vr" style={{ margin: '0 2%' }} />
+                      <strong
+                        style={{
+                          // marginTop: '0.5rem',
+                          fontSize: '13px',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          width: '650px',
+                        }}
+                        onClick={() => {
+                          navigate(`/welfare/${item.welfareId}`);
+                        }}
+                      >
+                        {item.welfare_target_detail}
+                      </strong>
+                      {/* <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
                         <Button
                           variant="primary"
                           size="sm"
@@ -202,7 +200,6 @@ function Main() {
                         >
                           더보기
                         </Button> */}
-                      </Stack>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
