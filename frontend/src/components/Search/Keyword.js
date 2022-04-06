@@ -48,7 +48,17 @@ function Keyword() {
       <div></div>
       {keywords.map((keyword, i) => (
         <StyledLi key={i}>
-          <div style={{ flexBasis: "30%" }}>{i + 1}</div>
+          <div style={{ flexBasis: "30%", }}><span style={{
+                    color:'white',
+                    backgroundColor: '#0d6dfd',
+                    display:'inline-block',
+                    fontSize:'.75rem',
+                    height:'16px',
+                    lineHeight: '16px',
+                    textAlign:'center',
+                    width:'15px',
+                    paddingBottom:'1px',
+                }}>{i + 1}</span></div>
           <div
             style={{ flexBasis: "70%", textAlign: "left" }}
             onClick={e => onClick(keyword.keywordName)}
