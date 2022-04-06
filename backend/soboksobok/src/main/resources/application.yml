@@ -3,8 +3,8 @@ spring:
   # 데이터 소스 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-#    url: jdbc:mysql://j6c205.p.ssafy.io:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&autoReconnect=true
+#    url: jdbc:mysql://localhost:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://j6c205.p.ssafy.io:3306/soboksobok?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true&autoReconnect=true
     username: ssafy
     password: ssafy
     hikari:
@@ -45,8 +45,8 @@ spring:
           clientSecret: 'pe7y4NArlDuQpJYXu8nxNFitPddPonFY'
           clientAuthenticationMethod: post
           authorizationGrantType: authorization_code
-#          redirectUri: "http://j6c205.p.ssafy.io:8080/api/{action}/oauth2/code/{registrationId}"
-          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          redirectUri: "http://j6c205.p.ssafy.io:8080/api/{action}/oauth2/code/{registrationId}"
+#          redirectUri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
           scope:
             - profile_nickname
             - profile_image
@@ -65,8 +65,8 @@ spring:
 
 # cors 설정
 cors:
-  allowed-origins: 'http://localhost:3000'
-#  allowed-origins: 'http://j6c205.p.ssafy.io:3000'
+#  allowed-origins: 'http://localhost:3000'
+  allowed-origins: 'http://j6c205.p.ssafy.io:3000'
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS
   allowed-headers: '*'
   max-age: 3600
@@ -82,8 +82,8 @@ app:
     refreshTokenExpiry: 604800000
   oauth2:
     authorizedRedirectUris:
-      - http://localhost:3000/oauth/kakao/callback
-#      - http://j6c205.p.ssafy.io:3000/ oauth/kakao/callback
+#      - http://localhost:3000/oauth/kakao/callback
+      - http://j6c205.p.ssafy.io:3000/ oauth/kakao/callback
 server:
   servlet:
     context-path: /api

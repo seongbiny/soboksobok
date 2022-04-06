@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.domain.welfare;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soboksobok.soboksobok.domain.user.Usedwelfare;
 import lombok.*;
 import org.w3c.dom.Text;
@@ -78,17 +79,20 @@ public class Welfare {
     @Column(columnDefinition = "TINYINT", length = 2)
     private Long welfare_child;
 
-    @OneToMany(mappedBy = "target")
+    @OneToMany(mappedBy = "welfare")
     private List<Welfaretarget> welfaretarget = new ArrayList<>();
 
-    @OneToMany(mappedBy = "family")
-    private List<Welfarefamily> welfarefamily = new ArrayList<>();
-
-    @OneToMany(mappedBy = "life")
-    private List<Welfarelife> welfarelife = new ArrayList<>();
 
     @OneToMany(mappedBy = "welfare")
-    private List<Usedwelfare> usingusers = new ArrayList<>();
+    private List<Welfarefamily> welfarefamily = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "welfare")
+    private List<Welfarelife> welfarelife = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "welfare")
+    private List<Usedwelfare> usedwelfares = new ArrayList<>();
 
     @Column(name = "welfareSimilarWelfare")
     private String welfare_similarwelfare;

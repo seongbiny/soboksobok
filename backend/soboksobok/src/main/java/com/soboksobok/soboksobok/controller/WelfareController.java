@@ -51,6 +51,9 @@ public class WelfareController {
     public ApiResponse getwelfaregroup() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
+        if (user == null) {
+            return ApiResponse.fail();
+        }
         Long group = user.getUserGroup();
         List<Welfare> list = welfareService.getWelfarebygroup(group);
         return ApiResponse.success("welfare", list);
@@ -61,6 +64,9 @@ public class WelfareController {
     public Map getwelfarepurpose() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
+        if (user == null) {
+            return null;
+        }
         Long group = user.getUserGroup();
         List<Welfare> list = welfareService.getWelfarebygroup(group);
 
@@ -129,6 +135,9 @@ public class WelfareController {
     public List getwelfaregrouppopular() {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
+        if (user == null) {
+            return null;
+        }
         Long group = user.getUserGroup();
 
         List popularview = new ArrayList<Object>();

@@ -1,5 +1,6 @@
 package com.soboksobok.soboksobok.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soboksobok.soboksobok.domain.welfare.Welfarefamily;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class Family {
     private String familyName;
 
     @OneToMany
+    @JsonManagedReference
     private List<Welfarefamily> welfarefamily = new ArrayList<>();
 
 }
