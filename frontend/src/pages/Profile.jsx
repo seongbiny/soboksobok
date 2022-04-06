@@ -5,10 +5,10 @@ import FilterChips from '../components/FilterChips';
 import { getAxios, getAxiosDjango } from '../api.js';
 import DeleteAccount from '../components/Profile/DeleteAccount';
 import UserProfile from '../components/Profile/UserProfile';
-// import PaginationBtn from "../components/Search/PaginationBtn";
 import { paginate } from "../components/Search/paginate";
 import _ from "lodash";
 import Pagination from "@mui/material/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -43,18 +43,27 @@ function Profile() {
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
+  const navigate = useNavigate();
   
-  const [welfares, setWelfares] = useState({
-    data: "",
-    pageSize: 5, // 한 페이지에 보여줄 데이터 개수
-    currentPage: 1, // 현재 활성화된 페이지 위치
+  const [welLikes, setWelLikes] = useState({
+    datal: "",
+    pageSizel: 5, // 한 페이지에 보여줄 데이터 개수
+    currentPagel: 1, // 현재 활성화된 페이지 위치
+  });
+  const [welUsed, setWelUsed] = useState({
+    datau: "",
+    pageSizeu: 5, // 한 페이지에 보여줄 데이터 개수
+    currentPageu: 1, // 현재 활성화된 페이지 위치
   });
   
   const handlePageChange = page => {
-    setWelfares({ ...welfares, currentPage: page });
+    setWelLikes({ ...welLikes, currentPagel: page });
+    setWelUsed({ ...welUsed, currentPageu: page });
   };
-  const { data, pageSize, currentPage } = welfares;
-  const pagedWelfares = paginate(data, currentPage, pageSize); // 페이지 별로 데이터가 속한 배열을 얻어옴
+  const { datal, pageSizel, currentPagel } = welLikes;
+  const { datau, pageSizeu, currentPageu } = welUsed;
+  const pagedWelLikes = paginate(datal, currentPagel, pageSizel); // 페이지 별로 데이터가 속한 배열을 얻어옴
+  const pagedWelUsed = paginate(datau, currentPageu, pageSizeu); // 페이지 별로 데이터가 속한 배열을 얻어옴
  
 
   const getProfile = async () => {
@@ -120,19 +129,12 @@ function Profile() {
       let response = await axios.get('/api/users/like');
       // console.log('찜 : ', response.data.body.likeList);/
       setLiked(response.data.body.likeList);
-      // console.log(response.data.body.likeList);
-      setWelfares({...welfares, data: response.data.body.likeList})
+      console.log(response.data.body.likeList);
+      setWelLikes({...welLikes, datal: response.data.body.likeList})
     } catch (err) {
       console.log(err);
     }
   };
-  // const renderLiked = () => {
-  //   const result = [];
-  //   for (let i = 0; i < liked.length; i++) {
-  //     result.push(<div key={i}>{' - ' + liked[i].welfare_service_name}</div>);
-  //   }
-  //   return result;
-  // };
 
   const getUsed = async () => {
     try {
@@ -140,18 +142,11 @@ function Profile() {
       let response = await axios.get('/api/users/used');
       // console.log('사용중 : ', response.data.body.usedWelfareList);
       setUsed(response.data.body.usedWelfareList);
-      setWelfares({...welfares, data: response.data.body.usedWelfareList})
+      setWelUsed({...welUsed, datau: response.data.body.usedWelfareList})
     } catch (err) {
       console.log(err);
     }
   };
-  // const renderUsed = () => {
-  //   const result = [];
-  //   for (let i = 0; i < used.length; i++) {
-  //     result.push(<div key={i}>{' - ' + used[i].welfare_service_name}</div>);
-  //   }
-  //   return result;
-  // };
 
   useEffect(() => {
     getProfile();
@@ -160,9 +155,10 @@ function Profile() {
   useEffect(() => {
     getLike();
     getUsed();
-
   }, []);
-  const { length: count } = data;
+
+  const { length: countl } = datal;
+  const { length: countu } = datau;
 
   return (
     <div>
@@ -209,23 +205,29 @@ function Profile() {
             <StyledTab>
               <Tabs defaultActiveKey="like" id="user-welfare-tab">
                 <Tab eventKey="like" title="찜한 복지">
-                  {pagedWelfares.map(wel=>(
-                    <h6 key={wel.welfareId}>{wel.welfare_service_name}</h6>
+                  {pagedWelLikes.map(wel=>(
+                    <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
                   ))}
                 </Tab>
 
                 <Tab eventKey="used" title="사용 중인 복지">
-                  {pagedWelfares.map(wel=>(
-                    <h6 key={wel.welfareId}>{wel.welfare_service_name}</h6>
+                  {pagedWelUsed.map(wel=>(
+                    <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
                   ))}
                 </Tab>
               </Tabs>
-              <PaginationBtn
-                itemsCount={count}
-                pageSize={pageSize}
-                onPageChange={handlePageChange}
-              />
-
+              {Tab === "찜한 복지" ? 
+                <PaginationBtn
+                  itemsCount={countl}
+                  pageSize={pageSizel}
+                  onPageChange={handlePageChange}
+                /> :
+                <PaginationBtn
+                  itemsCount={countu}
+                  pageSize={pageSizeu}
+                  onPageChange={handlePageChange}
+                />
+            }
             </StyledTab>
 
             <hr
@@ -243,7 +245,12 @@ function Profile() {
     </div>
   );
 }
-
+const StyledH = styled.h6`
+  &:hover {
+    text-decoration: underline;
+  }
+  cursor: pointer;
+`;
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
