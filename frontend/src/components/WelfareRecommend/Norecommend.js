@@ -12,7 +12,12 @@ const Norecommend = props => {
           <img
             src="/blank-profile.png"
             alt="profile"
-            style={{ width: "30vh", maxHeight: "100%" }}
+            style={{
+              width: "30vh",
+              maxHeight: "100%",
+              borderTopLeftRadius: "20px",
+              borderTopRightRadius: "20px",
+            }}
           ></img>
         ) : (
           <img
@@ -21,6 +26,8 @@ const Norecommend = props => {
             style={{
               width: "30vh",
               maxHeight: "100%",
+              borderTopLeftRadius: "20px",
+              borderTopRightRadius: "20px",
             }}
           ></img>
         )}
