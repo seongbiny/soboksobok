@@ -5,6 +5,10 @@ import FilterChips from '../components/FilterChips';
 import { getAxios, getAxiosDjango } from '../api.js';
 import DeleteAccount from '../components/Profile/DeleteAccount';
 import UserProfile from '../components/Profile/UserProfile';
+// import PaginationBtn from "../components/Search/PaginationBtn";
+import { paginate } from "../components/Search/paginate";
+import _ from "lodash";
+import Pagination from "@mui/material/Pagination";
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -12,6 +16,22 @@ ageMap.set('2', '청소년 (10~19)'); //창업
 ageMap.set('3', '청년 (20~29)'); //농어업인
 ageMap.set('4', '중/장년 (30~59)'); //중소기업
 ageMap.set('5', '노년 (60~)'); //일반
+
+const PaginationBtn = props => {
+  const { itemsCount, pageSize, currentPage, onPageChange } = props;
+  // 각각 복지목록 개수, 한 페이지에 보여줄 데이터개수,
+  const pageCount = Math.ceil(itemsCount / pageSize); // 몇 페이지가 필요한지 계산
+  if (pageCount === 1) return null; // 1페이지 뿐이라면 페이지네이션 안보이게
+  // const pages = _.range(1, pageCount + 1); // 마지막 페이지에 보여줄 컨텐츠를 위해 +1
+  return (
+    <Stack spacing={2}>
+      <Pagination
+        count={pageCount}
+        onClick={e => onPageChange(e.target.textContent)}
+      />
+    </Stack>
+  );
+}
 
 function Profile() {
   const [userSeq, setUserSeq] = useState('');
@@ -23,6 +43,19 @@ function Profile() {
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
+  const [welfares, setWelfares] = useState({
+    data: "",
+    pageSize: 5, // 한 페이지에 보여줄 데이터 개수
+    currentPage: 1, // 현재 활성화된 페이지 위치
+  });
+
+  const handlePageChange = page => {
+    setWelfares({ ...welfares, currentPage: page });
+    // console.log(page);
+  };
+ 
+  const { data, pageSize, currentPage } = welfares;
+  const pagedWelfares = paginate(data, currentPage, pageSize); // 페이지 별로 데이터가 속한 배열을 얻어옴
 
   const getProfile = async () => {
     try {
@@ -87,17 +120,19 @@ function Profile() {
       let response = await axios.get('/api/users/like');
       // console.log('찜 : ', response.data.body.likeList);/
       setLiked(response.data.body.likeList);
+      // console.log(response.data.body.likeList);
+      setWelfares({...welfares, data: response.data.body.likeList})
     } catch (err) {
       console.log(err);
     }
   };
-  const renderLiked = () => {
-    const result = [];
-    for (let i = 0; i < liked.length; i++) {
-      result.push(<div key={i}>{' - ' + liked[i].welfare_service_name}</div>);
-    }
-    return result;
-  };
+  // const renderLiked = () => {
+  //   const result = [];
+  //   for (let i = 0; i < liked.length; i++) {
+  //     result.push(<div key={i}>{' - ' + liked[i].welfare_service_name}</div>);
+  //   }
+  //   return result;
+  // };
 
   const getUsed = async () => {
     try {
@@ -105,17 +140,18 @@ function Profile() {
       let response = await axios.get('/api/users/used');
       // console.log('사용중 : ', response.data.body.usedWelfareList);
       setUsed(response.data.body.usedWelfareList);
+      setWelfares({...welfares, data: response.data.body.usedWelfareList})
     } catch (err) {
       console.log(err);
     }
   };
-  const renderUsed = () => {
-    const result = [];
-    for (let i = 0; i < used.length; i++) {
-      result.push(<div key={i}>{' - ' + used[i].welfare_service_name}</div>);
-    }
-    return result;
-  };
+  // const renderUsed = () => {
+  //   const result = [];
+  //   for (let i = 0; i < used.length; i++) {
+  //     result.push(<div key={i}>{' - ' + used[i].welfare_service_name}</div>);
+  //   }
+  //   return result;
+  // };
 
   useEffect(() => {
     getProfile();
@@ -124,7 +160,9 @@ function Profile() {
   useEffect(() => {
     getLike();
     getUsed();
+
   }, []);
+  const { length: count } = data;
 
   return (
     <div>
@@ -171,13 +209,24 @@ function Profile() {
             <StyledTab>
               <Tabs defaultActiveKey="like" id="user-welfare-tab">
                 <Tab eventKey="like" title="찜한 복지">
-                  <h6>{renderLiked()}</h6>
+                  {pagedWelfares.map(wel=>(
+                    <h6 key={wel.welfareId}>{wel.welfare_service_name}</h6>
+                  ))}
                 </Tab>
 
                 <Tab eventKey="used" title="사용 중인 복지">
-                  <h6>{renderUsed()}</h6>
+                  {pagedWelfares.map(wel=>(
+                    <h6 key={wel.welfareId}>{wel.welfare_service_name}</h6>
+                  ))}
                 </Tab>
               </Tabs>
+              <PaginationBtn
+                itemsCount={count}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+
             </StyledTab>
 
             <hr
