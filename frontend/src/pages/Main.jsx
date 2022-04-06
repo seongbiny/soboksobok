@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { Button, Tabs, Tab, ListGroup, Stack } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Tabs, Tab, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getAxios } from '../api';
@@ -7,8 +7,8 @@ import SearchBar from '../components/Main/SearchBar.js';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 
 function Main() {
-  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
-  // const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  // const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
@@ -243,7 +243,6 @@ const StyledIntro = styled.div`
   padding: 5% 10%;
   background-color: #90caf9;
   width: 100vw;
-  // justify-content: space-around;
   color: black;
 `;
 
@@ -272,12 +271,6 @@ const StyledTab = styled.div`
   background: white;
   border-radius: 5px;
   padding: 3% 5%;
-`;
-
-const StyledWelfare = styled.div`
-  margin: 5% 5%;
-  width: 300px;
-  // max-width: 80%;
 `;
 
 export default Main;
