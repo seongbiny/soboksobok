@@ -1,9 +1,9 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Button, Tabs, Tab, ListGroup, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
 import styled from 'styled-components';
 import { getAxios } from '../api';
+import SearchBar from '../components/Main/SearchBar';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 
 function Main() {
@@ -75,21 +75,12 @@ function Main() {
   };
 
   useEffect(() => {
-    fetchWord();
-  }, [!keywords]);
-
-  useEffect(() => {
     getPopular();
     fetchCard();
+    fetchWord();
     isLogin();
     getProfile();
-    console.log('selectfamilies: ', selectfamilies);
-    console.log('selecttargets', selecttargets);
   }, []);
-
-  // useEffect(() => {
-  //   fetchCard();
-  // }, [token]);
 
   return (
     <div className="main">
