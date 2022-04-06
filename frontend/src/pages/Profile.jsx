@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-// import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import { getAxios, getAxiosDjango } from '../api.js';
 import DeleteAccount from '../components/Profile/DeleteAccount';
 import UserProfile from '../components/Profile/UserProfile';
 import { paginate } from '../components/Search/paginate';
-import _ from 'lodash';
 import Pagination from '@mui/material/Pagination';
 import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { ListGroup } from 'react-bootstrap';
-import { registerables } from 'chart.js';
 
 const ageMap = new Map();
 ageMap.set('1', '어린이 (0~9)'); //무직
@@ -75,9 +72,6 @@ function Profile() {
       console.log('카카오 : ', response.data);
       setUsername(localStorage.getItem('name'));
       setProfileImage(localStorage.getItem('profile'));
-
-      // localStorage.setItem('name', response.data.body.user.username);
-      // localStorage.setItem('profile', response.data.body.user.profileImageUrl);
       setUserSeq(response.data.body.user.userSeq);
       console.log('userSeq: ', userSeq);
 
@@ -129,7 +123,6 @@ function Profile() {
     try {
       const axios = getAxios();
       let response = await axios.get('/api/users/like');
-      // console.log('찜 : ', response.data.body.likeList);/
       setLiked(response.data.body.likeList);
       console.log(response.data.body.likeList);
       setWelLikes({ ...welLikes, datal: response.data.body.likeList });
@@ -142,7 +135,6 @@ function Profile() {
     try {
       const axios = getAxios();
       let response = await axios.get('/api/users/used');
-      // console.log('사용중 : ', response.data.body.usedWelfareList);
       setUsed(response.data.body.usedWelfareList);
       setWelUsed({ ...welUsed, datau: response.data.body.usedWelfareList });
     } catch (err) {
@@ -182,7 +174,7 @@ function Profile() {
 
             <hr
               style={{
-                margin: '5% 0 5% 0',
+                margin: '3% 0 3% 0',
               }}
             />
 
@@ -199,17 +191,17 @@ function Profile() {
                 background: 'rgba(255, 255, 255, 0.4)',
               }}
             >
-              <h6>
+              <h5>
                 <strong>
                   회원님의 상황을 자세하게 설정하세요. 추천 복지 선택에 도움을 줍니다.
                 </strong>
-              </h6>
+              </h5>
               <FilterChips></FilterChips>
             </div>
 
             <hr
               style={{
-                margin: '5% 0 5% 0',
+                margin: '3% 0 3% 0',
               }}
             />
 
@@ -291,7 +283,7 @@ function Profile() {
 
             <hr
               style={{
-                margin: '5% 0 5% 0',
+                margin: '3% 0 3% 0',
               }}
             />
 
@@ -308,11 +300,9 @@ const StyledCard = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 5vh;
 `;
 const StyledPage = styled.div`
   margin: 0 auto;
-  // margin-top: 10px;
 `;
 const StyledBox = styled.div`
   height: 50vh;

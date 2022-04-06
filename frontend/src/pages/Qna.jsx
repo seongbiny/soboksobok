@@ -7,6 +7,7 @@ import { getAxios } from '../api.js';
 import Blank from '../components/Qna/Blank.js';
 import Write from '../components/Qna/BlankWrite.js';
 import '../CSS/app.css';
+import LoginModal from '../components/LoginModal';
 let TablePlace = styled.div`
   margin-top: 10%;
   width: 80%;
@@ -52,25 +53,28 @@ function Qna(props) {
     setQnas([...datas]);
   };
   const checkLogin = () => {
-    if (!isLogin()) {
-      alert('로그인해주세요');
-      navigate(`/`);
-    } else {
+    if (isLogin()) {
       fetchQnas();
     }
   };
+  // const checkLogin = () => {
+  //   if (!isLogin()) {
+  //     // alert('로그인해주세요');
+  //     // navigate(`/`);
+
+  //   } else {
+  //     fetchQnas();
+  //   }
+  // };
   useEffect(() => {
     checkLogin();
   }, []);
 
-    return (
-        <Container>
-
-        {isLogin() ? (
-          <TablePlace>
-          <Title>
-              Q&A 게시판
-          </Title>
+  return (
+    <Container>
+      {isLogin() ? (
+        <TablePlace>
+          <Title>Q&A 게시판</Title>
 
           <Link to="/QnaCreate">
             <WriteButton>
@@ -117,19 +121,12 @@ function Qna(props) {
               </tbody>
             )}
           </Table>
-
         </TablePlace>
-        ): (
-            // navigate(`/` )
-            <div></div>
-        )}
-
-        </Container>
-
-
-
-
-    );
+      ) : (
+        <LoginModal></LoginModal>
+      )}
+    </Container>
+  );
 }
 
 export default Qna;

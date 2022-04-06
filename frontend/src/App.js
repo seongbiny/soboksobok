@@ -1,24 +1,21 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import WelfareDetail from "./pages/WelfareDetail";
-import Main from "./pages/Main.jsx";
-import Auth from "./pages/OAuth.jsx";
-import Qna from "./pages/Qna.jsx";
-import QnaCreate from "./pages/QnaCreate.jsx";
-import QnaPatch from "./pages/QnaPatch.jsx";
-import QnaDetail from "./pages/QnaDetail.jsx";
-import WelfareSearch from "./pages/WelfareSearch";
-import WelfareRecommend from "./pages/WelfareRecommend";
-import CustomFilter from "./pages/CustomFilter";
-import Profile from "./pages/Profile";
-import NotFound from "./pages/NotFound";
-import Layout from "./components/layout/layout";
-import "./CSS/app.css";
-
-
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import WelfareDetail from './pages/WelfareDetail';
+import Main from './pages/Main.jsx';
+import Auth from './pages/OAuth.jsx';
+import Qna from './pages/Qna.jsx';
+import QnaCreate from './pages/QnaCreate.jsx';
+import QnaPatch from './pages/QnaPatch.jsx';
+import QnaDetail from './pages/QnaDetail.jsx';
+import WelfareSearch from './pages/WelfareSearch';
+import WelfareRecommend from './pages/WelfareRecommend';
+import CustomFilter from './pages/CustomFilter';
+import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
+import Layout from './components/layout/layout';
+import './CSS/app.css';
 
 function App() {
-  const token = localStorage.getItem('jwtToken');
   return (
     <div id="wrapper">
       <Layout>
