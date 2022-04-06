@@ -9,12 +9,9 @@ import styled from 'styled-components';
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
-function FilterSlide(props) {
+function FilterSlideMain(props) {
   return (
     <StyledBox className="main-wrap">
-      {/* <h2 style={{ marginLeft: '60px', marginBottom: '3vh', fontWeight: '600' }}>
-        {props.name}님에게 추천하는 복지
-      </h2> */}
       <Swiper
         style={{
           width: '70vw',
@@ -68,4 +65,4 @@ const StyledBox = styled.div`
   margin-bottom: 5vh;
   margin-top: 5vh;
 `;
-export default FilterSlide;
+export default FilterSlideMain;

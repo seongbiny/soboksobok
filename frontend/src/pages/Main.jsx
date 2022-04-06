@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { getAxios } from '../api';
 import SearchBar from '../components/Main/SearchBar.js';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
+import FilterSlideMain from '../components/WelfareRecommend/FilterSlideMainjs';
 
 function Main() {
-  // const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
-  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
+  // const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
@@ -165,7 +166,12 @@ function Main() {
                     </div>
                   </div>
                 ) : (
-                  <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  <div className="welfareRecommendContent">
+                    <h2 style={{ margin: '50px 0 -10px 60px', fontWeight: '600' }}>
+                      {name}님에게 추천하는 복지
+                    </h2>
+                    <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  </div>
                 )}
               </Tab>
 
