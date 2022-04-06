@@ -18,7 +18,7 @@ ageMap.set('4', '중/장년 (30~59)'); //중소기업
 ageMap.set('5', '노년 (60~)'); //일반
 
 const PaginationBtn = props => {
-  const { itemsCount, pageSize, currentPage, onPageChange } = props;
+  const { itemsCount, pageSize, onPageChange } = props;
   // 각각 복지목록 개수, 한 페이지에 보여줄 데이터개수,
   const pageCount = Math.ceil(itemsCount / pageSize); // 몇 페이지가 필요한지 계산
   if (pageCount === 1) return null; // 1페이지 뿐이라면 페이지네이션 안보이게
@@ -43,19 +43,19 @@ function Profile() {
   const [liked, setLiked] = useState([]);
   const [used, setUsed] = useState([]);
   const [modify, setModify] = useState('false');
+  
   const [welfares, setWelfares] = useState({
     data: "",
     pageSize: 5, // 한 페이지에 보여줄 데이터 개수
     currentPage: 1, // 현재 활성화된 페이지 위치
   });
-
+  
   const handlePageChange = page => {
     setWelfares({ ...welfares, currentPage: page });
-    // console.log(page);
   };
- 
   const { data, pageSize, currentPage } = welfares;
   const pagedWelfares = paginate(data, currentPage, pageSize); // 페이지 별로 데이터가 속한 배열을 얻어옴
+ 
 
   const getProfile = async () => {
     try {
@@ -223,7 +223,6 @@ function Profile() {
               <PaginationBtn
                 itemsCount={count}
                 pageSize={pageSize}
-                currentPage={currentPage}
                 onPageChange={handlePageChange}
               />
 
