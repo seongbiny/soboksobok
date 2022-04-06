@@ -206,8 +206,11 @@ public class WelfareController {
 //    @ApiOperation(value = "복지데이터 검색")
     @GetMapping("/search/{keyword}")
     public List welfaresearch(@PathVariable("keyword") String keyword) {
-        keywordService.getOrsetKeywordbyname(keyword);
+//        keywordService.getOrsetKeywordbyname(keyword);
         List list = welfareService.getWelfarebykeyword(keyword);
+        if (list != null) {
+            keywordService.getOrsetKeywordbyname(keyword);
+        }
         return list;
     }
 
