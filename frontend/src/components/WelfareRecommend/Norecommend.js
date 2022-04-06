@@ -8,16 +8,15 @@ const Norecommend = (props) => {
   const navigate = useNavigate();
   return (
     <StyledContainer>
-      {/* <StyledMainArea> */}
       <StyledProfile>
         {props.profile === null ? (
           <img
             src="/blank-profile.png"
             alt="profile"
             style={{
-              width: '30vh',
-              // maxHeight: '100%',
-              height: '70%',
+              width: '200px',
+              height: '200px%',
+              objectFit: 'cover',
               borderTopLeftRadius: '20px',
               borderTopRightRadius: '20px',
             }}
@@ -27,6 +26,8 @@ const Norecommend = (props) => {
             src={props.profile}
             alt="profile"
             style={{
+              width: '200px',
+              height: '200px',
               objectFit: 'cover',
               borderTopLeftRadius: '20px',
               borderTopRightRadius: '20px',
@@ -55,7 +56,6 @@ const Norecommend = (props) => {
           </Button>
         </div>
       </StyledBox>
-      {/* </StyledMainArea> */}
     </StyledContainer>
   );
 };
@@ -64,11 +64,9 @@ const StyledProfile = styled.div`
   text-align: center;
   display: grid;
   border-radius: 20px;
-  border: 1px solid red;
-  background-color: red;
-  // background-color: #e3f2fd;
+  background-color: #e3f2fd;
   width: 200px;
-  height: 200px;
+  height: 300px;
   margin: 0 2%;
   color: #033075;
 `;
@@ -79,25 +77,12 @@ const StyledContainer = styled.div`
   margin: 20vh 10vw;
   width: 80vw;
   height: 60vh;
-  border: 1px solid black;
 `;
-// const StyledContainer = styled.div`
-//   display: grid;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 20vh;
-//   grid-row-gap: 15vh;
-// `;
-const StyledMainArea = styled.div`
-  width: 80vw;
-  height: 60vh;
-  border: 1px solid black;
-`;
+
 const StyledBox = styled.div`
   box-sizing: border-box;
-  width: 60vw;
-  height: 100%;
-  // height: 20vh;
+  width: 50vw;
+  height: 300px;
   background: #e3f2fd;
   margin: 0 2%;
   border-radius: 20px;
