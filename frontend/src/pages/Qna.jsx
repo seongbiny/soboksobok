@@ -67,57 +67,10 @@ function Qna(props) {
         <Container>
 
         {isLogin() ? (
-            <TablePlace>
-            <Title>
-                Q&A 게시판
-            </Title>
-
-                <Link to = '/QnaCreate'>
-                <WriteButton >
-                    <Button variant="secondary">글쓰기</Button>{' '}
-                </WriteButton>
-                </Link>
-
-            <Table bordered hover >
-                <thead>
-                    <표내용>
-                    <th width='20%'>번호</th>
-                    <th width='60%'>제목</th>
-                    <th width='20%'>등록일</th>
-                    </표내용>
-
-                </thead>
-
-                { qnas.length === 0 ? 
-                    <tbody>
-                        <tr>
-                        {/* <Blank></Blank> */}
-                        <Write></Write>
-                        {/* <Blank></Blank> */}
-                        </tr>
-
-
-                    </tbody>
-
-                    : 
-                    <tbody>
-                    {   
-                        qnas.map((a, i)=> {
-                            return (
-                                <tr key={i} onClick={()=> {
-                                    navigate(`/QnaDetail/${a.id}` ) 
-                                }} style={{cursor: 'pointer'}} >
-                                    <중앙정렬 width='20%'>{i+1}</중앙정렬>
-                                    <중앙정렬 width='60%'>{a.title}</중앙정렬>
-                                    <중앙정렬 width='20%'>{a.qna_created_at[0]}년 {a.qna_created_at[1]}월 {a.qna_created_at[2]}일</중앙정렬>
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                }
-
-            </Table>
+          <TablePlace>
+          <Title>
+              Q&A 게시판
+          </Title>
 
           <Link to="/QnaCreate">
             <WriteButton>

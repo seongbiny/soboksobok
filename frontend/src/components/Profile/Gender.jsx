@@ -17,8 +17,8 @@ const GenderSelectBox = ({ gender, setGender }) => {
       <option value="placeholder" disabled>
         선택
       </option>
-      <option value="female">female</option>
-      <option value="male">male</option>
+      <option value="female">여자</option>
+      <option value="male">남자</option>
     </Form.Select>
   );
 };

@@ -7834,6 +7834,14 @@ raw-body@2.4.3:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-advanced-news-ticker@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-advanced-news-ticker/-/react-advanced-news-ticker-1.0.1.tgz#f4ca85e7ba17642d14c6bfbca043031db3e61b32"
+  integrity sha512-gWFW9jovuA5472Rkt13+SHnblWu9OyZ2seFC/xMgf5OthPCyVnt6gSlX3NTq4QCEEhUlVJzsm+xY+G+VKg85ag==
+  dependencies:
+    prop-types "^15.7.2"
+    react "^16.13.1"
+
 react-alert@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/react-alert/-/react-alert-7.0.3.tgz#4d47f539c574e1118a84409a077f3a58d161e23b"
@@ -8079,7 +8087,7 @@ react-transition-group@^4.4.0, react-transition-group@^4.4.1, react-transition-g
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@15.x.x - 16.x.x":
+"react@15.x.x - 16.x.x", react@^16.13.1:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==

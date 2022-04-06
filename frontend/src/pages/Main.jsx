@@ -7,15 +7,19 @@ import { getAxios } from '../api';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 
 function Main() {
-  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
+  // const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
 
   const [name, setName] = useState('User');
+  const [selectfamilies, setSelectfamilies] = useState([{}]);
+  const [selecttargets, setSelecttargets] = useState([{}]);
   const [popular, setPopular] = useState([{}]);
   const [token, setToken] = useState('');
   const [cards, setCards] = useState([]);
+  const [keywords, setKeywords] = useState([]);
 
   const isLogin = () => {
     if (localStorage.getItem('token')) {
@@ -33,6 +37,8 @@ function Main() {
       localStorage.setItem('name', response.data.body.user.username);
       localStorage.setItem('profile', response.data.body.user.profileImageUrl);
       await setName(localStorage.getItem('name'));
+      await setSelectfamilies(response.data.body.user.selectfamilies);
+      await setSelecttargets(response.data.body.user.selecttargets);
     } catch (err) {
       console.log(err);
     }
@@ -58,14 +64,32 @@ function Main() {
     }
   };
 
+  const fetchWord = async () => {
+    try {
+      const request = await axios.get('/api/welfare/keyword');
+      console.log('keywords: ', request.data.body.keywords);
+      setKeywords(request.data.body.keywords.slice(0, 10));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWord();
+  }, [!keywords]);
+
   useEffect(() => {
     getPopular();
-    isLogin();
     fetchCard();
+    isLogin();
     getProfile();
+    console.log('selectfamilies: ', selectfamilies);
+    console.log('selecttargets', selecttargets);
+  }, []);
 
-    console.log('name: ', name);
-  }, [name]);
+  // useEffect(() => {
+  //   fetchCard();
+  // }, [token]);
 
   return (
     <div className="main">
@@ -97,7 +121,7 @@ function Main() {
 
         <StyledBottomBackground>
           <StyledSearchBar>
-            <SearchBar></SearchBar>
+            <SearchBar keywords={keywords}></SearchBar>
           </StyledSearchBar>
 
           <StyledTab>
@@ -127,52 +151,47 @@ function Main() {
               </Tab>
 
               <Tab eventKey="popular-list" title="인기순">
-                <h5 style={{ padding: '1% 6.5%' }}>
+                <h5 style={{ padding: '1%' }}>
                   <b>지금 인기있는 복지 혜택을 안내드립니다.</b>
                 </h5>
-                <ListGroup
-                  variant="flush"
-                  style={{
-                    paddingLeft: '5%',
-                    paddingRight: '5%',
-                    display: 'flex',
-                    // justifyContent: 'spaceBetween',
-                    // alignContent: 'center',
-                  }}
-                >
+                <ListGroup variant="flush">
                   {popular.map((item, index) => (
                     <ListGroup.Item
                       key={index}
                       style={{
                         display: 'flex',
-                        justifyContent: 'spaceAround',
+                        alignItems: 'center',
                       }}
                     >
-                      <Stack direction="horizontal" gap={3}>
-                        <h6
-                          style={{ marginTop: '0.5rem', width: '250px' }}
-                          onClick={() => {
-                            navigate(`/welfare/${item.welfareId}`);
-                          }}
-                        >
-                          {item.welfare_service_name}
-                        </h6>
-                        <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
-                        <h6
-                          style={{
-                            marginTop: '0.5rem',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            width: '500px',
-                          }}
-                          onClick={() => {
-                            navigate(`/welfare/${item.welfareId}`);
-                          }}
-                        >
-                          {item.welfare_target_detail}
-                        </h6>
-                        {/* <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
+                      <strong
+                        style={{
+                          // marginTop: '0.5rem',
+                          width: '200px',
+                          fontSize: '13px',
+                        }}
+                        onClick={() => {
+                          navigate(`/welfare/${item.welfareId}`);
+                        }}
+                      >
+                        {item.welfare_service_name}
+                      </strong>
+                      <div className="vr" style={{ margin: '0 2%' }} />
+                      <strong
+                        style={{
+                          // marginTop: '0.5rem',
+                          fontSize: '13px',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          width: '650px',
+                        }}
+                        onClick={() => {
+                          navigate(`/welfare/${item.welfareId}`);
+                        }}
+                      >
+                        {item.welfare_target_detail}
+                      </strong>
+                      {/* <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
                         <Button
                           variant="primary"
                           size="sm"
@@ -182,7 +201,6 @@ function Main() {
                         >
                           더보기
                         </Button> */}
-                      </Stack>
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
@@ -231,7 +249,6 @@ const StyledBottomBackground = styled.div`
 
 const StyledSearchBar = styled.div`
   margin: 0px 220px 50px 220px;
-  z-index: 2;
 `;
 
 const StyledTab = styled.div`
@@ -239,7 +256,6 @@ const StyledTab = styled.div`
   background: white;
   border-radius: 5px;
   padding: 3% 5%;
-  z-index: 2;
 `;
 
 const StyledWelfare = styled.div`
