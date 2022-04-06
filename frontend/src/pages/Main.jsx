@@ -1,14 +1,14 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Button, Tabs, Tab, ListGroup, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
 import styled from 'styled-components';
 import { getAxios } from '../api';
+import SearchBar from '../components/Main/SearchBar';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 
 function Main() {
-  // const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
-  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
+  // const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
@@ -75,21 +75,12 @@ function Main() {
   };
 
   useEffect(() => {
-    fetchWord();
-  }, [!keywords]);
-
-  useEffect(() => {
     getPopular();
     fetchCard();
+    fetchWord();
     isLogin();
     getProfile();
-    console.log('selectfamilies: ', selectfamilies);
-    console.log('selecttargets', selecttargets);
   }, []);
-
-  // useEffect(() => {
-  //   fetchCard();
-  // }, [token]);
 
   return (
     <div className="main">
@@ -103,8 +94,6 @@ function Main() {
 
               <p>
                 소복소복은 사용자에게 맞춤 복지 정보를 제공합니다.
-                <br />
-                가구상황, 관심주제를 입력하여 더욱 정확한 맞춤 복지를 추천받으세요.
                 <br />
                 ‘소복소복’에 가입하고 나에게 딱 맞는 복지제도 정보를 찾아보세요
               </p>
@@ -127,26 +116,58 @@ function Main() {
           <StyledTab>
             <Tabs defaultActiveKey="home" id="main-welfare-tab" className="mb-3">
               <Tab eventKey="home" title="맞춤형 복지 안내">
-                {cards.length === 0 ? (
-                  <Fragment>
-                    <h5 style={{ padding: '1% 6.5%' }}>
-                      <b>알맞은 복지 카테고리를 선택하고 맞춤 복지 혜택을 안내받으세요.</b>
-                    </h5>
-                    <Button
-                      variant="primary"
-                      style={{ margin: '1% 6.5%' }}
-                      onClick={() => {
-                        navigate('/filter');
+                {cards.length === 0 || (selectfamilies === [] && selecttargets === []) ? (
+                  <div
+                    className="welfareInfo"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-around',
+                      alignItems: 'center',
+                      margin: '10% 0',
+                    }}
+                  >
+                    <img
+                      src="/drawKit/SVG/DrawKit (5).svg"
+                      alt="main-image"
+                      width="300px"
+                      style={{ transform: 'scaleX(-1)' }}
+                    />
+                    <div
+                      className="welfareInfoContent"
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
                       }}
                     >
-                      정보 입력하기
-                    </Button>
-                  </Fragment>
+                      <h5>
+                        <strong>
+                          나의 상황에 알맞은 정보를 입력하여
+                          <br /> 더욱 정확한 맞춤 복지 혜택을 추천받으세요.
+                        </strong>
+                      </h5>
+                      <strong
+                        style={{
+                          fontSize: '15px',
+                          margin: '1% 0 0 0',
+                        }}
+                      >
+                        회원님의 상황을 자세히 선택할수록
+                        <br /> 유용한 복지 혜택을 안내받을 수 있습니다.
+                      </strong>
+                      <Button
+                        variant="primary"
+                        style={{ margin: '5% 30% 5% 0' }}
+                        onClick={() => {
+                          navigate('/filter');
+                        }}
+                      >
+                        정보 입력하기
+                      </Button>
+                    </div>
+                  </div>
                 ) : (
-                  // <Norecommend profile={profile} name={name}></Norecommend>
-                  <StyledWelfare>
-                    <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
-                  </StyledWelfare>
+                  <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
                 )}
               </Tab>
 
@@ -165,7 +186,6 @@ function Main() {
                     >
                       <strong
                         style={{
-                          // marginTop: '0.5rem',
                           width: '200px',
                           fontSize: '13px',
                         }}
@@ -178,7 +198,6 @@ function Main() {
                       <div className="vr" style={{ margin: '0 2%' }} />
                       <strong
                         style={{
-                          // marginTop: '0.5rem',
                           fontSize: '13px',
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
@@ -191,16 +210,6 @@ function Main() {
                       >
                         {item.welfare_target_detail}
                       </strong>
-                      {/* <div className="vr" style={{ margin: '0.3rem 0 0.3rem 0' }} />
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={() => {
-                            navigate(`/welfare/${item.welfareId}`);
-                          }}
-                        >
-                          더보기
-                        </Button> */}
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
@@ -248,11 +257,11 @@ const StyledBottomBackground = styled.div`
 `;
 
 const StyledSearchBar = styled.div`
-  margin: 0px 220px 50px 220px;
+  margin: 0 10% 5% 10%;
 `;
 
 const StyledTab = styled.div`
-  margin: 50px 220px 200px 220px;
+  margin: 0 10% 5% 10%;
   background: white;
   border-radius: 5px;
   padding: 3% 5%;

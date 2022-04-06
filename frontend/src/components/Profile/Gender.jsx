@@ -8,7 +8,7 @@ const GenderSelectBox = ({ gender, setGender }) => {
 
   return (
     <Form.Select
-      id="selectAge"
+      id="selectGender"
       value={gender}
       onChange={handleChange}
       size="sm"
