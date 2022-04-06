@@ -3,7 +3,7 @@ import { Button, Tabs, Tab, ListGroup, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getAxios } from '../api';
-import SearchBar from '../components/Main/SearchBar';
+import SearchBar from '../components/Main/SearchBar.js';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 
 function Main() {
