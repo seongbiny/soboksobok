@@ -208,7 +208,7 @@ public class WelfareController {
     public List welfaresearch(@PathVariable("keyword") String keyword) {
 //        keywordService.getOrsetKeywordbyname(keyword);
         List list = welfareService.getWelfarebykeyword(keyword);
-        if (list != null) {
+        if (list.size() != 0) {
             keywordService.getOrsetKeywordbyname(keyword);
         }
         return list;
