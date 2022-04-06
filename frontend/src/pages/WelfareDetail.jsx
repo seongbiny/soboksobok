@@ -106,7 +106,7 @@ function WelfareDetail() {
           variant="contained"
           sx={{ height: 35 }}
           onClick={() => {
-            navigate('/');
+            navigate(-1);
           }}
         >
           뒤로가기
