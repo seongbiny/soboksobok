@@ -1,6 +1,10 @@
 import { Button, Stack } from 'react-bootstrap';
 import ModifyProfile from './Modify';
 
+const genderMap = new Map();
+genderMap.set('female', '여자');
+genderMap.set('male', '남자');
+
 const UserProfile = ({
   modify,
   setModify,
@@ -55,7 +59,9 @@ const UserProfile = ({
             <h6>
               <b>
                 성별:
-                {gender === 'placeholder' ? '수정 버튼을 눌러 정보를 입력해주세요' : gender}
+                {gender === 'placeholder'
+                  ? '수정 버튼을 눌러 정보를 입력해주세요'
+                  : genderMap.get(gender)}
               </b>
             </h6>
 

@@ -3,7 +3,6 @@ import { Button, Stack, Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 import FilterChips from '../components/FilterChips';
 import { getAxios, getAxiosDjango } from '../api.js';
-import ModifyProfile from '../components/Profile/Modify';
 import DeleteAccount from '../components/Profile/DeleteAccount';
 import UserProfile from '../components/Profile/UserProfile';
 
@@ -230,7 +229,7 @@ const StyledTab = styled.div`
 
 const StyledDeleteBtn = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 `;
 
 export default Profile;
