@@ -19,7 +19,7 @@ function Keyword() {
         const request = await axios.get("/api/welfare/keyword");
         setKeywords(request.data.body.keywords.slice(0, 10));
         // console.log(request.data.body.keywords);
-        console.log("최신 인기검색어 출력!");
+        // console.log("최신 인기검색어 출력!");
       } catch (err) {
         console.log(err);
       }

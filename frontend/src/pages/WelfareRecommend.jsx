@@ -6,8 +6,8 @@ import RecommendSlid from "../components/WelfareRecommend/RecommendSlide";
 import ProfileCard from "../components/WelfareRecommend/ProfileCard";
 import styled from 'styled-components';
 import { getAxios } from "../api";
-import { useNavigate } from 'react-router-dom';
 import Norecommend from "../components/WelfareRecommend/Norecommend";
+import LoginModal from "../components/LoginModal";
 
 
 const isLogin = () => {
@@ -23,13 +23,9 @@ function WelfareRecommend(){
     const [name, setName] = useState('User');
     const [profile, setProfile] = useState('');
     const [cards, setCards] = useState([]);
-    let navigate = useNavigate();
 
     useEffect(()=>{
-        if (!isLogin()) {
-            alert('로그인해주세요')
-            navigate('/') 
-        } else {
+        if (isLogin()) {
             setName(localStorage.getItem('name'));
             setProfile(localStorage.getItem('profile'));
         }
@@ -63,7 +59,7 @@ function WelfareRecommend(){
                 <RecommendSlid />
             </StyledMain>
         </StyledContainer>) : (
-            <div style={{marginTop: '40vh', fontFamily: 'Noto Sans KR', fontSize: '7vh', textAlign:'center'}}></div>
+            <LoginModal></LoginModal>
         )
     )
 }
