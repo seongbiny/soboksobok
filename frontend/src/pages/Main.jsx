@@ -184,7 +184,7 @@ function Main() {
                         alignItems: 'center',
                       }}
                     >
-                      <strong
+                      <StyledS
                         style={{
                           width: '200px',
                           fontSize: '13px',
@@ -194,7 +194,7 @@ function Main() {
                         }}
                       >
                         {item.welfare_service_name}
-                      </strong>
+                      </StyledS>
                       <div className="vr" style={{ margin: '0 2%' }} />
                       <strong
                         style={{
@@ -221,7 +221,14 @@ function Main() {
     </div>
   );
 }
-
+const StyledS = styled.strong`
+  &:hover {
+    text-decoration: none;
+    display: inline;
+    box-shadow: 0 -6px rgba(75, 112, 253, 0.3) inset;
+  }
+  cursor: pointer;
+`;
 const StyledContainer = styled.div`
   display: grid;
   justify-content: center;
