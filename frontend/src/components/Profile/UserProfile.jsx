@@ -65,29 +65,16 @@ const UserProfile = ({
               </b>
             </h6>
 
-            <Stack direction="horizontal" gap={2}>
-              <Button
-                variant="primary"
-                size="sm"
-                style={{ width: '80px' }}
-                onClick={() => {
-                  setModify('ture');
-                }}
-              >
-                수정
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                style={{ width: '80px' }}
-                onClick={() => {
-                  setModify('false');
-                  setProfile();
-                }}
-              >
-                저장
-              </Button>
-            </Stack>
+            <Button
+              variant="primary"
+              size="sm"
+              style={{ width: '80px' }}
+              onClick={() => {
+                setModify('ture');
+              }}
+            >
+              수정
+            </Button>
           </div>
         </div>
       ) : (
@@ -121,35 +108,23 @@ const UserProfile = ({
               <b> {username}님 안녕하세요!</b>
             </h5>
             <ModifyProfile
-              username={username}
               ageRange={ageRange}
               setAgeRange={setAgeRange}
               gender={gender}
               setGender={setGender}
             ></ModifyProfile>
-            <Stack direction="horizontal" gap={2}>
-              <Button
-                variant="primary"
-                size="sm"
-                style={{ width: '80px' }}
-                onClick={() => {
-                  setModify('ture');
-                }}
-              >
-                수정
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                style={{ width: '80px' }}
-                onClick={() => {
-                  setModify('false');
-                  setProfile();
-                }}
-              >
-                저장
-              </Button>
-            </Stack>
+
+            <Button
+              variant="primary"
+              size="sm"
+              style={{ width: '80px' }}
+              onClick={() => {
+                setModify('false');
+                setProfile();
+              }}
+            >
+              저장
+            </Button>
           </div>
         </div>
       )}

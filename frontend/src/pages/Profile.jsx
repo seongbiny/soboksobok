@@ -58,6 +58,7 @@ function Profile() {
       } else if (response.data.body.user.male === 0) {
         setGender('female');
       }
+      await console.log('gender: ', gender);
     } catch (err) {
       console.log(err);
     }

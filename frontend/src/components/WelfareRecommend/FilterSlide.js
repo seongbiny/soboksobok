@@ -1,25 +1,23 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Pagination, Autoplay, Navigation } from "swiper/core";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import FilterCard from "./FilterCard";
-import styled from "styled-components";
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Pagination, Autoplay, Navigation } from 'swiper/core';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import FilterCard from './FilterCard';
+import styled from 'styled-components';
 
 SwiperCore.use([Pagination, Autoplay, Navigation]);
 
 function FilterSlide(props) {
   return (
     <StyledBox className="main-wrap">
-      <h2 style={{ marginBottom: "3vh", fontWeight: "600" }}>
-        {props.name}님에게 추천하는 복지
-      </h2>
+      <h2 style={{ marginBottom: '3vh', fontWeight: '600' }}>{props.name}님에게 추천하는 복지</h2>
       <Swiper
         style={{
-          width: "70vw",
-          height: "40vh",
-          borderRadius: "12px",
+          width: '70vw',
+          height: '40vh',
+          borderRadius: '12px',
         }}
         spaceBetween={20}
         slidesPerView={4}
@@ -41,17 +39,17 @@ function FilterSlide(props) {
           },
         }}
       >
-        {props.cards.map(card => (
+        {props.cards.map((card) => (
           <SwiperSlide
             style={{
-              display: "flex",
-              justifyContent: "center",
+              display: 'flex',
+              justifyContent: 'center',
             }}
             key={card.welfareId}
           >
             <FilterCard
               style={{
-                alignItems: "center",
+                alignItems: 'center',
               }}
               name={card.welfare_service_name}
               content={card.welfare_service_content}
