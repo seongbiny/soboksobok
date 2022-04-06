@@ -53,8 +53,7 @@ function SearchBar() {
         <StyledNewsTicker>
           <div
             style={{
-              width: '30%',
-              width: '250px',
+              width: '200px',
               background: 'white',
               fontFamily: 'Noto Sans KR',
               fontSize: '13px',
@@ -74,7 +73,7 @@ function SearchBar() {
               autoStart={true}
               pauseOnHover={true}
               style={{
-                width: '250px',
+                width: '200px',
                 padding: '0 5%',
                 background: 'white',
                 borderRadius: '0 0 3px 3px ',
@@ -84,34 +83,234 @@ function SearchBar() {
               }}
             >
               <div>
-                <strong>1. {keywords[0].keywordName}</strong>
+                <strong>
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    1
+                  </span>
+
+                  {keywords[0].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>2. {keywords[1].keywordName}</strong>
+                <strong>
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    2
+                  </span>
+
+                  {keywords[1].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>3. {keywords[2].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    3
+                  </span>{' '}
+                  {keywords[2].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>4. {keywords[3].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    4
+                  </span>{' '}
+                  {keywords[3].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>5. {keywords[4].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    5
+                  </span>{' '}
+                  {keywords[4].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>6. {keywords[5].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    6
+                  </span>
+                  {keywords[5].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>7. {keywords[6].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    7
+                  </span>
+                  {keywords[6].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>8. {keywords[7].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    8
+                  </span>{' '}
+                  {keywords[7].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>9. {keywords[8].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    9
+                  </span>{' '}
+                  {keywords[8].keywordName}
+                </strong>
               </div>
               <div>
-                <strong>10. {keywords[9].keywordName}</strong>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    10
+                  </span>{' '}
+                  {keywords[9].keywordName}
+                </strong>
               </div>
             </NewsTicker>
           ) : (
@@ -126,7 +325,7 @@ function SearchBar() {
           onChange={onChange}
           value={word}
           style={{
-            width: '890px',
+            width: '1500px',
             height: '45px',
             margin: '0 0.5rem 0.4rem 0.5rem',
           }}
@@ -136,7 +335,7 @@ function SearchBar() {
           type="submit"
           onClick={onClick}
           style={{
-            width: '70px',
+            width: '80px',
             height: '45px',
             margin: '0 0 0.4rem 0.5rem',
           }}
@@ -150,7 +349,6 @@ function SearchBar() {
 
 const StyledSearchArea = styled.div`
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
 `;
 
