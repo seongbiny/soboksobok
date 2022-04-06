@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getAxios } from "../../api.js";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { changeInput } from "../../reducers/change.js";
 
@@ -11,6 +11,7 @@ function Keyword() {
   const [keywords, setKeywords] = useState([]);
   const navigate = useNavigate();
   const axios = getAxios();
+  const { keyword } = useSelector(state => state.change);
 
   useEffect(() => {
     const fetchWord = async () => {
@@ -18,12 +19,13 @@ function Keyword() {
         const request = await axios.get("/api/welfare/keyword");
         setKeywords(request.data.body.keywords.slice(0, 10));
         // console.log(request.data.body.keywords);
+        console.log("최신 인기검색어 출력!");
       } catch (err) {
         console.log(err);
       }
     };
     fetchWord();
-  }, []);
+  }, [keyword]);
 
   const onClick = word => {
     dispatch(changeInput(word));
