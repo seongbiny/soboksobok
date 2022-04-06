@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import styled from 'styled-components';
 import MultipleSelectChips from './Filter/MultipleSelectChips.js';
 import SidoSelectBox from './Filter/Sido.jsx';
@@ -89,6 +89,10 @@ function FilterChips() {
   const [child, setChild] = useState('2');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const setFilter = async () => {
     try {
@@ -206,11 +210,24 @@ function FilterChips() {
         }}
         onClick={() => {
           setFilter();
+          handleShow();
           // navigate('/', { replace: true });
         }}
       >
         저장
       </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>
+          <p>정보 입력이 완료되었습니다.</p>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </StyledFilterSet>
   );
 }
