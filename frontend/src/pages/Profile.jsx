@@ -193,6 +193,10 @@ function Profile() {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                padding: '5% 5%',
+                margin: '0 5%',
+                borderRadius: '5px',
+                background: 'rgba(255, 255, 255, 0.4)',
               }}
             >
               <h6>
@@ -318,7 +322,7 @@ const StyledBox = styled.div`
   align-items: center;
   grid-template-rows: 15% 70% 15%;
   font-family: 'Noto Sans KR', sans-serif;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
 `;
 const StyledH = styled.h6`
@@ -341,13 +345,13 @@ const StyledLeftArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // height: 200vh;
   margin: 15% 0;
+  // background-image: url('/background/layered-waves-haikei.svg');
 `;
 
 const StyledComponent = styled.div`
   margin: 0% 5%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   padding: 3% 5%;
 `;
