@@ -202,11 +202,14 @@ function Profile() {
             <StyledCard>
               <StyledBox>
                 <div style={{fontSize: 'x-large'}}>찜한 복지</div>
-                <StyledContent>
-                  {pagedWelLikes.map(wel=>(
-                    <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
-                  ))} 
-                </StyledContent>
+                {countl !== 0 ? 
+                  <div>
+                    {pagedWelLikes.map(wel=>(
+                      <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
+                    ))} 
+                  </div> :
+                  <div>찜한 복지가 없습니다.</div>
+                }
                 <StyledPage>
                     <PaginationBtn
                       itemsCount={countl}
@@ -217,11 +220,14 @@ function Profile() {
               </StyledBox>
               <StyledBox>
                 <div style={{fontSize: 'x-large'}}>사용 중 복지</div>
-                <div>
+                {countu !== 0 ? 
+                  <div>
                     {pagedWelUsed.map(wel=>(
                       <StyledH key={wel.welfareId} onClick={()=>{navigate(`/welfare/${wel.welfareId}`)}}>- {wel.welfare_service_name}</StyledH>
-                    ))}
-                </div>
+                    ))} 
+                  </div> :
+                  <div>사용중인 복지가 없습니다.</div>
+                }
                 <StyledPage>
                     <PaginationBtn
                       itemsCount={countu}
@@ -241,12 +247,6 @@ function Profile() {
     </div>
   );
 };
-const StyledContent = styled.div`
-  // background-color: white;
-  // width: 100%;
-  // height: 100%;
-  // text-align: center;
-`;
 const StyledCard = styled.div`
   display: flex;
   justify-content: space-evenly;
