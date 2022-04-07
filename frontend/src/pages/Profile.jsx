@@ -232,7 +232,7 @@ function Profile() {
                     ))}
                   </ListGroup>
                 ) : (
-                  <div>찜한 복지가 없습니다.</div>
+                  <div style={{ margin: 'auto' }}>찜한 복지가 없습니다.</div>
                 )}
                 <StyledPage>
                   <PaginationBtn
@@ -269,7 +269,7 @@ function Profile() {
                     ))}
                   </ListGroup>
                 ) : (
-                  <div>사용중인 복지가 없습니다.</div>
+                  <div style={{ margin: 'auto' }}>사용중인 복지가 없습니다.</div>
                 )}
                 <StyledPage>
                   <PaginationBtn

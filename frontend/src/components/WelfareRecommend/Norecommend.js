@@ -77,6 +77,7 @@ const StyledContainer = styled.div`
   margin: 20vh 10vw;
   width: 80vw;
   height: 60vh;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 
 const StyledBox = styled.div`
