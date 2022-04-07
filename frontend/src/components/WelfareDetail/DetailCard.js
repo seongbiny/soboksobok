@@ -37,8 +37,10 @@ function DetailCard(props) {
   };
 
   useEffect(() => {
-    if (likeNum.length !== 0) {
-      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    if (likeNum !== undefined) {
+      if (likeNum.length !== 0) {
+        likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+      }
     }
   }, []);
 
@@ -72,27 +74,31 @@ function DetailCard(props) {
               {welfare[1]}
             </Typography>
           </Grid>
-          <Grid item xs={2}>
-            {likeBtn ? (
-              <StarRoundedIcon
-                sx={{ color: yellow[600], fontSize: 30 }}
-                onClick={() => {
-                  setLikeBtn(false);
-                  unlikeAxios();
-                  alert("찜해제했습니다.");
-                }}
-              />
-            ) : (
-              <StarBorderRoundedIcon
-                sx={{ color: grey[400], fontSize: 30 }}
-                onClick={() => {
-                  setLikeBtn(true);
-                  likeAxios();
-                  alert("찜했습니다.");
-                }}
-              />
-            )}
-          </Grid>
+          {likeNum !== undefined ? (
+            <Grid item xs={2}>
+              {likeBtn ? (
+                <StarRoundedIcon
+                  sx={{ color: yellow[600], fontSize: 30 }}
+                  onClick={() => {
+                    setLikeBtn(false);
+                    unlikeAxios();
+                    alert("찜해제했습니다.");
+                  }}
+                />
+              ) : (
+                <StarBorderRoundedIcon
+                  sx={{ color: grey[400], fontSize: 30 }}
+                  onClick={() => {
+                    setLikeBtn(true);
+                    likeAxios();
+                    alert("찜했습니다.");
+                  }}
+                />
+              )}
+            </Grid>
+          ) : (
+            <div></div>
+          )}
         </Grid>
         <StyledP>{welfare[2]}</StyledP>
       </CardContent>
