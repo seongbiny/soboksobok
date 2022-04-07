@@ -7,6 +7,7 @@ import DetailTabs from '../components/WelfareDetail/DetailTabs';
 import DetailMain from '../components/WelfareDetail/DetailMain';
 import { getAxios } from '../api';
 import DetailCard from '../components/WelfareDetail/DetailCard';
+import { array } from 'prop-types';
 
 const isLogin = () => {
   const token = localStorage.getItem('token');
@@ -54,7 +55,10 @@ function WelfareDetail() {
       try {
         const request = await axios.get(`/api/welfare/${welfareId}/recommend`);
         // console.log(request.data)
-        setRecommend(request.data.slice(0,3));
+        // console.log(shuffle(request.data))
+        const arr = request.data.sort(()=>Math.random()-0.5);
+        // console.log(arr);
+        setRecommend(arr.slice(0,3));
       } catch (err) {
         console.log(err);
       }
