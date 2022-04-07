@@ -11,6 +11,7 @@ import { yellow, grey } from "@mui/material/colors";
 import Grid from "@mui/material/Grid";
 import { getAxios } from "../../api";
 import styled from "styled-components";
+import AlertModal from "../AlertModal";
 
 function DetailCard(props) {
   const [likeBtn, setLikeBtn] = useState(false);
@@ -18,6 +19,9 @@ function DetailCard(props) {
   const likeNum = props.likeNum;
   const welfareId = welfare[0];
   const axios = getAxios();
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState("");
+  const handleShow = () => setShow(true);
 
   const likeAxios = async () => {
     try {
@@ -73,7 +77,7 @@ function DetailCard(props) {
               sx={10}
               style={{ fontFamily: "Noto Sans KR" }}
             >
-              <StyledT>{welfare[1]}</StyledT>
+              {welfare[1]}
             </Typography>
           </Grid>
           {likeNum !== undefined ? (
@@ -84,7 +88,9 @@ function DetailCard(props) {
                   onClick={() => {
                     setLikeBtn(false);
                     unlikeAxios();
-                    alert("찜해제했습니다.");
+                    // alert('찜해제했습니다.');
+                    setText("찜한 복지 목록에서 삭제되었습니다. ");
+                    handleShow();
                   }}
                 />
               ) : (
@@ -93,7 +99,9 @@ function DetailCard(props) {
                   onClick={() => {
                     setLikeBtn(true);
                     likeAxios();
-                    alert("찜했습니다.");
+                    // alert("찜했습니다.");
+                    setText("찜한 복지 목록에 등록되었습니다. ");
+                    handleShow();
                   }}
                 />
               )}

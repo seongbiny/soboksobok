@@ -74,8 +74,10 @@ function Qna(props) {
     <Container>
       {isLogin() ? (
         <TablePlace>
-          <Title>고객센터</Title>
-          <div style={{textAlign:'center'}}>궁금한 점이나 문의 사항을 남겨주세요.</div>
+          <Title>
+            <strong>고객센터</strong>
+          </Title>
+          <div style={{ textAlign: 'center' }}>궁금한 점이나 문의 사항을 남겨주세요.</div>
 
           <Link to="/QnaCreate">
             <WriteButton>

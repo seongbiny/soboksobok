@@ -93,7 +93,9 @@ function DetailMain(props) {
                     onClick={() => {
                       setLikeBtn(false);
                       unlikeAxios();
-                      alert("찜해제했습니다.");
+                      // alert('찜해제했습니다.');
+                      setText("찜한 복지 목록에서 삭제되었습니다. ");
+                      handleShow();
                     }}
                   />
                 ) : (
@@ -102,7 +104,9 @@ function DetailMain(props) {
                     onClick={() => {
                       setLikeBtn(true);
                       likeAxios();
-                      alert("찜했습니다.");
+                      // alert("찜했습니다.");
+                      setText("찜한 복지 목록에 등록되었습니다. ");
+                      handleShow();
                     }}
                   />
                 )}
@@ -112,7 +116,9 @@ function DetailMain(props) {
                     onClick={() => {
                       setCheckBtn(false);
                       unusedAxios();
-                      alert("사용해제했습니다.");
+                      // alert('사용해제했습니다.');
+                      setText("사용 중인 복지 목록에서 삭제되었습니다.");
+                      handleShow();
                     }}
                   />
                 ) : (
@@ -121,10 +127,17 @@ function DetailMain(props) {
                     onClick={() => {
                       setCheckBtn(true);
                       usedAxios();
-                      alert("사용중입니다.");
+                      // alert('사용중입니다.');
+                      setText("사용 중인 복지 목록에 등록되었습니다.");
+                      handleShow();
                     }}
                   />
                 )}
+                <AlertModal
+                  text={text}
+                  show={show}
+                  setShow={setShow}
+                ></AlertModal>
               </div>
             </Grid>
           ) : (
