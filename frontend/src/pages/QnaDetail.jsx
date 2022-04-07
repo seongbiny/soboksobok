@@ -209,7 +209,7 @@ function QnaDetail(props) {
                         댓글들.map((a)=> {
                             return(
                                 <Comments key={a.comment_id} id={a.comment_id} content={a.comment_content} name={a.name} 
-                                getDate={a.comment_created_at} 
+                                getDate={a.comment_updated_at} checkDate={a.comment_created_at}
                                 getComment={getComment} />
                             )
                         })

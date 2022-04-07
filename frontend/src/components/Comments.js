@@ -23,12 +23,12 @@ const Comments = props => {
   const axios = getAxios();
   const qnaId  = useParams().qnaId;
   const [comment, setComment] = useState('');
-  const { id, content, getComment, name, getDate} = props;
+  const { id, content, getComment, name, getDate, checkDate} = props;
   const [editable, setEditable] = useState(false);
   const [username, setUsername] = useState('');
 
   const [writedate, setWritedate] = useState([]);
-
+  // const [updatedate, setUpdatedate] = useState(getDate);
 
   const [show, setShow] = useState(false);
   const [showDone, setShowDone] = useState(false);
@@ -48,22 +48,21 @@ const Comments = props => {
         comment_content: comment,
         
     })
+    // getComment();
     // console.log(writedate);
     // console.log('getDate')
     // console.log(getDate);
   }
  
   useEffect(()=> {
-    console.log(getDate)
-    console.log(123132)
+
     setComment(content);
     setUsername(name);
-
-  }, [])
-  useEffect(()=> {
+    // setUpdatedate(getDate);
     setWritedate(getDate);
-    console.log('확인', writedate)
-  },[])
+    console.log('dasdf')
+  }, [checkDate, getDate])
+
 
   return editable === false ? (
     <div>
@@ -71,9 +70,17 @@ const Comments = props => {
         {comment}
       </CommentSize>
 
+      { checkDate ? (
         <DatePlace>
-          작성자 : {username} / 
+        작성자 : {username} / 등록일 : {getDate[0]}.{getDate[1]}.{getDate[2]}.{getDate[3]}:{getDate[4]} 
         </DatePlace>
+      ):(
+        <DatePlace>
+        작성자 : {username} / 수정일 : {getDate[0]}.{getDate[1]}.{getDate[2]} {getDate[3]}:{getDate[4]}
+        </DatePlace>
+      )
+
+      }
 
          
       <Button
