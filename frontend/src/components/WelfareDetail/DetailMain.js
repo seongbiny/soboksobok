@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import BookmarkRemoveRoundedIcon from "@mui/icons-material/BookmarkRemoveRounded";
-import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
-import { yellow, blue, grey } from "@mui/material/colors";
-import { Grid, Typography } from "@mui/material";
-import { getAxios } from "../../api";
-import styled from "styled-components";
-import AlertModal from "../AlertModal";
+import React, { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import BookmarkRemoveRoundedIcon from '@mui/icons-material/BookmarkRemoveRounded';
+import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
+import { yellow, blue, grey } from '@mui/material/colors';
+import { Grid, Typography } from '@mui/material';
+import { getAxios } from '../../api';
+import styled from 'styled-components';
+import AlertModal from '../AlertModal';
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
   const [show, setShow] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const welfareId = Number(props.welfareId);
   const Name = props.Name;
   const Content = props.Content;
@@ -79,10 +79,10 @@ function DetailMain(props) {
         mt: 3,
       }}
     >
-      <Paper elevation={3} sx={{ p: 3, bgcolor: "#E3F2FD" }}>
+      <Paper elevation={3} sx={{ p: 3, bgcolor: '#E3F2FD' }}>
         <Grid container>
           <Grid item xs={10}>
-            <h2 style={{ color: "#033075" }}>{Name}</h2>
+            <h2 style={{ color: '#033075' }}>{Name}</h2>
           </Grid>
           {likeNum !== undefined && usedNum !== undefined ? (
             <Grid item xs={2} align="right">
@@ -93,7 +93,9 @@ function DetailMain(props) {
                     onClick={() => {
                       setLikeBtn(false);
                       unlikeAxios();
-                      alert("찜해제했습니다.");
+                      // alert('찜해제했습니다.');
+                      setText('찜한 복지 목록에서 삭제되었습니다. ');
+                      handleShow();
                     }}
                   />
                 ) : (
@@ -102,7 +104,9 @@ function DetailMain(props) {
                     onClick={() => {
                       setLikeBtn(true);
                       likeAxios();
-                      alert("찜했습니다.");
+                      // alert("찜했습니다.");
+                      setText('찜한 복지 목록에 등록되었습니다. ');
+                      handleShow();
                     }}
                   />
                 )}
@@ -112,7 +116,9 @@ function DetailMain(props) {
                     onClick={() => {
                       setCheckBtn(false);
                       unusedAxios();
-                      alert("사용해제했습니다.");
+                      // alert('사용해제했습니다.');
+                      setText('사용 중인 복지 목록에서 삭제되었습니다.');
+                      handleShow();
                     }}
                   />
                 ) : (
@@ -121,10 +127,13 @@ function DetailMain(props) {
                     onClick={() => {
                       setCheckBtn(true);
                       usedAxios();
-                      alert("사용중입니다.");
+                      // alert('사용중입니다.');
+                      setText('사용 중인 복지 목록에 등록되었습니다.');
+                      handleShow();
                     }}
                   />
                 )}
+                <AlertModal text={text} show={show} setShow={setShow}></AlertModal>
               </div>
             </Grid>
           ) : (
