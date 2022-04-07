@@ -56,7 +56,9 @@ function DetailCard(props) {
     <Card
       sx={{
         width: 275,
-        p: 2,
+        height: 250,
+        pl: 2,
+        pr: 2,
         display: "grid",
         gridTemplateRows: "80% 20%",
         fontFamily: "Noto Sans KR",
@@ -126,6 +128,5 @@ const StyledP = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
-  font-family: Noto Sans KR;
 `;
 export default DetailCard;
