@@ -9,16 +9,20 @@ import { yellow, blue, grey } from "@mui/material/colors";
 import { Grid, Typography } from "@mui/material";
 import { getAxios } from "../../api";
 import styled from "styled-components";
+import AlertModal from "../AlertModal";
 
 function DetailMain(props) {
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState("");
   const welfareId = Number(props.welfareId);
   const Name = props.Name;
   const Content = props.Content;
   const likeNum = props.likeNum;
   const usedNum = props.usedNum;
   const axios = getAxios();
+  const handleShow = () => setShow(true);
 
   const likeAxios = async () => {
     try {

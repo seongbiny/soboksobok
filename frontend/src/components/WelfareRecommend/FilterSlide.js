@@ -12,7 +12,9 @@ SwiperCore.use([Pagination, Autoplay, Navigation]);
 function FilterSlide(props) {
   return (
     <StyledBox className="main-wrap">
-      <h2 style={{ marginBottom: '3vh', fontWeight: '600' }}>{props.name}님에게 추천하는 복지</h2>
+      {/* <h2 style={{ marginLeft: '60px', marginBottom: '3vh', fontWeight: '600' }}>
+        {props.name}님에게 추천하는 복지
+      </h2> */}
       <Swiper
         style={{
           width: '70vw',

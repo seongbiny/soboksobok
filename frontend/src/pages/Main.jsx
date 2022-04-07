@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { Button, Tabs, Tab, ListGroup, Stack } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Tabs, Tab, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getAxios } from '../api';
@@ -88,18 +88,18 @@ function Main() {
         <StyledIntro>
           <StyledIntroMain>
             <div className="intro-text-area" style={{ marginTop: '170px' }}>
-              <h4>
+              <h2>
                 <b className="white">소개해요 복지! 소중해요 행복!</b>
-              </h4>
+              </h2>
 
-              <p>
+              <h5 style={{ marginTop: '10px' }}>
                 소복소복은 사용자에게 맞춤 복지 정보를 제공합니다.
                 <br />
                 ‘소복소복’에 가입하고 나에게 딱 맞는 복지제도 정보를 찾아보세요
-              </p>
+              </h5>
 
               {!token ? (
-                <Button href={KAKAO_AUTH_URL} variant="primary">
+                <Button href={KAKAO_AUTH_URL} variant="primary" style={{ marginTop: '10px' }}>
                   카카오톡 간편가입
                 </Button>
               ) : null}
@@ -121,15 +121,15 @@ function Main() {
                     className="welfareInfo"
                     style={{
                       display: 'flex',
-                      justifyContent: 'space-around',
+                      justifyContent: 'space-evenly',
                       alignItems: 'center',
-                      margin: '10% 0',
+                      margin: '2% 0',
                     }}
                   >
                     <img
                       src="/drawKit/SVG/DrawKit (5).svg"
                       alt="main-image"
-                      width="300px"
+                      width="400px"
                       style={{ transform: 'scaleX(-1)' }}
                     />
                     <div
@@ -140,21 +140,19 @@ function Main() {
                         justifyContent: 'flex-start',
                       }}
                     >
-                      <h5>
-                        <strong>
-                          나의 상황에 알맞은 정보를 입력하여
-                          <br /> 더욱 정확한 맞춤 복지 혜택을 추천받으세요.
-                        </strong>
+                      <h3>
+                        <strong>나의 상황에 알맞은 정보를 입력하여</strong>
+                      </h3>
+                      <h3>
+                        <strong>더욱 정확한 맞춤 복지 혜택을 추천받으세요.</strong>
+                      </h3>
+
+                      <h5 style={{ marginTop: '10px' }}>
+                        <strong>회원님의 상황을 자세히 선택할수록</strong>
                       </h5>
-                      <strong
-                        style={{
-                          fontSize: '15px',
-                          margin: '1% 0 0 0',
-                        }}
-                      >
-                        회원님의 상황을 자세히 선택할수록
-                        <br /> 유용한 복지 혜택을 안내받을 수 있습니다.
-                      </strong>
+                      <h5>
+                        <strong>유용한 복지 혜택을 안내받을 수 있습니다.</strong>
+                      </h5>
                       <Button
                         variant="primary"
                         style={{ margin: '5% 30% 5% 0' }}
@@ -167,12 +165,17 @@ function Main() {
                     </div>
                   </div>
                 ) : (
-                  <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  <div className="welfareRecommendContent">
+                    <h2 style={{ margin: '50px 0 -10px 60px', fontWeight: '600' }}>
+                      {name}님에게 추천하는 복지
+                    </h2>
+                    <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  </div>
                 )}
               </Tab>
 
               <Tab eventKey="popular-list" title="인기순">
-                <h5 style={{ padding: '1%' }}>
+                <h5 style={{ padding: '1% 3%' }}>
                   <b>지금 인기있는 복지 혜택을 안내드립니다.</b>
                 </h5>
                 <ListGroup variant="flush">
@@ -184,17 +187,22 @@ function Main() {
                         alignItems: 'center',
                       }}
                     >
-                      <StyledS
+                      <div
+                        className="welfare-service-name"
                         style={{
-                          width: '200px',
+                          width: '300px',
                           fontSize: '13px',
-                        }}
-                        onClick={() => {
-                          navigate(`/welfare/${item.welfareId}`);
+                          margin: '0 0 0 20px',
                         }}
                       >
-                        {item.welfare_service_name}
-                      </StyledS>
+                        <StyledS
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          {item.welfare_service_name}
+                        </StyledS>
+                      </div>
                       <div className="vr" style={{ margin: '0 2%' }} />
                       <strong
                         style={{
@@ -202,7 +210,8 @@ function Main() {
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
-                          width: '650px',
+                          width: '700px',
+                          margin: '0 0 0 20px',
                         }}
                         onClick={() => {
                           navigate(`/welfare/${item.welfareId}`);
@@ -239,11 +248,9 @@ const StyledIntro = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  margintop: 170px;
-  padding: 5% 10%;
+  padding: 1% 10%;
   background-color: #90caf9;
   width: 100vw;
-  // justify-content: space-around;
   color: black;
 `;
 
@@ -251,33 +258,27 @@ const StyledIntroMain = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margintop: 170px;
+  margin: 100px 0 0 0;
   justify-content: space-around;
   background-color: #90caf9;
 `;
 
 const StyledBottomBackground = styled.div`
   width: 100vw;
-  height: 150vh;
+  height: 100vh;
   position: relative;
   background-image: url('/background/layered-waves-haikei.svg');
 `;
 
 const StyledSearchBar = styled.div`
-  margin: 0 10% 5% 10%;
+  margin: 0 10% 1% 10%;
 `;
 
 const StyledTab = styled.div`
   margin: 0 10% 5% 10%;
   background: white;
   border-radius: 5px;
-  padding: 3% 5%;
-`;
-
-const StyledWelfare = styled.div`
-  margin: 5% 5%;
-  width: 300px;
-  // max-width: 80%;
+  padding: 1% 1%;
 `;
 
 export default Main;

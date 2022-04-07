@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { changeInput } from "../../reducers/change.js";
-import { useNavigate } from "react-router-dom";
-import NewsTicker from "react-advanced-news-ticker";
-import styled from "styled-components";
-import { getAxios } from "../../api";
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { changeInput } from '../../reducers/change.js';
+import { useNavigate } from 'react-router-dom';
+import NewsTicker from 'react-advanced-news-ticker';
+import styled from 'styled-components';
+import { getAxios } from '../../api';
 
 function SearchBar() {
   const axios = getAxios();
   const dispatch = useDispatch();
   const [keywords, setKeywords] = useState([]);
-  const [word, setWord] = useState("");
+  const [word, setWord] = useState('');
   const navigate = useNavigate();
 
-  const onChange = e => {
+  const onChange = (e) => {
     setWord(e.target.value);
   };
 
-  const onEnter = async e => {
-    if (e.key === "Enter") {
+  const onEnter = async (e) => {
+    if (e.key === 'Enter') {
       await setWord(e.target.value);
       await dispatch(changeInput(word));
       navigate(`/search?keyword=${word}`);
-      await setWord("");
+      await setWord('');
     }
   };
 
   const onClick = () => {
     dispatch(changeInput(word));
     navigate(`/search?keyword=${word}`);
-    setWord("");
+    setWord('');
   };
 
   useEffect(() => {
     const fetchWord = async () => {
       try {
-        const request = await axios.get("/api/welfare/keyword");
+        const request = await axios.get('/api/welfare/keyword');
         setKeywords(request.data.body.keywords.slice(0, 10));
         console.log(request.data.body.keywords.slice(0, 10));
         // console.log(keywords[0].keywordName);
@@ -50,8 +50,19 @@ function SearchBar() {
   return (
     <div className="searchBar">
       <StyledSearchArea>
-        <div style={{ display: "grid" }}>
-          <div>인기검색어</div>
+        <StyledNewsTicker>
+          <div
+            style={{
+              width: '200px',
+              background: 'white',
+              fontFamily: 'Noto Sans KR',
+              fontSize: '13px',
+              paddingLeft: '5%',
+              borderRadius: '3px 3px 0 0',
+            }}
+          >
+            인기검색어
+          </div>
           {keywords.length === 10 ? (
             <NewsTicker
               rowHeight={24}
@@ -62,27 +73,260 @@ function SearchBar() {
               autoStart={true}
               pauseOnHover={true}
               style={{
-                background: "white",
-                fontFamily: "Noto Sans KR",
-                listStyleType: "none",
-                paddingLeft: "5px",
+                width: '200px',
+                padding: '0 5%',
+                background: 'white',
+                borderRadius: '0 0 3px 3px ',
+                fontFamily: 'Noto Sans KR',
+                listStyleType: 'none',
+                listStyle: 'none',
               }}
             >
-              <div>1.{keywords[0].keywordName}</div>
-              <div>2.{keywords[1].keywordName}</div>
-              <div>3.{keywords[2].keywordName}</div>
-              <div>4.{keywords[3].keywordName}</div>
-              <div>5.{keywords[4].keywordName}</div>
-              <div>6.{keywords[5].keywordName}</div>
-              <div>7.{keywords[6].keywordName}</div>
-              <div>8.{keywords[7].keywordName}</div>
-              <div>9.{keywords[8].keywordName}</div>
-              <div>10.{keywords[9].keywordName}</div>
+              <div onClick={(e) => onClick(keywords[0].keywordName)}>
+                <strong>
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    1
+                  </span>
+
+                  {keywords[0].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[1].keywordName)}>
+                <strong>
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    2
+                  </span>
+
+                  {keywords[1].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[2].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    3
+                  </span>{' '}
+                  {keywords[2].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[3].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    4
+                  </span>{' '}
+                  {keywords[3].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[4].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    5
+                  </span>{' '}
+                  {keywords[4].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[5].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    6
+                  </span>
+                  {keywords[5].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[6].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    7
+                  </span>
+                  {keywords[6].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[7].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    8
+                  </span>{' '}
+                  {keywords[7].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[8].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    9
+                  </span>{' '}
+                  {keywords[8].keywordName}
+                </strong>
+              </div>
+              <div onClick={(e) => onClick(keywords[9].keywordName)}>
+                <strong>
+                  {' '}
+                  <span
+                    style={{
+                      color: 'white',
+                      backgroundColor: '#0d6dfd',
+                      display: 'inline-block',
+                      fontSize: '.75rem',
+                      height: '16px',
+                      lineHeight: '16px',
+                      textAlign: 'center',
+                      width: '15px',
+                      paddingBottom: '1px',
+                      marginRight: '1px',
+                      borderRadius: '2px',
+                    }}
+                  >
+                    10
+                  </span>{' '}
+                  {keywords[9].keywordName}
+                </strong>
+              </div>
             </NewsTicker>
           ) : (
-            <div></div>
+            <div
+              style={{
+                width: '200px',
+                padding: '0 5%',
+                background: 'white',
+                borderRadius: '0 0 3px 3px ',
+                fontFamily: 'Noto Sans KR',
+              }}
+            >
+              <strong>인기검색어가 없습니다.</strong>
+            </div>
           )}
-        </div>
+        </StyledNewsTicker>
 
         <Form.Control
           className="me-auto"
@@ -90,15 +334,20 @@ function SearchBar() {
           onKeyDown={onEnter}
           onChange={onChange}
           value={word}
-          style={{ margin: "0 2% 0 2%" }}
+          style={{
+            width: '1500px',
+            height: '45px',
+            margin: '0 0.5rem 0.4rem 0.5rem',
+          }}
         />
         <Button
           variant="primary"
           type="submit"
           onClick={onClick}
           style={{
-            width: "70px",
-            // margin: '0 2%'
+            width: '80px',
+            height: '45px',
+            margin: '0 0 0.4rem 0.5rem',
           }}
         >
           검색
@@ -110,8 +359,13 @@ function SearchBar() {
 
 const StyledSearchArea = styled.div`
   display: flex;
-  justify-content: space-around;
   align-items: center;
+`;
+
+const StyledNewsTicker = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 `;
 
 export default SearchBar;

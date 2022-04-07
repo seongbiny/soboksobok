@@ -46,7 +46,7 @@ function ResultBoard() {
 
   const { length: count } = data;
   if (count === 0) {
-    return <StyledNo>검색 정보가 없습니다.</StyledNo>;
+    return <StyledNo>검색 정보가 없습니다 🔍</StyledNo>;
   }
 
   return (

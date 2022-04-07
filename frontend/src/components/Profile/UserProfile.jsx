@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Button, Stack } from 'react-bootstrap';
+import AlertModal from '../AlertModal';
 import ModifyProfile from './Modify';
 
 const genderMap = new Map();
@@ -17,6 +19,10 @@ const UserProfile = ({
   gender,
   setGender,
 }) => {
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('');
+  const handleShow = () => setShow(true);
+
   return (
     <div>
       {modify === 'false' ? (
@@ -121,6 +127,8 @@ const UserProfile = ({
               onClick={() => {
                 setModify('false');
                 setProfile();
+                setText('정보 입력이 완료되었습니다.');
+                handleShow();
               }}
             >
               저장
@@ -128,6 +136,7 @@ const UserProfile = ({
           </div>
         </div>
       )}
+      <AlertModal text={text} show={show} setShow={setShow}></AlertModal>
     </div>
   );
 };

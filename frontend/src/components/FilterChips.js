@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import styled from 'styled-components';
 import MultipleSelectChips from './Filter/MultipleSelectChips.js';
-import SidoSelectBox from './Filter/Sido.jsx';
-import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
 import { getAxios, getAxiosDjango } from '../api.js';
 import { useNavigate } from 'react-router-dom';
+import AlertModal from './AlertModal.js';
+import { StepContext } from '@mui/material';
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -84,11 +84,13 @@ function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  // const [isAll, setIsAll] = useState('All');
-  // const [region, setRegion] = useState('00');
   const [child, setChild] = useState('2');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
+
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('');
+  const handleShow = () => setShow(true);
 
   const setFilter = async () => {
     try {
@@ -105,7 +107,6 @@ function FilterChips() {
 
       await console.log({
         child: child,
-        // region: region,
         job: selectJob,
         family: selectFamily,
       });
@@ -113,7 +114,6 @@ function FilterChips() {
       const axios = getAxios();
       await axios.post('/api/users/update/char', {
         child: child ? child : '2',
-        // region: region ? region : '00',
         job: selectJob,
         family: selectFamily,
       });
@@ -136,16 +136,9 @@ function FilterChips() {
 
         let res = await axios.get('/api/users/update/char');
         console.log('userCharacter: ', res.data.body);
-        // setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
-
-        // if (region === '00' || region === null) {
-        //   setIsAll('All');
-        // } else {
-        //   setIsAll('GwangJu');
-        // }
 
         let allValue = [];
         for (let element of job) {
@@ -168,9 +161,6 @@ function FilterChips() {
 
   return (
     <StyledFilterSet>
-      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
-            <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />*/}
-
       <MultipleSelectChips
         label="직장"
         value={clicked}
@@ -206,11 +196,14 @@ function FilterChips() {
         }}
         onClick={() => {
           setFilter();
-          // navigate('/', { replace: true });
+          setText('정보 입력이 완료되었습니다.');
+          handleShow();
         }}
       >
         저장
       </Button>
+
+      <AlertModal text={text} show={show} setShow={setShow}></AlertModal>
     </StyledFilterSet>
   );
 }

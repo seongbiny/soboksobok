@@ -47,7 +47,7 @@ function SearchBar() {
 const StyledContainer = styled.div`
   box-sizing: border-box;
   display: flex;
-  width: 70vw;
+  width: 65vw;
   margin-top: 30px;
   justify-content: center;
   align-items: center;
