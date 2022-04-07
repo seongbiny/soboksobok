@@ -101,18 +101,19 @@ function QnaDetail(props) {
             })
         }
     }
-    const updateComment = (Id) => {
-        axios.patch(`/api/comment/${Id}`, {
-            comment_content: 댓글
-        })
-        댓글값변경(댓글)
-    }
+    // const updateComment = (Id) => {
+    //     axios.patch(`/api/comment/${Id}`, {
+    //         comment_content: 댓글
+    //     })
+    //     댓글값변경(댓글)
+    // }
     const getComment = () => {
         axios.get(`/api/qna/mine/${qnaId}`)
         .then(res => {
             setCheck(true);
             setQna(res.data.body.success);
-            댓글들변경(res.data.body.success.comments)
+            댓글들변경(res.data.body.success.comments);
+            console.log(res)
         })
         .catch(err => 
           { alert('잘못된 접근입니다')
@@ -124,7 +125,7 @@ function QnaDetail(props) {
           alert('로그인해주세요')
           navigate(`/` )
       } else {
-          getComment()
+          getComment();
       }
   }
     useEffect(()=> {
@@ -207,7 +208,9 @@ function QnaDetail(props) {
                     {
                         댓글들.map((a)=> {
                             return(
-                                <Comments key={a.comment_id} id={a.comment_id} content={a.comment_content} getComment={getComment} />
+                                <Comments key={a.comment_id} id={a.comment_id} content={a.comment_content} name={a.name} 
+                                getDate={a.comment_created_at} 
+                                getComment={getComment} />
                             )
                         })
                     }

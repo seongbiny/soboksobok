@@ -11,12 +11,24 @@ let CommentContent = styled.div`
 let CommentSize = styled.p`
     font-size: medium;
 `
+let DatePlace = styled.div`
+  display: grid;
+  justify-content: space-between;
+  float:right;
+`
+let NamePlace = styled.div`
+  margin-left: 100%;
+`
 const Comments = props => {
   const axios = getAxios();
   const qnaId  = useParams().qnaId;
   const [comment, setComment] = useState('');
-  const { id, content, getComment } = props;
+  const { id, content, getComment, name, getDate} = props;
   const [editable, setEditable] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const [writedate, setWritedate] = useState([]);
+
 
   const [show, setShow] = useState(false);
   const [showDone, setShowDone] = useState(false);
@@ -33,20 +45,37 @@ const Comments = props => {
 
   const updateComment = Id => {
     axios.patch(`/api/comment/${Id}`, {
-        comment_content: comment
+        comment_content: comment,
+        
     })
+    // console.log(writedate);
+    // console.log('getDate')
+    // console.log(getDate);
   }
-
+ 
   useEffect(()=> {
-  
+    console.log(getDate)
+    console.log(123132)
     setComment(content);
+    setUsername(name);
+
   }, [])
+  useEffect(()=> {
+    setWritedate(getDate);
+    console.log('확인', writedate)
+  },[])
 
   return editable === false ? (
     <div>
       <CommentSize>
         {comment}
       </CommentSize>
+
+        <DatePlace>
+          작성자 : {username} / 
+        </DatePlace>
+
+         
       <Button
         variant="secondary"
         size="sm"

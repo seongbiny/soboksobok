@@ -23,7 +23,7 @@ let 글작성틀 = styled.div`
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
+    margin-top: 15%;
     padding-bottom: 15%;
     font-family: 'Noto Sans KR', sans-serif;
 `;
