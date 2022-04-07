@@ -61,7 +61,7 @@ const Comments = props => {
     // setUpdatedate(getDate);
     setWritedate(getDate);
     console.log('dasdf')
-  }, [checkDate, getDate])
+  }, [])
 
 
   return editable === false ? (
@@ -135,7 +135,13 @@ const Comments = props => {
         updateComment(props.id);
         setEditable(!editable)
       }}>저장</Button>
-
+      {' '}
+      <Button
+        variant="secondary"
+        size="sm"
+        onClick={(e)=> {
+          setEditable(!editable)
+        }}>취소</Button>
     </CommentContent>
     
 
