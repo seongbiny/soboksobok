@@ -12,6 +12,7 @@ import logger from "redux-logger";
 import rootReducer from "./reducers/index";
 import { applyMiddleware, createStore, compose } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import ScrollToTop from "./pages/ScrollTop";
 
 // import { createStore } from "redux";
 
@@ -42,6 +43,7 @@ const store = createStore(rootReducer, undefined, enhancer);
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Provider store={store}>
         <App />
       </Provider>
