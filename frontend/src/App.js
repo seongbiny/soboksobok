@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import Layout from './components/layout/layout';
 import './CSS/app.css';
+import Manual from './pages/Manual';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/filter" element={<CustomFilter />} />
           <Route path="/recommend" element={<WelfareRecommend />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/manual" element={<Manual />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Layout>
