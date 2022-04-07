@@ -36,8 +36,6 @@ public class CommentController {
         User user = userService.getUser(principal.getUsername());
         log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
-        System.out.println("qna_id ::"+content);
-        System.out.println("qna_id"+qna_id);
         CommentReqDto dd=new CommentReqDto();
         dd.setComment_content(content);
         CommentResDto dto=service.createComment(userId,qna_id,dd);
