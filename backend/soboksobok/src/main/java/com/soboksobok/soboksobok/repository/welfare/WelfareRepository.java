@@ -54,9 +54,17 @@ public class WelfareRepository {
     }
 
     public List<Welfare> getGroupPopularWelfare(Long group_id) {
-        return em.createQuery("select w from Welfare w where w.welfare_group = :group_id order by w.welfare_view desc" , Welfare.class)
+        List<Welfare> welfares = em.createQuery("select w from Welfare w where w.welfare_group = :group_id order by w.welfare_view desc" , Welfare.class)
                 .setParameter("group_id", group_id)
-                .getResultList().subList(0, 10);
+                .getResultList();
+        if (welfares.size() < 10) {
+            return welfares;
+        } else {
+            return welfares.subList(0, 10);
+        }
+//        return em.createQuery("select w from Welfare w where w.welfare_group = :group_id order by w.welfare_view desc" , Welfare.class)
+//                .setParameter("group_id", group_id)
+//                .getResultList().subList(0, 10);
     }
 
     public List<Welfare> getMostUserWelfare() {
