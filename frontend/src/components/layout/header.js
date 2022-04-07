@@ -17,6 +17,7 @@ const Header = () => {
             <Nav.Link href="/search">복지검색</Nav.Link>
             <Nav.Link href="/recommend">추천서비스</Nav.Link>
             <Nav.Link href="/qna">고객센터</Nav.Link>
+            <Nav.Link href="/manual">이용안내</Nav.Link>
           </Nav>
           <Login></Login>
         </Container>
