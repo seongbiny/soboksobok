@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { getAxios } from '../api';
 import SearchBar from '../components/Main/SearchBar.js';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
-import FilterSlideMain from '../components/WelfareRecommend/FilterSlideMainjs';
 
 function Main() {
   const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
@@ -188,18 +187,22 @@ function Main() {
                         alignItems: 'center',
                       }}
                     >
-                      <StyledS
+                      <div
+                        className="welfare-service-name"
                         style={{
                           width: '300px',
                           fontSize: '13px',
                           margin: '0 0 0 20px',
                         }}
-                        onClick={() => {
-                          navigate(`/welfare/${item.welfareId}`);
-                        }}
                       >
-                        {item.welfare_service_name}
-                      </StyledS>
+                        <StyledS
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          {item.welfare_service_name}
+                        </StyledS>
+                      </div>
                       <div className="vr" style={{ margin: '0 2%' }} />
                       <strong
                         style={{
