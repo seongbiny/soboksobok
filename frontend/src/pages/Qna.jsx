@@ -9,7 +9,7 @@ import Write from '../components/Qna/BlankWrite.js';
 import '../CSS/app.css';
 import LoginModal from '../components/LoginModal';
 let TablePlace = styled.div`
-  margin-top: 10%;
+  margin-top: 5%;
   width: 80%;
   margin-left: auto;
   margin-right: auto;
@@ -74,7 +74,8 @@ function Qna(props) {
     <Container>
       {isLogin() ? (
         <TablePlace>
-          <Title>Q&A 게시판</Title>
+          <Title>고객센터</Title>
+          <div style={{textAlign:'center'}}>궁금한 점이나 문의 사항을 남겨주세요.</div>
 
           <Link to="/QnaCreate">
             <WriteButton>
