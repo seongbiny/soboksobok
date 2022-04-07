@@ -20,12 +20,12 @@ let 게시글제목 = styled.div`
   margin-bottom: 2%;
 `;
 let 글작성틀 = styled.div`
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10%;
-  padding-bottom: 15%;
-  font-family: 'Noto Sans KR', sans-serif;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    padding-bottom: 15%;
+    font-family: 'Noto Sans KR', sans-serif;
 `;
 let 버튼위치 = styled.div`
   padding-top: 3%;

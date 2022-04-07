@@ -11,12 +11,24 @@ let CommentContent = styled.div`
 let CommentSize = styled.p`
     font-size: medium;
 `
+let DatePlace = styled.div`
+  display: grid;
+  justify-content: space-between;
+  float:right;
+`
+let NamePlace = styled.div`
+  margin-left: 100%;
+`
 const Comments = props => {
   const axios = getAxios();
   const qnaId  = useParams().qnaId;
   const [comment, setComment] = useState('');
-  const { id, content, getComment } = props;
+  const { id, content, getComment, name, getDate, checkDate} = props;
   const [editable, setEditable] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const [writedate, setWritedate] = useState([]);
+  // const [updatedate, setUpdatedate] = useState(getDate);
 
   const [show, setShow] = useState(false);
   const [showDone, setShowDone] = useState(false);
@@ -33,20 +45,44 @@ const Comments = props => {
 
   const updateComment = Id => {
     axios.patch(`/api/comment/${Id}`, {
-        comment_content: comment
+        comment_content: comment,
+        
     })
+    // getComment();
+    // console.log(writedate);
+    // console.log('getDate')
+    // console.log(getDate);
   }
-
+ 
   useEffect(()=> {
-  
+
     setComment(content);
+    setUsername(name);
+    // setUpdatedate(getDate);
+    setWritedate(getDate);
+    console.log('dasdf')
   }, [])
+
 
   return editable === false ? (
     <div>
       <CommentSize>
         {comment}
       </CommentSize>
+
+      { checkDate ? (
+        <DatePlace>
+        작성자 : {username} / 등록일 : {getDate[0]}.{getDate[1]}.{getDate[2]}.{getDate[3]}:{getDate[4]} 
+        </DatePlace>
+      ):(
+        <DatePlace>
+        작성자 : {username} / 수정일 : {getDate[0]}.{getDate[1]}.{getDate[2]} {getDate[3]}:{getDate[4]}
+        </DatePlace>
+      )
+
+      }
+
+         
       <Button
         variant="secondary"
         size="sm"
@@ -99,7 +135,13 @@ const Comments = props => {
         updateComment(props.id);
         setEditable(!editable)
       }}>저장</Button>
-
+      {' '}
+      <Button
+        variant="secondary"
+        size="sm"
+        onClick={(e)=> {
+          setEditable(!editable)
+        }}>취소</Button>
     </CommentContent>
     
 
