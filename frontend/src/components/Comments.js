@@ -44,9 +44,12 @@ const Comments = props => {
   } 
 
   const updateComment = Id => {
-    axios.patch(`/api/comment/${Id}`, {
-        comment_content: comment,
-        
+    axios.patch(`/api/comment/${Id}?content=${comment}`, {
+        // comment_content: comment,
+
+    })
+    .then((res) => {
+      console.log(res)
     })
     // getComment();
     // console.log(writedate);
@@ -69,18 +72,19 @@ const Comments = props => {
       <CommentSize>
         {comment}
       </CommentSize>
-
       { checkDate ? (
         <DatePlace>
-        작성자 : {username} / 등록일 : {getDate[0]}.{getDate[1]}.{getDate[2]}.{getDate[3]}:{getDate[4]} 
+          작성자 : {username} / 등록일 : {getDate[0]}년 {getDate[1]}월 {getDate[2]}일 {getDate[3]}:{getDate[4]}
         </DatePlace>
       ):(
         <DatePlace>
-        작성자 : {username} / 수정일 : {getDate[0]}.{getDate[1]}.{getDate[2]} {getDate[3]}:{getDate[4]}
+          작성자 : {username} / 수정일 : {getDate[0]}년 {getDate[1]}월 {getDate[2]}일 {getDate[3]}:{getDate[4]}
         </DatePlace>
       )
 
       }
+
+
 
          
       <Button

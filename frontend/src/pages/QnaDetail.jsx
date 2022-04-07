@@ -92,9 +92,8 @@ function QnaDetail(props) {
     if (댓글 == '') {
       alert('댓글을 입력하세요');
     } else if (댓글 !== '') {
-      axios
-        .post(`/api/comment/${qnaId}`, {
-          comment_content: 댓글,
+      axios.post(`/api/comment/${qnaId}?content=${댓글}`, {
+          // comment_content: 댓글,
         })
         .then((res) => {
           댓글값변경('');
@@ -115,6 +114,7 @@ function QnaDetail(props) {
         setCheck(true);
         setQna(res.data.body.success);
         댓글들변경(res.data.body.success.comments);
+        console.log(res)
       })
       .catch((err) => {
         alert('잘못된 접근입니다');
@@ -219,6 +219,9 @@ function QnaDetail(props) {
                   key={a.comment_id}
                   id={a.comment_id}
                   content={a.comment_content}
+                  name={a.name}
+                  getDate={a.comment_updated_at}
+                  checkDate={a.comment_created_at}
                   getComment={getComment}
                 />
               );
