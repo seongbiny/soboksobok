@@ -1,0 +1,36 @@
+.footer {
+  /* height: 7vh; */
+  margin-top: auto;
+  background-color: #e3f2fd;
+  width: 100%;
+  bottom: 0px;
+  /* position: absolute; */
+  box-sizing: border-box;
+  padding: 1vw;
+  width: 100vw;
+  font-family: Noto Sans KR;
+}
+
+.section {
+  display: flex;
+  /* margin: 1vw; */
+  font-size: small;
+}
+.section > div > p {
+  font-weight: bold;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 1vw; */
+  font-size: small;
+}
+
+.logo {
+  display: flex;
+  /* margin: 1vw; */
+  font-size: small;
+  /* grid-template-columns: 45% 55%; */
+  justify-content: space-between;
+}
