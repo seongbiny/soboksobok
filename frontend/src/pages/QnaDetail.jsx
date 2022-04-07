@@ -13,6 +13,7 @@ let 글작성틀 = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-top: 5%;
+  padding-bottom: 15%;
   font-family: 'Noto Sans KR', sans-serif;
 `;
 let 게시판이름 = styled.h1`
@@ -114,12 +115,12 @@ function QnaDetail(props) {
         setCheck(true);
         setQna(res.data.body.success);
         댓글들변경(res.data.body.success.comments);
-        console.log(res)
+        // console.log(res)
       })
       .catch((err) => {
         alert('잘못된 접근입니다');
         navigate('/');
-        console.log(err);
+        // console.log(err);
       });
   };
   const checkLogin = () => {

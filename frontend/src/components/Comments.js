@@ -28,7 +28,6 @@ const Comments = props => {
   const [username, setUsername] = useState('');
 
   const [writedate, setWritedate] = useState([]);
-  // const [updatedate, setUpdatedate] = useState(getDate);
 
   const [show, setShow] = useState(false);
   const [showDone, setShowDone] = useState(false);
@@ -41,29 +40,21 @@ const Comments = props => {
 
     })
     getComment();
+
   } 
 
-  const updateComment = Id => {
-    axios.patch(`/api/comment/${Id}?content=${comment}`, {
-        // comment_content: comment,
+  const updateComment = async (Id) => {
+    await axios.patch(`/api/comment/${Id}?content=${comment}`)
+    getComment();
 
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    // getComment();
-    // console.log(writedate);
-    // console.log('getDate')
-    // console.log(getDate);
   }
- 
   useEffect(()=> {
 
     setComment(content);
     setUsername(name);
     // setUpdatedate(getDate);
     setWritedate(getDate);
-    console.log('dasdf')
+
   }, [])
 
 
@@ -73,20 +64,18 @@ const Comments = props => {
         {comment}
       </CommentSize>
       { checkDate ? (
-        <DatePlace>
-          작성자 : {username} / 등록일 : {getDate[0]}년 {getDate[1]}월 {getDate[2]}일 {getDate[3]}:{getDate[4]}
-        </DatePlace>
-      ):(
-        <DatePlace>
-          작성자 : {username} / 수정일 : {getDate[0]}년 {getDate[1]}월 {getDate[2]}일 {getDate[3]}:{getDate[4]}
-        </DatePlace>
+
+          <DatePlace>
+            작성자 : {username} / 등록일 : {getDate[0]}년 {getDate[1]}월 {getDate[2]}일 {getDate[3]}시 {getDate[4]}분
+          </DatePlace>
+        ):(
+          <DatePlace>
+            작성자 : {username} / 수정일 : {getDate[0]}년 {getDate[1]}월 {getDate[2]}일 {getDate[3]}시 {getDate[4]}분
+          </DatePlace>
       )
 
       }
 
-
-
-         
       <Button
         variant="secondary"
         size="sm"

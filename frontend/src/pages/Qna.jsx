@@ -13,7 +13,8 @@ let TablePlace = styled.div`
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 10%;
+  padding-top: 15%;
+  padding-bottom: 15%;
   font-family: 'Noto Sans KR', sans-serif;
 `;
 let Title = styled.h1`
