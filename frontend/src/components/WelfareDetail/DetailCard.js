@@ -37,8 +37,10 @@ function DetailCard(props) {
   };
 
   useEffect(() => {
-    if (likeNum.length !== 0) {
-      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    if (likeNum !== undefined) {
+      if (likeNum.length !== 0) {
+        likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+      }
     }
   }, []);
 
@@ -54,7 +56,9 @@ function DetailCard(props) {
     <Card
       sx={{
         width: 275,
-        p: 2,
+        height: 250,
+        pl: 2,
+        pr: 2,
         display: "grid",
         gridTemplateRows: "80% 20%",
         fontFamily: "Noto Sans KR",
@@ -72,27 +76,31 @@ function DetailCard(props) {
               {welfare[1]}
             </Typography>
           </Grid>
-          <Grid item xs={2}>
-            {likeBtn ? (
-              <StarRoundedIcon
-                sx={{ color: yellow[600], fontSize: 30 }}
-                onClick={() => {
-                  setLikeBtn(false);
-                  unlikeAxios();
-                  alert("찜해제했습니다.");
-                }}
-              />
-            ) : (
-              <StarBorderRoundedIcon
-                sx={{ color: grey[400], fontSize: 30 }}
-                onClick={() => {
-                  setLikeBtn(true);
-                  likeAxios();
-                  alert("찜했습니다.");
-                }}
-              />
-            )}
-          </Grid>
+          {likeNum !== undefined ? (
+            <Grid item xs={2}>
+              {likeBtn ? (
+                <StarRoundedIcon
+                  sx={{ color: yellow[600], fontSize: 30 }}
+                  onClick={() => {
+                    setLikeBtn(false);
+                    unlikeAxios();
+                    alert("찜해제했습니다.");
+                  }}
+                />
+              ) : (
+                <StarBorderRoundedIcon
+                  sx={{ color: grey[400], fontSize: 30 }}
+                  onClick={() => {
+                    setLikeBtn(true);
+                    likeAxios();
+                    alert("찜했습니다.");
+                  }}
+                />
+              )}
+            </Grid>
+          ) : (
+            <div></div>
+          )}
         </Grid>
         <StyledP>{welfare[2]}</StyledP>
       </CardContent>
@@ -120,6 +128,5 @@ const StyledP = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
-  font-family: Noto Sans KR;
 `;
 export default DetailCard;

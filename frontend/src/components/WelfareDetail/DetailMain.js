@@ -57,11 +57,13 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    if (likeNum.length !== 0) {
-      likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
-    }
-    if (usedNum.length !== 0) {
-      usedNum.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
+    if (likeNum !== undefined && usedNum != undefined) {
+      if (likeNum.length !== 0) {
+        likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+      }
+      if (usedNum.length !== 0) {
+        usedNum.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
+      }
     }
   }, []);
 
@@ -78,48 +80,52 @@ function DetailMain(props) {
           <Grid item xs={10}>
             <h2 style={{ color: "#033075" }}>{Name}</h2>
           </Grid>
-          <Grid item xs={2} align="right">
-            <div>
-              {likeBtn ? (
-                <StarRoundedIcon
-                  sx={{ color: yellow[600], fontSize: 40 }}
-                  onClick={() => {
-                    setLikeBtn(false);
-                    unlikeAxios();
-                    alert("찜해제했습니다.");
-                  }}
-                />
-              ) : (
-                <StarBorderRoundedIcon
-                  sx={{ color: grey[400], fontSize: 40 }}
-                  onClick={() => {
-                    setLikeBtn(true);
-                    likeAxios();
-                    alert("찜했습니다.");
-                  }}
-                />
-              )}
-              {checkBtn ? (
-                <BookmarkRemoveRoundedIcon
-                  sx={{ color: blue[600], fontSize: 35 }}
-                  onClick={() => {
-                    setCheckBtn(false);
-                    unusedAxios();
-                    alert("사용해제했습니다.");
-                  }}
-                />
-              ) : (
-                <BookmarkAddedOutlinedIcon
-                  sx={{ color: grey[400], fontSize: 35 }}
-                  onClick={() => {
-                    setCheckBtn(true);
-                    usedAxios();
-                    alert("사용중입니다.");
-                  }}
-                />
-              )}
-            </div>
-          </Grid>
+          {likeNum !== undefined && usedNum !== undefined ? (
+            <Grid item xs={2} align="right">
+              <div>
+                {likeBtn ? (
+                  <StarRoundedIcon
+                    sx={{ color: yellow[600], fontSize: 40 }}
+                    onClick={() => {
+                      setLikeBtn(false);
+                      unlikeAxios();
+                      alert("찜해제했습니다.");
+                    }}
+                  />
+                ) : (
+                  <StarBorderRoundedIcon
+                    sx={{ color: grey[400], fontSize: 40 }}
+                    onClick={() => {
+                      setLikeBtn(true);
+                      likeAxios();
+                      alert("찜했습니다.");
+                    }}
+                  />
+                )}
+                {checkBtn ? (
+                  <BookmarkRemoveRoundedIcon
+                    sx={{ color: blue[600], fontSize: 35 }}
+                    onClick={() => {
+                      setCheckBtn(false);
+                      unusedAxios();
+                      alert("사용해제했습니다.");
+                    }}
+                  />
+                ) : (
+                  <BookmarkAddedOutlinedIcon
+                    sx={{ color: grey[400], fontSize: 35 }}
+                    onClick={() => {
+                      setCheckBtn(true);
+                      usedAxios();
+                      alert("사용중입니다.");
+                    }}
+                  />
+                )}
+              </div>
+            </Grid>
+          ) : (
+            <div></div>
+          )}
         </Grid>
         <StyledP>{Content}</StyledP>
       </Paper>

@@ -8,6 +8,15 @@ import DetailMain from '../components/WelfareDetail/DetailMain';
 import { getAxios } from '../api';
 import DetailCard from '../components/WelfareDetail/DetailCard';
 
+const isLogin = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function WelfareDetail() {
   let navigate = useNavigate();
   const welfareId = useParams().welfareId;
@@ -71,26 +80,42 @@ function WelfareDetail() {
         console.log(err);
       }
     };
-    fetchLike();
+    // fetchLike();
+    const checkLogin = () => {
+      if (isLogin()) {
+        fetchLike();
+      } 
+    }
+    checkLogin();
     return () => setLikeWelfares([]);
   }, []);
 
   useEffect(() => {
     const fetchUsed = async () => {
-      const request = await axios.get('api/users/used');
-      const datas = request.data.body.usedWelfareList;
-      if (datas.length !== 0) {
-        const ids = await datas.map((data) => data.welfareId);
-        const usedIds = await new Set(ids);
-        const arr = Array.from(usedIds);
-        setUsedWelfares(arr);
-        // console.log(arr);
-      } else {
-        setUsedWelfares([0]);
+      try {
+        const request = await axios.get('api/users/used');
+        const datas = request.data.body.usedWelfareList;
+        if (datas.length !== 0) {
+          const ids = await datas.map((data) => data.welfareId);
+          const usedIds = await new Set(ids);
+          const arr = Array.from(usedIds);
+          setUsedWelfares(arr);
+          // console.log(arr);
+        } else {
+          setUsedWelfares([0]);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
-    fetchUsed();
-    return () => setUsedWelfares([]);
+    // fetchUsed();
+    const checkLogin = () => {
+      if (isLogin()) {
+        fetchUsed();
+      }
+    }
+    checkLogin();
+    return () => setUsedWelfares([0]);
   }, []);
 
   return (
@@ -106,7 +131,7 @@ function WelfareDetail() {
           variant="contained"
           sx={{ height: 35 }}
           onClick={() => {
-            navigate('/');
+            navigate(-1);
           }}
         >
           뒤로가기
@@ -121,7 +146,11 @@ function WelfareDetail() {
           usedNum={usedWelfares}
         />
       ) : (
-        <div></div>
+        <DetailMain
+          welfareId={welfareId}
+          Name={name}
+          Content={content}
+        />
       )}
       <DetailTabs
         target={target}
@@ -139,14 +168,13 @@ function WelfareDetail() {
         {recommend.map((wel, index) => {
           return likeWelfares.length !== 0 ? (
             <DetailCard key={index} recommend={wel} likeNum={likeWelfares} />
-          ) : (
-            <div key={index}></div>
-          );
+          ) : <DetailCard key={index} recommend={wel} />
         })}
       </StyledCard>
     </StyledContainer>
   );
 }
+
 const StyledName = styled.span`
   text-decoration: none;
   display: inline;
@@ -173,4 +201,5 @@ const StyledTop = styled.div`
   margin: 10px;
   align-items: center;
 `;
+
 export default WelfareDetail;
