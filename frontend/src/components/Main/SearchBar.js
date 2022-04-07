@@ -82,7 +82,7 @@ function SearchBar() {
                 listStyle: 'none',
               }}
             >
-              <div>
+              <div onClick={(e) => onClick(keywords[0].keywordName)}>
                 <strong>
                   <span
                     style={{
@@ -105,7 +105,7 @@ function SearchBar() {
                   {keywords[0].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[1].keywordName)}>
                 <strong>
                   <span
                     style={{
@@ -128,7 +128,7 @@ function SearchBar() {
                   {keywords[1].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[2].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -151,7 +151,7 @@ function SearchBar() {
                   {keywords[2].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[3].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -174,7 +174,7 @@ function SearchBar() {
                   {keywords[3].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[4].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -197,7 +197,7 @@ function SearchBar() {
                   {keywords[4].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[5].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -220,7 +220,7 @@ function SearchBar() {
                   {keywords[5].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[6].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -243,7 +243,7 @@ function SearchBar() {
                   {keywords[6].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[7].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -266,7 +266,7 @@ function SearchBar() {
                   {keywords[7].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[8].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -289,7 +289,7 @@ function SearchBar() {
                   {keywords[8].keywordName}
                 </strong>
               </div>
-              <div>
+              <div onClick={(e) => onClick(keywords[9].keywordName)}>
                 <strong>
                   {' '}
                   <span
@@ -314,7 +314,17 @@ function SearchBar() {
               </div>
             </NewsTicker>
           ) : (
-            <div></div>
+            <div
+              style={{
+                width: '200px',
+                padding: '0 5%',
+                background: 'white',
+                borderRadius: '0 0 3px 3px ',
+                fontFamily: 'Noto Sans KR',
+              }}
+            >
+              <strong>인기검색어가 없습니다.</strong>
+            </div>
           )}
         </StyledNewsTicker>
 

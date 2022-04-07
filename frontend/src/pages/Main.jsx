@@ -7,8 +7,8 @@ import SearchBar from '../components/Main/SearchBar.js';
 import FilterSlide from '../components/WelfareRecommend/FilterSlide';
 
 function Main() {
-  // const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
-  const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `http://localhost:8080/api/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/oauth/kakao/callback`;
+  // const KAKAO_AUTH_URL = `http://j6c205.p.ssafy.io:8080/api/oauth2/authorization/kakao?redirect_uri=http://j6c205.p.ssafy.io:3000/oauth/kakao/callback`;
 
   const axios = getAxios();
   let navigate = useNavigate();
@@ -165,7 +165,12 @@ function Main() {
                     </div>
                   </div>
                 ) : (
-                  <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  <div className="welfareRecommendContent">
+                    <h2 style={{ margin: '50px 0 -10px 60px', fontWeight: '600' }}>
+                      {name}님에게 추천하는 복지
+                    </h2>
+                    <FilterSlide name={name} cards={cards} style={{ width: '300px' }} />
+                  </div>
                 )}
               </Tab>
 
@@ -182,18 +187,22 @@ function Main() {
                         alignItems: 'center',
                       }}
                     >
-                      <StyledS
+                      <div
+                        className="welfare-service-name"
                         style={{
                           width: '300px',
                           fontSize: '13px',
                           margin: '0 0 0 20px',
                         }}
-                        onClick={() => {
-                          navigate(`/welfare/${item.welfareId}`);
-                        }}
                       >
-                        {item.welfare_service_name}
-                      </StyledS>
+                        <StyledS
+                          onClick={() => {
+                            navigate(`/welfare/${item.welfareId}`);
+                          }}
+                        >
+                          {item.welfare_service_name}
+                        </StyledS>
+                      </div>
                       <div className="vr" style={{ margin: '0 2%' }} />
                       <strong
                         style={{
