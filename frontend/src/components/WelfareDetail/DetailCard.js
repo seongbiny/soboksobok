@@ -64,7 +64,7 @@ function DetailCard(props) {
         fontFamily: "Noto Sans KR",
       }}
     >
-      <CardContent>
+      <CardContent style={{ display: "grid" }}>
         <Grid container sx={{ mb: 2 }}>
           <Grid item xs={10}>
             <Typography
@@ -73,7 +73,7 @@ function DetailCard(props) {
               sx={10}
               style={{ fontFamily: "Noto Sans KR" }}
             >
-              {welfare[1]}
+              <StyledT>{welfare[1]}</StyledT>
             </Typography>
           </Grid>
           {likeNum !== undefined ? (
@@ -117,8 +117,20 @@ function DetailCard(props) {
     </Card>
   );
 }
+const StyledT = styled.div`
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.5;
+  height: 3em;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+`;
 const StyledP = styled.p`
-  overflow: hidden;
+  overflow: hidden !important;
   text-overflow: ellipsis;
   white-space: normal;
   line-height: 1.5;
