@@ -10,8 +10,10 @@ import { Grid, Typography } from "@mui/material";
 import { getAxios } from "../../api";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
+import { useSelector } from "react-redux";
 
 function DetailMain(props) {
+  const { used, like } = useSelector(state => state.likeused);
   const [likeBtn, setLikeBtn] = useState(false);
   const [checkBtn, setCheckBtn] = useState(false);
   const [show, setShow] = useState(false);
@@ -61,15 +63,15 @@ function DetailMain(props) {
   };
 
   useEffect(() => {
-    if (likeNum !== undefined && usedNum != undefined) {
-      if (likeNum.length !== 0) {
-        likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    if (used !== undefined && like !== undefined) {
+      if (like.length !== 0) {
+        like.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
       }
-      if (usedNum.length !== 0) {
-        usedNum.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
+      if (used.length !== 0) {
+        used.includes(welfareId) ? setCheckBtn(true) : setCheckBtn(false);
       }
     }
-  }, []);
+  }, [like, used]);
 
   return (
     <Box

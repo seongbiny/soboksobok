@@ -12,8 +12,10 @@ import Grid from "@mui/material/Grid";
 import { getAxios } from "../../api";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
+import { useSelector } from "react-redux";
 
 function DetailCard(props) {
+  const { used, like } = useSelector(state => state.likeused);
   const [likeBtn, setLikeBtn] = useState(false);
   const welfare = props.recommend;
   const likeNum = props.likeNum;
@@ -41,12 +43,12 @@ function DetailCard(props) {
   };
 
   useEffect(() => {
-    if (likeNum !== undefined) {
-      if (likeNum.length !== 0) {
-        likeNum.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
+    if (like !== undefined) {
+      if (like.length !== 0) {
+        like.includes(welfareId) ? setLikeBtn(true) : setLikeBtn(false);
       }
     }
-  }, []);
+  }, [like]);
 
   let navigate = useNavigate();
 
@@ -105,6 +107,11 @@ function DetailCard(props) {
                   }}
                 />
               )}
+              <AlertModal
+                text={text}
+                show={show}
+                setShow={setShow}
+              ></AlertModal>
             </Grid>
           ) : (
             <div></div>

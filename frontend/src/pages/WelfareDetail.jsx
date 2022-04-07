@@ -7,7 +7,8 @@ import DetailTabs from '../components/WelfareDetail/DetailTabs';
 import DetailMain from '../components/WelfareDetail/DetailMain';
 import { getAxios } from '../api';
 import DetailCard from '../components/WelfareDetail/DetailCard';
-import { array } from 'prop-types';
+import { useDispatch } from "react-redux";
+import { likeusedLike, likeusedUsed } from "../reducers/likeused";
 
 const isLogin = () => {
   const token = localStorage.getItem('token');
@@ -19,6 +20,7 @@ const isLogin = () => {
 }
 
 function WelfareDetail() {
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   const welfareId = useParams().welfareId;
   const [welfare, setWelfare] = useState({});
@@ -77,6 +79,7 @@ function WelfareDetail() {
           const likeIds = await new Set(ids);
           const arr = Array.from(likeIds);
           setLikeWelfares(arr);
+          dispatch(likeusedLike(arr));
         } else {
           setLikeWelfares([0]);
         }
@@ -104,6 +107,7 @@ function WelfareDetail() {
           const usedIds = await new Set(ids);
           const arr = Array.from(usedIds);
           setUsedWelfares(arr);
+          dispatch(likeusedUsed(arr));
           // console.log(arr);
         } else {
           setUsedWelfares([0]);
