@@ -1,42 +1,20 @@
-import { useEffect } from 'react';
-
 const GugunSelectBox = ({ isAll, setRegion, region }) => {
   const handleChange = (e) => {
-    console.log('e.target.value: ', e.target.value);
+    console.log('Gugun --> e.target.value: ', e.target.value);
     setRegion(e.target.value);
   };
 
-  const changeSelected = () => {
-    console.log('isAll: ', isAll);
-    if (isAll === 'All') {
-      const $select = document.querySelector('#selectGugunAll');
-      $select.value = region;
-    } else if (isAll === 'GwangJu') {
-      const $select = document.querySelector('#selectGugunGwangJu');
-      $select.value = region;
-    }
-  };
-
-  useEffect(() => {
-    changeSelected();
-  }, []);
-
   if (isAll === 'All') {
     return (
-      <select id="selectGugunAll" defaultValue="placeholder" onClick={handleChange}>
-        <option value="placeholder" disabled>
-          선택
+      <select id="selectGugunAll" value={region} onChange={handleChange} readOnly>
+        <option value="00" readOnly>
+          전체
         </option>
-        <option value="00">전체</option>
-        {/* <option value="01">전체1</option> */}
       </select>
     );
-  } else if (isAll === 'GwangJu')
+  } else if (isAll === 'GwangJu') {
     return (
-      <select id="selectGugunGwangJu" defaultValue="placeholder" onChange={handleChange}>
-        <option value="placeholder" disabled>
-          선택
-        </option>
+      <select id="selectGugunGwangJu" value={region} onChange={handleChange} readOnly>
         <option value="10">전체</option>
         <option value="11">광산구</option>
         <option value="12">남구</option>
@@ -45,6 +23,7 @@ const GugunSelectBox = ({ isAll, setRegion, region }) => {
         <option value="15">서구</option>
       </select>
     );
+  }
 };
 
 export default GugunSelectBox;
