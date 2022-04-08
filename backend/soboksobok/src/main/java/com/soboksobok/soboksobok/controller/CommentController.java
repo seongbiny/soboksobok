@@ -31,12 +31,14 @@ public class CommentController {
 
     @PostMapping("/{qna_id}")
     @ApiOperation(value="댓글 작성",notes="댓글을 작성합니다.")
-    public ApiResponse createComment(@PathVariable("qna_id") Long qna_id,@RequestBody CommentReqDto comment) throws Exception{
+    public ApiResponse createComment(@PathVariable("qna_id") Long qna_id,@RequestParam("content") String content) throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
         log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
-        CommentResDto dto=service.createComment(userId,qna_id,comment);
+        CommentReqDto dd=new CommentReqDto();
+        dd.setComment_content(content);
+        CommentResDto dto=service.createComment(userId,qna_id,dd);
         return ApiResponse.success("success",dto);
     }
 
@@ -53,12 +55,14 @@ public class CommentController {
 
     @PatchMapping("/{comment_id}")
     @ApiOperation(value="댓글 수정",notes="댓글을 수정합니다. 'comment_created_at'는 원래 값으로 넣어주세요.'")
-    public ApiResponse updateComment(@PathVariable("comment_id") Long comment_id,@RequestBody CommentReqDto dto) throws Exception{
+    public ApiResponse updateComment(@PathVariable("comment_id") Long comment_id,@RequestParam("content") String content) throws Exception{
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
         log.info("유저 확인: {}",user.getUsername());
         Long userId=user.getUserSeq();
-        CommentResDto res=service.updateComment(comment_id,userId,dto);
+        CommentReqDto dd=new CommentReqDto();
+        dd.setComment_content(content);
+        CommentResDto res=service.updateComment(comment_id,userId,dd);
         return ApiResponse.success("success",res);
     }
 }
