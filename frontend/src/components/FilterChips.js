@@ -120,7 +120,6 @@ function FilterChips() {
 
       const djangoAxios = getAxiosDjango();
       let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
-      console.log('django res: ', res);
     } catch (err) {
       console.log(err);
     }
@@ -132,10 +131,8 @@ function FilterChips() {
         const axios = getAxios();
         let response = await axios.get('/api/users/profile');
         setUserSeq(response.data.body.user.userSeq);
-        console.log('userSeq: ', userSeq);
 
         let res = await axios.get('/api/users/update/char');
-        console.log('userCharacter: ', res.data.body);
         setChild(res.data.body.UserCharacter.child);
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
@@ -147,7 +144,6 @@ function FilterChips() {
         for (let element of family) {
           await allValue.push(familyMap.get(element));
         }
-        console.log(value, '+', allValue);
         if (JSON.stringify(value) !== JSON.stringify(allValue)) {
           setValue([...allValue]);
           setCliked([...allValue]);

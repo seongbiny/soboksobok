@@ -29,9 +29,6 @@ function Login() {
                 fontWeight: 'bold',
                 fontSize: 'large',
               }}
-              // onClick={() => {
-              //   window.location.replace('/');
-              // }}
             >
               로그인
             </Button>
@@ -64,7 +61,6 @@ function Login() {
               localStorage.removeItem('token');
               localStorage.removeItem('name');
               localStorage.removeItem('profile');
-              // navigate('/', { replace: true });
               window.location.replace('/');
             }}
           >

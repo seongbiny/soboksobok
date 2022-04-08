@@ -16,7 +16,6 @@ const DeleteAccount = () => {
     try {
       const axios = getAxios();
       let res = await axios.delete('/api/users/delete');
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }

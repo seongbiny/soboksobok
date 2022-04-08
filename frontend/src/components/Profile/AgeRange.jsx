@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 const AgeSelectBox = ({ ageRange, setAgeRange }) => {
   const handleChange = (e) => {
     setAgeRange(e.target.value);
-    console.log('e.target.value: ', e.target.value);
   };
 
   return (

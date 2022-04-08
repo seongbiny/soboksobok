@@ -69,11 +69,9 @@ function Profile() {
       const axios = getAxios();
       let response = await axios.get('/api/users/profile');
 
-      console.log('카카오 : ', response.data);
       setUsername(localStorage.getItem('name'));
       setProfileImage(localStorage.getItem('profile'));
       setUserSeq(response.data.body.user.userSeq);
-      console.log('userSeq: ', userSeq);
 
       if (response.data.body.user.profileImageUrl === null) {
         setProfileImage('/blank-profile.png');
@@ -95,7 +93,6 @@ function Profile() {
       } else if (response.data.body.user.male === 0) {
         setGender('female');
       }
-      await console.log('gender: ', gender);
     } catch (err) {
       console.log(err);
     }
@@ -108,12 +105,10 @@ function Profile() {
         age: ageRange,
         gender: gender,
       });
-      console.log('ageRange: ', ageRange, 'gender: ', gender);
       setAgeRender(ageMap.get(ageRange));
 
       const djangoAxios = getAxiosDjango();
       let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
-      console.log('django res: ', res);
     } catch (err) {
       console.log(err);
     }
@@ -124,7 +119,6 @@ function Profile() {
       const axios = getAxios();
       let response = await axios.get('/api/users/like');
       setLiked(response.data.body.likeList);
-      console.log(response.data.body.likeList);
       setWelLikes({ ...welLikes, datal: response.data.body.likeList });
     } catch (err) {
       console.log(err);
@@ -144,7 +138,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-  }, [ageRender]); //대괄호 안에 실행조건을 추가. 조건이 없으므로 한번 실행하고 끝남.
+  }, [ageRender]);
 
   useEffect(() => {
     getLike();

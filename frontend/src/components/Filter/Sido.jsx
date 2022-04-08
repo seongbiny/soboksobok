@@ -1,7 +1,6 @@
 const SidoSelectBox = ({ setIsAll, isAll, setRegion }) => {
   const handleChange = (e) => {
     setIsAll(e.target.value);
-    console.log('Sido --> e.target.value: ', e.target.value);
     if (e.target.value === 'All') {
       setRegion('00');
     } else if (e.target.value === 'GwangJu') {

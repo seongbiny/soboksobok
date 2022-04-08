@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 const GenderSelectBox = ({ gender, setGender }) => {
   const handleChange = (e) => {
     setGender(e.target.value);
-    console.log('e.target.value: ', e.target.value);
   };
 
   return (

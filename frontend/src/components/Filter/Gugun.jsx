@@ -1,6 +1,5 @@
 const GugunSelectBox = ({ isAll, setRegion, region }) => {
   const handleChange = (e) => {
-    console.log('Gugun --> e.target.value: ', e.target.value);
     setRegion(e.target.value);
   };
 
