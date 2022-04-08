@@ -1,8 +1,8 @@
 package com.soboksobok.soboksobok.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.soboksobok.soboksobok.domain.welfare.Welfaretarget;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "target")
 public class Target {
 
@@ -21,6 +24,7 @@ public class Target {
     private String targetName;
 
     @OneToMany
+    @JsonManagedReference
     private List<Welfaretarget> welfaretarget = new ArrayList<>();
 
 }

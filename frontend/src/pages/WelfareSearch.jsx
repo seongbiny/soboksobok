@@ -9,7 +9,7 @@ function Search(){
 
     return(
         <StyledContainer>
-            <h1>통합검색</h1>
+            <h2>통합검색</h2>
             <SearchBar/>
             <StyledMain>
                 <ResultBoard />

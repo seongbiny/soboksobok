@@ -132,7 +132,7 @@ public class UserController {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
         userService.updateUserCharacter(dto,user.getUserId());
-        System.out.println(dto.getRegion().getClass().getName());
+//        System.out.println(dto.getRegion().getClass().getName());
         return ApiResponse.success("성공","성공");
     }
 
@@ -142,8 +142,6 @@ public class UserController {
         User user = userService.getUser(principal.getUsername());
         CharacterDto dto = new CharacterDto();
         dto.setChild(user.getChild());
-        String region = user.getArea()+user.getGu();
-        dto.setRegion(region);
         dto.setFamily(userService.getAllSelectFamily(user.getUserSeq()));
         dto.setJob(userService.getAllSelectTarget(user.getUserSeq()));
         return ApiResponse.success("UserCharacter",dto);

@@ -7,8 +7,20 @@ import DetailTabs from '../components/WelfareDetail/DetailTabs';
 import DetailMain from '../components/WelfareDetail/DetailMain';
 import { getAxios } from '../api';
 import DetailCard from '../components/WelfareDetail/DetailCard';
+import { useDispatch } from "react-redux";
+import { likeusedLike, likeusedUsed } from "../reducers/likeused";
+
+const isLogin = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function WelfareDetail() {
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   const welfareId = useParams().welfareId;
   const [welfare, setWelfare] = useState({});
@@ -33,7 +45,6 @@ function WelfareDetail() {
         const request = await axios.get(`/api/welfare/${welfareId}`);
         const datas = request.data.body.welfare;
         setWelfare(datas);
-        // console.log(datas)
       } catch (err) {
         console.log(err);
       }
@@ -45,17 +56,16 @@ function WelfareDetail() {
     const fetchRecommend = async () => {
       try {
         const request = await axios.get(`/api/welfare/${welfareId}/recommend`);
-        const datas = request.data.body.welfare;
-        // const ids = await datas.map(data => data.welfareId);
-        // setRecommend(ids);
-        console.log(datas.slice(undefined, 3));
-        setRecommend(datas.slice(undefined, 3));
+        // console.log(request.data)
+        // console.log(shuffle(request.data))
+        const arr = request.data.sort(()=>Math.random()-0.5);
+        // console.log(arr);
+        setRecommend(arr.slice(0,3));
       } catch (err) {
         console.log(err);
       }
     };
     fetchRecommend();
-    // console.log(recommend);
     return () => setRecommend([]);
   }, []);
 
@@ -64,12 +74,12 @@ function WelfareDetail() {
       try {
         const request = await axios.get('/api/users/like');
         const datas = request.data.body.likeList;
-        // console.log(update);
         if (datas.length !== 0) {
           const ids = await datas.map((data) => data.welfareId);
           const likeIds = await new Set(ids);
           const arr = Array.from(likeIds);
           setLikeWelfares(arr);
+          dispatch(likeusedLike(arr));
         } else {
           setLikeWelfares([0]);
         }
@@ -77,28 +87,43 @@ function WelfareDetail() {
         console.log(err);
       }
     };
-    fetchLike();
+    // fetchLike();
+    const checkLogin = () => {
+      if (isLogin()) {
+        fetchLike();
+      } 
+    }
+    checkLogin();
     return () => setLikeWelfares([]);
   }, []);
 
   useEffect(() => {
     const fetchUsed = async () => {
-      const request = await axios.get('api/users/used');
-      // console.log(request.data.body.usedWelfareList)
-      const datas = request.data.body.usedWelfareList;
-      // console.log(datas);
-      if (datas.length !== 0) {
-        const ids = await datas.map((data) => data.welfareId);
-        const usedIds = await new Set(ids);
-        const arr = Array.from(usedIds);
-        setUsedWelfares(arr);
-        console.log(arr);
-      } else {
-        setUsedWelfares([0]);
+      try {
+        const request = await axios.get('api/users/used');
+        const datas = request.data.body.usedWelfareList;
+        if (datas.length !== 0) {
+          const ids = await datas.map((data) => data.welfareId);
+          const usedIds = await new Set(ids);
+          const arr = Array.from(usedIds);
+          setUsedWelfares(arr);
+          dispatch(likeusedUsed(arr));
+          // console.log(arr);
+        } else {
+          setUsedWelfares([0]);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
-    fetchUsed();
-    return () => setUsedWelfares([]);
+    // fetchUsed();
+    const checkLogin = () => {
+      if (isLogin()) {
+        fetchUsed();
+      }
+    }
+    checkLogin();
+    return () => setUsedWelfares([0]);
   }, []);
 
   return (
@@ -114,7 +139,7 @@ function WelfareDetail() {
           variant="contained"
           sx={{ height: 35 }}
           onClick={() => {
-            navigate('/');
+            navigate(-1);
           }}
         >
           뒤로가기
@@ -129,7 +154,11 @@ function WelfareDetail() {
           usedNum={usedWelfares}
         />
       ) : (
-        <div></div>
+        <DetailMain
+          welfareId={welfareId}
+          Name={name}
+          Content={content}
+        />
       )}
       <DetailTabs
         target={target}
@@ -142,18 +171,24 @@ function WelfareDetail() {
         siteLink={siteLink}
         siteName={siteName}
       />
+        <div><StyledName>유사한 복지를 추천합니다</StyledName></div>
       <StyledCard>
         {recommend.map((wel, index) => {
           return likeWelfares.length !== 0 ? (
             <DetailCard key={index} recommend={wel} likeNum={likeWelfares} />
-          ) : (
-            <div key={index}></div>
-          );
+          ) : <DetailCard key={index} recommend={wel} />
         })}
       </StyledCard>
     </StyledContainer>
   );
 }
+
+const StyledName = styled.span`
+  text-decoration: none;
+  display: inline;
+  box-shadow: 0 -6px rgba(75, 112, 253, 0.3) inset;
+  font-size: x-large;
+`;
 
 const StyledContainer = styled.div`
   box-sizing: border-box;
@@ -174,4 +209,5 @@ const StyledTop = styled.div`
   margin: 10px;
   align-items: center;
 `;
+
 export default WelfareDetail;

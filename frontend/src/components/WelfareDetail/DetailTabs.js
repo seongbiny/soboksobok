@@ -1,10 +1,12 @@
-import React, { Children } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,7 +66,12 @@ export default function DetailTaps(props) {
         mb: 3,
       }}
     >
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -78,7 +85,13 @@ export default function DetailTaps(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+        <div
+          style={{
+            marginBottom: "5vh",
+            fontWeight: "bold",
+            fontFamily: "Noto Sans KR",
+          }}
+        >
           누가 받을 수 있나요?
         </div>
         <div style={{ display: "flex" }}>
@@ -87,23 +100,38 @@ export default function DetailTaps(props) {
             style={{ marginRight: "10px" }}
             src="/broken-image.jpg"
           />
-          <div style={{ width: "80px", flexShrink: 0 }}>지원대상 |</div>
-          <div>{target}</div>
+          <div
+            style={{ width: "80px", flexShrink: 0, fontFamily: "Noto Sans KR" }}
+          >
+            지원대상 |
+          </div>
+          <StyledP>{target}</StyledP>
         </div>
-        <Box
-          sx={{
-            bgcolor: "#90CAF9",
-            borderRadius: 2,
-            p: 2,
-            mt: 3,
-            color: "#033075",
-          }}
-        >
-          {crit}
-        </Box>
+        {crit !== null ? (
+          <Box
+            sx={{
+              bgcolor: "#90CAF9",
+              borderRadius: 2,
+              p: 2,
+              mt: 3,
+              color: "#033075",
+              fontFamily: "Noto Sans KR",
+            }}
+          >
+            {crit}
+          </Box>
+        ) : (
+          <div></div>
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+        <div
+          style={{
+            marginBottom: "5vh",
+            fontWeight: "bold",
+            fontFamily: "Noto Sans KR",
+          }}
+        >
           어떤 혜택을 받을 수 있나요?
         </div>
         <div style={{ display: "flex" }}>
@@ -112,12 +140,22 @@ export default function DetailTaps(props) {
             style={{ marginRight: "10px" }}
             src="/broken-image.jpg"
           />
-          <div style={{ width: "80px", flexShrink: 0 }}>지원내용 |</div>
-          <div>{content}</div>
+          <div
+            style={{ width: "80px", flexShrink: 0, fontFamily: "Noto Sans KR" }}
+          >
+            지원내용 |
+          </div>
+          <StyledP>{content}</StyledP>
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+        <div
+          style={{
+            marginBottom: "5vh",
+            fontWeight: "bold",
+            fontFamily: "Noto Sans KR",
+          }}
+        >
           어떻게 신청하나요?
         </div>
         <div style={{ display: "flex" }}>
@@ -126,12 +164,22 @@ export default function DetailTaps(props) {
             style={{ marginRight: "10px" }}
             src="/broken-image.jpg"
           />
-          <div style={{ width: "80px", flexShrink: 0 }}>신청방법 |</div>
-          <div>{howto}</div>
+          <div
+            style={{ width: "80px", flexShrink: 0, fontFamily: "Noto Sans KR" }}
+          >
+            신청방법 |
+          </div>
+          <StyledP>{howto}</StyledP>
         </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <div style={{ marginBottom: "5vh", fontWeight: "bold" }}>
+        <div
+          style={{
+            marginBottom: "5vh",
+            fontWeight: "bold",
+            fontFamily: "Noto Sans KR",
+          }}
+        >
           궁금한 사항이 더 있어요.
         </div>
         <div style={{ display: "flex" }}>
@@ -140,11 +188,18 @@ export default function DetailTaps(props) {
             style={{ marginRight: "10px" }}
             src="/broken-image.jpg"
           />
-          <div style={{ width: "80px", flexShrink: 0, marginBottom: "1vh" }}>
+          <div
+            style={{
+              width: "80px",
+              flexShrink: 0,
+              marginBottom: "1vh",
+              fontFamily: "Noto Sans KR",
+            }}
+          >
             관련부서 |
           </div>
-          <div>{deptName}</div>
-          <div>{contact}</div>
+          <StyledP>{deptName}</StyledP>
+          <StyledP>{contact}</StyledP>
         </div>
         <div style={{ display: "flex" }}>
           <Avatar
@@ -152,10 +207,17 @@ export default function DetailTaps(props) {
             style={{ marginRight: "10px" }}
             src="/broken-image.jpg"
           />
-          <div style={{ width: "80px", flexShrink: 0, marginBottom: "1vh" }}>
+          <div
+            style={{
+              width: "80px",
+              flexShrink: 0,
+              marginBottom: "1vh",
+              fontFamily: "Noto Sans KR",
+            }}
+          >
             전화문의 |
           </div>
-          <div>{phone}</div>
+          <StyledP>{phone}</StyledP>
         </div>
         <div style={{ display: "flex" }}>
           <Avatar
@@ -163,11 +225,25 @@ export default function DetailTaps(props) {
             style={{ marginRight: "10px" }}
             src="/broken-image.jpg"
           />
-          <div style={{ width: "120px", flexShrink: 0 }}>관련 웹사이트 |</div>
-          <div>{siteLink}</div>
-          <div>{siteName}</div>
+          <div
+            style={{
+              width: "120px",
+              flexShrink: 0,
+              fontFamily: "Noto Sans KR",
+            }}
+          >
+            관련 웹사이트 |
+          </div>
+          <StyledP style={{ marginRight: "1vw" }}>{siteName}</StyledP>
+          <StyledP>
+            <a href={siteLink}>{siteLink}</a>
+          </StyledP>
         </div>
       </TabPanel>
     </Box>
   );
 }
+
+const StyledP = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+`;

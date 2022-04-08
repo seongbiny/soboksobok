@@ -1,0 +1,77 @@
+server {
+
+
+
+  server_name j6c205.p.ssafy.io;
+
+
+
+  listen 30;
+
+  
+
+  location / {
+
+​    root   /app/build;
+
+​    index  index.html;
+
+​    try_files $uri $uri/ /index.html;
+
+  }
+
+
+
+  location /api {
+
+​    proxy_pass https://j6c205.p.ssafy.io:8080/;
+
+​    proxy_redirect off;
+
+​    charset utf-8;
+
+
+
+​    proxy_set_header X-Real-IP $remote_addr;
+
+​    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+​    proxy_set_header X-Forwarded-Proto $scheme;
+
+​    proxy_set_header X-NginX-Proxy true;
+
+  }
+
+
+
+  listen 443 ssl; # managed by Certbot
+
+  ssl_certificate /etc/letsencrypt/live/j6c205.p.ssafy.io/fullchain.pem; # managed by Certbot
+
+  ssl_certificate_key /etc/letsencrypt/live/j6c205.p.ssafy.io/privkey.pem; # managed by Certbot
+
+  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+
+server {
+
+  if ($host = j6c205.p.ssafy.io) {
+
+​    return 301 https://$host$request_uri;
+
+  }
+
+
+
+  server_name j6c205.p.ssafy.io;
+
+  listen 80;
+
+  return 404;
+
+}

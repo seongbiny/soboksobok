@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
+import styled from 'styled-components';
 import MultipleSelectChips from './Filter/MultipleSelectChips.js';
-import SidoSelectBox from './Filter/Sido.jsx';
-import GugunSelectBox from './Filter/Gugun.jsx';
 import ChildSelectBox from './Filter/Child.jsx';
 import { getAxios, getAxiosDjango } from '../api.js';
 import { useNavigate } from 'react-router-dom';
+import AlertModal from './AlertModal.js';
+import { StepContext } from '@mui/material';
 
 const map = new Map();
 map.set(15, 0); //학생
@@ -16,18 +17,19 @@ map.set(19, 4); //중소기업
 map.set(20, 5); //일반
 map.set(23, 0); //무주택자
 map.set(24, 1); //임산부
-map.set(25, 2); //미취학
+map.set(25, 2); //미취학 --> 1인가구
 map.set(26, 3); //다문화/탈북민
 map.set(27, 4); //다자녀
 map.set(28, 5); //보훈대상자
 map.set(29, 6); //장애인
-map.set(30, 7); //저소득
+map.set(30, 7); //저소득 --> 신규전입
 map.set(31, 8); //한부모/조손
-map.set(32, 9); //신용불량자
-map.set(33, 10); //독거노인
+map.set(32, 9); //신용불량자 --> 확대가족
+map.set(33, 10); //독거노인 --> 요양환자/치매환자
 map.set(34, 11); //취약계층
+map.set(35, 12); //--> 해당없음
 
-const jobMap = new Map();
+const jobMap = new Map(); //직장
 jobMap.set(0, 15); //학생
 jobMap.set(1, 16); //무직
 jobMap.set(2, 17); //창업
@@ -35,7 +37,7 @@ jobMap.set(3, 18); //농어업인
 jobMap.set(4, 19); //중소기업
 jobMap.set(5, 20); //일반
 
-const familyMap = new Map();
+const familyMap = new Map(); //상황
 familyMap.set(0, 23); //무주택자
 familyMap.set(1, 24); //임산부
 familyMap.set(2, 25); //미취학 --> 1인가구
@@ -82,11 +84,13 @@ function FilterChips() {
   const [value, setValue] = useState([0]); //value에 없는 임의의 초기값 저장
   const [clicked, setCliked] = useState([]);
   const [error, setError] = useState('');
-  // const [isAll, setIsAll] = useState('All');
-  // const [region, setRegion] = useState('00');
   const [child, setChild] = useState('2');
   const [job, setJob] = useState([]);
   const [family, setFamily] = useState([]);
+
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('');
+  const handleShow = () => setShow(true);
 
   const setFilter = async () => {
     try {
@@ -101,23 +105,21 @@ function FilterChips() {
         }
       }
 
-      // await console.log({
-      //   child: child,
-      //   region: region,
-      //   job: selectJob,
-      //   family: selectFamily,
-      // });
+      await console.log({
+        child: child,
+        job: selectJob,
+        family: selectFamily,
+      });
 
       const axios = getAxios();
       await axios.post('/api/users/update/char', {
         child: child ? child : '2',
-        // region: region ? region : '00',
         job: selectJob,
         family: selectFamily,
       });
 
       const djangoAxios = getAxiosDjango();
-      let res = await djangoAxios.get(`/insertusergroup/${userSeq}`);
+      let res = await djangoAxios.get(`/insertusergroup/dbscan/${userSeq}`);
       console.log('django res: ', res);
     } catch (err) {
       console.log(err);
@@ -134,16 +136,9 @@ function FilterChips() {
 
         let res = await axios.get('/api/users/update/char');
         console.log('userCharacter: ', res.data.body);
-        // setRegion(res.data.body.UserCharacter.region);
         setChild(res.data.body.UserCharacter.child);
         setJob(res.data.body.UserCharacter.job);
         setFamily(res.data.body.UserCharacter.family);
-
-        // if (region === '00' || region === null) {
-        //   setIsAll('All');
-        // } else {
-        //   setIsAll('GwangJu');
-        // }
 
         let allValue = [];
         for (let element of job) {
@@ -165,14 +160,9 @@ function FilterChips() {
   }, [value]);
 
   return (
-    <div>
-      {/* <SidoSelectBox setIsAll={setIsAll} isAll={isAll} setRegion={setRegion} region={region} />
-      <GugunSelectBox isAll={isAll} setRegion={setRegion} region={region} />
-      <p>{region}</p> */}
-      {/* <p>{value}</p> */}
-
+    <StyledFilterSet>
       <MultipleSelectChips
-        label="대상특성"
+        label="직장"
         value={clicked}
         setValue={setCliked}
         options={jobChip}
@@ -180,28 +170,61 @@ function FilterChips() {
         setError={setError}
       />
 
-      <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
-      {/* <p>{child}</p> */}
+      <StyledChildArea>
+        <h5 style={{ marginBottom: '15px' }}>
+          <b>자녀</b>
+        </h5>
+        <ChildSelectBox child={child} setChild={setChild}></ChildSelectBox>
+      </StyledChildArea>
 
-      <MultipleSelectChips
-        label="가구특성"
-        value={clicked}
-        setValue={setCliked}
-        options={familyChip}
-        error={error}
-        setError={setError}
-      />
+      <StyledFamilyArea>
+        <MultipleSelectChips
+          label="상황"
+          value={clicked}
+          setValue={setCliked}
+          options={familyChip}
+          error={error}
+          setError={setError}
+        />
+      </StyledFamilyArea>
+
       <Button
         variant="primary"
+        style={{
+          marginTop: '2%',
+          width: '250px',
+        }}
         onClick={() => {
           setFilter();
-          navigate('/', { replace: true });
+          setText('정보 입력이 완료되었습니다.');
+          handleShow();
         }}
       >
         저장
       </Button>
-    </div>
+
+      <AlertModal text={text} show={show} setShow={setShow}></AlertModal>
+    </StyledFilterSet>
   );
 }
+
+const StyledFilterSet = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledFamilyArea = styled.div`
+  width: 70%;
+`;
+
+const StyledChildArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-bottom: 2%;
+  align-items: center;
+`;
 
 export default FilterChips;

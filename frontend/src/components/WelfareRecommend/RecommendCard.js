@@ -6,9 +6,10 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import styled from "styled-components";
 
 function RecommendCard(props) {
-  const { name, content, id } = props;
+  const { title, id, content } = props;
   let navigate = useNavigate();
 
   const onClick = () => {
@@ -19,7 +20,7 @@ function RecommendCard(props) {
     <Card
       sx={{
         width: 275,
-        height: 275,
+        height: 250,
         pl: 2,
         pr: 2,
         display: "grid",
@@ -27,23 +28,18 @@ function RecommendCard(props) {
         background: "#E3F2FD",
       }}
     >
-      <CardContent>
+      <CardContent style={{ display: "grid" }}>
         <Grid container sx={{ mb: 2 }}>
-          <Grid>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={10}
-              style={{ color: "#033075", fontWeight: "500" }}
-            >
-              아동수당 지급
-            </Typography>
-          </Grid>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={10}
+            style={{ color: "#033075", fontFamily: "Noto Sans KR" }}
+          >
+            <StyledLi>{title}</StyledLi>
+          </Typography>
         </Grid>
-        <Typography sx={{ mb: 1.5, fontSize: 14 }} color="text.secondary">
-          만 8세 미만 아동의 양육 부담을 덜고 아동의 기본적인 권리와 복지 증진을
-          돕습니다.
-        </Typography>
+        <StyledP>{content}</StyledP>
       </CardContent>
       <CardActions>
         <Button variant="contained" size="small" fullWidth onClick={onClick}>
@@ -53,4 +49,24 @@ function RecommendCard(props) {
     </Card>
   );
 }
+const StyledP = styled.p`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.5;
+  height: 4.5em;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+`;
+const StyledLi = styled.div`
+  &:hover {
+    text-decoration: none;
+    display: inline;
+    box-shadow: 0 -6px rgba(75, 112, 253, 0.3) inset;
+  }
+  cursor: pointer;
+`;
 export default RecommendCard;

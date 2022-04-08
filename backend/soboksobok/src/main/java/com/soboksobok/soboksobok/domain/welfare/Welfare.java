@@ -1,7 +1,8 @@
 package com.soboksobok.soboksobok.domain.welfare;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.soboksobok.soboksobok.domain.user.Usedwelfare;
+import lombok.*;
 import org.w3c.dom.Text;
 
 import javax.persistence.*;
@@ -11,6 +12,9 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "welfare")
 public class Welfare {
 
@@ -26,6 +30,15 @@ public class Welfare {
 
     @Column(name = "welfareDeptName")
     private String welfare_dept_name;
+
+    @Column(name = "welfareServiceType")
+    private String welfare_service_type;
+
+    @Column(columnDefinition = "TEXT", name = "welfareDate")
+    private String welfare_date;
+
+    @Column(columnDefinition = "TEXT", name = "welfareServicePurpose")
+    private String welfare_service_purpose;
 
     @Column(columnDefinition = "TEXT", name = "welfareTargetDetail")
     private String welfare_target_detail;
@@ -51,31 +64,36 @@ public class Welfare {
     @Column(name = "welfareSiteLink")
     private String welfare_site_link;
 
+    @Column(name = "welfareView")
+    private Long welfare_view;
+
+    @Column(name = "welfareMale")
+    private Long welfare_male;
+
+    @Column(name = "welfareFemale")
+    private Long welfare_female;
+
     @Column(name = "welfareGroup")
     private Long welfare_group;
-
-    @Column(length = 2)
-    @NotNull
-    private String welfare_area;
-
-    @Column(length = 2)
-    @NotNull
-    private String welfare_gu;
 
     @Column(columnDefinition = "TINYINT", length = 2)
     private Long welfare_child;
 
-    @OneToMany(mappedBy = "target")
+    @OneToMany(mappedBy = "welfare")
     private List<Welfaretarget> welfaretarget = new ArrayList<>();
 
-    @OneToMany(mappedBy = "family")
+
+    @OneToMany(mappedBy = "welfare")
     private List<Welfarefamily> welfarefamily = new ArrayList<>();
 
-    @OneToMany(mappedBy = "purpose")
-    private List<Welfarepurpose> welfarepurpose = new ArrayList<>();
 
-    @OneToMany(mappedBy = "life")
+    @OneToMany(mappedBy = "welfare")
     private List<Welfarelife> welfarelife = new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "welfare")
+    private List<Usedwelfare> usedwelfares = new ArrayList<>();
+
+    @Column(name = "welfareSimilarWelfare")
+    private String welfare_similarwelfare;
 }

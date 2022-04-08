@@ -25,7 +25,10 @@ const DeleteAccount = () => {
   return (
     <div>
       <Button
-        variant="primary"
+        variant="danger"
+        style={{
+          width: '100px',
+        }}
         onClick={() => {
           handleShow();
         }}

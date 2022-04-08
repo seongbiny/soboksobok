@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { BsSearch } from "react-icons/bs";
 import styled from "styled-components";
-
 import { useDispatch } from "react-redux";
 import { changeInput } from "../../reducers/change.js";
 
@@ -48,7 +47,7 @@ function SearchBar() {
 const StyledContainer = styled.div`
   box-sizing: border-box;
   display: flex;
-  width: 70vw;
+  width: 65vw;
   margin-top: 30px;
   justify-content: center;
   align-items: center;

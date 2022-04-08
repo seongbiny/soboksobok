@@ -1,9 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { Button } from "react-bootstrap";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
+import { convertLength } from '@mui/material/styles/cssUtils';
 
-const Norecommend = props => {
+const Norecommend = (props) => {
   const navigate = useNavigate();
   return (
     <StyledContainer>
@@ -12,38 +13,43 @@ const Norecommend = props => {
           <img
             src="/blank-profile.png"
             alt="profile"
-            style={{ width: "30vh", maxHeight: "100%" }}
+            style={{
+              width: '200px',
+              height: '200px%',
+              objectFit: 'cover',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px',
+            }}
           ></img>
         ) : (
           <img
             src={props.profile}
             alt="profile"
             style={{
-              width: "30vh",
-              maxHeight: "100%",
+              width: '200px',
+              height: '200px',
+              objectFit: 'cover',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px',
             }}
           ></img>
         )}
         {props.name === null ? (
-          <div style={{ marginTop: "1vh", marginBottom: "1vh" }}>
-            안녕하세요!
-          </div>
+          <div style={{ marginTop: '1vh', marginBottom: '1vh' }}>안녕하세요!</div>
         ) : (
-          <div style={{ marginTop: "1vh", marginBottom: "1vh" }}>
+          <div style={{ marginTop: '1vh', marginBottom: '1vh' }}>
             <div>안녕하세요!</div>
             <div>{props.name}님</div>
           </div>
         )}
       </StyledProfile>
       <StyledBox>
-        <h2 style={{ margin: "auto", color: "#033075" }}>
-          추천 복지가 없습니다.
-        </h2>
-        <div style={{ margin: "auto" }}>
+        <h2 style={{ color: '#033075' }}>추천 복지가 없습니다.</h2>
+        <div>
           <Button
             variant="primary"
             onClick={() => {
-              navigate("/filter");
+              navigate('/filter');
             }}
           >
             맞춤필터 설정하러가기
@@ -59,25 +65,31 @@ const StyledProfile = styled.div`
   display: grid;
   border-radius: 20px;
   background-color: #e3f2fd;
-  width: 30vh;
-  margin: auto;
+  width: 200px;
+  height: 300px;
+  margin: 0 2%;
   color: #033075;
 `;
 const StyledContainer = styled.div`
-  display: grid;
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20vh;
-  grid-row-gap: 15vh;
+  margin: 20vh 10vw;
+  width: 80vw;
+  height: 60vh;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
+
 const StyledBox = styled.div`
   box-sizing: border-box;
-  width: 60vw;
-  height: 20vh;
+  width: 50vw;
+  height: 300px;
   background: #e3f2fd;
-  margin: auto;
+  margin: 0 2%;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 export default Norecommend;

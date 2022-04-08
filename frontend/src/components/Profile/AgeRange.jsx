@@ -1,3 +1,5 @@
+import Form from 'react-bootstrap/Form';
+
 const AgeSelectBox = ({ ageRange, setAgeRange }) => {
   const handleChange = (e) => {
     setAgeRange(e.target.value);
@@ -5,7 +7,13 @@ const AgeSelectBox = ({ ageRange, setAgeRange }) => {
   };
 
   return (
-    <select id="selectAge" value={ageRange} onChange={handleChange}>
+    <Form.Select
+      id="selectAge"
+      value={ageRange}
+      onChange={handleChange}
+      size="sm"
+      style={{ display: 'inline', width: '150px' }}
+    >
       <option value="placeholder" disabled>
         선택
       </option>
@@ -14,7 +22,7 @@ const AgeSelectBox = ({ ageRange, setAgeRange }) => {
       <option value="3">청년 (20~29)</option>
       <option value="4">중/장년 (30~59)</option>
       <option value="5">노년 (60~)</option>
-    </select>
+    </Form.Select>
   );
 };
 

@@ -5,10 +5,7 @@ import { useEffect, useState } from "react";
 import { getAxios } from "../../api";
 
 const Container = styled.div`
-  max-width: 800px;
-  padding-top: 7vh;
-  padding-bottom: 7vh;
-  padding-left: 7vh;
+  padding: 3vh;
 `;
 
 function Chart() {
@@ -17,20 +14,26 @@ function Chart() {
   const [datas, setDatas] = useState([]);
 
   const data = {
-    // labels: ["Red", "Blue", "Yellow"],
     labels: label,
     datasets: [
       {
         label: "My First Dataset",
-        // data: [300, 50, 100, 50, 20],
         data: datas,
         backgroundColor: [
+          "rgba(255, 99, 132, 0.8)",
+          "rgba(255, 159, 64, 0.8)",
+          "rgba(255, 205, 86, 0.8)",
+          "rgba(75, 192, 192, 0.8)",
+          "rgba(54, 162, 235, 0.8)",
+          "rgba(153, 102, 255, 0.8)",
+        ],
+        borderColor: [
           "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
+          "rgb(255, 159, 64)",
           "rgb(255, 205, 86)",
-          "rgb(255, 105, 86)",
-          "rgb(155, 205, 86)",
-          "rgb(155, 305, 86)",
+          "rgb(75, 192, 192)",
+          "rgb(54, 162, 235)",
+          "rgb(153, 102, 255)",
         ],
         hoverOffset: 4,
       },
@@ -40,17 +43,11 @@ function Chart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const request = await axios.get("/api/welfare/recommend/purpose");
-        const request = await axios.get("/api/welfare/recommend/grouppopular");
-        console.log(request.data);
-        // let wel = request.data;
-        // await setLabel(Object.keys(wel).slice(0, 6));
-        // await setDatas(Object.values(wel).slice(0, 6));
-        let wel = request.data.map(a => a.welfare_service_name);
-        // console.log(wel);
-        await setLabel(wel);
-        let view = request.data.map(a => a.welfare_view);
-        await setDatas(view);
+        const res = await axios.get("/api/welfare/recommend/purpose");
+        console.log(res.data);
+        let wel = res.data;
+        await setLabel(Object.keys(wel).slice(0, 6));
+        await setDatas(Object.values(wel).slice(0, 6));
       } catch (err) {
         console.log(err);
       }
