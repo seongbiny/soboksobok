@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-const NotFound = () => {
+export default function NotFound(){
     let navigate = useNavigate();
     return (
         <div style={{marginTop: '15vh', textAlign:'center', marginBottom: '5vh'}}>
@@ -18,4 +18,3 @@ const NotFound = () => {
         </div>
     )
 }
-export default NotFound;
