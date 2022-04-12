@@ -22,6 +22,79 @@
 
 * 백엔드 3명, 프론트엔드 3명 총 6인
 
+<table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/dmswl0311">
+          <img src="https://avatars.githubusercontent.com/u/48826021?v=4" alt="조은지 프로필" />
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/a2456542">
+          <img src="https://avatars.githubusercontent.com/u/70923021?v=4" alt="김준형 프로필" />
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/bangtugu">
+          <img src="https://avatars.githubusercontent.com/u/87453984?v=4" alt="송상빈 프로필" />
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/seongbiny">
+          <img src="https://avatars.githubusercontent.com/u/60650518?v=4" alt="윤성빈 프로필" />
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/hyunjung0409">
+          <img src="https://avatars.githubusercontent.com/u/87763315?v=4" alt="이현정 프로필" />
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/leejuyong12">
+          <img src="https://avatars.githubusercontent.com/u/32806091?v=4" alt="이주용 프로필" />
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+          팀장 / BE<br />
+        <a href="https://github.com/dmswl0311">
+          조은지<br />
+        </a>
+      </td>
+      <td align="center">
+           BE<br />
+        <a href="https://github.com/a2456542">
+          김준형<br />
+        </a>
+      </td>
+      <td align="center">
+           BE<br />
+        <a href="https://github.com/bangtugu">
+          송상빈<br />
+        </a>
+      </td>
+      <td align="center">
+           FE<br />
+        <a href="https://github.com/seongbiny">
+          윤성빈<br />
+        </a>
+      </td>
+      <td align="center">
+          FE<br />
+        <a href="https://github.com/hyunjung0409">
+          이현정<br />
+        </a>
+      </td>
+      <td align="center">
+          FE<br />
+        <a href="https://github.com/leejuyong12">
+          이주용<br />
+        </a>
+      </td>
+    </tr>
+  </table>
+
 | 이름   | 역할      | 개발 내용                                                    |
 | ------ | --------- | ------------------------------------------------------------ |
 | 윤성빈 | Front-end | - UI/UX 디자인, 와이어프레임과 navbar, footer, 전체 layout<br />- 'Redux' 를 이용한 상태관리<br />&nbsp;&nbsp;- 검색키워드, 복지 상세 정보, 찜과 사용중인 복지데이터<br />-'Styled-components'와 'MUI'를 이용한 CSS-in-JS 스타일링 구현<br />- Axios를 이용한 서버와 데이터 통신<br />- 검색페이지 <br />&nbsp;&nbsp;- 인기검색어, 검색데이터 표시, 페이지네이션 구현<br />- 추천서비스페이지<br />&nbsp;- 원그래프, 선그래프로 추천 내용 구현<br /> &nbsp;- 추천 복지들 카드 슬라이드 구현<br />- 복지 상세페이지<br /> &nbsp;- 해당 복지와 유사 복지 랜덤으로 3개씩 불러오기 <br /> &nbsp;- 찜하기, 사용중 기능 개발<br /> &nbsp;- 해당 복지의 상세 내용 데이터 표시<br />- 내 정보<br /> &nbsp;- 찜하기, 사용중 복지 표시, 페이지네이션 구현<br />- 404 Not Found 페이지 개발 |
